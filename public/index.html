@@ -101,15 +101,23 @@
         </div>
       </div>
 
-      <!-- Navigation Tabs for the 2 Separated Parts -->
-      <div class="flex items-center gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70">
-        <button id="tabBtnPart1" onclick="switchPart(1)" class="px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
+      <!-- Navigation Tabs for the Separated Parts -->
+      <div class="flex items-center gap-1.5 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
+        <button id="tabBtnPart1" onclick="switchPart(1)" title="1. Configuración de la APP" aria-label="1. Configuración de la APP" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
           <span>⚙️</span>
-          <span>1. Configuración de la APP</span>
+          <span class="hidden sm:inline">1. Configuración de la APP</span>
         </button>
-        <button id="tabBtnPart2" onclick="switchPart(2)" class="px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30">
+        <button id="tabBtnPart4" onclick="switchPart(4)" title="Filtro" aria-label="Filtro" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
+          <span>🎛️</span>
+          <span class="hidden sm:inline">Filtro</span>
+        </button>
+        <button id="tabBtnPart2" onclick="switchPart(2)" title="2. Calendario y Espectáculos (A)" aria-label="2. Calendario y Espectáculos (A)" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30">
           <span>📅</span>
-          <span>2. Calendario y Espectáculos (A)</span>
+          <span class="hidden sm:inline">2. Calendario y Espectáculos (A)</span>
+        </button>
+        <button id="tabBtnPart3" onclick="switchPart(3)" title="Búsqueda" aria-label="Búsqueda" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
+          <span>🔍</span>
+          <span class="hidden sm:inline">Búsqueda</span>
         </button>
       </div>
     </div>
@@ -194,11 +202,131 @@
     </section>
 
     <!-- ===================================================================== -->
-    <!-- PARTE 2: CALENDARIO Y SELECCIÓN SIMPLIFICADA (APARTADO A + SALAS)     -->
+    <!-- PARTE 2: CALENDARIO Y CONTADORES                                      -->
     <!-- ===================================================================== -->
     <section id="part2Container" class="space-y-6">
 
-      <!-- Barra Superior: Ciudad + Tipos de Espectáculo A + Clasificación por Salas de Concierto -->
+      <!-- Contadores por tipo de espectáculo -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
+          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
+          <p data-stat="total" class="text-2xl font-extrabold text-white mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
+          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
+          <p data-stat="Conciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
+          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
+          <p data-stat="Teatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
+          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
+          <p data-stat="Cine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
+          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
+          <p data-stat="Exposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+        </div>
+      </div>
+
+      <!-- Calendario Visual (FullCalendar) -->
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800">
+          <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-300">
+            <span>🎵 <strong>Conciertos:</strong> coloreados según el <strong>TAG de su Sala</strong></span>
+            <span class="text-slate-600">·</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> Teatro</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500 inline-block"></span> Cine</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Exposiciones</span>
+          </div>
+          <span id="lastUpdatedBadge" class="text-xs text-slate-400">Sin actualizar aún</span>
+        </div>
+        <div id="calendarEl" class="min-h-[560px]"></div>
+      </div>
+
+      <!-- Registro de Búsqueda -->
+      <details id="aiLogsAccordion" class="rounded-2xl bg-slate-900/90 border border-slate-800 p-4 text-xs">
+        <summary class="cursor-pointer font-bold text-slate-300 flex items-center justify-between">
+          <span>📋 Registro de Búsqueda, Salas y Estilos detectados</span>
+          <span class="text-indigo-400">Ver detalle ▾</span>
+        </summary>
+        <div id="aiLogsList" class="mt-3 space-y-1 font-mono text-[11px] text-slate-400 max-h-48 overflow-y-auto bg-slate-950 p-3 rounded-xl border border-slate-800">
+          Pulsa "Actualizar Calendario" para buscar espectáculos...
+        </div>
+      </details>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PARTE 3: BÚSQUEDA DE EVENTOS                                          -->
+    <!-- ===================================================================== -->
+    <section id="part3Container" class="hidden space-y-6">
+      <!-- Contadores por tipo de espectáculo -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
+          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
+          <p data-stat="total" class="text-2xl font-extrabold text-white mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
+          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
+          <p data-stat="Conciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
+          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
+          <p data-stat="Teatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
+          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
+          <p data-stat="Cine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
+          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
+          <p data-stat="Exposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+        </div>
+      </div>
+
+      <!-- Lista de Eventos con TAG de Sala, Color y Enlace Directo -->
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h3 class="text-base font-extrabold text-white">🔗 Eventos del Calendario (con TAG de Sala y Enlace Directo)</h3>
+            <p class="text-xs text-slate-400">Cada concierto muestra el TAG y color de su sala junto con su enlace directo (Ir a Más info / Comprar entradas)</p>
+          </div>
+          <input id="searchEventsInput" oninput="renderEventsList()" type="text" placeholder="Buscar por evento o sala..." class="rounded-xl bg-slate-800 border border-slate-700 px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" />
+        </div>
+        <div id="eventsListContainer" class="space-y-2.5 max-h-96 overflow-y-auto pr-1"></div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PARTE 4: FILTROS (CIUDAD, ACTUALIZAR, ESPECTÁCULOS Y TAGS)            -->
+    <!-- ===================================================================== -->
+    <section id="part4Container" class="hidden space-y-6">
+      <!-- Contadores por tipo de espectáculo -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
+          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
+          <p data-stat="total" class="text-2xl font-extrabold text-white mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
+          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
+          <p data-stat="Conciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
+          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
+          <p data-stat="Teatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
+          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
+          <p data-stat="Cine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
+          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
+          <p data-stat="Exposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+        </div>
+      </div>
+
       <div class="rounded-2xl bg-slate-900/95 border border-slate-800 p-6 shadow-xl space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
           <div class="flex flex-wrap items-center gap-4">
@@ -234,7 +362,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
             <h2 class="text-base font-extrabold text-white flex items-center gap-2">
               <span>🎭</span>
-              <span>A. ESPECTÁCULOS — Tipos de espectáculo:</span>
+              <span>A Espectáculos</span>
             </h2>
             <div class="flex items-center gap-3 text-xs">
               <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
@@ -249,15 +377,10 @@
         <!-- CLASIFICACIÓN DE CONCIERTOS POR SALAS (TAG + COLOR) -->
         <div id="concertVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
-                <span>🎸</span>
-                <span>Salas de Conciertos detectadas (Clasificación por TAG y Color):</span>
-              </h3>
-              <p class="text-xs text-slate-400 mt-0.5">
-                Cada sala donde hay algún concierto tiene asignado su propio <strong>TAG</strong> y <strong>Color</strong> en el calendario. Haz clic en los TAGs para filtrar por salas:
-              </p>
-            </div>
+            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span>🎸</span>
+              <span>Salas de Conciertos</span>
+            </h3>
             <div class="flex items-center gap-3 text-xs">
               <button type="button" onclick="selectAllConcertVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
               <span class="text-slate-600">|</span>
@@ -271,15 +394,10 @@
         <!-- CLASIFICACIÓN DE CONCIERTOS POR ESTILOS MUSICALES (TAG + COLOR EXTRAÍDOS DE LA DESCRIPCIÓN) -->
         <div id="concertStylesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
-                <span>🎵</span>
-                <span>Estilos Musicales detectados en la descripción (Clasificación por TAG y Color):</span>
-              </h3>
-              <p class="text-xs text-slate-400 mt-0.5">
-                Estilos extraídos automáticamente de la descripción del concierto. Haz clic en uno o varios <strong>TAGs de Estilo</strong> para filtrar el calendario:
-              </p>
-            </div>
+            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span>🎵</span>
+              <span>Estilos Musicales</span>
+            </h3>
             <div class="flex items-center gap-3 text-xs">
               <button type="button" onclick="selectAllConcertStyles(true)" class="text-indigo-400 hover:underline font-semibold">Todos los estilos</button>
               <span class="text-slate-600">|</span>
@@ -293,15 +411,10 @@
         <!-- CLASIFICACIÓN DE CONCIERTOS POR FESTIVALES (TAG + COLOR) -->
         <div id="concertFestivalsPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
-                <span>🎪</span>
-                <span>Festivales detectados en esta ciudad (Clasificación por TAG y Color):</span>
-              </h3>
-              <p class="text-xs text-slate-400 mt-0.5">
-                Festivales filtrados para la ciudad seleccionada. Haz clic en los <strong>TAGs de Festival</strong> para filtrar el calendario:
-              </p>
-            </div>
+            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span>🎪</span>
+              <span>Festivales</span>
+            </h3>
             <div class="flex items-center gap-3 text-xs">
               <button type="button" onclick="selectAllConcertFestivals(true)" class="text-indigo-400 hover:underline font-semibold">Todos los festivales</button>
               <span class="text-slate-600">|</span>
@@ -315,15 +428,10 @@
         <!-- CLASIFICACIÓN DE TEATROS POR SALAS / LUGARES (TAG + COLOR) -->
         <div id="theaterVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
-                <span>🎭</span>
-                <span>Salas de Teatro detectadas (Clasificación por TAG y Color):</span>
-              </h3>
-              <p class="text-xs text-slate-400 mt-0.5">
-                Cada teatro o espacio escénico tiene asignado su propio <strong>TAG</strong> y <strong>Color</strong>. Haz clic para filtrar obras de teatro:
-              </p>
-            </div>
+            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span>🎭</span>
+              <span>Salas de Teatro</span>
+            </h3>
             <div class="flex items-center gap-3 text-xs">
               <button type="button" onclick="selectAllTheaterVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
               <span class="text-slate-600">|</span>
@@ -337,15 +445,10 @@
         <!-- CLASIFICACIÓN DE EXPOSICIONES POR SALAS / MUSEOS (TAG + COLOR) -->
         <div id="exhibitionVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
-                <span>🖼️</span>
-                <span>Salas y Museos de Exposiciones detectados (Clasificación por TAG y Color):</span>
-              </h3>
-              <p class="text-xs text-slate-400 mt-0.5">
-                Cada museo o sala de exposiciones tiene asignado su propio <strong>TAG</strong> y <strong>Color</strong>. Haz clic para filtrar exposiciones:
-              </p>
-            </div>
+            <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span>🖼️</span>
+              <span>Salas y Museos</span>
+            </h3>
             <div class="flex items-center gap-3 text-xs">
               <button type="button" onclick="selectAllExhibitionVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
               <span class="text-slate-600">|</span>
@@ -356,69 +459,6 @@
           <div id="exhibitionVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
         </div>
       </div>
-
-      <!-- Contadores por tipo de espectáculo -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
-          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
-          <p id="statTotalEvents" class="text-2xl font-extrabold text-white mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
-          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
-          <p id="statConciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
-          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
-          <p id="statTeatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
-          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
-          <p id="statCine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
-          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
-          <p id="statExposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
-        </div>
-      </div>
-
-      <!-- Calendario Visual (FullCalendar) -->
-      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800">
-          <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-300">
-            <span>🎵 <strong>Conciertos:</strong> coloreados según el <strong>TAG de su Sala</strong></span>
-            <span class="text-slate-600">·</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> Teatro</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500 inline-block"></span> Cine</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Exposiciones</span>
-          </div>
-          <span id="lastUpdatedBadge" class="text-xs text-slate-400">Sin actualizar aún</span>
-        </div>
-        <div id="calendarEl" class="min-h-[560px]"></div>
-      </div>
-
-      <!-- Registro de Búsqueda -->
-      <details id="aiLogsAccordion" class="rounded-2xl bg-slate-900/90 border border-slate-800 p-4 text-xs">
-        <summary class="cursor-pointer font-bold text-slate-300 flex items-center justify-between">
-          <span>📋 Registro de Búsqueda, Salas y Estilos detectados</span>
-          <span class="text-indigo-400">Ver detalle ▾</span>
-        </summary>
-        <div id="aiLogsList" class="mt-3 space-y-1 font-mono text-[11px] text-slate-400 max-h-48 overflow-y-auto bg-slate-950 p-3 rounded-xl border border-slate-800">
-          Pulsa "Actualizar Calendario" para buscar espectáculos...
-        </div>
-      </details>
-
-      <!-- Lista de Eventos con TAG de Sala, Color y Enlace Directo -->
-      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <div>
-            <h3 class="text-base font-extrabold text-white">🔗 Eventos del Calendario (con TAG de Sala y Enlace Directo)</h3>
-            <p class="text-xs text-slate-400">Cada concierto muestra el TAG y color de su sala junto con su enlace directo (Ir a Más info / Comprar entradas)</p>
-          </div>
-          <input id="searchEventsInput" oninput="renderEventsList()" type="text" placeholder="Buscar por evento o sala..." class="rounded-xl bg-slate-800 border border-slate-700 px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" />
-        </div>
-        <div id="eventsListContainer" class="space-y-2.5 max-h-96 overflow-y-auto pr-1"></div>
-      </div>
-
     </section>
   </main>
 
@@ -447,39 +487,48 @@
 
   <!-- Modal de Detalle de Evento al hacer clic en el Calendario -->
   <div id="eventModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-    <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl space-y-4">
-      <div class="flex items-start justify-between gap-3">
-        <div class="flex flex-wrap items-center gap-2">
-          <span id="modalBadge" class="text-xs font-bold uppercase px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300">Espectáculo</span>
-          <span id="modalVenueTagBadge" class="text-xs font-extrabold uppercase px-2.5 py-1 rounded-full text-white">SALA</span>
+    <div class="w-full max-w-lg h-[420px] rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl flex flex-col justify-between">
+      <div class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="modalBadge" class="text-xs font-bold uppercase px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300">Espectáculo</span>
+            <span id="modalVenueTagBadge" class="text-xs font-extrabold uppercase px-2.5 py-1 rounded-full text-white">SALA</span>
+          </div>
+          <button onclick="closeEventModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
         </div>
-        <button onclick="closeEventModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+        <h3 id="modalTitle" class="text-lg font-extrabold text-white leading-snug">Título del Evento</h3>
+        <div class="space-y-2 text-sm text-slate-300 bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
+          <p><strong>📅 Fecha y Hora:</strong> <span id="modalDateTime"></span></p>
+          <p><strong>📍 Sala / Lugar:</strong> <span id="modalVenue"></span></p>
+          <p><strong>💶 Precio:</strong> <span id="modalPrice"></span></p>
+        </div>
       </div>
-      <h3 id="modalTitle" class="text-lg font-extrabold text-white leading-snug">Título del Evento</h3>
-      <div class="space-y-2 text-sm text-slate-300 bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
-        <p><strong>📅 Fecha y Hora:</strong> <span id="modalDateTime"></span></p>
-        <p><strong>📍 Sala / Lugar:</strong> <span id="modalVenue"></span></p>
-        <p><strong>💶 Precio:</strong> <span id="modalPrice"></span></p>
-      </div>
-      <div class="pt-2 flex flex-wrap items-center justify-end gap-2.5">
-        <button onclick="closeEventModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">Cerrar</button>
-        <a id="modalAddGoogleCalBtn" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg shadow-emerald-600/30 flex items-center gap-1.5">
-          <span>📅 Añadir al calendario</span>
-        </a>
-        <a id="modalRefLink" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-indigo-600/30 flex items-center gap-1.5">
-          <span>Ir a la Fuente</span>
-          <span>↗</span>
-        </a>
+      <div class="pt-4 border-t border-slate-800/80 space-y-2.5 shrink-0">
+        <div class="grid grid-cols-[116px_1fr_116px] items-center gap-2">
+          <button id="modalPrevBtn" type="button" onclick="navigateModalEvent(-1)" class="w-full px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-slate-200 border border-slate-700 transition whitespace-nowrap text-center">⬅️ Anterior</button>
+          <span id="modalNavPos" class="text-[11px] font-mono tabular-nums text-slate-400 text-center"></span>
+          <button id="modalNextBtn" type="button" onclick="navigateModalEvent(1)" class="w-full px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-xs font-bold text-slate-200 border border-slate-700 transition whitespace-nowrap text-center">Siguiente ➡️</button>
+        </div>
+        <div class="grid grid-cols-[84px_1fr_168px] items-center gap-2">
+          <button onclick="closeEventModal()" class="w-full px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 whitespace-nowrap text-center">Cerrar</button>
+          <a id="modalAddGoogleCalBtn" href="#" target="_blank" rel="noopener noreferrer" class="w-full px-3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <span>📅 Añadir al calendario</span>
+          </a>
+          <a id="modalRefLink" href="#" target="_blank" rel="noopener noreferrer" class="w-full px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-1.5 whitespace-nowrap">
+            <span>Ir a la Fuente</span>
+            <span>↗</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
     const SHOW_TYPES_META = [
-      { id: 'Conciertos', label: 'Conciertos', icon: '🎵', desc: 'Clasificados por Sala (TAG + Color)' },
-      { id: 'Teatro', label: 'Teatro', icon: '🎭', desc: 'Obras escénicas, musicales, comedia y drama' },
-      { id: 'Cine', label: 'Cine', icon: '🎬', desc: 'Cartelera, filmoteca y proyecciones' },
-      { id: 'Exposiciones', label: 'Exposiciones', icon: '🖼️', desc: 'Museos, galerías y muestras' }
+      { id: 'Conciertos', label: 'Conciertos', icon: '🎵' },
+      { id: 'Teatro', label: 'Teatro', icon: '🎭' },
+      { id: 'Cine', label: 'Cine', icon: '🎬' },
+      { id: 'Exposiciones', label: 'Expo', icon: '🖼️' }
     ];
 
     let appState = null;
@@ -494,6 +543,8 @@
     let activeExhibitionVenueTags = new Set();
     // Set of active festival TAGs in UI filter (empty = all active)
     let activeFestivalTags = new Set();
+    let orderedVisibleEvents = [];
+    let currentModalEventIndex = -1;
 
     function renderShowTypeSelectors(selectedList) {
       const container = document.getElementById('containerShowTypes');
@@ -502,13 +553,10 @@
         return `
           <label class="show-card-checkbox cursor-pointer select-none block">
             <input type="checkbox" name="showTypes" value="${item.id}" onchange="onShowTypeCheckboxChange()" ${isChecked ? 'checked' : ''} class="sr-only" />
-            <div class="rounded-xl bg-slate-800/60 border border-slate-700 p-4 transition flex items-center justify-between gap-3 hover:border-slate-500">
-              <div class="flex items-center gap-3">
-                <span class="text-2xl">${item.icon}</span>
-                <div>
-                  <p class="text-sm font-extrabold text-white">${item.label}</p>
-                  <p class="text-[11px] text-slate-400">${item.desc}</p>
-                </div>
+            <div class="rounded-xl bg-slate-800/60 border border-slate-700 p-3.5 transition flex items-center justify-between gap-3 hover:border-slate-500">
+              <div class="flex items-center gap-2.5">
+                <span class="text-xl">${item.icon}</span>
+                <p class="text-sm font-extrabold text-white">${item.label}</p>
               </div>
               <span class="check-indicator w-6 h-6 rounded-lg border border-slate-600 bg-slate-900 flex items-center justify-center text-xs font-bold text-transparent transition">
                 ✓
@@ -806,24 +854,21 @@
     }
 
     function switchPart(partNum) {
-      const p1 = document.getElementById('part1Container');
-      const p2 = document.getElementById('part2Container');
-      const b1 = document.getElementById('tabBtnPart1');
-      const b2 = document.getElementById('tabBtnPart2');
+      const activeCls = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30';
+      const inactiveCls = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white';
 
-      if (partNum === 1) {
-        p1.classList.remove('hidden');
-        p2.classList.add('hidden');
-        b1.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30';
-        b2.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white';
-      } else {
-        p1.classList.add('hidden');
-        p2.classList.remove('hidden');
-        b2.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30';
-        b1.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white';
-        if (calendarInstance) {
-          setTimeout(() => calendarInstance.updateSize(), 50);
-        }
+      [1, 2, 3, 4].forEach(n => {
+        const container = document.getElementById(`part${n}Container`);
+        const btn = document.getElementById(`tabBtnPart${n}`);
+        const isActive = n === partNum;
+        if (container) container.classList.toggle('hidden', !isActive);
+        if (btn) btn.className = isActive ? activeCls : inactiveCls;
+      });
+
+      if (partNum === 2 && calendarInstance) {
+        setTimeout(() => calendarInstance.updateSize(), 50);
+      } else if (partNum === 3) {
+        renderEventsList();
       }
     }
 
@@ -895,6 +940,7 @@
         locale: 'es',
         firstDay: 1,
         height: 'auto',
+        eventOrder: 'sortKey,title',
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
@@ -953,16 +999,32 @@
           }
         }
         return true;
+      }).sort((a, b) => {
+        const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
+        const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
+        if (ka !== kb) return ka.localeCompare(kb);
+        return (a.title || '').localeCompare(b.title || '');
       });
     }
 
     function refreshCalendarAndStats() {
       const events = getVisibleEvents();
-      document.getElementById('statTotalEvents').textContent = events.length;
-      document.getElementById('statConciertos').textContent = events.filter(e => e.subType === 'Conciertos').length;
-      document.getElementById('statTeatro').textContent = events.filter(e => e.subType === 'Teatro').length;
-      document.getElementById('statCine').textContent = events.filter(e => e.subType === 'Cine').length;
-      document.getElementById('statExposiciones').textContent = events.filter(e => e.subType === 'Exposiciones').length;
+      events.forEach((ev, idx) => {
+        ev._modalIndex = idx;
+      });
+      orderedVisibleEvents = events;
+      const statCounts = {
+        total: events.length,
+        Conciertos: events.filter(e => e.subType === 'Conciertos').length,
+        Teatro: events.filter(e => e.subType === 'Teatro').length,
+        Cine: events.filter(e => e.subType === 'Cine').length,
+        Exposiciones: events.filter(e => e.subType === 'Exposiciones').length
+      };
+      Object.entries(statCounts).forEach(([key, val]) => {
+        document.querySelectorAll(`[data-stat="${key}"]`).forEach(el => {
+          el.textContent = val;
+        });
+      });
 
       if (appState.lastUpdateMeta?.updatedAt) {
         const dt = new Date(appState.lastUpdateMeta.updatedAt);
@@ -978,19 +1040,21 @@
 
       if (calendarInstance) {
         calendarInstance.removeAllEvents();
-        const fcEvents = events.map(ev => {
+        const fcEvents = events.map((ev, idx) => {
           const color = getEventColor(ev);
           const groupOrTitle = (ev.artistName || ev.title || '').trim();
           const styleParen = ev.musicStyle ? ` (${ev.musicStyle})` : '';
           const timePart = ev.time ? ` ${ev.time}` : '';
+          const sortKey = `${ev.date || '9999-99-99'} ${(ev.time || '23:59').padStart(5, '0')}`;
           return {
-            id: ev.id,
+            id: String(idx),
             title: `${groupOrTitle}${styleParen}${timePart}`,
             start: ev.date,
             url: ev.url,
             backgroundColor: color,
             borderColor: color,
-            extendedProps: ev
+            sortKey,
+            extendedProps: { ...ev, _modalIndex: idx }
           };
         });
         calendarInstance.addEventSource(fcEvents);
@@ -1040,10 +1104,15 @@
               </div>
               <p class="text-sm font-bold text-white truncate">${ev.title}</p>
             </div>
-            <a href="${ev.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 px-3.5 py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-xs font-bold transition flex items-center gap-1">
-              <span>${ev.actionLabel || (ev.isTicketUrl ? 'Comprar entradas' : 'Ir a Más info')}</span>
-              <span>↗</span>
-            </a>
+            <div class="shrink-0 flex items-center gap-2">
+              <a href="${buildGoogleCalendarUrl(ev)}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-200 hover:text-white border border-emerald-500/40 text-xs font-bold transition flex items-center gap-1 whitespace-nowrap">
+                <span>📅 Añadir al calendario</span>
+              </a>
+              <a href="${ev.url}" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-xs font-bold transition flex items-center gap-1 whitespace-nowrap">
+                <span>${ev.actionLabel || (ev.isTicketUrl ? 'Comprar entradas' : 'Ir a Más info')}</span>
+                <span>↗</span>
+              </a>
+            </div>
           </div>
         `;
       }).join('');
@@ -1078,6 +1147,38 @@
     }
 
     function openEventModal(ev) {
+      if (orderedVisibleEvents.length === 0) {
+        orderedVisibleEvents = getVisibleEvents();
+        orderedVisibleEvents.forEach((item, idx) => {
+          item._modalIndex = idx;
+        });
+      }
+      if (typeof ev._modalIndex === 'number' && orderedVisibleEvents[ev._modalIndex]) {
+        currentModalEventIndex = ev._modalIndex;
+      } else {
+        currentModalEventIndex = orderedVisibleEvents.findIndex(
+          item =>
+            item === ev ||
+            (item.date === ev.date &&
+              item.time === ev.time &&
+              item.title === ev.title &&
+              item.url === ev.url)
+        );
+      }
+
+      const prevBtn = document.getElementById('modalPrevBtn');
+      const nextBtn = document.getElementById('modalNextBtn');
+      const posEl = document.getElementById('modalNavPos');
+      if (currentModalEventIndex >= 0) {
+        prevBtn.disabled = currentModalEventIndex <= 0;
+        nextBtn.disabled = currentModalEventIndex >= orderedVisibleEvents.length - 1;
+        posEl.textContent = `${currentModalEventIndex + 1}/${orderedVisibleEvents.length}`;
+      } else {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        posEl.textContent = '';
+      }
+
       const color = getEventColor(ev);
       document.getElementById('modalBadge').textContent = ev.musicStyle ? `${ev.subType} · (${ev.musicStyle})` : ev.subType;
       const vBadge = document.getElementById('modalVenueTagBadge');
@@ -1099,6 +1200,14 @@
       const modal = document.getElementById('eventModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+    }
+
+    function navigateModalEvent(delta) {
+      if (currentModalEventIndex < 0) return;
+      const nextIdx = currentModalEventIndex + delta;
+      if (nextIdx >= 0 && nextIdx < orderedVisibleEvents.length) {
+        openEventModal(orderedVisibleEvents[nextIdx]);
+      }
     }
 
     function closeEventModal() {
