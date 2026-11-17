@@ -1,0 +1,157 @@
+{
+  "appConfig": {
+    "projectName": "go2enjoy.com",
+    "ownerEmail": "",
+    "activeCity": "Zaragoza",
+    "cities": {
+      "Zaragoza": {
+        "name": "Zaragoza",
+        "urls": [
+          "https://vivezaragoza.es/",
+          "https://aragonenvivo.com/",
+          "https://www.locozaragozadiscoteca.com/",
+          "https://conciertos.club/zaragoza"
+        ]
+      },
+      "Madrid": {
+        "name": "Madrid",
+        "urls": [
+          "https://www.esmadrid.com/agenda-exposiciones-madrid",
+          "https://www.esmadrid.com/agenda-musica-madrid",
+          "https://www.esmadrid.com/agenda-teatro-madrid",
+          "https://www.esmadrid.com/agenda-musicales",
+          "https://madridenvivo.com/",
+          "https://conciertos.club/madrid"
+        ]
+      },
+      "Barcelona": {
+        "name": "Barcelona",
+        "urls": [
+          "https://guia.barcelona.cat/es",
+          "https://conciertos.club/barcelona"
+        ]
+      },
+      "VALENCIA": {
+        "name": "VALENCIA",
+        "urls": [
+          "https://conciertos.club/valencia"
+        ]
+      },
+      "Bilbao Bizkaia": {
+        "name": "Bilbao Bizkaia",
+        "urls": [
+          "https://conciertos.club/bilbao-bizkaia"
+        ]
+      },
+      "Murcia": {
+        "name": "Murcia",
+        "urls": [
+          "https://conciertos.club/murcia"
+        ]
+      },
+      "Alicante": {
+        "name": "Alicante",
+        "urls": [
+          "https://conciertos.club/alicante"
+        ]
+      },
+      "Baleares": {
+        "name": "Baleares",
+        "urls": [
+          "https://conciertos.club/baleares"
+        ]
+      },
+      "Valladolid": {
+        "name": "Valladolid",
+        "urls": [
+          "https://conciertos.club/valladolid"
+        ]
+      },
+      "Asturias": {
+        "name": "Asturias",
+        "urls": [
+          "https://conciertos.club/asturias"
+        ]
+      },
+      "A Coruña": {
+        "name": "A Coruña",
+        "urls": [
+          "https://conciertos.club/a-coruna"
+        ]
+      },
+      "Pontevedra Vigo": {
+        "name": "Pontevedra Vigo",
+        "urls": [
+          "https://conciertos.club/pontevedra-vigo"
+        ]
+      },
+      "Malaga": {
+        "name": "Malaga",
+        "urls": [
+          "https://conciertos.club/malaga"
+        ]
+      },
+      "Almeria": {
+        "name": "Almeria",
+        "urls": [
+          "https://conciertos.club/almeria"
+        ]
+      },
+      "Cordoba": {
+        "name": "Cordoba",
+        "urls": [
+          "https://conciertos.club/cordoba"
+        ]
+      },
+      "Jaen": {
+        "name": "Jaen",
+        "urls": [
+          "https://conciertos.club/jaen"
+        ]
+      },
+      "Sevilla": {
+        "name": "Sevilla",
+        "urls": [
+          "https://www.escenaensevilla.es/"
+        ]
+      },
+      "Granada": {
+        "name": "Granada",
+        "urls": [
+          "https://www.conciertosengranada.es/"
+        ]
+      },
+      "Salamanca": {
+        "name": "Salamanca",
+        "urls": [
+          "https://conciertos.club/salamanca"
+        ]
+      }
+    },
+    "festivalUrls": [
+      "https://inverfest.com/conciertos/",
+      "https://inverfest.com/zgz/",
+      "https://negufest.com/"
+    ]
+  },
+  "userProfile": {
+    "email": "",
+    "selectedCity": "Bilbao Bizkaia",
+    "preferences": {
+      "A": {
+        "showTypes": [
+          "Conciertos"
+        ],
+        "selectedVenues": []
+      }
+    }
+  },
+  "concertVenues": [],
+  "calendarEvents": [],
+  "lastUpdateMeta": null,
+  "concertStyles": [],
+  "theaterVenues": [],
+  "exhibitionVenues": [],
+  "cityCache": {},
+  "concertFestivals": []
+}

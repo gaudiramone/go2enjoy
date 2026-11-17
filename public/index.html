@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>go2enjoy.com — Calendario Inteligente de Espectáculos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+    }
+    .fc {
+      --fc-border-color: rgba(148, 163, 184, 0.18);
+      --fc-page-bg-color: transparent;
+      --fc-neutral-bg-color: rgba(30, 41, 59, 0.6);
+      --fc-list-event-hover-bg-color: rgba(51, 65, 85, 0.6);
+      --fc-today-bg-color: rgba(99, 102, 241, 0.14);
+      color: #e2e8f0;
+    }
+    .fc .fc-toolbar-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #f8fafc;
+      text-transform: capitalize;
+    }
+    .fc .fc-button-primary {
+      background-color: #1e293b;
+      border-color: #334155;
+      color: #e2e8f0;
+      font-weight: 600;
+      text-transform: capitalize;
+      border-radius: 0.5rem;
+      padding: 0.4rem 0.8rem;
+    }
+    .fc .fc-button-primary:hover {
+      background-color: #334155;
+      border-color: #475569;
+    }
+    .fc .fc-button-primary:not(:disabled).fc-button-active {
+      background-color: #6366f1;
+      border-color: #6366f1;
+      color: #fff;
+    }
+    .fc-daygrid-event {
+      border-radius: 6px;
+      padding: 2px 5px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease;
+    }
+    .fc-daygrid-event:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    }
+    .show-card-checkbox input:checked + div {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
+      border-color: #818cf8;
+      box-shadow: 0 0 18px rgba(99, 102, 241, 0.28);
+    }
+    .show-card-checkbox input:checked + div .check-indicator {
+      background-color: #6366f1;
+      border-color: #818cf8;
+      color: white;
+    }
+    .venue-tag-pill {
+      transition: all 0.15s ease;
+    }
+    .venue-tag-pill.inactive {
+      opacity: 0.35;
+      filter: grayscale(60%);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Top Navigation Header -->
+  <header class="sticky top-0 z-30 border-b border-slate-800 bg-slate-900/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 font-extrabold text-white text-lg">
+          G2
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">go2enjoy.com</span>
+            <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Salas & TAGs por Color</span>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+            <span>Agenda cultural por ciudad · Usuario Google:</span>
+            <span id="headerUserEmail" class="text-indigo-300 font-bold">Sin sesión</span>
+            <button id="btnLogoutGoogle" onclick="logoutGoogleUser()" class="hidden px-2 py-0.5 rounded-md bg-rose-500/15 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-[11px] font-bold transition">
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs for the 2 Separated Parts -->
+      <div class="flex items-center gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70">
+        <button id="tabBtnPart1" onclick="switchPart(1)" class="px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
+          <span>⚙️</span>
+          <span>1. Configuración de la APP</span>
+        </button>
+        <button id="tabBtnPart2" onclick="switchPart(2)" class="px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30">
+          <span>📅</span>
+          <span>2. Calendario y Espectáculos (A)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
+
+    <!-- ===================================================================== -->
+    <!-- PARTE 1: CONFIGURACIÓN DE LA APP (Ciudades, URLs concretas e IA)      -->
+    <!-- ===================================================================== -->
+    <section id="part1Container" class="hidden space-y-6">
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-6 shadow-xl">
+        <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-800 pb-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Parte 1 · Configuración de la APP</span>
+            <h1 class="text-2xl font-extrabold text-white mt-1">Ciudades y Webs de Referencia</h1>
+          </div>
+          <button onclick="switchPart(2)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition">
+            Ir al Calendario de Usuario →
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+          <div class="lg:col-span-5 space-y-4">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">Ciudades Disponibles</h2>
+            <div id="citiesListContainer" class="space-y-3"></div>
+          </div>
+
+          <div class="lg:col-span-7 rounded-xl bg-slate-800/50 border border-slate-700/70 p-5 space-y-4">
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <span>🌐</span> Añadir o Editar Ciudad
+            </h2>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Nombre de la Ciudad</label>
+              <input id="cfgCityName" type="text" placeholder="Ej: Zaragoza, Huesca, Teruel, Madrid..." class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+                URLs principales para esta ciudad (una por línea)
+              </label>
+              <textarea id="cfgCityUrls" rows="4" placeholder="https://www.locozaragozadiscoteca.com/&#10;https://salalopez.com/eventos/&#10;https://www.rockandbluescafe.com/conciertos/" class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2.5 text-sm text-indigo-200 font-mono focus:outline-none focus:border-indigo-500"></textarea>
+            </div>
+
+            <div class="pt-2 flex items-center justify-between gap-3">
+              <span id="cfgSaveFeedback" class="text-xs font-semibold text-emerald-400"></span>
+              <button onclick="saveCityConfig()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold shadow-lg shadow-indigo-600/25 transition">
+                💾 Guardar Ciudad
+              </button>
+            </div>
+
+            <!-- Apartado General: Festivales (multi-ciudad) -->
+            <div class="mt-4 pt-4 border-t border-slate-700/80 space-y-2.5">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <label for="cfgFestivalUrls" class="text-xs font-bold uppercase tracking-wider text-pink-300">🎪 Festivales (URLs generales multi-ciudad, una por línea)</label>
+                <span id="cfgFestSaveFeedback" class="text-xs font-semibold text-emerald-400"></span>
+              </div>
+              <p class="text-[11px] text-slate-400">Se escanean siempre y se muestran en el calendario únicamente los conciertos que suceden en la ciudad seleccionada.</p>
+              <textarea id="cfgFestivalUrls" rows="2" placeholder="https://ejemplo-festival.com/..." class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2 text-xs text-pink-200 font-mono focus:outline-none focus:border-pink-500"></textarea>
+              <div class="flex justify-end">
+                <button type="button" onclick="saveFestivalUrls()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold shadow-lg shadow-pink-600/25 transition">💾 Guardar Festivales</button>
+              </div>
+            </div>
+
+            <!-- Caché diaria en Google Drive (1 único fichero go2enjoy_cache.json) -->
+            <div class="mt-4 pt-4 border-t border-slate-700/80 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-300">☁️ Google Drive (1 único fichero diario: go2enjoy_cache.json)</h3>
+                <span id="driveStatusBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-700">Caché local diaria activa</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <input id="cfgGoogleClientId" type="text" placeholder="Opcional: Google OAuth Client ID (xxxx.apps.googleusercontent.com)" class="flex-1 min-w-[220px] rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:border-emerald-500" />
+                <button type="button" onclick="saveGoogleClientId()" class="px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold transition">Guardar Client ID</button>
+                <button type="button" onclick="connectGoogleDrive()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition">☁️ Conectar Drive</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PARTE 2: CALENDARIO Y SELECCIÓN SIMPLIFICADA (APARTADO A + SALAS)     -->
+    <!-- ===================================================================== -->
+    <section id="part2Container" class="space-y-6">
+
+      <!-- Barra Superior: Ciudad + Tipos de Espectáculo A + Clasificación por Salas de Concierto -->
+      <div class="rounded-2xl bg-slate-900/95 border border-slate-800 p-6 shadow-xl space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-4">
+          <div class="flex flex-wrap items-center gap-4">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1">📍 Ciudad a consultar</label>
+              <div class="flex items-center gap-2">
+                <select id="userCitySelect" onchange="onUserCityChange()" class="rounded-xl bg-slate-950 border border-slate-700 px-4 py-2.5 text-sm font-bold text-white focus:outline-none focus:border-indigo-500"></select>
+                <button onclick="switchPart(1)" title="Añadir otra ciudad" class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 border border-slate-700 transition">
+                  + Otra ciudad
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones Actualizar -->
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button id="btnUpdateCalendar" onclick="triggerCalendarUpdate(false)" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-extrabold text-sm shadow-xl shadow-indigo-600/30 flex items-center gap-2.5 transition transform active:scale-95">
+              <svg id="updateSpinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+              <span id="btnUpdateIcon">🔄</span>
+              <span id="btnUpdateText">Actualizar Calendario</span>
+            </button>
+            <button type="button" onclick="triggerCalendarUpdate(true)" title="Ignora la caché de hoy y vuelve a consultar internet" class="px-4 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-bold transition">
+              ⚡ Forzar recarga
+            </button>
+          </div>
+        </div>
+
+        <!-- APARTADO A: ESPECTÁCULOS (Conciertos, Teatro, Cine, Exposiciones) -->
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+              <span>🎭</span>
+              <span>A. ESPECTÁCULOS — Tipos de espectáculo:</span>
+            </h2>
+            <div class="flex items-center gap-3 text-xs">
+              <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
+              <span class="text-slate-600">|</span>
+              <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
+            </div>
+          </div>
+
+          <div id="containerShowTypes" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
+        </div>
+
+        <!-- CLASIFICACIÓN DE CONCIERTOS POR SALAS (TAG + COLOR) -->
+        <div id="concertVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                <span>🎸</span>
+                <span>Salas de Conciertos detectadas (Clasificación por TAG y Color):</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Cada sala donde hay algún concierto tiene asignado su propio <strong>TAG</strong> y <strong>Color</strong> en el calendario. Haz clic en los TAGs para filtrar por salas:
+              </p>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <button type="button" onclick="selectAllConcertVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
+              <span class="text-slate-600">|</span>
+              <button type="button" onclick="selectAllConcertVenues(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
+            </div>
+          </div>
+
+          <div id="concertVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- CLASIFICACIÓN DE CONCIERTOS POR ESTILOS MUSICALES (TAG + COLOR EXTRAÍDOS DE LA DESCRIPCIÓN) -->
+        <div id="concertStylesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                <span>🎵</span>
+                <span>Estilos Musicales detectados en la descripción (Clasificación por TAG y Color):</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Estilos extraídos automáticamente de la descripción del concierto. Haz clic en uno o varios <strong>TAGs de Estilo</strong> para filtrar el calendario:
+              </p>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <button type="button" onclick="selectAllConcertStyles(true)" class="text-indigo-400 hover:underline font-semibold">Todos los estilos</button>
+              <span class="text-slate-600">|</span>
+              <button type="button" onclick="selectAllConcertStyles(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
+            </div>
+          </div>
+
+          <div id="concertStylesTagsContainer" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- CLASIFICACIÓN DE CONCIERTOS POR FESTIVALES (TAG + COLOR) -->
+        <div id="concertFestivalsPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                <span>🎪</span>
+                <span>Festivales detectados en esta ciudad (Clasificación por TAG y Color):</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Festivales filtrados para la ciudad seleccionada. Haz clic en los <strong>TAGs de Festival</strong> para filtrar el calendario:
+              </p>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <button type="button" onclick="selectAllConcertFestivals(true)" class="text-indigo-400 hover:underline font-semibold">Todos los festivales</button>
+              <span class="text-slate-600">|</span>
+              <button type="button" onclick="selectAllConcertFestivals(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
+            </div>
+          </div>
+
+          <div id="concertFestivalsTagsContainer" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- CLASIFICACIÓN DE TEATROS POR SALAS / LUGARES (TAG + COLOR) -->
+        <div id="theaterVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                <span>🎭</span>
+                <span>Salas de Teatro detectadas (Clasificación por TAG y Color):</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Cada teatro o espacio escénico tiene asignado su propio <strong>TAG</strong> y <strong>Color</strong>. Haz clic para filtrar obras de teatro:
+              </p>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <button type="button" onclick="selectAllTheaterVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
+              <span class="text-slate-600">|</span>
+              <button type="button" onclick="selectAllTheaterVenues(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
+            </div>
+          </div>
+
+          <div id="theaterVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- CLASIFICACIÓN DE EXPOSICIONES POR SALAS / MUSEOS (TAG + COLOR) -->
+        <div id="exhibitionVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                <span>🖼️</span>
+                <span>Salas y Museos de Exposiciones detectados (Clasificación por TAG y Color):</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Cada museo o sala de exposiciones tiene asignado su propio <strong>TAG</strong> y <strong>Color</strong>. Haz clic para filtrar exposiciones:
+              </p>
+            </div>
+            <div class="flex items-center gap-3 text-xs">
+              <button type="button" onclick="selectAllExhibitionVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
+              <span class="text-slate-600">|</span>
+              <button type="button" onclick="selectAllExhibitionVenues(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
+            </div>
+          </div>
+
+          <div id="exhibitionVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <!-- Contadores por tipo de espectáculo -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
+          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
+          <p id="statTotalEvents" class="text-2xl font-extrabold text-white mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
+          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
+          <p id="statConciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
+          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
+          <p id="statTeatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
+          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
+          <p id="statCine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+        </div>
+        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
+          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
+          <p id="statExposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+        </div>
+      </div>
+
+      <!-- Calendario Visual (FullCalendar) -->
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800">
+          <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-300">
+            <span>🎵 <strong>Conciertos:</strong> coloreados según el <strong>TAG de su Sala</strong></span>
+            <span class="text-slate-600">·</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> Teatro</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500 inline-block"></span> Cine</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Exposiciones</span>
+          </div>
+          <span id="lastUpdatedBadge" class="text-xs text-slate-400">Sin actualizar aún</span>
+        </div>
+        <div id="calendarEl" class="min-h-[560px]"></div>
+      </div>
+
+      <!-- Registro de Búsqueda -->
+      <details id="aiLogsAccordion" class="rounded-2xl bg-slate-900/90 border border-slate-800 p-4 text-xs">
+        <summary class="cursor-pointer font-bold text-slate-300 flex items-center justify-between">
+          <span>📋 Registro de Búsqueda, Salas y Estilos detectados</span>
+          <span class="text-indigo-400">Ver detalle ▾</span>
+        </summary>
+        <div id="aiLogsList" class="mt-3 space-y-1 font-mono text-[11px] text-slate-400 max-h-48 overflow-y-auto bg-slate-950 p-3 rounded-xl border border-slate-800">
+          Pulsa "Actualizar Calendario" para buscar espectáculos...
+        </div>
+      </details>
+
+      <!-- Lista de Eventos con TAG de Sala, Color y Enlace Directo -->
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <div>
+            <h3 class="text-base font-extrabold text-white">🔗 Eventos del Calendario (con TAG de Sala y Enlace Directo)</h3>
+            <p class="text-xs text-slate-400">Cada concierto muestra el TAG y color de su sala junto con su enlace directo (Ir a Más info / Comprar entradas)</p>
+          </div>
+          <input id="searchEventsInput" oninput="renderEventsList()" type="text" placeholder="Buscar por evento o sala..." class="rounded-xl bg-slate-800 border border-slate-700 px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" />
+        </div>
+        <div id="eventsListContainer" class="space-y-2.5 max-h-96 overflow-y-auto pr-1"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Modal de Login de Usuario Google al arrancar -->
+  <div id="googleLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/90 backdrop-blur-md p-4">
+    <form onsubmit="submitGoogleLogin(event)" class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl space-y-5">
+      <div class="flex items-center gap-3">
+        <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-extrabold text-white text-lg">G</div>
+        <div>
+          <h2 class="text-lg font-extrabold text-white">Iniciar sesión con Google</h2>
+          <p class="text-xs text-slate-400">Se usará para guardar eventos en tu Google Calendar y para las consultas de IA.</p>
+        </div>
+      </div>
+
+      <div>
+        <label for="loginGmailInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">Usuario de Google (Gmail)</label>
+        <input id="loginGmailInput" type="email" required placeholder="tuusuario@gmail.com" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+        <p id="loginErrorMsg" class="hidden text-xs text-rose-400 mt-1.5 font-semibold"></p>
+      </div>
+
+      <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-extrabold shadow-lg shadow-indigo-600/30 transition">
+        Entrar con este usuario Google →
+      </button>
+    </form>
+  </div>
+
+  <!-- Modal de Detalle de Evento al hacer clic en el Calendario -->
+  <div id="eventModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+    <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="modalBadge" class="text-xs font-bold uppercase px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300">Espectáculo</span>
+          <span id="modalVenueTagBadge" class="text-xs font-extrabold uppercase px-2.5 py-1 rounded-full text-white">SALA</span>
+        </div>
+        <button onclick="closeEventModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+      <h3 id="modalTitle" class="text-lg font-extrabold text-white leading-snug">Título del Evento</h3>
+      <div class="space-y-2 text-sm text-slate-300 bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
+        <p><strong>📅 Fecha y Hora:</strong> <span id="modalDateTime"></span></p>
+        <p><strong>📍 Sala / Lugar:</strong> <span id="modalVenue"></span></p>
+        <p><strong>💶 Precio:</strong> <span id="modalPrice"></span></p>
+      </div>
+      <div class="pt-2 flex flex-wrap items-center justify-end gap-2.5">
+        <button onclick="closeEventModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">Cerrar</button>
+        <a id="modalAddGoogleCalBtn" href="#" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold shadow-lg shadow-emerald-600/30 flex items-center gap-1.5">
+          <span>📅 Añadir al calendario</span>
+        </a>
+        <a id="modalRefLink" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-indigo-600/30 flex items-center gap-1.5">
+          <span>Ir a la Fuente</span>
+          <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SHOW_TYPES_META = [
+      { id: 'Conciertos', label: 'Conciertos', icon: '🎵', desc: 'Clasificados por Sala (TAG + Color)' },
+      { id: 'Teatro', label: 'Teatro', icon: '🎭', desc: 'Obras escénicas, musicales, comedia y drama' },
+      { id: 'Cine', label: 'Cine', icon: '🎬', desc: 'Cartelera, filmoteca y proyecciones' },
+      { id: 'Exposiciones', label: 'Exposiciones', icon: '🖼️', desc: 'Museos, galerías y muestras' }
+    ];
+
+    let appState = null;
+    let calendarInstance = null;
+    // Set of active concert venue TAGs in UI filter (empty = all active)
+    let activeVenueTags = new Set();
+    // Set of active concert music style TAGs in UI filter (empty = all active)
+    let activeStyleTags = new Set();
+    // Set of active theater venue TAGs in UI filter (empty = all active)
+    let activeTheaterVenueTags = new Set();
+    // Set of active exhibition venue TAGs in UI filter (empty = all active)
+    let activeExhibitionVenueTags = new Set();
+    // Set of active festival TAGs in UI filter (empty = all active)
+    let activeFestivalTags = new Set();
+
+    function renderShowTypeSelectors(selectedList) {
+      const container = document.getElementById('containerShowTypes');
+      container.innerHTML = SHOW_TYPES_META.map(item => {
+        const isChecked = selectedList.includes(item.id);
+        return `
+          <label class="show-card-checkbox cursor-pointer select-none block">
+            <input type="checkbox" name="showTypes" value="${item.id}" onchange="onShowTypeCheckboxChange()" ${isChecked ? 'checked' : ''} class="sr-only" />
+            <div class="rounded-xl bg-slate-800/60 border border-slate-700 p-4 transition flex items-center justify-between gap-3 hover:border-slate-500">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">${item.icon}</span>
+                <div>
+                  <p class="text-sm font-extrabold text-white">${item.label}</p>
+                  <p class="text-[11px] text-slate-400">${item.desc}</p>
+                </div>
+              </div>
+              <span class="check-indicator w-6 h-6 rounded-lg border border-slate-600 bg-slate-900 flex items-center justify-center text-xs font-bold text-transparent transition">
+                ✓
+              </span>
+            </div>
+          </label>
+        `;
+      }).join('');
+    }
+
+    function onShowTypeCheckboxChange() {
+      const checked = Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value);
+      document.getElementById('concertVenuesPanel').classList.toggle('hidden', !checked.includes('Conciertos'));
+      document.getElementById('concertStylesPanel').classList.toggle('hidden', !checked.includes('Conciertos'));
+      document.getElementById('concertFestivalsPanel').classList.toggle('hidden', !checked.includes('Conciertos'));
+      document.getElementById('theaterVenuesPanel').classList.toggle('hidden', !checked.includes('Teatro'));
+      document.getElementById('exhibitionVenuesPanel').classList.toggle('hidden', !checked.includes('Exposiciones'));
+      refreshCalendarAndStats();
+    }
+
+    function renderConcertVenueTags() {
+      const venues = appState.concertVenues || [];
+      const container = document.getElementById('concertVenuesTagsContainer');
+      if (venues.length === 0) {
+        container.innerHTML = `<span class="text-xs text-slate-500">Pulsa "Actualizar Calendario" para detectar las salas con conciertos...</span>`;
+        return;
+      }
+
+      const allActive = activeVenueTags.size === 0;
+
+      container.innerHTML = venues.map(v => {
+        const isSelected = allActive || activeVenueTags.has(v.tag);
+        return `
+          <button
+            type="button"
+            onclick="toggleVenueTag('${v.tag.replace(/'/g, "\\'")}')"
+            class="venue-tag-pill ${isSelected ? '' : 'inactive'} inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-extrabold text-white border shadow-sm"
+            style="background-color: ${v.color}22; border-color: ${v.color}; color: #f8fafc;"
+            title="${v.name} (${v.count} conciertos)"
+          >
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${v.color};"></span>
+            <span>${v.tag}</span>
+            <span class="px-1.5 py-0.2 rounded-md text-[10px] font-bold" style="background-color: ${v.color}; color: #fff;">${v.count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleVenueTag(tag) {
+      const venues = appState.concertVenues || [];
+      if (activeVenueTags.size === 0) {
+        activeVenueTags = new Set([tag]);
+      } else if (activeVenueTags.has(tag)) {
+        activeVenueTags.delete(tag);
+        if (activeVenueTags.size === 0) {
+          activeVenueTags.clear();
+        }
+      } else {
+        activeVenueTags.add(tag);
+        if (activeVenueTags.size === venues.length) {
+          activeVenueTags.clear();
+        }
+      }
+      renderConcertVenueTags();
+      refreshCalendarAndStats();
+    }
+
+    function selectAllConcertVenues(selectAll) {
+      activeVenueTags.clear();
+      renderConcertVenueTags();
+      refreshCalendarAndStats();
+    }
+
+    function renderConcertStyleTags() {
+      const styles = appState.concertStyles || [];
+      const container = document.getElementById('concertStylesTagsContainer');
+      if (styles.length === 0) {
+        container.innerHTML = `<span class="text-xs text-slate-500">Pulsa "Actualizar Calendario" para detectar los estilos musicales de las descripciones...</span>`;
+        return;
+      }
+
+      const allActive = activeStyleTags.size === 0;
+
+      container.innerHTML = styles.map(s => {
+        const isSelected = allActive || activeStyleTags.has(s.tag);
+        return `
+          <button
+            type="button"
+            onclick="toggleStyleTag('${s.tag.replace(/'/g, "\\'")}')"
+            class="venue-tag-pill ${isSelected ? '' : 'inactive'} inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-extrabold text-white border shadow-sm"
+            style="background-color: ${s.color}22; border-color: ${s.color}; color: #f8fafc;"
+            title="${s.name} (${s.count} conciertos)"
+          >
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${s.color};"></span>
+            <span>${s.tag}</span>
+            <span class="px-1.5 py-0.2 rounded-md text-[10px] font-bold" style="background-color: ${s.color}; color: #fff;">${s.count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleStyleTag(tag) {
+      const styles = appState.concertStyles || [];
+      if (activeStyleTags.size === 0) {
+        activeStyleTags = new Set([tag]);
+      } else if (activeStyleTags.has(tag)) {
+        activeStyleTags.delete(tag);
+        if (activeStyleTags.size === 0) {
+          activeStyleTags.clear();
+        }
+      } else {
+        activeStyleTags.add(tag);
+        if (activeStyleTags.size === styles.length) {
+          activeStyleTags.clear();
+        }
+      }
+      renderConcertStyleTags();
+      refreshCalendarAndStats();
+    }
+
+    function selectAllConcertStyles(selectAll) {
+      activeStyleTags.clear();
+      renderConcertStyleTags();
+      refreshCalendarAndStats();
+    }
+
+    function renderConcertFestivalTags() {
+      const fests = appState.concertFestivals || [];
+      const container = document.getElementById('concertFestivalsTagsContainer');
+      if (fests.length === 0) {
+        container.innerHTML = `<span class="text-xs text-slate-500">No hay festivales detectados en esta ciudad (configura URLs en el apartado Festivales de Configuración).</span>`;
+        return;
+      }
+      const allActive = activeFestivalTags.size === 0;
+      container.innerHTML = fests.map(f => {
+        const isSelected = allActive || activeFestivalTags.has(f.tag);
+        return `
+          <button
+            type="button"
+            onclick="toggleFestivalTag('${f.tag.replace(/'/g, "\\'")}')"
+            class="venue-tag-pill ${isSelected ? '' : 'inactive'} inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-extrabold text-white border shadow-sm"
+            style="background-color: ${f.color}22; border-color: ${f.color}; color: #f8fafc;"
+            title="${f.name} (${f.count} conciertos)"
+          >
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${f.color};"></span>
+            <span>🎪 ${f.tag}</span>
+            <span class="px-1.5 py-0.2 rounded-md text-[10px] font-bold" style="background-color: ${f.color}; color: #fff;">${f.count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleFestivalTag(tag) {
+      const fests = appState.concertFestivals || [];
+      if (activeFestivalTags.size === 0) {
+        activeFestivalTags = new Set([tag]);
+      } else if (activeFestivalTags.has(tag)) {
+        activeFestivalTags.delete(tag);
+        if (activeFestivalTags.size === 0) activeFestivalTags.clear();
+      } else {
+        activeFestivalTags.add(tag);
+        if (activeFestivalTags.size === fests.length) activeFestivalTags.clear();
+      }
+      renderConcertFestivalTags();
+      refreshCalendarAndStats();
+    }
+
+    function selectAllConcertFestivals(selectAll) {
+      activeFestivalTags.clear();
+      renderConcertFestivalTags();
+      refreshCalendarAndStats();
+    }
+
+    function renderTheaterVenueTags() {
+      const venues = appState.theaterVenues || [];
+      const container = document.getElementById('theaterVenuesTagsContainer');
+      if (venues.length === 0) {
+        container.innerHTML = `<span class="text-xs text-slate-500">Pulsa "Actualizar Calendario" para detectar las salas de teatro...</span>`;
+        return;
+      }
+
+      const allActive = activeTheaterVenueTags.size === 0;
+
+      container.innerHTML = venues.map(v => {
+        const isSelected = allActive || activeTheaterVenueTags.has(v.tag);
+        return `
+          <button
+            type="button"
+            onclick="toggleTheaterVenueTag('${v.tag.replace(/'/g, "\\'")}')"
+            class="venue-tag-pill ${isSelected ? '' : 'inactive'} inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-extrabold text-white border shadow-sm"
+            style="background-color: ${v.color}22; border-color: ${v.color}; color: #f8fafc;"
+            title="${v.name} (${v.count} obras)"
+          >
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${v.color};"></span>
+            <span>${v.tag}</span>
+            <span class="px-1.5 py-0.2 rounded-md text-[10px] font-bold" style="background-color: ${v.color}; color: #fff;">${v.count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleTheaterVenueTag(tag) {
+      const venues = appState.theaterVenues || [];
+      if (activeTheaterVenueTags.size === 0) {
+        activeTheaterVenueTags = new Set([tag]);
+      } else if (activeTheaterVenueTags.has(tag)) {
+        activeTheaterVenueTags.delete(tag);
+        if (activeTheaterVenueTags.size === 0) {
+          activeTheaterVenueTags.clear();
+        }
+      } else {
+        activeTheaterVenueTags.add(tag);
+        if (activeTheaterVenueTags.size === venues.length) {
+          activeTheaterVenueTags.clear();
+        }
+      }
+      renderTheaterVenueTags();
+      refreshCalendarAndStats();
+    }
+
+    function selectAllTheaterVenues(selectAll) {
+      activeTheaterVenueTags.clear();
+      renderTheaterVenueTags();
+      refreshCalendarAndStats();
+    }
+
+    function renderExhibitionVenueTags() {
+      const venues = appState.exhibitionVenues || [];
+      const container = document.getElementById('exhibitionVenuesTagsContainer');
+      if (venues.length === 0) {
+        container.innerHTML = `<span class="text-xs text-slate-500">Pulsa "Actualizar Calendario" para detectar las salas y museos de exposiciones...</span>`;
+        return;
+      }
+
+      const allActive = activeExhibitionVenueTags.size === 0;
+
+      container.innerHTML = venues.map(v => {
+        const isSelected = allActive || activeExhibitionVenueTags.has(v.tag);
+        return `
+          <button
+            type="button"
+            onclick="toggleExhibitionVenueTag('${v.tag.replace(/'/g, "\\'")}')"
+            class="venue-tag-pill ${isSelected ? '' : 'inactive'} inline-flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-extrabold text-white border shadow-sm"
+            style="background-color: ${v.color}22; border-color: ${v.color}; color: #f8fafc;"
+            title="${v.name} (${v.count} exposiciones)"
+          >
+            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: ${v.color};"></span>
+            <span>${v.tag}</span>
+            <span class="px-1.5 py-0.2 rounded-md text-[10px] font-bold" style="background-color: ${v.color}; color: #fff;">${v.count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function toggleExhibitionVenueTag(tag) {
+      const venues = appState.exhibitionVenues || [];
+      if (activeExhibitionVenueTags.size === 0) {
+        activeExhibitionVenueTags = new Set([tag]);
+      } else if (activeExhibitionVenueTags.has(tag)) {
+        activeExhibitionVenueTags.delete(tag);
+        if (activeExhibitionVenueTags.size === 0) {
+          activeExhibitionVenueTags.clear();
+        }
+      } else {
+        activeExhibitionVenueTags.add(tag);
+        if (activeExhibitionVenueTags.size === venues.length) {
+          activeExhibitionVenueTags.clear();
+        }
+      }
+      renderExhibitionVenueTags();
+      refreshCalendarAndStats();
+    }
+
+    function selectAllExhibitionVenues(selectAll) {
+      activeExhibitionVenueTags.clear();
+      renderExhibitionVenueTags();
+      refreshCalendarAndStats();
+    }
+
+    function collectPreferencesFromUI() {
+      const showTypes = Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value);
+      return {
+        A: {
+          showTypes,
+          selectedVenues: []
+        }
+      };
+    }
+
+    function toggleAllShowTypes(state) {
+      document.querySelectorAll('input[name="showTypes"]').forEach(el => {
+        el.checked = state;
+      });
+      onShowTypeCheckboxChange();
+    }
+
+    function switchPart(partNum) {
+      const p1 = document.getElementById('part1Container');
+      const p2 = document.getElementById('part2Container');
+      const b1 = document.getElementById('tabBtnPart1');
+      const b2 = document.getElementById('tabBtnPart2');
+
+      if (partNum === 1) {
+        p1.classList.remove('hidden');
+        p2.classList.add('hidden');
+        b1.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30';
+        b2.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white';
+      } else {
+        p1.classList.add('hidden');
+        p2.classList.remove('hidden');
+        b2.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30';
+        b1.className = 'px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white';
+        if (calendarInstance) {
+          setTimeout(() => calendarInstance.updateSize(), 50);
+        }
+      }
+    }
+
+    function renderPart1Cities() {
+      const cities = appState.appConfig?.cities || {};
+      const container = document.getElementById('citiesListContainer');
+      const citySelect = document.getElementById('userCitySelect');
+
+      const entries = Object.values(cities);
+      container.innerHTML = entries.map(c => `
+        <div onclick="loadCityIntoForm('${c.name}')" class="cursor-pointer rounded-xl bg-slate-800/70 hover:bg-slate-800 border ${c.name === appState.userProfile?.selectedCity ? 'border-indigo-500' : 'border-slate-700'} p-4 transition">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-extrabold text-white">📍 ${c.name}</h3>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">
+              ${(c.urls || []).length} URLs
+            </span>
+          </div>
+          <div class="mt-2 space-y-1">
+            ${(c.urls || []).map(u => `<p class="text-xs font-mono text-indigo-300 truncate">🔗 ${u}</p>`).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      citySelect.innerHTML = entries.map(c =>
+        `<option value="${c.name}" ${c.name === appState.userProfile?.selectedCity ? 'selected' : ''}>${c.name}</option>`
+      ).join('');
+    }
+
+    function loadCityIntoForm(cityName) {
+      const c = appState.appConfig?.cities?.[cityName];
+      if (!c) return;
+      document.getElementById('cfgCityName').value = c.name;
+      document.getElementById('cfgCityUrls').value = (c.urls || []).join('\n');
+    }
+
+    async function saveCityConfig() {
+      const name = document.getElementById('cfgCityName').value.trim();
+      const urls = document.getElementById('cfgCityUrls').value.split('\n').map(s => s.trim()).filter(Boolean);
+
+      if (!name) return alert('Introduce el nombre de la ciudad');
+
+      const res = await fetch('/api/app-config/city', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, urls })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        appState.appConfig = data.appConfig;
+        appState.userProfile.selectedCity = name;
+        renderPart1Cities();
+        const fb = document.getElementById('cfgSaveFeedback');
+        fb.textContent = `✓ Ciudad "${name}" guardada`;
+        setTimeout(() => { fb.textContent = ''; }, 3000);
+      }
+    }
+
+    function onUserCityChange() {
+      const selectedCity = document.getElementById('userCitySelect').value;
+      appState.userProfile.selectedCity = selectedCity;
+      loadCityIntoForm(selectedCity);
+      renderPart1Cities();
+    }
+
+    function initCalendar() {
+      const calendarEl = document.getElementById('calendarEl');
+      calendarInstance = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        firstDay: 1,
+        height: 'auto',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,dayGridWeek,listYear'
+        },
+        buttonText: {
+          today: 'Hoy',
+          month: 'Mes',
+          week: 'Semana',
+          list: 'Agenda Anual'
+        },
+        eventClick: function(info) {
+          info.jsEvent.preventDefault();
+          openEventModal(info.event.extendedProps);
+        }
+      });
+      calendarInstance.render();
+    }
+
+    function getEventColor(ev) {
+      if ((ev.subType === 'Conciertos' || ev.subType === 'Teatro' || ev.subType === 'Exposiciones') && ev.venueColor) {
+        return ev.venueColor;
+      }
+      if (ev.subType === 'Teatro') return '#f43f5e';       // Rose
+      if (ev.subType === 'Cine') return '#f59e0b';         // Amber
+      if (ev.subType === 'Exposiciones') return '#10b981'; // Emerald
+      return '#6366f1';
+    }
+
+    function getVisibleEvents() {
+      const allEvents = appState.calendarEvents || [];
+      const checkedTypes = Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value);
+
+      return allEvents.filter(ev => {
+        if (!checkedTypes.includes(ev.subType)) return false;
+        if (ev.subType === 'Conciertos') {
+          if (activeVenueTags.size > 0 && !activeVenueTags.has(ev.venueTag)) {
+            return false;
+          }
+          const evStyleTag = ev.styleTag || 'SIN ESPECIFICAR';
+          if (activeStyleTags.size > 0 && !activeStyleTags.has(evStyleTag)) {
+            return false;
+          }
+          if (activeFestivalTags.size > 0 && (!ev.isFestival || !activeFestivalTags.has(ev.festivalTag))) {
+            return false;
+          }
+        }
+        if (ev.subType === 'Teatro') {
+          if (activeTheaterVenueTags.size > 0 && !activeTheaterVenueTags.has(ev.venueTag)) {
+            return false;
+          }
+        }
+        if (ev.subType === 'Exposiciones') {
+          if (activeExhibitionVenueTags.size > 0 && !activeExhibitionVenueTags.has(ev.venueTag)) {
+            return false;
+          }
+        }
+        return true;
+      });
+    }
+
+    function refreshCalendarAndStats() {
+      const events = getVisibleEvents();
+      document.getElementById('statTotalEvents').textContent = events.length;
+      document.getElementById('statConciertos').textContent = events.filter(e => e.subType === 'Conciertos').length;
+      document.getElementById('statTeatro').textContent = events.filter(e => e.subType === 'Teatro').length;
+      document.getElementById('statCine').textContent = events.filter(e => e.subType === 'Cine').length;
+      document.getElementById('statExposiciones').textContent = events.filter(e => e.subType === 'Exposiciones').length;
+
+      if (appState.lastUpdateMeta?.updatedAt) {
+        const dt = new Date(appState.lastUpdateMeta.updatedAt);
+        document.getElementById('lastUpdatedBadge').textContent =
+          `Actualizado: ${dt.toLocaleTimeString('es-ES')} · Ciudad: ${appState.lastUpdateMeta.city}`;
+      }
+
+      if (appState.lastUpdateMeta?.logs) {
+        document.getElementById('aiLogsList').innerHTML = appState.lastUpdateMeta.logs
+          .map(l => `<div>${l}</div>`)
+          .join('');
+      }
+
+      if (calendarInstance) {
+        calendarInstance.removeAllEvents();
+        const fcEvents = events.map(ev => {
+          const color = getEventColor(ev);
+          const groupOrTitle = (ev.artistName || ev.title || '').trim();
+          const styleParen = ev.musicStyle ? ` (${ev.musicStyle})` : '';
+          const timePart = ev.time ? ` ${ev.time}` : '';
+          return {
+            id: ev.id,
+            title: `${groupOrTitle}${styleParen}${timePart}`,
+            start: ev.date,
+            url: ev.url,
+            backgroundColor: color,
+            borderColor: color,
+            extendedProps: ev
+          };
+        });
+        calendarInstance.addEventSource(fcEvents);
+      }
+
+      renderEventsList(events);
+    }
+
+    function renderEventsList(visibleEvents) {
+      const events = visibleEvents || getVisibleEvents();
+      const q = (document.getElementById('searchEventsInput').value || '').toLowerCase().trim();
+      const container = document.getElementById('eventsListContainer');
+
+      const filtered = q
+        ? events.filter(e => `${e.title} ${e.subType} ${e.venue} ${e.venueTag || ''} ${e.musicStyle || ''} ${e.styleTag || ''} ${e.sourceName || ''}`.toLowerCase().includes(q))
+        : events;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-xs text-slate-400">No hay espectáculos que coincidan con los filtros actuales.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(ev => {
+        const color = getEventColor(ev);
+        const venueTagHtml = ev.venueTag
+          ? `<span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded text-white shadow-sm" style="background-color: ${color};">
+               ${ev.venueTag}
+             </span>`
+          : '';
+        const styleTagHtml = ev.subType === 'Conciertos' && ev.styleTag
+          ? `<span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded border" style="background-color: ${ev.styleColor || '#6366f1'}25; border-color: ${ev.styleColor || '#6366f1'}; color: #f8fafc;">
+               🎵 ${ev.styleTag}
+             </span>`
+          : '';
+
+        return `
+          <div class="rounded-xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/70 p-3.5 flex flex-wrap items-center justify-between gap-3 transition">
+            <div class="space-y-1 min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-slate-700 text-slate-200">
+                  ${ev.subType}
+                </span>
+                ${venueTagHtml}
+                ${styleTagHtml}
+                <span class="text-xs font-bold text-slate-300">📅 ${ev.date} · ${ev.time || ''}</span>
+                <span class="text-[11px] text-slate-400">📍 ${ev.venue || ''}</span>
+              </div>
+              <p class="text-sm font-bold text-white truncate">${ev.title}</p>
+            </div>
+            <a href="${ev.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 px-3.5 py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-xs font-bold transition flex items-center gap-1">
+              <span>${ev.actionLabel || (ev.isTicketUrl ? 'Comprar entradas' : 'Ir a Más info')}</span>
+              <span>↗</span>
+            </a>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function buildGoogleCalendarUrl(ev) {
+      const [y, m, d] = (ev.date || '').split('-').map(Number);
+      const [hh, mm] = (ev.time || '20:00').split(':').map(Number);
+      const startDt = new Date(y || 2026, (m || 1) - 1, d || 1, isNaN(hh) ? 20 : hh, isNaN(mm) ? 0 : mm, 0);
+      const endDt = new Date(startDt.getTime() + 2 * 60 * 60 * 1000);
+      const fmtGCal = (dt) => {
+        const pad = n => String(n).padStart(2, '0');
+        return `${dt.getFullYear()}${pad(dt.getMonth() + 1)}${pad(dt.getDate())}T${pad(dt.getHours())}${pad(dt.getMinutes())}00`;
+      };
+
+      const titleWithStyle = ev.musicStyle ? `${ev.title} ${ev.musicStyle}` : (ev.title || 'Evento');
+      const activeEmail = localStorage.getItem('go2enjoy_user_email') || appState?.userProfile?.email || '';
+      const params = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: titleWithStyle,
+        dates: `${fmtGCal(startDt)}/${fmtGCal(endDt)}`,
+        location: ev.venue || '',
+        details: ev.url || ''
+      });
+      if (activeEmail) {
+        params.append('authuser', activeEmail);
+      }
+      if (ev.url) {
+        params.append('sprop', `website:${ev.url}`);
+      }
+      return `https://calendar.google.com/calendar/render?${params.toString()}`;
+    }
+
+    function openEventModal(ev) {
+      const color = getEventColor(ev);
+      document.getElementById('modalBadge').textContent = ev.musicStyle ? `${ev.subType} · (${ev.musicStyle})` : ev.subType;
+      const vBadge = document.getElementById('modalVenueTagBadge');
+      vBadge.textContent = ev.venueTag || ev.venue || 'SALA';
+      vBadge.style.backgroundColor = color;
+
+      document.getElementById('modalTitle').textContent = ev.title;
+      document.getElementById('modalDateTime').textContent = `${ev.date} a las ${ev.time || '19:30'}`;
+      document.getElementById('modalVenue').textContent = ev.venue || 'Zaragoza';
+      document.getElementById('modalPrice').textContent = ev.price || 'Consultar en enlace';
+
+      document.getElementById('modalAddGoogleCalBtn').href = buildGoogleCalendarUrl(ev);
+
+      const refLink = document.getElementById('modalRefLink');
+      const label = ev.actionLabel || (ev.isTicketUrl ? 'Comprar entradas' : 'Ir a Más info');
+      refLink.href = ev.url || '#';
+      refLink.innerHTML = `<span>${label}</span><span>↗</span>`;
+
+      const modal = document.getElementById('eventModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeEventModal() {
+      const modal = document.getElementById('eventModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    const DRIVE_CACHE_FILENAME = 'go2enjoy_cache.json';
+    let driveAccessToken = '';
+    let driveFileId = '';
+
+    function getTodayYMD() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+    }
+
+    function setDriveStatus(text, isConnected = false) {
+      const badge = document.getElementById('driveStatusBadge');
+      if (!badge) return;
+      badge.textContent = text;
+      badge.className = isConnected
+        ? 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold'
+        : 'text-[11px] px-2.5 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-700';
+    }
+
+    async function saveFestivalUrls() {
+      const festivalUrls = (document.getElementById('cfgFestivalUrls')?.value || '').split('\n').map(s => s.trim()).filter(Boolean);
+      const res = await fetch('/api/app-config/festivals', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ festivalUrls })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        appState.appConfig = data.appConfig;
+        const fb = document.getElementById('cfgFestSaveFeedback');
+        fb.textContent = `✓ ${data.festivalUrls.length} URLs de festivales guardadas`;
+        setTimeout(() => { fb.textContent = ''; }, 3000);
+      }
+    }
+
+    async function saveGoogleClientId() {
+      const clientId = (document.getElementById('cfgGoogleClientId')?.value || '').trim();
+      const res = await fetch('/api/app-config/google-client-id', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ googleClientId: clientId })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        appState.appConfig = data.appConfig;
+        setDriveStatus(clientId ? 'Client ID guardado (listo para Drive)' : 'Caché local diaria activa', false);
+      }
+    }
+
+    function connectGoogleDrive() {
+      const clientId = (document.getElementById('cfgGoogleClientId')?.value || appState?.appConfig?.googleClientId || '').trim();
+      if (!clientId) {
+        alert('Introduce primero tu Google OAuth Client ID en Configuración.');
+        return;
+      }
+      if (!window.google?.accounts?.oauth2) {
+        alert('Google Identity Services aún está cargando. Inténtalo en 1 segundo.');
+        return;
+      }
+      const activeEmail = localStorage.getItem('go2enjoy_user_email') || '';
+      const tokenClient = window.google.accounts.oauth2.initTokenClient({
+        client_id: clientId,
+        scope: 'https://www.googleapis.com/auth/drive.file',
+        hint: activeEmail || undefined,
+        callback: async (resp) => {
+          if (resp.error || !resp.access_token) {
+            setDriveStatus('Error al conectar Drive', false);
+            return;
+          }
+          driveAccessToken = resp.access_token;
+          setDriveStatus('☁️ Drive conectado (go2enjoy_cache.json)', true);
+          await triggerCalendarUpdate(false);
+        }
+      });
+      tokenClient.requestAccessToken();
+    }
+
+    async function findSingleDriveFileId() {
+      if (!driveAccessToken) return '';
+      if (driveFileId) return driveFileId;
+      const q = encodeURIComponent(`name='${DRIVE_CACHE_FILENAME}' and trashed=false`);
+      const res = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name)&pageSize=1`, {
+        headers: { Authorization: `Bearer ${driveAccessToken}` }
+      });
+      if (!res.ok) return '';
+      const data = await res.json();
+      driveFileId = data.files?.[0]?.id || '';
+      return driveFileId;
+    }
+
+    async function readSingleDriveCache() {
+      const fId = await findSingleDriveFileId();
+      if (!fId) return null;
+      const res = await fetch(`https://www.googleapis.com/drive/v3/files/${fId}?alt=media`, {
+        headers: { Authorization: `Bearer ${driveAccessToken}` }
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    }
+
+    async function writeSingleDriveCache(cityCache) {
+      if (!driveAccessToken || !cityCache) return;
+      const todayYMD = getTodayYMD();
+      // Mantener solo las entradas de hoy (descartar fechas antiguas) en 1 único fichero
+      const cleanCities = {};
+      for (const [k, v] of Object.entries(cityCache)) {
+        if (v && v.date === todayYMD) {
+          cleanCities[k] = v;
+        }
+      }
+      const payload = JSON.stringify({ updatedAt: new Date().toISOString(), date: todayYMD, cities: cleanCities });
+      const fId = await findSingleDriveFileId();
+      const boundary = 'go2enjoy_boundary_' + Date.now();
+      const metadata = JSON.stringify({ name: DRIVE_CACHE_FILENAME, mimeType: 'application/json' });
+      const body = `--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${metadata}\r\n--${boundary}\r\nContent-Type: application/json\r\n\r\n${payload}\r\n--${boundary}--`;
+
+      const url = fId
+        ? `https://www.googleapis.com/upload/drive/v3/files/${fId}?uploadType=multipart`
+        : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
+      const method = fId ? 'PATCH' : 'POST';
+
+      const res = await fetch(url, {
+        method,
+        headers: {
+          Authorization: `Bearer ${driveAccessToken}`,
+          'Content-Type': `multipart/related; boundary=${boundary}`
+        },
+        body
+      });
+      if (res.ok) {
+        const saved = await res.json();
+        if (saved.id) driveFileId = saved.id;
+      }
+    }
+
+    async function triggerCalendarUpdate(forceRefresh = false) {
+      const btn = document.getElementById('btnUpdateCalendar');
+      const spinner = document.getElementById('updateSpinner');
+      const icon = document.getElementById('btnUpdateIcon');
+      const txt = document.getElementById('btnUpdateText');
+
+      btn.disabled = true;
+      spinner.classList.remove('hidden');
+      icon.classList.add('hidden');
+      txt.textContent = 'Buscando Espectáculos, Salas y Estilos...';
+
+      try {
+        const preferences = collectPreferencesFromUI();
+        const selectedCity = document.getElementById('userCitySelect').value || 'Zaragoza';
+        const userEmail = localStorage.getItem('go2enjoy_user_email') || appState?.userProfile?.email || '';
+        const todayYMD = getTodayYMD();
+        const cityUrlsKey = JSON.stringify({
+          city: appState?.appConfig?.cities?.[selectedCity]?.urls || [],
+          festivals: appState?.appConfig?.festivalUrls || []
+        });
+
+        // 1. Si Drive está conectado y no es recarga forzada, leer del fichero único go2enjoy_cache.json si es de hoy
+        if (!forceRefresh && driveAccessToken) {
+          try {
+            const driveJson = await readSingleDriveCache();
+            const entry = driveJson?.cities?.[selectedCity];
+            if (entry && entry.date === todayYMD && entry.urlsKey === cityUrlsKey) {
+              await fetch('/api/cache/restore', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ city: selectedCity, entry })
+              });
+              appState.calendarEvents = entry.events || [];
+              appState.concertVenues = entry.concertVenues || [];
+              appState.concertFestivals = entry.concertFestivals || [];
+              appState.theaterVenues = entry.theaterVenues || [];
+              appState.exhibitionVenues = entry.exhibitionVenues || [];
+              appState.concertStyles = entry.concertStyles || [];
+              appState.lastUpdateMeta = {
+                ...(entry.meta || {}),
+                logs: [`☁️ Recuperado de Google Drive (${DRIVE_CACHE_FILENAME}, fecha ${todayYMD}) sin acceder a internet.`, ...(entry.meta?.logs || [])]
+              };
+              activeVenueTags.clear();
+              activeStyleTags.clear();
+              activeFestivalTags.clear();
+              activeTheaterVenueTags.clear();
+              activeExhibitionVenueTags.clear();
+              renderConcertVenueTags();
+              renderConcertStyleTags();
+              renderConcertFestivalTags();
+              renderTheaterVenueTags();
+              renderExhibitionVenueTags();
+              refreshCalendarAndStats();
+              return;
+            }
+          } catch (_) {}
+        }
+
+        const res = await fetch('/api/calendar/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ selectedCity, preferences, userEmail, forceRefresh })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          appState.calendarEvents = data.events;
+          appState.concertVenues = data.concertVenues || [];
+          appState.concertFestivals = data.concertFestivals || [];
+          appState.theaterVenues = data.theaterVenues || [];
+          appState.exhibitionVenues = data.exhibitionVenues || [];
+          appState.concertStyles = data.concertStyles || [];
+          appState.lastUpdateMeta = data.meta;
+          activeVenueTags.clear();
+          activeStyleTags.clear();
+          activeFestivalTags.clear();
+          activeTheaterVenueTags.clear();
+          activeExhibitionVenueTags.clear();
+          renderConcertVenueTags();
+          renderConcertStyleTags();
+          renderConcertFestivalTags();
+          renderTheaterVenueTags();
+          renderExhibitionVenueTags();
+          refreshCalendarAndStats();
+          document.getElementById('aiLogsAccordion').open = true;
+
+          if (driveAccessToken && data.cityCache) {
+            writeSingleDriveCache(data.cityCache).catch(() => {});
+          }
+        } else {
+          alert('Error al actualizar: ' + (data.error || 'Desconocido'));
+        }
+      } catch (err) {
+        alert('Error de conexión: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.classList.add('hidden');
+        icon.classList.remove('hidden');
+        txt.textContent = 'Actualizar Calendario';
+      }
+    }
+
+    function updateHeaderUserUI(email) {
+      const emailEl = document.getElementById('headerUserEmail');
+      const logoutBtn = document.getElementById('btnLogoutGoogle');
+      if (email) {
+        emailEl.textContent = email;
+        logoutBtn.classList.remove('hidden');
+      } else {
+        emailEl.textContent = 'Sin sesión';
+        logoutBtn.classList.add('hidden');
+      }
+    }
+
+    function showGoogleLoginModal(prefillEmail = '') {
+      const modal = document.getElementById('googleLoginModal');
+      const input = document.getElementById('loginGmailInput');
+      const errEl = document.getElementById('loginErrorMsg');
+      errEl.classList.add('hidden');
+      input.value = prefillEmail || '';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function hideGoogleLoginModal() {
+      const modal = document.getElementById('googleLoginModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    async function submitGoogleLogin(event) {
+      event.preventDefault();
+      const input = document.getElementById('loginGmailInput');
+      const errEl = document.getElementById('loginErrorMsg');
+      const email = (input.value || '').trim().toLowerCase();
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errEl.textContent = 'Introduce una dirección de correo válida (p. ej. usuario@gmail.com).';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (!data.ok) {
+        errEl.textContent = data.error || 'Error al iniciar sesión';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      localStorage.setItem('go2enjoy_user_email', data.email);
+      if (appState?.userProfile) {
+        appState.userProfile.email = data.email;
+      }
+      updateHeaderUserUI(data.email);
+      hideGoogleLoginModal();
+
+      if (!appState?.calendarEvents?.length) {
+        await triggerCalendarUpdate();
+      }
+    }
+
+    function logoutGoogleUser() {
+      localStorage.removeItem('go2enjoy_user_email');
+      driveAccessToken = '';
+      driveFileId = '';
+      setDriveStatus('Caché local diaria activa', false);
+      updateHeaderUserUI('');
+      showGoogleLoginModal('');
+    }
+
+    async function bootstrap() {
+      initCalendar();
+      const res = await fetch('/api/state');
+      appState = await res.json();
+
+      if (document.getElementById('cfgGoogleClientId')) {
+        document.getElementById('cfgGoogleClientId').value = appState.appConfig?.googleClientId || '';
+      }
+      if (document.getElementById('cfgFestivalUrls')) {
+        document.getElementById('cfgFestivalUrls').value = (appState.appConfig?.festivalUrls || []).join('\n');
+      }
+      renderPart1Cities();
+      loadCityIntoForm(appState.userProfile?.selectedCity || 'Zaragoza');
+      const initialTypes = appState.userProfile?.preferences?.A?.showTypes || ['Conciertos', 'Teatro', 'Cine', 'Exposiciones'];
+      renderShowTypeSelectors(initialTypes);
+      renderConcertVenueTags();
+      renderConcertStyleTags();
+      renderConcertFestivalTags();
+      renderTheaterVenueTags();
+      renderExhibitionVenueTags();
+      onShowTypeCheckboxChange();
+
+      const savedEmail = localStorage.getItem('go2enjoy_user_email') || '';
+      if (!savedEmail) {
+        updateHeaderUserUI('');
+        showGoogleLoginModal('');
+        return;
+      }
+
+      updateHeaderUserUI(savedEmail);
+      await triggerCalendarUpdate();
+    }
+
+    window.addEventListener('DOMContentLoaded', bootstrap);
+  </script>
+</body>
+</html>

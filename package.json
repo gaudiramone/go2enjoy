@@ -1,0 +1,19 @@
+{
+  "name": "go2enjoy",
+  "version": "1.0.0",
+  "description": "go2enjoy.com - Seguimiento personalizado en calendario de eventos culturales, formación y gastronomía por ciudad impulsado por IA",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test-suite.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.1"
+  }
+}
