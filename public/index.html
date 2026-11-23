@@ -75,6 +75,9 @@
       opacity: 0.35;
       filter: grayscale(60%);
     }
+    summary.no-marker::-webkit-details-marker {
+      display: none;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -87,14 +90,16 @@
           G2
         </div>
         <div>
-          <div class="flex items-center gap-2">
+          <div class="flex flex-wrap items-baseline gap-2.5">
             <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-indigo-200 to-purple-300 bg-clip-text text-transparent">go2enjoy.com</span>
-            <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">Salas & TAGs por Color</span>
+            <span class="text-xs text-slate-400">Agenda cultural por ciudad</span>
           </div>
-          <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400">
-            <span>Agenda cultural por ciudad · Usuario Google:</span>
-            <span id="headerUserEmail" class="text-indigo-300 font-bold">Sin sesión</span>
-            <button id="btnLogoutGoogle" onclick="logoutGoogleUser()" class="hidden px-2 py-0.5 rounded-md bg-rose-500/15 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-[11px] font-bold transition">
+          <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400 mt-1">
+            <button id="headerProfileBtn" type="button" onclick="openProfileModal()" title="Abrir mi perfil" class="inline-flex items-center gap-2.5 pl-1 pr-3 py-1 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-indigo-200 font-bold transition">
+              <span id="headerProfileAvatar" class="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center overflow-hidden text-3xl shrink-0">😎</span>
+              <span id="headerProfileLabel" class="max-w-[160px] truncate">Mi perfil</span>
+            </button>
+            <button id="btnLogoutGoogle" onclick="logoutGoogleUser()" class="hidden px-2.5 py-1 rounded-md bg-rose-500/15 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-[11px] font-bold transition">
               Cerrar sesión
             </button>
           </div>
@@ -102,22 +107,30 @@
       </div>
 
       <!-- Navigation Tabs for the Separated Parts -->
-      <div class="flex items-center gap-1.5 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
-        <button id="tabBtnPart1" onclick="switchPart(1)" title="1. Configuración de la APP" aria-label="1. Configuración de la APP" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
+      <div class="w-full sm:w-auto grid grid-cols-6 sm:flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
+        <button id="tabBtnPart1" onclick="switchPart(1)" title="Conf." aria-label="Conf." class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
           <span>⚙️</span>
-          <span class="hidden sm:inline">1. Configuración de la APP</span>
+          <span>Conf.</span>
         </button>
-        <button id="tabBtnPart4" onclick="switchPart(4)" title="Filtro" aria-label="Filtro" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
+        <button id="tabBtnPart4" onclick="switchPart(4)" title="Filtro" aria-label="Filtro" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
           <span>🎛️</span>
-          <span class="hidden sm:inline">Filtro</span>
+          <span>Filtro</span>
         </button>
-        <button id="tabBtnPart2" onclick="switchPart(2)" title="2. Calendario y Espectáculos (A)" aria-label="2. Calendario y Espectáculos (A)" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30">
+        <button id="tabBtnPart2" onclick="switchPart(2)" title="Calend" aria-label="Calend" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 whitespace-nowrap">
           <span>📅</span>
-          <span class="hidden sm:inline">2. Calendario y Espectáculos (A)</span>
+          <span>Calend</span>
         </button>
-        <button id="tabBtnPart3" onclick="switchPart(3)" title="Búsqueda" aria-label="Búsqueda" class="px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white">
+        <button id="tabBtnPart3" onclick="switchPart(3)" title="Búsqueda" aria-label="Búsqueda" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
           <span>🔍</span>
-          <span class="hidden sm:inline">Búsqueda</span>
+          <span>Búsqueda</span>
+        </button>
+        <button id="tabBtnPart5" onclick="switchPart(5)" title="Eventos" aria-label="Eventos" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
+          <span>🍸</span>
+          <span>Eventos</span>
+        </button>
+        <button id="tabBtnPart6" onclick="switchPart(6)" title="Amigos" aria-label="Amigos" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
+          <span>👥</span>
+          <span>Amigos</span>
         </button>
       </div>
     </div>
@@ -183,19 +196,6 @@
                 <button type="button" onclick="saveFestivalUrls()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold shadow-lg shadow-pink-600/25 transition">💾 Guardar Festivales</button>
               </div>
             </div>
-
-            <!-- Caché diaria en Google Drive (1 único fichero go2enjoy_cache.json) -->
-            <div class="mt-4 pt-4 border-t border-slate-700/80 space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-300">☁️ Google Drive (1 único fichero diario: go2enjoy_cache.json)</h3>
-                <span id="driveStatusBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-700">Caché local diaria activa</span>
-              </div>
-              <div class="flex flex-wrap gap-2">
-                <input id="cfgGoogleClientId" type="text" placeholder="Opcional: Google OAuth Client ID (xxxx.apps.googleusercontent.com)" class="flex-1 min-w-[220px] rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2 text-xs text-white font-mono focus:outline-none focus:border-emerald-500" />
-                <button type="button" onclick="saveGoogleClientId()" class="px-4 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold transition">Guardar Client ID</button>
-                <button type="button" onclick="connectGoogleDrive()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition">☁️ Conectar Drive</button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -207,38 +207,63 @@
     <section id="part2Container" class="space-y-6">
 
       <!-- Contadores por tipo de espectáculo -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
-          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
-          <p data-stat="total" class="text-2xl font-extrabold text-white mt-0.5">0</p>
+      <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-2 sm:p-3.5 text-center sm:text-left flex flex-col justify-between">
+          <span class="block truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total en Calendario</span></span>
+          <p data-stat="total" class="text-base sm:text-2xl font-extrabold text-white mt-0.5">0</p>
         </div>
-        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
-          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
-          <p data-stat="Conciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
-          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
-          <p data-stat="Teatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
-          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
-          <p data-stat="Cine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
-          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
-          <p data-stat="Exposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
-        </div>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-indigo-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Música</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Conciertos" class="text-base sm:text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-rose-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Teatro</span><span class="hidden sm:inline">🎭 Teatro</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Teatro" class="text-base sm:text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-amber-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Cine" class="text-base sm:text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-emerald-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Exposiciones" class="text-base sm:text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+          </div>
+        </label>
+      </div>
+      <div class="flex items-center justify-end gap-3 text-[11px] sm:text-xs -mt-3">
+        <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
+        <span class="text-slate-600">|</span>
+        <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
       </div>
 
       <!-- Calendario Visual (FullCalendar) -->
       <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800">
           <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-300">
-            <span>🎵 <strong>Conciertos:</strong> coloreados según el <strong>TAG de su Sala</strong></span>
-            <span class="text-slate-600">·</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> Teatro</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500 inline-block"></span> Cine</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Exposiciones</span>
+            <span>Coloreados según filtros</span>
           </div>
           <span id="lastUpdatedBadge" class="text-xs text-slate-400">Sin actualizar aún</span>
         </div>
@@ -263,27 +288,56 @@
     <!-- ===================================================================== -->
     <section id="part3Container" class="hidden space-y-6">
       <!-- Contadores por tipo de espectáculo -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
-          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
-          <p data-stat="total" class="text-2xl font-extrabold text-white mt-0.5">0</p>
+      <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-2 sm:p-3.5 text-center sm:text-left flex flex-col justify-between">
+          <span class="block truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total en Calendario</span></span>
+          <p data-stat="total" class="text-base sm:text-2xl font-extrabold text-white mt-0.5">0</p>
         </div>
-        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
-          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
-          <p data-stat="Conciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
-          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
-          <p data-stat="Teatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
-          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
-          <p data-stat="Cine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
-          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
-          <p data-stat="Exposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
-        </div>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-indigo-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Música</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Conciertos" class="text-base sm:text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-rose-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Teatro</span><span class="hidden sm:inline">🎭 Teatro</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Teatro" class="text-base sm:text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-amber-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Cine" class="text-base sm:text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-emerald-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Exposiciones" class="text-base sm:text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+          </div>
+        </label>
+      </div>
+      <div class="flex items-center justify-end gap-3 text-[11px] sm:text-xs -mt-3">
+        <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
+        <span class="text-slate-600">|</span>
+        <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
       </div>
 
       <!-- Lista de Eventos con TAG de Sala, Color y Enlace Directo -->
@@ -304,27 +358,56 @@
     <!-- ===================================================================== -->
     <section id="part4Container" class="hidden space-y-6">
       <!-- Contadores por tipo de espectáculo -->
-      <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
-        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-3.5">
-          <span class="text-[11px] text-slate-400 font-semibold uppercase">Total en Calendario</span>
-          <p data-stat="total" class="text-2xl font-extrabold text-white mt-0.5">0</p>
+      <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
+        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-2 sm:p-3.5 text-center sm:text-left flex flex-col justify-between">
+          <span class="block truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total en Calendario</span></span>
+          <p data-stat="total" class="text-base sm:text-2xl font-extrabold text-white mt-0.5">0</p>
         </div>
-        <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-3.5">
-          <span class="text-[11px] text-indigo-300 font-semibold uppercase">🎵 Conciertos</span>
-          <p data-stat="Conciertos" class="text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-3.5">
-          <span class="text-[11px] text-rose-300 font-semibold uppercase">🎭 Teatro</span>
-          <p data-stat="Teatro" class="text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-3.5">
-          <span class="text-[11px] text-amber-300 font-semibold uppercase">🎬 Cine</span>
-          <p data-stat="Cine" class="text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
-        </div>
-        <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-3.5">
-          <span class="text-[11px] text-emerald-300 font-semibold uppercase">🖼️ Exposiciones</span>
-          <p data-stat="Exposiciones" class="text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
-        </div>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-indigo-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Música</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Conciertos" class="text-base sm:text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-rose-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Teatro</span><span class="hidden sm:inline">🎭 Teatro</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Teatro" class="text-base sm:text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-amber-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Cine" class="text-base sm:text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
+          </div>
+        </label>
+        <label class="show-card-checkbox cursor-pointer select-none block">
+          <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+          <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-emerald-400/60">
+            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
+              <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
+              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
+            </div>
+            <p data-stat="Exposiciones" class="text-base sm:text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
+          </div>
+        </label>
+      </div>
+      <div class="flex items-center justify-end gap-3 text-[11px] sm:text-xs -mt-3">
+        <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
+        <span class="text-slate-600">|</span>
+        <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
       </div>
 
       <div class="rounded-2xl bg-slate-900/95 border border-slate-800 p-6 shadow-xl space-y-5">
@@ -357,110 +440,331 @@
           </div>
         </div>
 
-        <!-- APARTADO A: ESPECTÁCULOS (Conciertos, Teatro, Cine, Exposiciones) -->
-        <div>
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-            <h2 class="text-base font-extrabold text-white flex items-center gap-2">
-              <span>🎭</span>
-              <span>A Espectáculos</span>
-            </h2>
-            <div class="flex items-center gap-3 text-xs">
-              <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
-              <span class="text-slate-600">|</span>
-              <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
-            </div>
-          </div>
-
-          <div id="containerShowTypes" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
-        </div>
-
         <!-- CLASIFICACIÓN DE CONCIERTOS POR SALAS (TAG + COLOR) -->
-        <div id="concertVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
+        <details id="concertVenuesPanel" class="group pt-3 border-t border-slate-800/80">
+          <summary class="no-marker list-none cursor-pointer select-none flex items-center justify-between gap-2 py-1">
             <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span class="text-xs text-slate-400 transition-transform duration-150 group-open:rotate-90 inline-block">▶</span>
               <span>🎸</span>
               <span>Salas de Conciertos</span>
             </h3>
-            <div class="flex items-center gap-3 text-xs">
+            <span class="text-[11px] font-semibold text-indigo-400 group-open:hidden">Desplegar</span>
+            <span class="text-[11px] font-semibold text-slate-400 hidden group-open:inline">Ocultar</span>
+          </summary>
+          <div class="mt-3 space-y-3">
+            <div class="flex items-center justify-end gap-3 text-xs">
               <button type="button" onclick="selectAllConcertVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
               <span class="text-slate-600">|</span>
               <button type="button" onclick="selectAllConcertVenues(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
             </div>
+            <div id="concertVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
           </div>
-
-          <div id="concertVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
-        </div>
+        </details>
 
         <!-- CLASIFICACIÓN DE CONCIERTOS POR ESTILOS MUSICALES (TAG + COLOR EXTRAÍDOS DE LA DESCRIPCIÓN) -->
-        <div id="concertStylesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
+        <details id="concertStylesPanel" class="group pt-3 border-t border-slate-800/80">
+          <summary class="no-marker list-none cursor-pointer select-none flex items-center justify-between gap-2 py-1">
             <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span class="text-xs text-slate-400 transition-transform duration-150 group-open:rotate-90 inline-block">▶</span>
               <span>🎵</span>
               <span>Estilos Musicales</span>
             </h3>
-            <div class="flex items-center gap-3 text-xs">
+            <span class="text-[11px] font-semibold text-indigo-400 group-open:hidden">Desplegar</span>
+            <span class="text-[11px] font-semibold text-slate-400 hidden group-open:inline">Ocultar</span>
+          </summary>
+          <div class="mt-3 space-y-3">
+            <div class="flex items-center justify-end gap-3 text-xs">
               <button type="button" onclick="selectAllConcertStyles(true)" class="text-indigo-400 hover:underline font-semibold">Todos los estilos</button>
               <span class="text-slate-600">|</span>
               <button type="button" onclick="selectAllConcertStyles(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
             </div>
+            <div id="concertStylesTagsContainer" class="flex flex-wrap gap-2"></div>
           </div>
-
-          <div id="concertStylesTagsContainer" class="flex flex-wrap gap-2"></div>
-        </div>
+        </details>
 
         <!-- CLASIFICACIÓN DE CONCIERTOS POR FESTIVALES (TAG + COLOR) -->
-        <div id="concertFestivalsPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
+        <details id="concertFestivalsPanel" class="group pt-3 border-t border-slate-800/80">
+          <summary class="no-marker list-none cursor-pointer select-none flex items-center justify-between gap-2 py-1">
             <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span class="text-xs text-slate-400 transition-transform duration-150 group-open:rotate-90 inline-block">▶</span>
               <span>🎪</span>
               <span>Festivales</span>
             </h3>
-            <div class="flex items-center gap-3 text-xs">
+            <span class="text-[11px] font-semibold text-indigo-400 group-open:hidden">Desplegar</span>
+            <span class="text-[11px] font-semibold text-slate-400 hidden group-open:inline">Ocultar</span>
+          </summary>
+          <div class="mt-3 space-y-3">
+            <div class="flex items-center justify-end gap-3 text-xs">
               <button type="button" onclick="selectAllConcertFestivals(true)" class="text-indigo-400 hover:underline font-semibold">Todos los festivales</button>
               <span class="text-slate-600">|</span>
               <button type="button" onclick="selectAllConcertFestivals(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
             </div>
+            <div id="concertFestivalsTagsContainer" class="flex flex-wrap gap-2"></div>
           </div>
-
-          <div id="concertFestivalsTagsContainer" class="flex flex-wrap gap-2"></div>
-        </div>
+        </details>
 
         <!-- CLASIFICACIÓN DE TEATROS POR SALAS / LUGARES (TAG + COLOR) -->
-        <div id="theaterVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
+        <details id="theaterVenuesPanel" class="group pt-3 border-t border-slate-800/80">
+          <summary class="no-marker list-none cursor-pointer select-none flex items-center justify-between gap-2 py-1">
             <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span class="text-xs text-slate-400 transition-transform duration-150 group-open:rotate-90 inline-block">▶</span>
               <span>🎭</span>
               <span>Salas de Teatro</span>
             </h3>
-            <div class="flex items-center gap-3 text-xs">
+            <span class="text-[11px] font-semibold text-indigo-400 group-open:hidden">Desplegar</span>
+            <span class="text-[11px] font-semibold text-slate-400 hidden group-open:inline">Ocultar</span>
+          </summary>
+          <div class="mt-3 space-y-3">
+            <div class="flex items-center justify-end gap-3 text-xs">
               <button type="button" onclick="selectAllTheaterVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
               <span class="text-slate-600">|</span>
               <button type="button" onclick="selectAllTheaterVenues(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
             </div>
+            <div id="theaterVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
           </div>
-
-          <div id="theaterVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
-        </div>
+        </details>
 
         <!-- CLASIFICACIÓN DE EXPOSICIONES POR SALAS / MUSEOS (TAG + COLOR) -->
-        <div id="exhibitionVenuesPanel" class="pt-3 border-t border-slate-800/80 space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
+        <details id="exhibitionVenuesPanel" class="group pt-3 border-t border-slate-800/80">
+          <summary class="no-marker list-none cursor-pointer select-none flex items-center justify-between gap-2 py-1">
             <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+              <span class="text-xs text-slate-400 transition-transform duration-150 group-open:rotate-90 inline-block">▶</span>
               <span>🖼️</span>
               <span>Salas y Museos</span>
             </h3>
-            <div class="flex items-center gap-3 text-xs">
+            <span class="text-[11px] font-semibold text-indigo-400 group-open:hidden">Desplegar</span>
+            <span class="text-[11px] font-semibold text-slate-400 hidden group-open:inline">Ocultar</span>
+          </summary>
+          <div class="mt-3 space-y-3">
+            <div class="flex items-center justify-end gap-3 text-xs">
               <button type="button" onclick="selectAllExhibitionVenues(true)" class="text-indigo-400 hover:underline font-semibold">Todas las salas</button>
               <span class="text-slate-600">|</span>
               <button type="button" onclick="selectAllExhibitionVenues(false)" class="text-slate-400 hover:underline font-semibold">Limpiar selección</button>
             </div>
+            <div id="exhibitionVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
           </div>
+        </details>
+      </div>
+    </section>
 
-          <div id="exhibitionVenuesTagsContainer" class="flex flex-wrap gap-2"></div>
-        </div>
+    <!-- ===================================================================== -->
+    <!-- PARTE 5: EVENTOS                                                      -->
+    <!-- ===================================================================== -->
+    <section id="part5Container" class="hidden space-y-6">
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+          <span>🍸</span>
+          <span>Eventos</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Próximamente: aquí irá el contenido de Eventos.</p>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PARTE 6: AMIGOS                                                       -->
+    <!-- ===================================================================== -->
+    <section id="part6Container" class="hidden space-y-6">
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+          <span>👥</span>
+          <span>Amigos</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-1">Próximamente: aquí irá el contenido de Amigos.</p>
       </div>
     </section>
   </main>
+
+  <!-- ===================================================================== -->
+  <!-- VENTANA A PANTALLA COMPLETA: MI PERFIL                                -->
+  <!-- ===================================================================== -->
+  <section id="profileFullScreenView" class="fixed inset-0 z-40 hidden bg-slate-950 overflow-y-auto">
+    <div class="max-w-5xl mx-auto min-h-screen px-4 sm:px-6 py-5 flex flex-col justify-between gap-5">
+      <div class="w-full rounded-2xl bg-slate-900/95 border border-slate-800 p-4 sm:p-6 shadow-xl space-y-5 flex-1">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 shrink-0">
+        <div class="flex items-center gap-3.5">
+          <div id="profileAvatarPreview" class="w-20 h-20 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-4xl overflow-hidden shrink-0">😎</div>
+          <div>
+            <h2 class="text-lg font-extrabold text-white">Mi Perfil</h2>
+            <p class="text-xs text-slate-400">Personaliza tu icono, privacidad y conexión con Google Drive</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeProfileModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <!-- 6 Tabs dentro del Perfil -->
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 bg-slate-800/80 p-1 rounded-xl border border-slate-700/70 my-4 shrink-0">
+        <button id="profileTabBtn1" type="button" onclick="switchProfileTab(1)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap">👤 Cuenta</button>
+        <button id="profileTabBtn2" type="button" onclick="switchProfileTab(2)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">🏛️ Ideología</button>
+        <button id="profileTabBtn3" type="button" onclick="switchProfileTab(3)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">💞 Sexo</button>
+        <button id="profileTabBtn4" type="button" onclick="switchProfileTab(4)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">📸 Fotos</button>
+        <button id="profileTabBtn5" type="button" onclick="switchProfileTab(5)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">🌐 Redes</button>
+        <button id="profileTabBtn6" type="button" onclick="switchProfileTab(6)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">📅 Calendario</button>
+      </div>
+
+      <div class="space-y-5">
+        <!-- TAB 1: Icono, Alias, Correo y Google Drive -->
+        <div id="profileTabPanel1" class="space-y-5">
+          <!-- Icono o Foto -->
+          <div class="space-y-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-300">Icono o Foto de perfil</label>
+              <div class="flex items-center gap-2">
+                <label class="cursor-pointer px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-bold text-indigo-300 transition">
+                  📷 Subir foto
+                  <input id="profilePhotoInput" type="file" accept="image/*" onchange="onProfilePhotoSelected(event)" class="hidden" />
+                </label>
+                <button id="btnClearProfilePhoto" type="button" onclick="clearProfilePhoto()" class="hidden px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-bold text-slate-300 transition">
+                  Usar icono
+                </button>
+              </div>
+            </div>
+            <div id="profileAvatarGrid" class="grid grid-cols-6 gap-2"></div>
+          </div>
+
+          <!-- Alias + Ocultar -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <label for="profileAliasInput" class="text-xs font-bold uppercase tracking-wider text-slate-300">Alias</label>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-400 cursor-pointer select-none">
+                <input id="profileHideAlias" type="checkbox" class="rounded border-slate-600 bg-slate-950 text-indigo-500 focus:ring-indigo-500" />
+                <span>Ocultar</span>
+              </label>
+            </div>
+            <input id="profileAliasInput" type="text" placeholder="Tu alias o apodo público..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+
+          <!-- Correo + Ocultar -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between gap-2">
+              <label for="profileEmailInput" class="text-xs font-bold uppercase tracking-wider text-slate-300">Correo electrónico</label>
+              <label class="inline-flex items-center gap-1.5 text-xs text-slate-400 cursor-pointer select-none">
+                <input id="profileHideEmail" type="checkbox" class="rounded border-slate-600 bg-slate-950 text-indigo-500 focus:ring-indigo-500" />
+                <span>Ocultar</span>
+              </label>
+            </div>
+            <input id="profileEmailInput" type="email" placeholder="tuusuario@gmail.com" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+
+          <!-- Caché diaria en Google Drive (1 único fichero go2enjoy_cache.json) -->
+          <div class="pt-4 border-t border-slate-800 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-300">☁️ Google Drive (1 único fichero diario: go2enjoy_cache.json)</h3>
+              <span id="driveStatusBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-slate-950 text-slate-400 border border-slate-700">No conectado</span>
+            </div>
+            <div id="profileDriveBanner" class="rounded-xl border border-amber-500/40 bg-amber-500/10 px-3.5 py-2.5 text-xs text-amber-200 font-medium">
+              🔴 No estás conectado con Google Drive. Conecta primero para poder guardar tu perfil y tus datos en tu Drive.
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <p class="text-xs text-slate-400">Guarda tu perfil y tu caché diaria de eventos directamente en tu Google Drive.</p>
+              <button type="button" onclick="connectGoogleDrive()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow-lg shadow-emerald-600/25">☁️ Conectar con Google Drive</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Ideología (Apartado político) -->
+        <div id="profileTabPanel2" class="hidden space-y-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">🏛️ Apartado político</h3>
+          <div class="space-y-1.5">
+            <label for="profilePoliticalPhrase" class="block text-xs font-semibold text-slate-300">Una frase que te defina ideológicamente</label>
+            <input id="profilePoliticalPhrase" type="text" placeholder="Escribe una frase que te defina ideológicamente..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <label class="text-xs font-semibold text-slate-300">¿Cómo te consideras del 1 al 5 en ideología política?</label>
+              <span class="text-[11px] text-slate-400">1 Izda · 3 Centro · 5 Dcha</span>
+            </div>
+            <div id="profilePoliticalScaleGrid" class="grid grid-cols-5 gap-2"></div>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <button id="btnOpenPoliticalQuiz" type="button" onclick="openPoliticalQuizModal()" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 hover:underline text-left transition">
+                🧭 ¿No estás seguro? Responde a estas preguntas para elegir una posición →
+              </button>
+              <span id="profilePoliticalQuizResultBadge" class="hidden text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: Sexo -->
+        <div id="profileTabPanel3" class="hidden space-y-5">
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Apariencia</label>
+            <div id="profileAppearanceGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Sexo</label>
+            <div id="profileSexualityGrid" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Busco persona</label>
+            <div id="profileSeekingPersonGrid" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Busco Relación</label>
+            <div id="profileSeekingRelationGrid" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <!-- TAB 4: Fotos (hasta 3 fotos) -->
+        <div id="profileTabPanel4" class="hidden space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">📸 Mis Fotos (hasta 3)</h3>
+          </div>
+          <div id="profilePhotosSlotsGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
+        </div>
+
+        <!-- TAB 5: Redes sociales -->
+        <div id="profileTabPanel5" class="hidden space-y-3">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">🌐 Redes sociales</h3>
+          <div id="profileSocialLinksContainer" class="space-y-2.5"></div>
+        </div>
+
+        <!-- TAB 6: Calendario -->
+        <div id="profileTabPanel6" class="hidden space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">📅 Mi Calendario de Perfil</h3>
+            <span id="profileCalendarCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">0 eventos</span>
+          </div>
+          <div id="profileCalendarEl" class="min-h-[520px]"></div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-800 flex items-center justify-end gap-2.5">
+        <button type="button" onclick="closeProfileModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">← Volver</button>
+        <button id="btnSaveUserProfile" type="button" onclick="saveUserProfile()" disabled class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-extrabold shadow-lg shadow-indigo-600/30 transition">💾 Guardar Perfil</button>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal de Encuesta Política (10 preguntas) -->
+  <div id="politicalQuizModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-xl max-h-[90vh] flex flex-col rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-800 pb-3 shrink-0">
+        <div>
+          <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+            <span>🧭</span>
+            <span>Encuesta básica de orientación (10 preguntas)</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Responde rápido del 1 al 5 según tu opinión. Podrás cambiar el resultado después.</p>
+        </div>
+        <button type="button" onclick="closePoliticalQuizModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
+      </div>
+
+      <div id="politicalQuizQuestionsList" class="flex-1 min-h-0 overflow-y-auto py-4 space-y-4 pr-1"></div>
+
+      <div id="politicalQuizResultBox" class="hidden rounded-xl border border-indigo-500/40 bg-indigo-500/15 p-3.5 text-xs text-indigo-100 space-y-1 mb-3 shrink-0"></div>
+
+      <div class="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-2 shrink-0">
+        <span id="politicalQuizProgress" class="text-xs font-mono text-slate-400">0/10 respondidas</span>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closePoliticalQuizModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">Volver al perfil</button>
+          <button id="btnCalculatePoliticalQuiz" type="button" onclick="calculatePoliticalQuizResult()" disabled class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-extrabold shadow-lg shadow-indigo-600/30 transition">Calcular posición</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Modal de Login de Usuario Google al arrancar -->
   <div id="googleLoginModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/90 backdrop-blur-md p-4">
@@ -487,7 +791,7 @@
 
   <!-- Modal de Detalle de Evento al hacer clic en el Calendario -->
   <div id="eventModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-    <div class="w-full max-w-lg h-[420px] rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl flex flex-col justify-between">
+    <div class="w-full max-w-lg h-[510px] max-h-[92vh] rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl flex flex-col justify-between">
       <div class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1">
         <div class="flex items-start justify-between gap-3">
           <div class="flex flex-wrap items-center gap-2">
@@ -499,6 +803,7 @@
         <h3 id="modalTitle" class="text-lg font-extrabold text-white leading-snug">Título del Evento</h3>
         <div class="space-y-2 text-sm text-slate-300 bg-slate-800/60 p-3.5 rounded-xl border border-slate-700/60">
           <p><strong>📅 Fecha y Hora:</strong> <span id="modalDateTime"></span></p>
+          <p id="modalExhibitionRangeRow" class="hidden"><strong>🗓️ Intervalo:</strong> <span id="modalExhibitionRange" class="text-emerald-300 font-semibold"></span></p>
           <p><strong>📍 Sala / Lugar:</strong> <span id="modalVenue"></span></p>
           <p><strong>💶 Precio:</strong> <span id="modalPrice"></span></p>
         </div>
@@ -519,6 +824,17 @@
             <span>↗</span>
           </a>
         </div>
+        <div id="modalProfileDateRow" class="hidden flex items-center justify-between gap-2 rounded-xl bg-amber-500/10 border border-amber-500/30 px-3 py-2">
+          <span class="text-xs font-bold text-amber-200 whitespace-nowrap">📌 Fijar día en Perfil:</span>
+          <div class="flex items-center gap-1.5">
+            <button id="modalProfileDatePrevBtn" type="button" onclick="stepModalProfileDate(-1)" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 disabled:opacity-35 disabled:cursor-not-allowed border border-slate-700 text-xs font-bold text-white flex items-center justify-center transition">◀</button>
+            <span id="modalProfileDateDisplay" class="w-24 text-center text-xs font-mono font-bold tabular-nums text-white"></span>
+            <button id="modalProfileDateNextBtn" type="button" onclick="stepModalProfileDate(1)" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 disabled:opacity-35 disabled:cursor-not-allowed border border-slate-700 text-xs font-bold text-white flex items-center justify-center transition">▶</button>
+          </div>
+        </div>
+        <button id="modalAddProfileCalBtn" type="button" onclick="toggleCurrentEventInProfileCalendar()" class="w-full px-3 py-2.5 rounded-xl bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white border border-amber-500/40 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition">
+          <span>👤 Añadir al calendario de Perfil</span>
+        </button>
       </div>
     </div>
   </div>
@@ -547,28 +863,18 @@
     let currentModalEventIndex = -1;
 
     function renderShowTypeSelectors(selectedList) {
-      const container = document.getElementById('containerShowTypes');
-      container.innerHTML = SHOW_TYPES_META.map(item => {
-        const isChecked = selectedList.includes(item.id);
-        return `
-          <label class="show-card-checkbox cursor-pointer select-none block">
-            <input type="checkbox" name="showTypes" value="${item.id}" onchange="onShowTypeCheckboxChange()" ${isChecked ? 'checked' : ''} class="sr-only" />
-            <div class="rounded-xl bg-slate-800/60 border border-slate-700 p-3.5 transition flex items-center justify-between gap-3 hover:border-slate-500">
-              <div class="flex items-center gap-2.5">
-                <span class="text-xl">${item.icon}</span>
-                <p class="text-sm font-extrabold text-white">${item.label}</p>
-              </div>
-              <span class="check-indicator w-6 h-6 rounded-lg border border-slate-600 bg-slate-900 flex items-center justify-center text-xs font-bold text-transparent transition">
-                ✓
-              </span>
-            </div>
-          </label>
-        `;
-      }).join('');
+      document.querySelectorAll('input[name="showTypes"]').forEach(el => {
+        el.checked = selectedList.includes(el.value);
+      });
     }
 
-    function onShowTypeCheckboxChange() {
-      const checked = Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value);
+    function onShowTypeCheckboxChange(sourceCheckbox) {
+      if (sourceCheckbox && sourceCheckbox.value) {
+        document.querySelectorAll(`input[name="showTypes"][value="${sourceCheckbox.value}"]`).forEach(el => {
+          el.checked = sourceCheckbox.checked;
+        });
+      }
+      const checked = [...new Set(Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value))];
       document.getElementById('concertVenuesPanel').classList.toggle('hidden', !checked.includes('Conciertos'));
       document.getElementById('concertStylesPanel').classList.toggle('hidden', !checked.includes('Conciertos'));
       document.getElementById('concertFestivalsPanel').classList.toggle('hidden', !checked.includes('Conciertos'));
@@ -837,7 +1143,7 @@
     }
 
     function collectPreferencesFromUI() {
-      const showTypes = Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value);
+      const showTypes = [...new Set(Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value))];
       return {
         A: {
           showTypes,
@@ -854,10 +1160,10 @@
     }
 
     function switchPart(partNum) {
-      const activeCls = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30';
-      const inactiveCls = 'px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 text-slate-300 hover:text-white';
+      const activeCls = 'px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 whitespace-nowrap';
+      const inactiveCls = 'px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap';
 
-      [1, 2, 3, 4].forEach(n => {
+      [1, 2, 3, 4, 5, 6].forEach(n => {
         const container = document.getElementById(`part${n}Container`);
         const btn = document.getElementById(`tabBtnPart${n}`);
         const isActive = n === partNum;
@@ -933,9 +1239,10 @@
       renderPart1Cities();
     }
 
-    function initCalendar() {
-      const calendarEl = document.getElementById('calendarEl');
-      calendarInstance = new FullCalendar.Calendar(calendarEl, {
+    let profileCalendarInstance = null;
+
+    function createCalendarWidget(el, onEventClick) {
+      const instance = new FullCalendar.Calendar(el, {
         initialView: 'dayGridMonth',
         locale: 'es',
         firstDay: 1,
@@ -954,10 +1261,49 @@
         },
         eventClick: function(info) {
           info.jsEvent.preventDefault();
-          openEventModal(info.event.extendedProps);
+          onEventClick(info.event.extendedProps);
         }
       });
-      calendarInstance.render();
+      instance.render();
+      return instance;
+    }
+
+    function initCalendar() {
+      calendarInstance = createCalendarWidget(
+        document.getElementById('calendarEl'),
+        ev => openEventModal(ev)
+      );
+    }
+
+    function initProfileCalendar() {
+      if (profileCalendarInstance) return;
+      const el = document.getElementById('profileCalendarEl');
+      if (!el) return;
+      profileCalendarInstance = createCalendarWidget(
+        el,
+        ev => openEventModal(ev, getProfileCalendarEvents())
+      );
+    }
+
+    function mapEventsToFullCalendar(events) {
+      return events.map((ev, idx) => {
+        ev._modalIndex = idx;
+        const color = ev.color || getEventColor(ev);
+        const groupOrTitle = (ev.artistName || ev.title || '').trim();
+        const styleParen = ev.musicStyle ? ` (${ev.musicStyle})` : '';
+        const timePart = ev.time ? ` ${ev.time}` : '';
+        const sortKey = `${ev.date || '9999-99-99'} ${(ev.time || '23:59').padStart(5, '0')}`;
+        return {
+          id: String(idx),
+          title: `${groupOrTitle}${styleParen}${timePart}`,
+          start: ev.date,
+          url: ev.url,
+          backgroundColor: color,
+          borderColor: color,
+          sortKey,
+          extendedProps: { ...ev, _modalIndex: idx }
+        };
+      });
     }
 
     function getEventColor(ev) {
@@ -1040,24 +1386,7 @@
 
       if (calendarInstance) {
         calendarInstance.removeAllEvents();
-        const fcEvents = events.map((ev, idx) => {
-          const color = getEventColor(ev);
-          const groupOrTitle = (ev.artistName || ev.title || '').trim();
-          const styleParen = ev.musicStyle ? ` (${ev.musicStyle})` : '';
-          const timePart = ev.time ? ` ${ev.time}` : '';
-          const sortKey = `${ev.date || '9999-99-99'} ${(ev.time || '23:59').padStart(5, '0')}`;
-          return {
-            id: String(idx),
-            title: `${groupOrTitle}${styleParen}${timePart}`,
-            start: ev.date,
-            url: ev.url,
-            backgroundColor: color,
-            borderColor: color,
-            sortKey,
-            extendedProps: { ...ev, _modalIndex: idx }
-          };
-        });
-        calendarInstance.addEventSource(fcEvents);
+        calendarInstance.addEventSource(mapEventsToFullCalendar(events));
       }
 
       renderEventsList(events);
@@ -1146,17 +1475,64 @@
       return `https://calendar.google.com/calendar/render?${params.toString()}`;
     }
 
-    function openEventModal(ev) {
-      if (orderedVisibleEvents.length === 0) {
+    function getExhibitionDateRange(ev) {
+      if (!ev || ev.subType !== 'Exposiciones') return null;
+      const dates = [];
+      if (ev.rangeStart) dates.push(ev.rangeStart);
+      if (ev.rangeEnd) dates.push(ev.rangeEnd);
+      if (ev.date) dates.push(ev.date);
+      (appState?.calendarEvents || []).forEach(item => {
+        if (item.subType === 'Exposiciones' && item.title === ev.title && item.url === ev.url && item.date) {
+          dates.push(item.date);
+        }
+      });
+      const uniqueSorted = [...new Set(dates.filter(Boolean))].sort();
+      if (uniqueSorted.length < 2) return null;
+      const start = uniqueSorted[0];
+      const end = uniqueSorted[uniqueSorted.length - 1];
+      return start !== end ? { start, end } : null;
+    }
+
+    let currentModalEvent = null;
+    let modalNavigationList = null;
+    let modalProfileChosenDate = '';
+    let modalProfileRange = null;
+
+    function addDaysYMD(ymd, delta) {
+      const [y, m, d] = (ymd || '').split('-').map(Number);
+      if (!y || !m || !d) return ymd;
+      const dt = new Date(Date.UTC(y, m - 1, d + delta));
+      return dt.toISOString().slice(0, 10);
+    }
+
+    function renderModalProfileDateStepper() {
+      const disp = document.getElementById('modalProfileDateDisplay');
+      const prevBtn = document.getElementById('modalProfileDatePrevBtn');
+      const nextBtn = document.getElementById('modalProfileDateNextBtn');
+      if (!disp || !modalProfileRange) return;
+      disp.textContent = modalProfileChosenDate || modalProfileRange.start;
+      if (prevBtn) prevBtn.disabled = modalProfileChosenDate <= modalProfileRange.start;
+      if (nextBtn) nextBtn.disabled = modalProfileChosenDate >= modalProfileRange.end;
+    }
+
+    function openEventModal(ev, customList) {
+      currentModalEvent = ev;
+      if (Array.isArray(customList)) {
+        modalNavigationList = customList;
+      } else if (customList === undefined) {
+        modalNavigationList = null;
+      }
+      const navList = Array.isArray(modalNavigationList) ? modalNavigationList : orderedVisibleEvents;
+      if (!Array.isArray(modalNavigationList) && orderedVisibleEvents.length === 0) {
         orderedVisibleEvents = getVisibleEvents();
         orderedVisibleEvents.forEach((item, idx) => {
           item._modalIndex = idx;
         });
       }
-      if (typeof ev._modalIndex === 'number' && orderedVisibleEvents[ev._modalIndex]) {
+      if (typeof ev._modalIndex === 'number' && navList[ev._modalIndex]) {
         currentModalEventIndex = ev._modalIndex;
       } else {
-        currentModalEventIndex = orderedVisibleEvents.findIndex(
+        currentModalEventIndex = navList.findIndex(
           item =>
             item === ev ||
             (item.date === ev.date &&
@@ -1171,8 +1547,8 @@
       const posEl = document.getElementById('modalNavPos');
       if (currentModalEventIndex >= 0) {
         prevBtn.disabled = currentModalEventIndex <= 0;
-        nextBtn.disabled = currentModalEventIndex >= orderedVisibleEvents.length - 1;
-        posEl.textContent = `${currentModalEventIndex + 1}/${orderedVisibleEvents.length}`;
+        nextBtn.disabled = currentModalEventIndex >= navList.length - 1;
+        posEl.textContent = `${currentModalEventIndex + 1}/${navList.length}`;
       } else {
         prevBtn.disabled = true;
         nextBtn.disabled = true;
@@ -1190,12 +1566,34 @@
       document.getElementById('modalVenue').textContent = ev.venue || 'Zaragoza';
       document.getElementById('modalPrice').textContent = ev.price || 'Consultar en enlace';
 
+      const expoRange = getExhibitionDateRange(ev);
+      modalProfileRange = expoRange;
+      const rangeRow = document.getElementById('modalExhibitionRangeRow');
+      const rangeText = document.getElementById('modalExhibitionRange');
+      const dateRow = document.getElementById('modalProfileDateRow');
+      if (expoRange && rangeRow && rangeText && dateRow) {
+        rangeText.textContent = `Del ${expoRange.start} al ${expoRange.end}`;
+        rangeRow.classList.remove('hidden');
+        const savedItem = getProfileCalendarEvents().find(item => getProfileEventKey(item) === getProfileEventKey(ev));
+        modalProfileChosenDate = savedItem?.date || ev.date || expoRange.start;
+        if (modalProfileChosenDate < expoRange.start) modalProfileChosenDate = expoRange.start;
+        if (modalProfileChosenDate > expoRange.end) modalProfileChosenDate = expoRange.end;
+        renderModalProfileDateStepper();
+        dateRow.classList.remove('hidden');
+      } else {
+        modalProfileChosenDate = ev.date || '';
+        if (rangeRow) rangeRow.classList.add('hidden');
+        if (dateRow) dateRow.classList.add('hidden');
+      }
+
       document.getElementById('modalAddGoogleCalBtn').href = buildGoogleCalendarUrl(ev);
 
       const refLink = document.getElementById('modalRefLink');
       const label = ev.actionLabel || (ev.isTicketUrl ? 'Comprar entradas' : 'Ir a Más info');
       refLink.href = ev.url || '#';
       refLink.innerHTML = `<span>${label}</span><span>↗</span>`;
+
+      updateModalProfileCalendarButton(ev);
 
       const modal = document.getElementById('eventModal');
       modal.classList.remove('hidden');
@@ -1204,9 +1602,10 @@
 
     function navigateModalEvent(delta) {
       if (currentModalEventIndex < 0) return;
+      const navList = Array.isArray(modalNavigationList) ? modalNavigationList : orderedVisibleEvents;
       const nextIdx = currentModalEventIndex + delta;
-      if (nextIdx >= 0 && nextIdx < orderedVisibleEvents.length) {
-        openEventModal(orderedVisibleEvents[nextIdx]);
+      if (nextIdx >= 0 && nextIdx < navList.length) {
+        openEventModal(navList[nextIdx], modalNavigationList);
       }
     }
 
@@ -1227,11 +1626,26 @@
 
     function setDriveStatus(text, isConnected = false) {
       const badge = document.getElementById('driveStatusBadge');
-      if (!badge) return;
-      badge.textContent = text;
-      badge.className = isConnected
-        ? 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold'
-        : 'text-[11px] px-2.5 py-0.5 rounded-full bg-slate-900 text-slate-400 border border-slate-700';
+      if (badge) {
+        badge.textContent = text;
+        badge.className = isConnected
+          ? 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold'
+          : 'text-[11px] px-2.5 py-0.5 rounded-full bg-slate-950 text-slate-400 border border-slate-700';
+      }
+      const banner = document.getElementById('profileDriveBanner');
+      if (banner) {
+        if (isConnected) {
+          banner.className = 'rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-2.5 text-xs text-emerald-200 font-medium';
+          banner.textContent = '🟢 Conectado con Google Drive. Ya puedes guardar todo tu perfil y tus datos en Drive.';
+        } else {
+          banner.className = 'rounded-xl border border-amber-500/40 bg-amber-500/10 px-3.5 py-2.5 text-xs text-amber-200 font-medium';
+          banner.textContent = '🔴 No estás conectado con Google Drive. Conecta primero para poder guardar tu perfil y tus datos en tu Drive.';
+        }
+      }
+      const saveBtn = document.getElementById('btnSaveUserProfile');
+      if (saveBtn) {
+        saveBtn.disabled = !isConnected;
+      }
     }
 
     async function saveFestivalUrls() {
@@ -1264,8 +1678,10 @@
       }
     }
 
+    const DEFAULT_GOOGLE_CLIENT_ID = '108535358368-9rfnr7kk4iklcp6qd7rq9cu5luivr2l2.apps.googleusercontent.com';
+
     function connectGoogleDrive() {
-      const clientId = (document.getElementById('cfgGoogleClientId')?.value || appState?.appConfig?.googleClientId || '').trim();
+      const clientId = (appState?.appConfig?.googleClientId || DEFAULT_GOOGLE_CLIENT_ID).trim();
       if (!clientId) {
         alert('Introduce primero tu Google OAuth Client ID en Configuración.');
         return;
@@ -1325,7 +1741,12 @@
           cleanCities[k] = v;
         }
       }
-      const payload = JSON.stringify({ updatedAt: new Date().toISOString(), date: todayYMD, cities: cleanCities });
+      const payload = JSON.stringify({
+        updatedAt: new Date().toISOString(),
+        date: todayYMD,
+        userProfile: getUserProfileSettings(),
+        cities: cleanCities
+      });
       const fId = await findSingleDriveFileId();
       const boundary = 'go2enjoy_boundary_' + Date.now();
       const metadata = JSON.stringify({ name: DRIVE_CACHE_FILENAME, mimeType: 'application/json' });
@@ -1451,15 +1872,659 @@
       }
     }
 
-    function updateHeaderUserUI(email) {
-      const emailEl = document.getElementById('headerUserEmail');
-      const logoutBtn = document.getElementById('btnLogoutGoogle');
-      if (email) {
-        emailEl.textContent = email;
-        logoutBtn.classList.remove('hidden');
+    const PROFILE_AVATAR_ICONS = ['😎', '🎸', '🎭', '🎬', '🍸', '🦊', '🦉', '🚀', '⚡', '🌟', '🎧', '👑'];
+    const POLITICAL_SCALE_OPTIONS = [
+      { value: 1, label: '1', sub: 'Izda' },
+      { value: 2, label: '2', sub: '' },
+      { value: 3, label: '3', sub: 'Centro' },
+      { value: 4, label: '4', sub: '' },
+      { value: 5, label: '5', sub: 'Dcha' }
+    ];
+    let draftProfileAvatar = '😎';
+    let draftProfileAvatarImage = '';
+    let draftPoliticalScale = null;
+    let draftAppearance = '';
+    let draftSexuality = '';
+    let draftSeekingPerson = '';
+    let draftSeekingRelation = '';
+    let draftProfilePhotos = ['', '', ''];
+
+    const PROFILE_SOCIAL_FIELDS = [
+      { key: 'instagram', label: 'Instagram', icon: '📷', placeholder: '@usuario o https://instagram.com/...' },
+      { key: 'tiktok', label: 'TikTok', icon: '🎵', placeholder: '@usuario o https://tiktok.com/@...' },
+      { key: 'x', label: 'X / Twitter', icon: '✖️', placeholder: '@usuario o https://x.com/...' },
+      { key: 'facebook', label: 'Facebook', icon: '📘', placeholder: 'https://facebook.com/...' },
+      { key: 'youtube', label: 'YouTube', icon: '▶️', placeholder: 'https://youtube.com/@...' },
+      { key: 'linkedin', label: 'LinkedIn', icon: '💼', placeholder: 'https://linkedin.com/in/...' },
+      { key: 'web', label: 'Web / Otro', icon: '🔗', placeholder: 'https://...' }
+    ];
+
+    const PROFILE_SEX_GROUPS = [
+      { key: 'appearance', elId: 'profileAppearanceGrid', single: true, options: ['Hombre', 'Mujer', 'Neutro', 'Otro'] },
+      { key: 'sexuality', elId: 'profileSexualityGrid', single: true, options: ['Heterosexual', 'Homosexual', 'Bisexual', 'Pansexual', 'Asexual', 'Otro'] },
+      { key: 'seekingPerson', elId: 'profileSeekingPersonGrid', single: true, options: ['Hombre', 'Mujer', 'Neutro', 'Cualquiera'] },
+      { key: 'seekingRelation', elId: 'profileSeekingRelationGrid', single: true, options: ['Amistad', 'Conocer gente', 'Cita', 'Relación seria', 'Algo casual', 'Planes culturales'] }
+    ];
+
+    function getUserProfileSettings() {
+      let local = {};
+      try {
+        local = JSON.parse(localStorage.getItem('go2enjoy_user_profile') || '{}') || {};
+      } catch {}
+      const srv = appState?.userProfile || {};
+      const rawScale = local.politicalScale !== undefined ? local.politicalScale : srv.politicalScale;
+      return {
+        email: local.email || srv.email || localStorage.getItem('go2enjoy_user_email') || '',
+        alias: typeof local.alias === 'string' ? local.alias : (srv.alias || ''),
+        avatar: local.avatar || srv.avatar || '😎',
+        avatarImage: typeof local.avatarImage === 'string' ? local.avatarImage : (srv.avatarImage || ''),
+        hideAlias: typeof local.hideAlias === 'boolean' ? local.hideAlias : Boolean(srv.hideAlias),
+        hideEmail: typeof local.hideEmail === 'boolean' ? local.hideEmail : Boolean(srv.hideEmail),
+        politicalPhrase: typeof local.politicalPhrase === 'string' ? local.politicalPhrase : (srv.politicalPhrase || ''),
+        politicalScale: Number.isInteger(Number(rawScale)) && Number(rawScale) >= 1 && Number(rawScale) <= 5 ? Number(rawScale) : null,
+        appearance: typeof local.appearance === 'string' ? local.appearance : (srv.appearance || ''),
+        sexuality: typeof local.sexuality === 'string' ? local.sexuality : (Array.isArray(local.sexuality) ? (local.sexuality[0] || '') : (typeof srv.sexuality === 'string' ? srv.sexuality : (Array.isArray(srv.sexuality) ? (srv.sexuality[0] || '') : ''))),
+        seekingPerson: typeof local.seekingPerson === 'string' ? local.seekingPerson : (Array.isArray(local.seekingPerson) ? (local.seekingPerson[0] || '') : (typeof srv.seekingPerson === 'string' ? srv.seekingPerson : (Array.isArray(srv.seekingPerson) ? (srv.seekingPerson[0] || '') : ''))),
+        seekingRelation: typeof local.seekingRelation === 'string' ? local.seekingRelation : (Array.isArray(local.seekingRelation) ? (local.seekingRelation[0] || '') : (typeof srv.seekingRelation === 'string' ? srv.seekingRelation : (Array.isArray(srv.seekingRelation) ? (srv.seekingRelation[0] || '') : ''))),
+        photos: [0, 1, 2].map(i => (Array.isArray(local.photos) && typeof local.photos[i] === 'string') ? local.photos[i] : ((Array.isArray(srv.photos) && typeof srv.photos[i] === 'string') ? srv.photos[i] : '')),
+        socialLinks: {
+          instagram: local.socialLinks?.instagram ?? srv.socialLinks?.instagram ?? '',
+          tiktok: local.socialLinks?.tiktok ?? srv.socialLinks?.tiktok ?? '',
+          x: local.socialLinks?.x ?? srv.socialLinks?.x ?? '',
+          facebook: local.socialLinks?.facebook ?? srv.socialLinks?.facebook ?? '',
+          youtube: local.socialLinks?.youtube ?? srv.socialLinks?.youtube ?? '',
+          linkedin: local.socialLinks?.linkedin ?? srv.socialLinks?.linkedin ?? '',
+          web: local.socialLinks?.web ?? srv.socialLinks?.web ?? ''
+        },
+        profileCalendar: Array.isArray(local.profileCalendar)
+          ? local.profileCalendar
+          : (Array.isArray(srv.profileCalendar) ? srv.profileCalendar : [])
+      };
+    }
+
+    function renderAvatarInto(el, avatar, avatarImage, imgClass = 'w-full h-full object-cover') {
+      if (!el) return;
+      if (avatarImage) {
+        el.innerHTML = `<img src="${avatarImage}" alt="Avatar" class="${imgClass}" />`;
       } else {
-        emailEl.textContent = 'Sin sesión';
-        logoutBtn.classList.add('hidden');
+        el.textContent = avatar || '😎';
+      }
+    }
+
+    function updateHeaderUserUI(email) {
+      const profile = getUserProfileSettings();
+      const effectiveEmail = typeof email === 'string' ? email : profile.email;
+      const avatarEl = document.getElementById('headerProfileAvatar');
+      const labelEl = document.getElementById('headerProfileLabel');
+      const logoutBtn = document.getElementById('btnLogoutGoogle');
+
+      renderAvatarInto(avatarEl, profile.avatar, profile.avatarImage);
+
+      const visibleAlias = !profile.hideAlias && profile.alias ? profile.alias : '';
+      const visibleEmail = !profile.hideEmail && effectiveEmail ? effectiveEmail : '';
+      if (labelEl) {
+        labelEl.textContent = visibleAlias || visibleEmail || (effectiveEmail ? 'Mi perfil' : 'Sin sesión');
+      }
+      if (logoutBtn) {
+        logoutBtn.classList.toggle('hidden', !effectiveEmail);
+      }
+    }
+
+    function renderProfileAvatarGrid() {
+      const grid = document.getElementById('profileAvatarGrid');
+      if (!grid) return;
+      grid.innerHTML = PROFILE_AVATAR_ICONS.map(icon => {
+        const selected = !draftProfileAvatarImage && draftProfileAvatar === icon;
+        return `
+          <button type="button" onclick="selectProfileAvatar('${icon}')" class="h-10 rounded-xl border text-xl flex items-center justify-center transition ${selected ? 'bg-indigo-600/30 border-indigo-400 shadow-md shadow-indigo-500/20' : 'bg-slate-800/70 border-slate-700 hover:border-slate-500'}">
+            ${icon}
+          </button>
+        `;
+      }).join('');
+      renderAvatarInto(document.getElementById('profileAvatarPreview'), draftProfileAvatar, draftProfileAvatarImage);
+      const clearBtn = document.getElementById('btnClearProfilePhoto');
+      if (clearBtn) clearBtn.classList.toggle('hidden', !draftProfileAvatarImage);
+    }
+
+    function renderPoliticalScaleButtons() {
+      const grid = document.getElementById('profilePoliticalScaleGrid');
+      if (!grid) return;
+      grid.innerHTML = POLITICAL_SCALE_OPTIONS.map(opt => {
+        const selected = draftPoliticalScale === opt.value;
+        return `
+          <button type="button" onclick="selectPoliticalScale(${opt.value})" class="py-2 px-1 rounded-xl border text-center transition flex flex-col items-center justify-center ${selected ? 'bg-indigo-600 border-indigo-400 text-white shadow-md shadow-indigo-600/30 font-extrabold' : 'bg-slate-800/70 border-slate-700 text-slate-300 hover:border-slate-500 font-bold'}">
+            <span class="text-sm leading-tight">${opt.label}</span>
+            ${opt.sub ? `<span class="text-[10px] opacity-80 leading-tight">${opt.sub}</span>` : ''}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectPoliticalScale(val) {
+      draftPoliticalScale = draftPoliticalScale === val ? null : val;
+      renderPoliticalScaleButtons();
+    }
+
+    const POLITICAL_QUIZ_QUESTIONS = [
+      { id: 1, text: 'El Estado debería subir los impuestos a las grandes fortunas para reforzar los servicios públicos.', dir: 'left' },
+      { id: 2, text: 'Cuanto menos intervenga el Estado en la economía, mejor funciona el país.', dir: 'right' },
+      { id: 3, text: 'La sanidad y la educación deberían ser casi exclusivamente públicas y gestionadas por el Estado.', dir: 'left' },
+      { id: 4, text: 'Es preferible bajar impuestos aunque eso suponga reducir algunos programas o ayudas públicas.', dir: 'right' },
+      { id: 5, text: 'El gobierno debería limitar por ley los precios del alquiler en zonas tensionadas.', dir: 'left' },
+      { id: 6, text: 'Las empresas necesitan mayor flexibilidad laboral y menos trabas para crear empleo.', dir: 'right' },
+      { id: 7, text: 'La transición ecológica debe ser prioritaria aunque frene a corto plazo ciertos sectores industriales.', dir: 'left' },
+      { id: 8, text: 'Conviene mantener valores y tradiciones nacionales frente a cambios sociales rápidos.', dir: 'right' },
+      { id: 9, text: 'Las leyes deberían proteger más activamente a los colectivos vulnerables y la diversidad social.', dir: 'left' },
+      { id: 10, text: 'La iniciativa privada suele gestionar los recursos de forma más eficiente que el sector público.', dir: 'right' }
+    ];
+    const POLITICAL_SCALE_LABELS = {
+      1: '1 · Izquierda',
+      2: '2 · Centro-izquierda',
+      3: '3 · Centro',
+      4: '4 · Centro-derecha',
+      5: '5 · Derecha'
+    };
+    let politicalQuizAnswers = {};
+
+    function openPoliticalQuizModal() {
+      politicalQuizAnswers = {};
+      document.getElementById('politicalQuizResultBox').classList.add('hidden');
+      renderPoliticalQuizQuestions();
+      const modal = document.getElementById('politicalQuizModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePoliticalQuizModal() {
+      const modal = document.getElementById('politicalQuizModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function selectQuizAnswer(qId, agreementScore) {
+      politicalQuizAnswers[qId] = agreementScore;
+      renderPoliticalQuizQuestions();
+    }
+
+    function renderPoliticalQuizQuestions() {
+      const container = document.getElementById('politicalQuizQuestionsList');
+      if (!container) return;
+      const scaleChoices = [
+        { val: 1, label: 'Nada' },
+        { val: 2, label: 'Poco' },
+        { val: 3, label: 'Neutral' },
+        { val: 4, label: 'Bastante' },
+        { val: 5, label: 'Totalmente' }
+      ];
+      container.innerHTML = POLITICAL_QUIZ_QUESTIONS.map((q, idx) => {
+        const current = politicalQuizAnswers[q.id];
+        return `
+          <div class="rounded-xl bg-slate-800/60 border border-slate-700/70 p-3.5 space-y-2.5">
+            <p class="text-xs font-bold text-slate-200 leading-snug"><span class="text-indigo-400 mr-1">${idx + 1}.</span>${q.text}</p>
+            <div class="grid grid-cols-5 gap-1.5">
+              ${scaleChoices.map(c => {
+                const active = current === c.val;
+                return `
+                  <button type="button" onclick="selectQuizAnswer(${q.id}, ${c.val})" class="py-1.5 px-1 rounded-lg border text-[11px] transition ${active ? 'bg-indigo-600 border-indigo-400 text-white font-bold shadow-sm' : 'bg-slate-900 border-slate-700 text-slate-300 hover:border-slate-500'}">
+                    ${c.label}
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const answeredCount = Object.keys(politicalQuizAnswers).length;
+      const total = POLITICAL_QUIZ_QUESTIONS.length;
+      document.getElementById('politicalQuizProgress').textContent = `${answeredCount}/${total} respondidas`;
+      document.getElementById('btnCalculatePoliticalQuiz').disabled = answeredCount < total;
+    }
+
+    function calculatePoliticalQuizResult() {
+      const scores = POLITICAL_QUIZ_QUESTIONS.map(q => {
+        const agree = politicalQuizAnswers[q.id] || 3;
+        return q.dir === 'left' ? 6 - agree : agree;
+      });
+      const mean = scores.reduce((a, b) => a + b, 0) / scores.length;
+      const chosen = Math.max(1, Math.min(5, Math.round(mean)));
+      const variance = scores.reduce((acc, s) => acc + Math.pow(s - mean, 2), 0) / scores.length;
+      const stdDev = Math.sqrt(variance);
+      const clarity = 1 - Math.abs(mean - chosen) * 0.8;
+      const consistency = 1 - Math.min(stdDev, 2) / 3.2;
+      const probability = Math.round(Math.max(52, Math.min(98, (0.55 * consistency + 0.45 * clarity) * 100)));
+
+      draftPoliticalScale = chosen;
+      renderPoliticalScaleButtons();
+
+      const badge = document.getElementById('profilePoliticalQuizResultBadge');
+      if (badge) {
+        badge.textContent = `Encuesta: ${POLITICAL_SCALE_LABELS[chosen]} (${probability}% prob.)`;
+        badge.classList.remove('hidden');
+      }
+
+      const resultBox = document.getElementById('politicalQuizResultBox');
+      resultBox.innerHTML = `
+        <p class="font-extrabold text-sm text-white">Resultado: ${POLITICAL_SCALE_LABELS[chosen]}</p>
+        <p>Probabilidad estimada de acierto: <strong class="text-emerald-300">${probability}%</strong></p>
+        <p class="text-[11px] text-indigo-200/80">Ya hemos marcado el botón <strong>${chosen}</strong> en tu perfil. Puedes cambiarlo manualmente cuando quieras.</p>
+      `;
+      resultBox.classList.remove('hidden');
+    }
+
+    function selectProfileAvatar(icon) {
+      draftProfileAvatar = icon;
+      draftProfileAvatarImage = '';
+      renderProfileAvatarGrid();
+    }
+
+    function clearProfilePhoto() {
+      draftProfileAvatarImage = '';
+      renderProfileAvatarGrid();
+    }
+
+    function resizeImageFileToDataUrl(file, maxSide, quality, onDone) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(img.width * scale));
+          canvas.height = Math.max(1, Math.round(img.height * scale));
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          onDone(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function onProfilePhotoSelected(event) {
+      const file = event.target?.files?.[0];
+      resizeImageFileToDataUrl(file, 320, 0.94, (dataUrl) => {
+        draftProfileAvatarImage = dataUrl;
+        renderProfileAvatarGrid();
+      });
+    }
+
+    function renderProfilePhotosTab() {
+      const grid = document.getElementById('profilePhotosSlotsGrid');
+      if (!grid) return;
+      grid.innerHTML = [0, 1, 2].map(idx => {
+        const src = draftProfilePhotos[idx] || '';
+        return `
+          <div class="rounded-xl border border-slate-700 bg-slate-950/70 p-2.5 flex flex-col gap-2">
+            <div class="aspect-square rounded-lg bg-slate-900 border border-slate-800 overflow-hidden flex items-center justify-center">
+              ${src
+                ? `<img src="${src}" alt="Foto ${idx + 1}" class="w-full h-full object-cover" />`
+                : `<span class="text-xs text-slate-500 font-semibold">Foto ${idx + 1}</span>`}
+            </div>
+            <div class="flex items-center gap-1.5">
+              <label class="flex-1 cursor-pointer text-center py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-bold text-indigo-300 transition">
+                ${src ? 'Cambiar' : '+ Añadir'}
+                <input type="file" accept="image/*" onchange="onProfileExtraPhotoSelected(${idx}, event)" class="hidden" />
+              </label>
+              ${src ? `<button type="button" onclick="clearProfileExtraPhoto(${idx})" class="py-1.5 px-2 rounded-lg bg-rose-500/15 hover:bg-rose-500/30 border border-rose-500/30 text-[11px] font-bold text-rose-300 transition">✕</button>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function onProfileExtraPhotoSelected(slotIdx, event) {
+      const file = event.target?.files?.[0];
+      resizeImageFileToDataUrl(file, 480, 0.9, (dataUrl) => {
+        draftProfilePhotos[slotIdx] = dataUrl;
+        renderProfilePhotosTab();
+      });
+    }
+
+    function clearProfileExtraPhoto(slotIdx) {
+      draftProfilePhotos[slotIdx] = '';
+      renderProfilePhotosTab();
+    }
+
+    function buildSocialNetworkUrl(key, rawValue) {
+      const val = String(rawValue || '').trim();
+      if (!val) return '';
+      if (/^https?:\/\//i.test(val)) return val;
+      if (val.includes('.') && !val.startsWith('@')) return `https://${val}`;
+      const handle = val.replace(/^@+/, '');
+      const baseMap = {
+        instagram: `https://instagram.com/${handle}`,
+        tiktok: `https://tiktok.com/@${handle}`,
+        x: `https://x.com/${handle}`,
+        facebook: `https://facebook.com/${handle}`,
+        youtube: `https://youtube.com/@${handle}`,
+        linkedin: `https://linkedin.com/in/${handle}`,
+        web: `https://${handle}`
+      };
+      return baseMap[key] || `https://${handle}`;
+    }
+
+    function updateSocialLinkTestButton(key) {
+      const input = document.getElementById(`profileSocial_${key}`);
+      const btn = document.getElementById(`profileSocialTest_${key}`);
+      if (!input || !btn) return;
+      const url = buildSocialNetworkUrl(key, input.value);
+      if (url) {
+        btn.href = url;
+        btn.className = 'shrink-0 px-3 py-2 rounded-xl bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-[11px] font-bold transition whitespace-nowrap';
+      } else {
+        btn.href = '#';
+        btn.className = 'shrink-0 px-3 py-2 rounded-xl bg-slate-900 text-slate-600 border border-slate-800 text-[11px] font-bold pointer-events-none opacity-50 whitespace-nowrap';
+      }
+    }
+
+    function renderProfileSocialInputs(links = {}) {
+      const container = document.getElementById('profileSocialLinksContainer');
+      if (!container) return;
+      container.innerHTML = PROFILE_SOCIAL_FIELDS.map(f => `
+        <div class="flex items-center gap-2">
+          <label for="profileSocial_${f.key}" class="w-24 sm:w-28 shrink-0 text-xs font-bold text-slate-300 flex items-center gap-1.5">
+            <span>${f.icon}</span>
+            <span>${f.label}</span>
+          </label>
+          <input id="profileSocial_${f.key}" type="text" oninput="updateSocialLinkTestButton('${f.key}')" value="${String(links[f.key] || '').replace(/"/g, '&quot;')}" placeholder="${f.placeholder}" class="flex-1 min-w-0 rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" />
+          <a id="profileSocialTest_${f.key}" href="#" target="_blank" rel="noopener noreferrer" title="Comprobar enlace">Probar ↗</a>
+        </div>
+      `).join('');
+      PROFILE_SOCIAL_FIELDS.forEach(f => updateSocialLinkTestButton(f.key));
+    }
+
+    function collectProfileSocialLinks() {
+      const out = {};
+      PROFILE_SOCIAL_FIELDS.forEach(f => {
+        out[f.key] = (document.getElementById(`profileSocial_${f.key}`)?.value || '').trim();
+      });
+      return out;
+    }
+
+    function switchProfileTab(tabNum) {
+      const activeCls = 'py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap';
+      const inactiveCls = 'py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap';
+      [1, 2, 3, 4, 5, 6].forEach(n => {
+        const panel = document.getElementById(`profileTabPanel${n}`);
+        const btn = document.getElementById(`profileTabBtn${n}`);
+        const active = n === tabNum;
+        if (panel) panel.classList.toggle('hidden', !active);
+        if (btn) btn.className = active ? activeCls : inactiveCls;
+      });
+      if (tabNum === 6) {
+        setTimeout(() => {
+          initProfileCalendar();
+          renderProfileCalendarTab();
+          if (profileCalendarInstance) profileCalendarInstance.updateSize();
+        }, 50);
+      }
+    }
+
+    function renderProfileSexTabGrids() {
+      const stateMap = {
+        appearance: draftAppearance,
+        sexuality: draftSexuality,
+        seekingPerson: draftSeekingPerson,
+        seekingRelation: draftSeekingRelation
+      };
+      PROFILE_SEX_GROUPS.forEach(group => {
+        const container = document.getElementById(group.elId);
+        if (!container) return;
+        const current = stateMap[group.key];
+        container.innerHTML = group.options.map(opt => {
+          const selected = group.single ? current === opt : current.includes(opt);
+          return `
+            <button type="button" onclick="toggleProfileSexOption('${group.key}', '${opt.replace(/'/g, "\\'")}')" class="px-3 py-2 rounded-xl border text-xs font-bold transition ${selected ? 'bg-indigo-600 border-indigo-400 text-white shadow-sm' : 'bg-slate-800/70 border-slate-700 text-slate-300 hover:border-slate-500'}">
+              ${opt}
+            </button>
+          `;
+        }).join('');
+      });
+    }
+
+    function toggleProfileSexOption(key, val) {
+      if (key === 'appearance') {
+        draftAppearance = draftAppearance === val ? '' : val;
+      } else if (key === 'sexuality') {
+        draftSexuality = draftSexuality === val ? '' : val;
+      } else if (key === 'seekingPerson') {
+        draftSeekingPerson = draftSeekingPerson === val ? '' : val;
+      } else if (key === 'seekingRelation') {
+        draftSeekingRelation = draftSeekingRelation === val ? '' : val;
+      }
+      renderProfileSexTabGrids();
+    }
+
+    function hydrateProfilePageUI() {
+      const profile = getUserProfileSettings();
+      draftProfileAvatar = profile.avatar || '😎';
+      draftProfileAvatarImage = profile.avatarImage || '';
+      draftPoliticalScale = profile.politicalScale || null;
+      draftAppearance = profile.appearance || '';
+      draftSexuality = typeof profile.sexuality === 'string' ? profile.sexuality : '';
+      draftSeekingPerson = typeof profile.seekingPerson === 'string' ? profile.seekingPerson : '';
+      draftSeekingRelation = typeof profile.seekingRelation === 'string' ? profile.seekingRelation : '';
+      draftProfilePhotos = [...(profile.photos || ['', '', ''])];
+      document.getElementById('profileAliasInput').value = profile.alias || '';
+      document.getElementById('profileHideAlias').checked = Boolean(profile.hideAlias);
+      document.getElementById('profileEmailInput').value = profile.email || '';
+      document.getElementById('profileHideEmail').checked = Boolean(profile.hideEmail);
+      document.getElementById('profilePoliticalPhrase').value = profile.politicalPhrase || '';
+      renderProfileAvatarGrid();
+      renderPoliticalScaleButtons();
+      renderProfileSexTabGrids();
+      renderProfilePhotosTab();
+      renderProfileSocialInputs(profile.socialLinks || {});
+      renderProfileCalendarTab();
+      setDriveStatus(
+        driveAccessToken ? '☁️ Drive conectado (go2enjoy_cache.json)' : 'No conectado',
+        Boolean(driveAccessToken)
+      );
+    }
+
+    function openProfileModal() {
+      hydrateProfilePageUI();
+      switchProfileTab(1);
+      const view = document.getElementById('profileFullScreenView');
+      if (view) view.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeProfileModal() {
+      const view = document.getElementById('profileFullScreenView');
+      if (view) view.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    async function saveUserProfile() {
+      if (!driveAccessToken) {
+        alert('Conecta primero con Google Drive para poder guardar tu perfil y tus datos.');
+        return;
+      }
+      const alias = (document.getElementById('profileAliasInput').value || '').trim();
+      const hideAlias = document.getElementById('profileHideAlias').checked;
+      const email = (document.getElementById('profileEmailInput').value || '').trim().toLowerCase();
+      const hideEmail = document.getElementById('profileHideEmail').checked;
+      const politicalPhrase = (document.getElementById('profilePoliticalPhrase').value || '').trim();
+
+      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('Introduce un correo electrónico válido.');
+        return;
+      }
+
+      const payload = {
+        alias,
+        hideAlias,
+        email,
+        hideEmail,
+        avatar: draftProfileAvatar,
+        avatarImage: draftProfileAvatarImage,
+        politicalPhrase,
+        politicalScale: draftPoliticalScale,
+        appearance: draftAppearance,
+        sexuality: draftSexuality,
+        seekingPerson: draftSeekingPerson,
+        seekingRelation: draftSeekingRelation,
+        photos: [...draftProfilePhotos],
+        socialLinks: collectProfileSocialLinks(),
+        profileCalendar: getProfileCalendarEvents()
+      };
+      localStorage.setItem('go2enjoy_user_profile', JSON.stringify(payload));
+      if (email) {
+        localStorage.setItem('go2enjoy_user_email', email);
+      } else {
+        localStorage.removeItem('go2enjoy_user_email');
+      }
+      if (appState?.userProfile) {
+        Object.assign(appState.userProfile, payload);
+      }
+
+      try {
+        await fetch('/api/user-profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+      } catch {}
+
+      if (driveAccessToken) {
+        await writeSingleDriveCache(appState?.cityCache || {}).catch(() => {});
+      }
+
+      updateHeaderUserUI(email);
+      closeProfileModal();
+    }
+
+    function getProfileEventKey(ev) {
+      if (!ev) return '';
+      if (ev.subType === 'Exposiciones') {
+        return `expo||${ev.title || ''}||${ev.url || ''}`;
+      }
+      return `${ev.date || ''}||${ev.time || ''}||${ev.title || ''}||${ev.url || ''}`;
+    }
+
+    function getProfileCalendarEvents() {
+      return [...(getUserProfileSettings().profileCalendar || [])].sort((a, b) => {
+        const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
+        const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
+        if (ka !== kb) return ka.localeCompare(kb);
+        return (a.title || '').localeCompare(b.title || '', 'es');
+      });
+    }
+
+    async function persistProfileCalendarEvents(eventsList) {
+      const current = getUserProfileSettings();
+      const updated = { ...current, profileCalendar: eventsList };
+      localStorage.setItem('go2enjoy_user_profile', JSON.stringify(updated));
+      if (appState?.userProfile) {
+        appState.userProfile.profileCalendar = eventsList;
+      }
+      try {
+        await fetch('/api/user-profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ profileCalendar: eventsList })
+        });
+      } catch {}
+      if (driveAccessToken) {
+        await writeSingleDriveCache(appState?.cityCache || {}).catch(() => {});
+      }
+    }
+
+    function updateModalProfileCalendarButton(ev) {
+      const btn = document.getElementById('modalAddProfileCalBtn');
+      if (!btn || !ev) return;
+      const key = getProfileEventKey(ev);
+      const exists = getProfileCalendarEvents().some(item => getProfileEventKey(item) === key);
+      if (exists) {
+        btn.className = 'w-full px-3 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white border border-amber-400 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition';
+        btn.innerHTML = '<span>✓ En tu calendario de Perfil (pulsa para quitar)</span>';
+      } else {
+        btn.className = 'w-full px-3 py-2.5 rounded-xl bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white border border-amber-500/40 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition';
+        btn.innerHTML = '<span>👤 Añadir al calendario de Perfil</span>';
+      }
+    }
+
+    async function stepModalProfileDate(delta) {
+      if (!currentModalEvent || !modalProfileRange) return;
+      const candidate = addDaysYMD(modalProfileChosenDate || modalProfileRange.start, delta);
+      if (candidate < modalProfileRange.start || candidate > modalProfileRange.end) return;
+      modalProfileChosenDate = candidate;
+      renderModalProfileDateStepper();
+
+      const key = getProfileEventKey(currentModalEvent);
+      const list = getProfileCalendarEvents();
+      const idx = list.findIndex(item => getProfileEventKey(item) === key);
+      if (idx >= 0) {
+        list[idx].date = modalProfileChosenDate;
+        await persistProfileCalendarEvents(list);
+        renderProfileCalendarTab();
+        document.getElementById('modalDateTime').textContent = `${modalProfileChosenDate} a las ${currentModalEvent.time || '19:30'}`;
+      }
+    }
+
+    async function toggleCurrentEventInProfileCalendar() {
+      if (!currentModalEvent) return;
+      const ev = currentModalEvent;
+      const key = getProfileEventKey(ev);
+      const list = getProfileCalendarEvents();
+      const idx = list.findIndex(item => getProfileEventKey(item) === key);
+      if (idx >= 0) {
+        list.splice(idx, 1);
+      } else {
+        const expoRange = getExhibitionDateRange(ev);
+        const pickedDate = expoRange
+          ? (modalProfileChosenDate || ev.date || expoRange.start)
+          : (ev.date || '');
+        list.push({
+          id: ev.id || '',
+          subType: ev.subType || '',
+          title: ev.title || '',
+          artistName: ev.artistName || '',
+          date: pickedDate,
+          rangeStart: expoRange ? expoRange.start : '',
+          rangeEnd: expoRange ? expoRange.end : '',
+          time: ev.time || '',
+          venue: ev.venue || '',
+          venueTag: ev.venueTag || '',
+          musicStyle: ev.musicStyle || '',
+          styleTag: ev.styleTag || '',
+          styleColor: ev.styleColor || '',
+          price: ev.price || '',
+          url: ev.url || '',
+          isTicketUrl: Boolean(ev.isTicketUrl),
+          actionLabel: ev.actionLabel || '',
+          color: getEventColor(ev)
+        });
+      }
+      await persistProfileCalendarEvents(list);
+      updateModalProfileCalendarButton(ev);
+      renderProfileCalendarTab();
+    }
+
+    async function removeEventFromProfileCalendar(idx) {
+      const list = getProfileCalendarEvents();
+      if (idx < 0 || idx >= list.length) return;
+      list.splice(idx, 1);
+      await persistProfileCalendarEvents(list);
+      renderProfileCalendarTab();
+      if (currentModalEvent) {
+        updateModalProfileCalendarButton(currentModalEvent);
+      }
+    }
+
+    function renderProfileCalendarTab() {
+      const list = getProfileCalendarEvents();
+      const countEl = document.getElementById('profileCalendarCount');
+      if (countEl) {
+        countEl.textContent = `${list.length} ${list.length === 1 ? 'evento' : 'eventos'}`;
+      }
+      initProfileCalendar();
+      if (profileCalendarInstance) {
+        profileCalendarInstance.removeAllEvents();
+        profileCalendarInstance.addEventSource(mapEventsToFullCalendar(list));
       }
     }
 
