@@ -815,7 +815,7 @@
             <span>↗</span>
           </a>
         </div>
-        <div id="modalProfileDateRow" class="hidden flex items-center justify-between gap-2 rounded-xl bg-amber-500/10 border border-amber-500/30 px-3 py-2">
+        <div id="modalProfileDateRow" class="invisible pointer-events-none flex items-center justify-between gap-2 rounded-xl bg-amber-500/10 border border-amber-500/30 px-3 py-2">
           <span class="text-xs font-bold text-amber-200 whitespace-nowrap">📌 Fijar día en Perfil:</span>
           <div class="flex items-center gap-1.5">
             <button id="modalProfileDatePrevBtn" type="button" onclick="stepModalProfileDate(-1)" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 disabled:opacity-35 disabled:cursor-not-allowed border border-slate-700 text-xs font-bold text-white flex items-center justify-center transition">◀</button>
@@ -885,25 +885,52 @@
     </div>
   </div>
 
-  <!-- Modal de Apuntados Públicos en un Evento -->
+  <!-- Modal de Apuntados Públicos en un Evento (Matriz de Iconos) -->
   <div id="eventAttendeesModal" class="fixed inset-0 z-[65] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
     <div class="w-full max-w-lg max-h-[88vh] flex flex-col rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl">
       <div class="flex items-start justify-between gap-3 border-b border-slate-800 pb-3 shrink-0">
-        <div>
+        <div class="min-w-0">
           <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
             <span>👥</span>
             <span>Apuntados a este evento</span>
           </h2>
-          <p id="attendeesModalEventTitle" class="text-xs text-slate-400 mt-0.5 truncate max-w-[360px]"></p>
+          <p id="attendeesModalEventTitle" class="text-xs text-slate-300 font-semibold mt-0.5 truncate"></p>
+          <p id="attendeesModalEventDateTime" class="text-xs text-indigo-300 font-bold mt-0.5"></p>
         </div>
         <button type="button" onclick="closeEventAttendeesModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
       </div>
 
-      <div id="eventAttendeesList" class="flex-1 min-h-0 overflow-y-auto py-4 space-y-3 pr-1"></div>
+      <div id="eventAttendeesList" class="flex-1 min-h-0 overflow-y-auto py-4 pr-1"></div>
 
-      <div class="pt-3 border-t border-slate-800 flex justify-end shrink-0">
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-2 shrink-0">
+        <span class="text-[11px] text-slate-400">Pulsa un icono para ver lo que comparte</span>
         <button type="button" onclick="closeEventAttendeesModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">Cerrar</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal de Detalle de un Asistente Público -->
+  <div id="attendeeDetailModal" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-md max-h-[88vh] flex flex-col rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-800 pb-3 shrink-0">
+        <h3 class="text-base font-extrabold text-white">👤 Información compartida</h3>
+        <button type="button" onclick="closeAttendeeDetailModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
+      </div>
+      <div id="attendeeDetailBody" class="flex-1 min-h-0 overflow-y-auto py-4 space-y-3 pr-1"></div>
+      <div class="pt-3 border-t border-slate-800 flex justify-end shrink-0">
+        <button type="button" onclick="closeAttendeeDetailModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bloqueo de pantalla mientras se guarda -->
+  <div id="savingBlockingOverlay" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/75 backdrop-blur-sm select-none cursor-wait">
+    <div class="rounded-2xl bg-slate-900 border border-indigo-500/50 px-8 py-6 shadow-2xl flex flex-col items-center gap-3 text-center">
+      <svg class="animate-spin h-8 w-8 text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <p id="savingBlockingText" class="text-sm font-extrabold tracking-widest uppercase text-white">GUARDANDO ESPERA</p>
     </div>
   </div>
 
@@ -1670,11 +1697,11 @@
         if (modalProfileChosenDate < expoRange.start) modalProfileChosenDate = expoRange.start;
         if (modalProfileChosenDate > expoRange.end) modalProfileChosenDate = expoRange.end;
         renderModalProfileDateStepper();
-        dateRow.classList.remove('hidden');
+        dateRow.classList.remove('invisible', 'pointer-events-none');
       } else {
         modalProfileChosenDate = ev.date || '';
         if (rangeRow) rangeRow.classList.add('hidden');
-        if (dateRow) dateRow.classList.add('hidden');
+        if (dateRow) dateRow.classList.add('invisible', 'pointer-events-none');
       }
 
       document.getElementById('modalAddGoogleCalBtn').href = buildGoogleCalendarUrl(ev);
@@ -2337,12 +2364,51 @@
       }).join('');
     }
 
+    function makeThumbnailFromDataUrl(dataUrl, maxSide = 220, quality = 0.82) {
+      return new Promise((resolve) => {
+        if (!dataUrl) return resolve('');
+        const img = new Image();
+        img.onload = () => {
+          const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(img.width * scale));
+          canvas.height = Math.max(1, Math.round(img.height * scale));
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = () => resolve(dataUrl);
+        img.src = dataUrl;
+      });
+    }
+
     function onProfileExtraPhotoSelected(slotIdx, event) {
       const file = event.target?.files?.[0];
-      resizeImageFileToDataUrl(file, 480, 0.9, (dataUrl) => {
-        draftProfilePhotos[slotIdx] = dataUrl;
-        renderProfilePhotosTab();
-      });
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        const rawDataUrl = reader.result;
+        if (file.size <= 900 * 1024) {
+          draftProfilePhotos[slotIdx] = rawDataUrl;
+          renderProfilePhotosTab();
+          return;
+        }
+        const img = new Image();
+        img.onload = () => {
+          const maxSide = 1280;
+          const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.max(1, Math.round(img.width * scale));
+          canvas.height = Math.max(1, Math.round(img.height * scale));
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const mime = (file.type === 'image/png' || file.type === 'image/webp') ? file.type : 'image/jpeg';
+          draftProfilePhotos[slotIdx] = canvas.toDataURL(mime, 0.9);
+          renderProfilePhotosTab();
+        };
+        img.src = rawDataUrl;
+      };
+      reader.readAsDataURL(file);
     }
 
     function clearProfileExtraPhoto(slotIdx) {
@@ -2499,6 +2565,24 @@
       document.body.classList.remove('overflow-hidden');
     }
 
+    function showSavingOverlay(message = 'GUARDANDO ESPERA') {
+      const overlay = document.getElementById('savingBlockingOverlay');
+      const txt = document.getElementById('savingBlockingText');
+      if (txt) txt.textContent = message;
+      if (overlay) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+      }
+    }
+
+    function hideSavingOverlay() {
+      const overlay = document.getElementById('savingBlockingOverlay');
+      if (overlay) {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+      }
+    }
+
     async function saveUserProfile() {
       if (!driveAccessToken) {
         alert('Conecta primero con Google Drive para poder guardar tu perfil y tus datos.');
@@ -2508,8 +2592,9 @@
       const prevBtnText = btn ? btn.textContent : '';
       if (btn) {
         btn.disabled = true;
-        btn.textContent = 'Guardando en Drive...';
+        btn.textContent = 'Guardando...';
       }
+      showSavingOverlay('GUARDANDO ESPERA');
 
       try {
         const alias = (document.getElementById('profileAliasInput').value || '').trim();
@@ -2564,6 +2649,7 @@
         updateHeaderUserUI(email);
         closeProfileModal();
       } finally {
+        hideSavingOverlay();
         if (btn) {
           btn.disabled = !driveAccessToken;
           btn.textContent = prevBtnText || '💾 Guardar Perfil';
@@ -2802,13 +2888,27 @@
       }
 
       const blob = await (await fetch(dataUrl)).blob();
+      const mime = blob.type || 'image/jpeg';
+      const ext = mime === 'image/png' ? 'png' : (mime === 'image/webp' ? 'webp' : 'jpg');
+      const finalFileName = customFileName || `go2enjoy_profile_photo_${Number(slotIdx) + 1}.${ext}`;
+      const q2 = encodeURIComponent(`name='${finalFileName}' and trashed=false`);
+      if (!existingId && finalFileName !== fileName) {
+        const s2 = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q2}&fields=files(id)&pageSize=1`, {
+          headers: { Authorization: `Bearer ${driveAccessToken}` }
+        });
+        if (s2.ok) {
+          const d2 = await s2.json();
+          existingId = d2.files?.[0]?.id || '';
+        }
+      }
+
       const form = new FormData();
-      form.append('metadata', new Blob([JSON.stringify({ name: fileName, mimeType: 'image/jpeg' })], { type: 'application/json' }));
+      form.append('metadata', new Blob([JSON.stringify({ name: finalFileName, mimeType: mime })], { type: 'application/json' }));
       form.append('file', blob);
 
       const uploadUrl = existingId
-        ? `https://www.googleapis.com/upload/drive/v3/files/${existingId}?uploadType=multipart&fields=id`
-        : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id';
+        ? `https://www.googleapis.com/upload/drive/v3/files/${existingId}?uploadType=multipart&fields=id,webViewLink`
+        : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,webViewLink';
       const uploadRes = await fetch(uploadUrl, {
         method: existingId ? 'PATCH' : 'POST',
         headers: { Authorization: `Bearer ${driveAccessToken}` },
@@ -2828,7 +2928,7 @@
         body: JSON.stringify({ role: 'reader', type: 'anyone' })
       }).catch(() => {});
 
-      const publicUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+      const publicUrl = uploaded.webViewLink || `https://drive.google.com/file/d/${fileId}/view`;
       cached[slotIdx] = { sig, url: publicUrl };
       localStorage.setItem(cacheKey, JSON.stringify(cached));
       return publicUrl;
@@ -2842,6 +2942,7 @@
         btn.disabled = true;
         btn.textContent = 'Guardando...';
       }
+      showSavingOverlay('GUARDANDO ESPERA');
 
       try {
         const ev = currentModalEvent;
@@ -2888,11 +2989,14 @@
           const sharedPhotos = [];
           for (let i = 0; i < 3; i++) {
             if (shareConfig.photos[i] && profile.photos?.[i]) {
-              let photoUrl = '';
+              const thumb = await makeThumbnailFromDataUrl(profile.photos[i], 220, 0.82);
+              let driveUrl = '';
               if (driveAccessToken) {
-                photoUrl = await uploadPhotoToDriveForShare(i, profile.photos[i]).catch(() => '');
+                driveUrl = await uploadPhotoToDriveForShare(i, profile.photos[i]).catch(() => '');
               }
-              if (photoUrl) sharedPhotos.push(photoUrl);
+              if (thumb || driveUrl) {
+                sharedPhotos.push({ thumb: thumb || driveUrl, url: driveUrl || thumb });
+              }
             }
           }
           const sharedSocials = {};
@@ -2941,6 +3045,7 @@
         await fetchEventAttendees(ev);
         closeEventShareModal();
       } finally {
+        hideSavingOverlay();
         if (btn) {
           btn.disabled = false;
           btn.textContent = prevText || '💾 Guardar en mi Perfil';
@@ -2985,6 +3090,13 @@
     function openEventAttendeesModal() {
       if (!currentModalEvent) return;
       document.getElementById('attendeesModalEventTitle').textContent = currentModalEvent.title || '';
+      const dtEl = document.getElementById('attendeesModalEventDateTime');
+      if (dtEl) {
+        const expoRange = getExhibitionDateRange(currentModalEvent);
+        dtEl.textContent = expoRange
+          ? `🗓️ Del ${expoRange.start} al ${expoRange.end} · ${currentModalEvent.time || '19:30'}`
+          : `📅 ${currentModalEvent.date || ''} · ${currentModalEvent.time || '19:30'}`;
+      }
       const listEl = document.getElementById('eventAttendeesList');
       if (currentEventAttendees.length === 0) {
         listEl.innerHTML = `
@@ -2993,58 +3105,88 @@
           </div>
         `;
       } else {
-        listEl.innerHTML = currentEventAttendees.map(att => {
-          const p = att.profile || {};
-          const avatarHtml = p.avatarImage
-            ? `<img src="${p.avatarImage}" alt="Avatar" class="w-full h-full object-cover" />`
-            : `<span>${p.avatar || '😎'}</span>`;
-          const displayName = p.alias || 'Usuario público';
-          const socialsHtml = p.socialLinks
-            ? Object.entries(p.socialLinks).map(([k, v]) => {
-                const meta = PROFILE_SOCIAL_FIELDS.find(f => f.key === k);
-                const url = buildSocialNetworkUrl(k, v);
-                return url ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-[11px] font-bold transition">${meta?.icon || '🔗'} ${meta?.label || k} ↗</a>` : '';
-              }).join('')
-            : '';
-          const photosHtml = Array.isArray(p.photos) && p.photos.length > 0
-            ? `<div class="grid grid-cols-3 gap-2 pt-1">${p.photos.map((u, idx) => `<a href="${u}" target="_blank" rel="noopener noreferrer" class="aspect-square rounded-lg overflow-hidden border border-slate-700 bg-slate-900 block"><img src="${u}" alt="Foto ${idx + 1}" class="w-full h-full object-cover" /></a>`).join('')}</div>`
-            : '';
-
-          return `
-            <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-3.5 space-y-2.5">
-              <div class="flex items-center justify-between gap-3">
-                <div class="flex items-center gap-3 min-w-0">
-                  <div class="w-11 h-11 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-2xl overflow-hidden shrink-0">${avatarHtml}</div>
-                  <div class="min-w-0">
-                    <p class="text-sm font-extrabold text-white truncate">${displayName}</p>
-                    ${p.email ? `<p class="text-[11px] text-slate-400 truncate">✉️ ${p.email}</p>` : ''}
-                  </div>
-                </div>
-                ${att.chosenDate ? `<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 shrink-0">📅 ${att.chosenDate}</span>` : ''}
-              </div>
-              ${p.politicalPhrase || p.politicalScale ? `
-                <div class="text-xs text-slate-300 space-y-0.5">
-                  ${p.politicalScale ? `<p>🏛️ <strong>Ideología:</strong> ${POLITICAL_SCALE_LABELS[p.politicalScale] || p.politicalScale}</p>` : ''}
-                  ${p.politicalPhrase ? `<p class="italic text-slate-400">"${p.politicalPhrase}"</p>` : ''}
-                </div>
-              ` : ''}
-              ${(p.appearance || p.sexuality || p.seekingPerson || p.seekingRelation) ? `
-                <div class="flex flex-wrap gap-1.5 text-[11px]">
-                  ${p.appearance ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Apariencia: ${p.appearance}</span>` : ''}
-                  ${p.sexuality ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Sexo: ${p.sexuality}</span>` : ''}
-                  ${p.seekingPerson ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Busco: ${p.seekingPerson}</span>` : ''}
-                  ${p.seekingRelation ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Relación: ${p.seekingRelation}</span>` : ''}
-                </div>
-              ` : ''}
-              ${photosHtml}
-              ${socialsHtml ? `<div class="flex flex-wrap gap-1.5 pt-1">${socialsHtml}</div>` : ''}
-            </div>
-          `;
-        }).join('');
+        listEl.innerHTML = `
+          <div class="grid grid-cols-4 sm:grid-cols-6 gap-3">
+            ${currentEventAttendees.map((att, idx) => {
+              const p = att.profile || {};
+              const avatarHtml = p.avatarImage
+                ? `<img src="${p.avatarImage}" alt="Avatar" class="w-full h-full object-cover" />`
+                : `<span class="text-3xl">${p.avatar || '😎'}</span>`;
+              return `
+                <button type="button" onclick="openAttendeeDetailModal(${idx})" title="Ver perfil compartido" class="aspect-square rounded-2xl bg-slate-800/80 hover:bg-indigo-600/30 border border-slate-700 hover:border-indigo-400 flex items-center justify-center overflow-hidden transition transform hover:scale-105 shadow-md">
+                  ${avatarHtml}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
       }
       const modal = document.getElementById('eventAttendeesModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+    }
+
+    function openAttendeeDetailModal(idx) {
+      const att = currentEventAttendees[idx];
+      if (!att) return;
+      const p = att.profile || {};
+      const body = document.getElementById('attendeeDetailBody');
+      const avatarHtml = p.avatarImage
+        ? `<img src="${p.avatarImage}" alt="Avatar" class="w-full h-full object-cover" />`
+        : `<span class="text-4xl">${p.avatar || '😎'}</span>`;
+      const displayName = p.alias || 'Usuario público';
+      const socialsHtml = p.socialLinks
+        ? Object.entries(p.socialLinks).map(([k, v]) => {
+            const meta = PROFILE_SOCIAL_FIELDS.find(f => f.key === k);
+            const url = buildSocialNetworkUrl(k, v);
+            return url ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-xs font-bold transition">${meta?.icon || '🔗'} ${meta?.label || k} ↗</a>` : '';
+          }).join('')
+        : '';
+      const photosHtml = Array.isArray(p.photos) && p.photos.length > 0
+        ? `<div class="grid grid-cols-3 gap-2 pt-1">${p.photos.map((item, i) => {
+            const thumbSrc = typeof item === 'string' ? item : (item?.thumb || item?.url || '');
+            const fullHref = typeof item === 'string' ? item : (item?.url || item?.thumb || '#');
+            return `<a href="${fullHref}" target="_blank" rel="noopener noreferrer" class="aspect-square rounded-xl overflow-hidden border border-slate-700 bg-slate-900 block"><img src="${thumbSrc}" alt="Foto ${i + 1}" referrerpolicy="no-referrer" class="w-full h-full object-cover" /></a>`;
+          }).join('')}</div>`
+        : '';
+      const hasExtra = Boolean(p.alias || p.email || p.politicalPhrase || p.politicalScale || p.appearance || p.sexuality || p.seekingPerson || p.seekingRelation || photosHtml || socialsHtml);
+
+      body.innerHTML = `
+        <div class="flex items-center gap-3.5">
+          <div class="w-16 h-16 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center overflow-hidden shrink-0">${avatarHtml}</div>
+          <div class="min-w-0">
+            <p class="text-base font-extrabold text-white truncate">${displayName}</p>
+            ${p.email ? `<p class="text-xs text-slate-300 truncate">✉️ ${p.email}</p>` : ''}
+            ${(currentModalEvent?.subType === 'Exposiciones' && att.chosenDate) ? `<p class="text-xs text-amber-300 font-semibold mt-0.5">📌 Día elegido: ${att.chosenDate}</p>` : ''}
+          </div>
+        </div>
+        ${p.politicalPhrase || p.politicalScale ? `
+          <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 text-xs text-slate-300 space-y-1">
+            ${p.politicalScale ? `<p>🏛️ <strong>Ideología:</strong> ${POLITICAL_SCALE_LABELS[p.politicalScale] || p.politicalScale}</p>` : ''}
+            ${p.politicalPhrase ? `<p class="italic text-slate-400">"${p.politicalPhrase}"</p>` : ''}
+          </div>
+        ` : ''}
+        ${(p.appearance || p.sexuality || p.seekingPerson || p.seekingRelation) ? `
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            ${p.appearance ? `<span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-700">Apariencia: ${p.appearance}</span>` : ''}
+            ${p.sexuality ? `<span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-700">Sexo: ${p.sexuality}</span>` : ''}
+            ${p.seekingPerson ? `<span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-700">Busco: ${p.seekingPerson}</span>` : ''}
+            ${p.seekingRelation ? `<span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-700">Relación: ${p.seekingRelation}</span>` : ''}
+          </div>
+        ` : ''}
+        ${photosHtml}
+        ${socialsHtml ? `<div class="flex flex-wrap gap-2 pt-1">${socialsHtml}</div>` : ''}
+        ${!hasExtra ? `<p class="text-xs text-slate-400 italic">Este usuario solo comparte su icono de perfil para este evento.</p>` : ''}
+      `;
+      const modal = document.getElementById('attendeeDetailModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAttendeeDetailModal() {
+      const modal = document.getElementById('attendeeDetailModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
     }
 
     function closeEventAttendeesModal() {
