@@ -56,6 +56,8 @@ const DEFAULT_DB = {
     hideEmail: false,
     politicalPhrase: '',
     politicalScale: null,
+    religion: '',
+    religionPractice: '',
     appearance: '',
     sexuality: '',
     seekingPerson: '',
@@ -271,6 +273,8 @@ app.put('/api/user-profile', (req, res) => {
     avatarImage,
     politicalPhrase,
     politicalScale,
+    religion,
+    religionPractice,
     appearance,
     sexuality,
     seekingPerson,
@@ -303,6 +307,8 @@ app.put('/api/user-profile', (req, res) => {
     if (politicalScale === null || (Number.isInteger(Number(politicalScale)) && Number(politicalScale) >= 1 && Number(politicalScale) <= 5)) {
       target.politicalScale = politicalScale === null ? null : Number(politicalScale);
     }
+    if (typeof religion === 'string') target.religion = religion.trim();
+    if (typeof religionPractice === 'string') target.religionPractice = religionPractice.trim();
     if (typeof appearance === 'string') target.appearance = appearance.trim();
     if (typeof sexuality === 'string') target.sexuality = sexuality.trim();
     else if (Array.isArray(sexuality)) target.sexuality = sexuality[0] ? String(sexuality[0]) : '';
