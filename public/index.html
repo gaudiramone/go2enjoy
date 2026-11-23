@@ -1308,6 +1308,7 @@
     }
 
     let profileCalendarInstance = null;
+    let orderedProfileEvents = [];
 
     function createCalendarWidget(el, onEventClick) {
       const instance = new FullCalendar.Calendar(el, {
@@ -1349,21 +1350,37 @@
       if (!el) return;
       profileCalendarInstance = createCalendarWidget(
         el,
-        ev => openEventModal(ev, getProfileCalendarEvents())
+        ev => openEventModal(ev, orderedProfileEvents)
       );
     }
 
+    function getFullCalendarDisplayTitle(ev) {
+      const groupOrTitle = (ev.artistName || ev.title || '').trim();
+      const styleParen = ev.musicStyle ? ` (${ev.musicStyle})` : '';
+      const timePart = ev.time ? ` ${ev.time}` : '';
+      return `${groupOrTitle}${styleParen}${timePart}`;
+    }
+
+    function getFullCalendarSortKey(ev) {
+      return `${ev.date || '9999-99-99'} ${(ev.time || '23:59').padStart(5, '0')}`;
+    }
+
     function mapEventsToFullCalendar(events) {
+      events.sort((a, b) => {
+        const ka = getFullCalendarSortKey(a);
+        const kb = getFullCalendarSortKey(b);
+        if (ka !== kb) return ka < kb ? -1 : 1;
+        const ta = getFullCalendarDisplayTitle(a);
+        const tb = getFullCalendarDisplayTitle(b);
+        return ta < tb ? -1 : (ta > tb ? 1 : 0);
+      });
       return events.map((ev, idx) => {
         ev._modalIndex = idx;
         const color = ev.color || getEventColor(ev);
-        const groupOrTitle = (ev.artistName || ev.title || '').trim();
-        const styleParen = ev.musicStyle ? ` (${ev.musicStyle})` : '';
-        const timePart = ev.time ? ` ${ev.time}` : '';
-        const sortKey = `${ev.date || '9999-99-99'} ${(ev.time || '23:59').padStart(5, '0')}`;
+        const sortKey = getFullCalendarSortKey(ev);
         return {
           id: String(idx),
-          title: `${groupOrTitle}${styleParen}${timePart}`,
+          title: getFullCalendarDisplayTitle(ev),
           start: ev.date,
           url: ev.url,
           backgroundColor: color,
@@ -1597,12 +1614,18 @@
           item._modalIndex = idx;
         });
       }
-      if (typeof ev._modalIndex === 'number' && navList[ev._modalIndex]) {
+      const evKey = getProfileEventKey(ev);
+      if (
+        typeof ev._modalIndex === 'number' &&
+        navList[ev._modalIndex] &&
+        getProfileEventKey(navList[ev._modalIndex]) === evKey
+      ) {
         currentModalEventIndex = ev._modalIndex;
       } else {
         currentModalEventIndex = navList.findIndex(
           item =>
             item === ev ||
+            getProfileEventKey(item) === evKey ||
             (item.date === ev.date &&
               item.time === ev.time &&
               item.title === ev.title &&
@@ -3100,6 +3123,11 @@
 
     function renderProfileCalendarTab() {
       const list = getProfileCalendarEvents();
+      const mapped = mapEventsToFullCalendar(list);
+      orderedProfileEvents = list;
+      if (Array.isArray(modalNavigationList)) {
+        modalNavigationList = orderedProfileEvents;
+      }
       const countEl = document.getElementById('profileCalendarCount');
       if (countEl) {
         countEl.textContent = `${list.length} ${list.length === 1 ? 'evento' : 'eventos'}`;
@@ -3107,7 +3135,7 @@
       initProfileCalendar();
       if (profileCalendarInstance) {
         profileCalendarInstance.removeAllEvents();
-        profileCalendarInstance.addEventSource(mapEventsToFullCalendar(list));
+        profileCalendarInstance.addEventSource(mapped);
       }
     }
 
