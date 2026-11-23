@@ -8,6 +8,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
+const DEFAULT_GOOGLE_CLIENT_ID =
+  process.env.GOOGLE_CLIENT_ID ||
+  '108535358368-9rfnr7kk4iklcp6qd7rq9cu5luivr2l2.apps.googleusercontent.com';
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
@@ -17,7 +20,7 @@ const DEFAULT_DB = {
   appConfig: {
     projectName: 'go2enjoy.com',
     ownerEmail: '',
-    googleClientId: '',
+    googleClientId: DEFAULT_GOOGLE_CLIENT_ID,
     festivalUrls: [],
     activeCity: 'Zaragoza',
     cities: {
@@ -44,6 +47,28 @@ const DEFAULT_DB = {
   },
   userProfile: {
     email: '',
+    alias: '',
+    avatar: '😎',
+    avatarImage: '',
+    hideAlias: false,
+    hideEmail: false,
+    politicalPhrase: '',
+    politicalScale: null,
+    appearance: '',
+    sexuality: '',
+    seekingPerson: '',
+    seekingRelation: '',
+    photos: ['', '', ''],
+    socialLinks: {
+      instagram: '',
+      tiktok: '',
+      x: '',
+      facebook: '',
+      youtube: '',
+      linkedin: '',
+      web: ''
+    },
+    profileCalendar: [],
     selectedCity: 'Zaragoza',
     preferences: {
       A: {
@@ -92,6 +117,11 @@ function loadDb() {
     }
     if (!Array.isArray(parsed.concertVenues)) {
       parsed.concertVenues = [];
+    }
+    if (!parsed.appConfig) {
+      parsed.appConfig = JSON.parse(JSON.stringify(DEFAULT_DB.appConfig));
+    } else if (!parsed.appConfig.googleClientId) {
+      parsed.appConfig.googleClientId = DEFAULT_GOOGLE_CLIENT_ID;
     }
     return parsed;
   } catch (err) {
@@ -197,12 +227,63 @@ app.post('/api/auth/login', (req, res) => {
   res.json({ ok: true, email });
 });
 
-// PUT Part 2: User Preferences Profile
+// PUT Part 2: User Preferences & Profile
 app.put('/api/user-profile', (req, res) => {
   const db = loadDb();
-  const { selectedCity, preferences, email } = req.body;
+  const {
+    selectedCity,
+    preferences,
+    email,
+    alias,
+    avatar,
+    avatarImage,
+    hideAlias,
+    hideEmail,
+    politicalPhrase,
+    politicalScale,
+    appearance,
+    sexuality,
+    seekingPerson,
+    seekingRelation,
+    photos,
+    socialLinks,
+    profileCalendar
+  } = req.body;
   if (selectedCity) db.userProfile.selectedCity = selectedCity;
-  if (email) db.userProfile.email = email;
+  if (typeof email === 'string') db.userProfile.email = email.trim().toLowerCase();
+  if (typeof alias === 'string') db.userProfile.alias = alias.trim();
+  if (typeof avatar === 'string' && avatar.trim()) db.userProfile.avatar = avatar.trim();
+  if (typeof avatarImage === 'string') db.userProfile.avatarImage = avatarImage;
+  if (typeof hideAlias === 'boolean') db.userProfile.hideAlias = hideAlias;
+  if (typeof hideEmail === 'boolean') db.userProfile.hideEmail = hideEmail;
+  if (typeof politicalPhrase === 'string') db.userProfile.politicalPhrase = politicalPhrase.trim();
+  if (politicalScale === null || (Number.isInteger(Number(politicalScale)) && Number(politicalScale) >= 1 && Number(politicalScale) <= 5)) {
+    db.userProfile.politicalScale = politicalScale === null ? null : Number(politicalScale);
+  }
+  if (typeof appearance === 'string') db.userProfile.appearance = appearance.trim();
+  if (typeof sexuality === 'string') db.userProfile.sexuality = sexuality.trim();
+  else if (Array.isArray(sexuality)) db.userProfile.sexuality = sexuality[0] ? String(sexuality[0]) : '';
+  if (typeof seekingPerson === 'string') db.userProfile.seekingPerson = seekingPerson.trim();
+  else if (Array.isArray(seekingPerson)) db.userProfile.seekingPerson = seekingPerson[0] ? String(seekingPerson[0]) : '';
+  if (typeof seekingRelation === 'string') db.userProfile.seekingRelation = seekingRelation.trim();
+  else if (Array.isArray(seekingRelation)) db.userProfile.seekingRelation = seekingRelation[0] ? String(seekingRelation[0]) : '';
+  if (Array.isArray(photos)) {
+    db.userProfile.photos = [0, 1, 2].map(i => (typeof photos[i] === 'string' ? photos[i] : ''));
+  }
+  if (socialLinks && typeof socialLinks === 'object') {
+    db.userProfile.socialLinks = {
+      instagram: String(socialLinks.instagram || '').trim(),
+      tiktok: String(socialLinks.tiktok || '').trim(),
+      x: String(socialLinks.x || '').trim(),
+      facebook: String(socialLinks.facebook || '').trim(),
+      youtube: String(socialLinks.youtube || '').trim(),
+      linkedin: String(socialLinks.linkedin || '').trim(),
+      web: String(socialLinks.web || '').trim()
+    };
+  }
+  if (Array.isArray(profileCalendar)) {
+    db.userProfile.profileCalendar = profileCalendar;
+  }
   if (preferences?.A) {
     db.userProfile.preferences = {
       A: {
