@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
+const SHARED_ATTENDANCE_PATH = path.join(DATA_DIR, 'shared_attendance.json');
 const DEFAULT_GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID ||
   '108535358368-9rfnr7kk4iklcp6qd7rq9cu5luivr2l2.apps.googleusercontent.com';
@@ -294,6 +295,86 @@ app.put('/api/user-profile', (req, res) => {
   }
   saveDb(db);
   res.json({ ok: true, userProfile: db.userProfile });
+});
+
+function loadSharedAttendance() {
+  try {
+    if (!fs.existsSync(SHARED_ATTENDANCE_PATH)) {
+      return { events: {} };
+    }
+    const parsed = JSON.parse(fs.readFileSync(SHARED_ATTENDANCE_PATH, 'utf8'));
+    if (!parsed || typeof parsed.events !== 'object') return { events: {} };
+    return parsed;
+  } catch {
+    return { events: {} };
+  }
+}
+
+function saveSharedAttendance(data) {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  fs.writeFileSync(SHARED_ATTENDANCE_PATH, JSON.stringify(data, null, 2), 'utf8');
+}
+
+// GET public attendees for an event
+app.get('/api/events/attendance', (req, res) => {
+  const eventKey = String(req.query.key || '').trim();
+  if (!eventKey) {
+    return res.json({ ok: true, attendees: [] });
+  }
+  const store = loadSharedAttendance();
+  const attendees = Array.isArray(store.events[eventKey]) ? store.events[eventKey] : [];
+  res.json({ ok: true, attendees });
+});
+
+// PUT publish/update public attendance for an event
+app.put('/api/events/attendance', (req, res) => {
+  const eventKey = String(req.body?.eventKey || '').trim();
+  const userId = String(req.body?.userId || '').trim();
+  const chosenDate = String(req.body?.chosenDate || '').trim();
+  const profile = req.body?.profile && typeof req.body.profile === 'object' ? req.body.profile : null;
+
+  if (!eventKey || !userId || !profile) {
+    return res.status(400).json({ ok: false, error: 'eventKey, userId y profile son obligatorios' });
+  }
+
+  const store = loadSharedAttendance();
+  if (!Array.isArray(store.events[eventKey])) {
+    store.events[eventKey] = [];
+  }
+  const list = store.events[eventKey];
+  const entry = {
+    userId,
+    chosenDate,
+    updatedAt: new Date().toISOString(),
+    profile
+  };
+  const existingIdx = list.findIndex(item => item.userId === userId);
+  if (existingIdx >= 0) {
+    list[existingIdx] = entry;
+  } else {
+    list.push(entry);
+  }
+  saveSharedAttendance(store);
+  res.json({ ok: true, attendees: list });
+});
+
+// DELETE remove public attendance for an event
+app.delete('/api/events/attendance', (req, res) => {
+  const eventKey = String(req.body?.eventKey || '').trim();
+  const userId = String(req.body?.userId || '').trim();
+  if (!eventKey || !userId) {
+    return res.status(400).json({ ok: false, error: 'eventKey y userId son obligatorios' });
+  }
+  const store = loadSharedAttendance();
+  const list = Array.isArray(store.events[eventKey]) ? store.events[eventKey] : [];
+  store.events[eventKey] = list.filter(item => item.userId !== userId);
+  if (store.events[eventKey].length === 0) {
+    delete store.events[eventKey];
+  }
+  saveSharedAttendance(store);
+  res.json({ ok: true, attendees: store.events[eventKey] || [] });
 });
 
 // POST Trigger AI Web & URL Update ("Botón Actualizar")
