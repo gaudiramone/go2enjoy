@@ -580,21 +580,41 @@
   <section id="profileFullScreenView" class="fixed inset-0 z-40 hidden bg-slate-950 overflow-y-auto">
     <div class="max-w-5xl mx-auto min-h-screen px-4 sm:px-6 py-5 flex flex-col justify-between gap-5">
       <div class="w-full rounded-2xl bg-slate-900/95 border border-slate-800 p-4 sm:p-6 shadow-xl space-y-5 flex-1">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-3 shrink-0">
-        <div class="flex items-center gap-3.5">
-          <div id="profileAvatarPreview" class="w-20 h-20 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-4xl overflow-hidden shrink-0">😎</div>
-          <div>
-            <h2 class="text-lg font-extrabold text-white">Mi Perfil</h2>
-            <p class="text-xs text-slate-400">Personaliza tu icono, privacidad y conexión con Google Drive</p>
+      <div class="flex items-start justify-between gap-4 border-b border-slate-800 pb-4 shrink-0">
+        <div class="flex items-start sm:items-center gap-4 min-w-0 flex-1">
+          <label class="relative group cursor-pointer shrink-0" title="Pulsa para cambiar tu foto de perfil">
+            <div id="profileAvatarPreview" class="w-24 h-24 rounded-2xl bg-slate-950 border-2 border-indigo-500/40 group-hover:border-indigo-400 flex flex-col items-center justify-center text-slate-400 overflow-hidden transition">
+              <span class="text-2xl">📷</span>
+              <span class="text-[10px] font-bold mt-1">Foto</span>
+            </div>
+            <span class="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center text-xs font-extrabold text-white transition">📷 Cambiar</span>
+            <input id="profilePhotoInput" type="file" accept="image/*" onchange="onProfilePhotoSelected(event)" class="hidden" />
+          </label>
+          <div class="min-w-0 flex-1 space-y-1.5">
+            <!-- Alias + botón editar -->
+            <div id="profileAliasViewRow" class="flex items-center gap-2 min-w-0">
+              <h2 id="profileAliasDisplay" class="text-lg sm:text-xl font-extrabold text-white truncate">Sin alias</h2>
+              <button type="button" onclick="toggleProfileAliasEdit(true)" title="Modificar alias" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-indigo-300 transition shrink-0">✏️</button>
+            </div>
+            <div id="profileAliasEditRow" class="hidden flex items-center gap-2 max-w-sm">
+              <input id="profileAliasInput" type="text" placeholder="Escribe tu alias..." onkeydown="if (event.key === 'Enter') { event.preventDefault(); toggleProfileAliasEdit(false); }" class="flex-1 min-w-0 rounded-xl bg-slate-950 border border-indigo-500 px-3 py-1.5 text-sm font-bold text-white focus:outline-none" />
+              <button type="button" onclick="toggleProfileAliasEdit(false)" class="px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shrink-0">✓</button>
+            </div>
+            <!-- Correo solo lectura -->
+            <p id="profileEmailDisplay" class="text-xs text-slate-400 truncate">🔒 Sin sesión iniciada</p>
+            <!-- Google Drive estado + botón si está en rojo -->
+            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+              <span id="driveStatusBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/40 font-bold">🔴 Drive no conectado</span>
+              <button id="btnProfileConnectDrive" type="button" onclick="connectGoogleDrive()" class="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-bold transition shadow-md shadow-emerald-600/25">☁️ Conectar con Google Drive</button>
+            </div>
           </div>
         </div>
-        <button type="button" onclick="closeProfileModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+        <button type="button" onclick="closeProfileModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
       </div>
 
-      <!-- 6 Tabs dentro del Perfil -->
-      <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5 bg-slate-800/80 p-1 rounded-xl border border-slate-700/70 my-4 shrink-0">
-        <button id="profileTabBtn1" type="button" onclick="switchProfileTab(1)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap">👤 Cuenta</button>
-        <button id="profileTabBtn2" type="button" onclick="switchProfileTab(2)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">🏛️ Ideología</button>
+      <!-- 5 Tabs dentro del Perfil -->
+      <div class="grid grid-cols-3 sm:grid-cols-5 gap-1.5 bg-slate-800/80 p-1 rounded-xl border border-slate-700/70 my-4 shrink-0">
+        <button id="profileTabBtn2" type="button" onclick="switchProfileTab(2)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap">🏛️ Ideología</button>
         <button id="profileTabBtn3" type="button" onclick="switchProfileTab(3)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">💞 Sexo</button>
         <button id="profileTabBtn4" type="button" onclick="switchProfileTab(4)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">📸 Fotos</button>
         <button id="profileTabBtn5" type="button" onclick="switchProfileTab(5)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">🌐 Redes</button>
@@ -602,67 +622,26 @@
       </div>
 
       <div class="space-y-5">
-        <!-- TAB 1: Icono, Alias, Correo y Google Drive -->
-        <div id="profileTabPanel1" class="space-y-5">
-          <!-- Icono o Foto -->
-          <div class="space-y-2.5">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <label class="text-xs font-bold uppercase tracking-wider text-slate-300">Icono o Foto de perfil</label>
-              <div class="flex items-center gap-2">
-                <label class="cursor-pointer px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-bold text-indigo-300 transition">
-                  📷 Subir foto
-                  <input id="profilePhotoInput" type="file" accept="image/*" onchange="onProfilePhotoSelected(event)" class="hidden" />
-                </label>
-                <button id="btnClearProfilePhoto" type="button" onclick="clearProfilePhoto()" class="hidden px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-bold text-slate-300 transition">
-                  Usar icono
-                </button>
-              </div>
-            </div>
-            <div id="profileAvatarGrid" class="grid grid-cols-6 gap-2"></div>
-          </div>
-
-          <!-- Alias -->
-          <div class="space-y-1.5">
-            <label for="profileAliasInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300">Alias</label>
-            <input id="profileAliasInput" type="text" placeholder="Tu alias o apodo público..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
-          </div>
-
-          <!-- Correo (solo lectura, vinculado al inicio de sesión) -->
-          <div class="space-y-1.5">
-            <div class="flex items-center justify-between gap-2">
-              <label for="profileEmailInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300">Correo electrónico</label>
-              <span class="text-[11px] text-slate-400">🔒 Vinculado a tu sesión</span>
-            </div>
-            <input id="profileEmailInput" type="email" readonly tabindex="-1" placeholder="Sin sesión iniciada" class="w-full rounded-xl bg-slate-900/70 border border-slate-800 px-3.5 py-2.5 text-sm text-slate-400 cursor-not-allowed select-none focus:outline-none" />
-          </div>
-
-          <!-- Caché diaria en Google Drive (1 único fichero go2enjoy_cache.json) -->
-          <div class="pt-4 border-t border-slate-800 space-y-3">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-300">☁️ Google Drive (1 único fichero diario: go2enjoy_cache.json)</h3>
-              <span id="driveStatusBadge" class="text-[11px] px-2.5 py-0.5 rounded-full bg-slate-950 text-slate-400 border border-slate-700">No conectado</span>
-            </div>
-            <div id="profileDriveBanner" class="rounded-xl border border-amber-500/40 bg-amber-500/10 px-3.5 py-2.5 text-xs text-amber-200 font-medium">
-              🔴 No estás conectado con Google Drive. Conecta primero para poder guardar tu perfil y tus datos en tu Drive.
-            </div>
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <p class="text-xs text-slate-400">Guarda tu perfil y tu caché diaria de eventos directamente en tu Google Drive.</p>
-              <button type="button" onclick="connectGoogleDrive()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition shadow-lg shadow-emerald-600/25">☁️ Conectar con Google Drive</button>
-            </div>
-          </div>
-        </div>
-
         <!-- TAB 2: Ideología (Apartado político) -->
-        <div id="profileTabPanel2" class="hidden space-y-4">
+        <div id="profileTabPanel2" class="space-y-4">
           <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">🏛️ Apartado político</h3>
           <div class="space-y-1.5">
-            <label for="profilePoliticalPhrase" class="block text-xs font-semibold text-slate-300">Una frase que te defina ideológicamente</label>
-            <input id="profilePoliticalPhrase" type="text" placeholder="Escribe una frase que te defina ideológicamente..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+            <div class="flex items-center justify-between gap-2">
+              <label for="profilePoliticalPhrase" class="block text-xs font-semibold text-slate-300">Una frase que te defina ideológicamente</label>
+              <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                <input id="noData_politicalPhrase" type="checkbox" onchange="onNoDataToggle('politicalPhrase', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                <span>NO DATA</span>
+              </label>
+            </div>
+            <input id="profilePoliticalPhrase" type="text" oninput="syncNoDataCheckboxes()" placeholder="Escribe una frase que te defina ideológicamente..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
           </div>
           <div class="space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <label class="text-xs font-semibold text-slate-300">¿Cómo te consideras del 1 al 5 en ideología política?</label>
-              <span class="text-[11px] text-slate-400">1 Izda · 3 Centro · 5 Dcha</span>
+              <label class="text-xs font-semibold text-slate-300">¿Cómo te consideras del 1 al 5 en ideología política? <span class="text-[11px] font-normal text-slate-400">(1 Izda · 3 Centro · 5 Dcha)</span></label>
+              <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                <input id="noData_politicalScale" type="checkbox" onchange="onNoDataToggle('politicalScale', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                <span>NO DATA</span>
+              </label>
             </div>
             <div id="profilePoliticalScaleGrid" class="grid grid-cols-5 gap-2"></div>
             <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
@@ -672,27 +651,75 @@
               <span id="profilePoliticalQuizResultBadge" class="hidden text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40"></span>
             </div>
           </div>
+
+          <div class="pt-4 border-t border-slate-800 space-y-4">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">🙏 Religión</h3>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <label class="block text-xs font-semibold text-slate-300">Selecciona una religión</label>
+                <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                  <input id="noData_religion" type="checkbox" onchange="onNoDataToggle('religion', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                  <span>NO DATA</span>
+                </label>
+              </div>
+              <div id="profileReligionGrid" class="flex flex-wrap gap-2"></div>
+            </div>
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <label class="block text-xs font-semibold text-slate-300">Practicante</label>
+                <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                  <input id="noData_religionPractice" type="checkbox" onchange="onNoDataToggle('religionPractice', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                  <span>NO DATA</span>
+                </label>
+              </div>
+              <div id="profileReligionPracticeGrid" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
         </div>
 
         <!-- TAB 3: Sexo -->
         <div id="profileTabPanel3" class="hidden space-y-5">
           <div class="space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Apariencia</label>
+            <div class="flex items-center justify-between gap-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Apariencia</label>
+              <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                <input id="noData_appearance" type="checkbox" onchange="onNoDataToggle('appearance', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                <span>NO DATA</span>
+              </label>
+            </div>
             <div id="profileAppearanceGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2"></div>
           </div>
 
           <div class="space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Sexo</label>
+            <div class="flex items-center justify-between gap-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Sexo</label>
+              <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                <input id="noData_sexuality" type="checkbox" onchange="onNoDataToggle('sexuality', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                <span>NO DATA</span>
+              </label>
+            </div>
             <div id="profileSexualityGrid" class="flex flex-wrap gap-2"></div>
           </div>
 
           <div class="space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Busco persona</label>
+            <div class="flex items-center justify-between gap-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Busco persona</label>
+              <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                <input id="noData_seekingPerson" type="checkbox" onchange="onNoDataToggle('seekingPerson', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                <span>NO DATA</span>
+              </label>
+            </div>
             <div id="profileSeekingPersonGrid" class="flex flex-wrap gap-2"></div>
           </div>
 
           <div class="space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Busco Relación</label>
+            <div class="flex items-center justify-between gap-2">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Busco Relación</label>
+              <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-400 cursor-pointer select-none">
+                <input id="noData_seekingRelation" type="checkbox" onchange="onNoDataToggle('seekingRelation', this.checked)" class="rounded border-slate-600 bg-slate-950 text-rose-500 focus:ring-rose-500" />
+                <span>NO DATA</span>
+              </label>
+            </div>
             <div id="profileSeekingRelationGrid" class="flex flex-wrap gap-2"></div>
           </div>
         </div>
@@ -1504,21 +1531,31 @@
       renderEventsList(events);
     }
 
+    let lastFilteredSearchEvents = [];
+
+    function openSearchEventModal(idx) {
+      const ev = lastFilteredSearchEvents[idx];
+      if (!ev) return;
+      openEventModal(ev, lastFilteredSearchEvents);
+    }
+
     function renderEventsList(visibleEvents) {
       const events = visibleEvents || getVisibleEvents();
       const q = (document.getElementById('searchEventsInput').value || '').toLowerCase().trim();
       const container = document.getElementById('eventsListContainer');
 
-      const filtered = q
+      const filtered = (q
         ? events.filter(e => `${e.title} ${e.subType} ${e.venue} ${e.venueTag || ''} ${e.musicStyle || ''} ${e.styleTag || ''} ${e.sourceName || ''}`.toLowerCase().includes(q))
-        : events;
+        : events
+      ).map((e, idx) => ({ ...e, _modalIndex: idx }));
+      lastFilteredSearchEvents = filtered;
 
       if (filtered.length === 0) {
         container.innerHTML = `<div class="text-center py-8 text-xs text-slate-400">No hay espectáculos que coincidan con los filtros actuales.</div>`;
         return;
       }
 
-      container.innerHTML = filtered.map(ev => {
+      container.innerHTML = filtered.map((ev, idx) => {
         const color = getEventColor(ev);
         const venueTagHtml = ev.venueTag
           ? `<span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded text-white shadow-sm" style="background-color: ${color};">
@@ -1545,7 +1582,10 @@
               </div>
               <p class="text-sm font-bold text-white truncate">${ev.title}</p>
             </div>
-            <div class="shrink-0 flex items-center gap-2">
+            <div class="shrink-0 flex flex-wrap items-center gap-2">
+              <button type="button" onclick="openSearchEventModal(${idx})" class="px-3 py-2 rounded-lg bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white border border-amber-500/40 text-xs font-bold transition flex items-center gap-1 whitespace-nowrap">
+                <span>👁️ Detalle</span>
+              </button>
               <a href="${buildGoogleCalendarUrl(ev)}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-200 hover:text-white border border-emerald-500/40 text-xs font-bold transition flex items-center gap-1 whitespace-nowrap">
                 <span>📅 Añadir al calendario</span>
               </a>
@@ -1746,20 +1786,14 @@
     function setDriveStatus(text, isConnected = false) {
       const badge = document.getElementById('driveStatusBadge');
       if (badge) {
-        badge.textContent = text;
+        badge.textContent = isConnected ? `🟢 ${text}` : '🔴 Drive no conectado';
         badge.className = isConnected
           ? 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold'
-          : 'text-[11px] px-2.5 py-0.5 rounded-full bg-slate-950 text-slate-400 border border-slate-700';
+          : 'text-[11px] px-2.5 py-0.5 rounded-full bg-rose-500/15 text-rose-300 border border-rose-500/40 font-bold';
       }
-      const banner = document.getElementById('profileDriveBanner');
-      if (banner) {
-        if (isConnected) {
-          banner.className = 'rounded-xl border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-2.5 text-xs text-emerald-200 font-medium';
-          banner.textContent = '🟢 Conectado con Google Drive. Ya puedes guardar todo tu perfil y tus datos en Drive.';
-        } else {
-          banner.className = 'rounded-xl border border-amber-500/40 bg-amber-500/10 px-3.5 py-2.5 text-xs text-amber-200 font-medium';
-          banner.textContent = '🔴 No estás conectado con Google Drive. Conecta primero para poder guardar tu perfil y tus datos en tu Drive.';
-        }
+      const connectBtn = document.getElementById('btnProfileConnectDrive');
+      if (connectBtn) {
+        connectBtn.classList.toggle('hidden', isConnected);
       }
       const saveBtn = document.getElementById('btnSaveUserProfile');
       if (saveBtn) {
@@ -2035,6 +2069,8 @@
     let draftProfileAvatar = '😎';
     let draftProfileAvatarImage = '';
     let draftPoliticalScale = null;
+    let draftReligion = '';
+    let draftReligionPractice = '';
     let draftAppearance = '';
     let draftSexuality = '';
     let draftSeekingPerson = '';
@@ -2052,6 +2088,8 @@
     ];
 
     const PROFILE_SEX_GROUPS = [
+      { key: 'religion', elId: 'profileReligionGrid', single: true, options: ['Católica', 'Cristiana', 'Musulmana', 'Judía', 'Budista', 'Hinduista', 'Ateo / Agnóstico', 'Espiritual', 'Otro'] },
+      { key: 'religionPractice', elId: 'profileReligionPracticeGrid', single: true, options: ['1 vez al día', 'Cada 2 días', 'Semanal', 'Mensual', 'Anual'] },
       { key: 'appearance', elId: 'profileAppearanceGrid', single: true, options: ['Hombre', 'Mujer', 'Neutro', 'Otro'] },
       { key: 'sexuality', elId: 'profileSexualityGrid', single: true, options: ['Heterosexual', 'Homosexual', 'Bisexual', 'Pansexual', 'Asexual', 'Otro'] },
       { key: 'seekingPerson', elId: 'profileSeekingPersonGrid', single: true, options: ['Hombre', 'Mujer', 'Neutro', 'Cualquiera'] },
@@ -2066,6 +2104,8 @@
         avatarImage: '',
         politicalPhrase: '',
         politicalScale: null,
+        religion: '',
+        religionPractice: '',
         appearance: '',
         sexuality: '',
         seekingPerson: '',
@@ -2114,6 +2154,8 @@
         hideEmail: typeof local.hideEmail === 'boolean' ? local.hideEmail : Boolean(srv.hideEmail),
         politicalPhrase: typeof local.politicalPhrase === 'string' ? local.politicalPhrase : (srv.politicalPhrase || ''),
         politicalScale: Number.isInteger(Number(rawScale)) && Number(rawScale) >= 1 && Number(rawScale) <= 5 ? Number(rawScale) : null,
+        religion: typeof local.religion === 'string' ? local.religion : (srv.religion || ''),
+        religionPractice: typeof local.religionPractice === 'string' ? local.religionPractice : (srv.religionPractice || ''),
         appearance: typeof local.appearance === 'string' ? local.appearance : (srv.appearance || ''),
         sexuality: typeof local.sexuality === 'string' ? local.sexuality : (Array.isArray(local.sexuality) ? (local.sexuality[0] || '') : (typeof srv.sexuality === 'string' ? srv.sexuality : (Array.isArray(srv.sexuality) ? (srv.sexuality[0] || '') : ''))),
         seekingPerson: typeof local.seekingPerson === 'string' ? local.seekingPerson : (Array.isArray(local.seekingPerson) ? (local.seekingPerson[0] || '') : (typeof srv.seekingPerson === 'string' ? srv.seekingPerson : (Array.isArray(srv.seekingPerson) ? (srv.seekingPerson[0] || '') : ''))),
@@ -2160,22 +2202,6 @@
       }
     }
 
-    function renderProfileAvatarGrid() {
-      const grid = document.getElementById('profileAvatarGrid');
-      if (!grid) return;
-      grid.innerHTML = PROFILE_AVATAR_ICONS.map(icon => {
-        const selected = !draftProfileAvatarImage && draftProfileAvatar === icon;
-        return `
-          <button type="button" onclick="selectProfileAvatar('${icon}')" class="h-10 rounded-xl border text-xl flex items-center justify-center transition ${selected ? 'bg-indigo-600/30 border-indigo-400 shadow-md shadow-indigo-500/20' : 'bg-slate-800/70 border-slate-700 hover:border-slate-500'}">
-            ${icon}
-          </button>
-        `;
-      }).join('');
-      renderAvatarInto(document.getElementById('profileAvatarPreview'), draftProfileAvatar, draftProfileAvatarImage);
-      const clearBtn = document.getElementById('btnClearProfilePhoto');
-      if (clearBtn) clearBtn.classList.toggle('hidden', !draftProfileAvatarImage);
-    }
-
     function renderPoliticalScaleButtons() {
       const grid = document.getElementById('profilePoliticalScaleGrid');
       if (!grid) return;
@@ -2193,6 +2219,52 @@
     function selectPoliticalScale(val) {
       draftPoliticalScale = draftPoliticalScale === val ? null : val;
       renderPoliticalScaleButtons();
+      syncNoDataCheckboxes();
+    }
+
+    function syncNoDataCheckboxes() {
+      const phraseVal = (document.getElementById('profilePoliticalPhrase')?.value || '').trim();
+      const map = {
+        politicalPhrase: !phraseVal,
+        politicalScale: draftPoliticalScale === null,
+        religion: !draftReligion,
+        religionPractice: !draftReligionPractice,
+        appearance: !draftAppearance,
+        sexuality: !draftSexuality,
+        seekingPerson: !draftSeekingPerson,
+        seekingRelation: !draftSeekingRelation
+      };
+      Object.entries(map).forEach(([key, isEmpty]) => {
+        const el = document.getElementById(`noData_${key}`);
+        if (el) el.checked = isEmpty;
+      });
+    }
+
+    function onNoDataToggle(fieldKey, isChecked) {
+      if (!isChecked) return;
+      if (fieldKey === 'politicalPhrase') {
+        const input = document.getElementById('profilePoliticalPhrase');
+        if (input) input.value = '';
+      } else if (fieldKey === 'politicalScale') {
+        draftPoliticalScale = null;
+        renderPoliticalScaleButtons();
+        const badge = document.getElementById('profilePoliticalQuizResultBadge');
+        if (badge) badge.classList.add('hidden');
+      } else if (fieldKey === 'religion') {
+        draftReligion = '';
+      } else if (fieldKey === 'religionPractice') {
+        draftReligionPractice = '';
+      } else if (fieldKey === 'appearance') {
+        draftAppearance = '';
+      } else if (fieldKey === 'sexuality') {
+        draftSexuality = '';
+      } else if (fieldKey === 'seekingPerson') {
+        draftSeekingPerson = '';
+      } else if (fieldKey === 'seekingRelation') {
+        draftSeekingRelation = '';
+      }
+      renderProfileSexTabGrids();
+      syncNoDataCheckboxes();
     }
 
     const POLITICAL_QUIZ_QUESTIONS = [
@@ -2286,6 +2358,7 @@
 
       draftPoliticalScale = chosen;
       renderPoliticalScaleButtons();
+      syncNoDataCheckboxes();
 
       const badge = document.getElementById('profilePoliticalQuizResultBadge');
       if (badge) {
@@ -2300,17 +2373,6 @@
         <p class="text-[11px] text-indigo-200/80">Ya hemos marcado el botón <strong>${chosen}</strong> en tu perfil. Puedes cambiarlo manualmente cuando quieras.</p>
       `;
       resultBox.classList.remove('hidden');
-    }
-
-    function selectProfileAvatar(icon) {
-      draftProfileAvatar = icon;
-      draftProfileAvatarImage = '';
-      renderProfileAvatarGrid();
-    }
-
-    function clearProfilePhoto() {
-      draftProfileAvatarImage = '';
-      renderProfileAvatarGrid();
     }
 
     function resizeImageFileToDataUrl(file, maxSide, quality, onDone) {
@@ -2472,10 +2534,38 @@
       return out;
     }
 
+    function renderProfileAvatarGrid() {
+      const preview = document.getElementById('profileAvatarPreview');
+      if (!preview) return;
+      if (draftProfileAvatarImage) {
+        preview.innerHTML = `<img src="${draftProfileAvatarImage}" alt="Foto de perfil" class="w-full h-full object-cover" />`;
+      } else {
+        preview.innerHTML = `<span class="text-2xl">📷</span><span class="text-[10px] font-bold mt-1">Subir foto</span>`;
+      }
+    }
+
+    function toggleProfileAliasEdit(editing) {
+      const viewRow = document.getElementById('profileAliasViewRow');
+      const editRow = document.getElementById('profileAliasEditRow');
+      const input = document.getElementById('profileAliasInput');
+      const disp = document.getElementById('profileAliasDisplay');
+      if (!viewRow || !editRow || !input || !disp) return;
+      if (editing) {
+        viewRow.classList.add('hidden');
+        editRow.classList.remove('hidden');
+        setTimeout(() => input.focus(), 30);
+      } else {
+        const val = (input.value || '').trim();
+        disp.textContent = val || 'Sin alias';
+        editRow.classList.add('hidden');
+        viewRow.classList.remove('hidden');
+      }
+    }
+
     function switchProfileTab(tabNum) {
       const activeCls = 'py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap';
       const inactiveCls = 'py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap';
-      [1, 2, 3, 4, 5, 6].forEach(n => {
+      [2, 3, 4, 5, 6].forEach(n => {
         const panel = document.getElementById(`profileTabPanel${n}`);
         const btn = document.getElementById(`profileTabBtn${n}`);
         const active = n === tabNum;
@@ -2493,6 +2583,8 @@
 
     function renderProfileSexTabGrids() {
       const stateMap = {
+        religion: draftReligion,
+        religionPractice: draftReligionPractice,
         appearance: draftAppearance,
         sexuality: draftSexuality,
         seekingPerson: draftSeekingPerson,
@@ -2514,7 +2606,11 @@
     }
 
     function toggleProfileSexOption(key, val) {
-      if (key === 'appearance') {
+      if (key === 'religion') {
+        draftReligion = draftReligion === val ? '' : val;
+      } else if (key === 'religionPractice') {
+        draftReligionPractice = draftReligionPractice === val ? '' : val;
+      } else if (key === 'appearance') {
         draftAppearance = draftAppearance === val ? '' : val;
       } else if (key === 'sexuality') {
         draftSexuality = draftSexuality === val ? '' : val;
@@ -2524,6 +2620,7 @@
         draftSeekingRelation = draftSeekingRelation === val ? '' : val;
       }
       renderProfileSexTabGrids();
+      syncNoDataCheckboxes();
     }
 
     function hydrateProfilePageUI() {
@@ -2531,13 +2628,17 @@
       draftProfileAvatar = profile.avatar || '😎';
       draftProfileAvatarImage = profile.avatarImage || '';
       draftPoliticalScale = profile.politicalScale || null;
+      draftReligion = profile.religion || '';
+      draftReligionPractice = profile.religionPractice || '';
       draftAppearance = profile.appearance || '';
       draftSexuality = typeof profile.sexuality === 'string' ? profile.sexuality : '';
       draftSeekingPerson = typeof profile.seekingPerson === 'string' ? profile.seekingPerson : '';
       draftSeekingRelation = typeof profile.seekingRelation === 'string' ? profile.seekingRelation : '';
       draftProfilePhotos = [...(profile.photos || ['', '', ''])];
       document.getElementById('profileAliasInput').value = profile.alias || '';
-      document.getElementById('profileEmailInput').value = profile.email || '';
+      document.getElementById('profileAliasDisplay').textContent = profile.alias || 'Sin alias';
+      toggleProfileAliasEdit(false);
+      document.getElementById('profileEmailDisplay').textContent = profile.email ? `🔒 ${profile.email}` : '🔒 Sin sesión iniciada';
       document.getElementById('profilePoliticalPhrase').value = profile.politicalPhrase || '';
       renderProfileAvatarGrid();
       renderPoliticalScaleButtons();
@@ -2545,15 +2646,16 @@
       renderProfilePhotosTab();
       renderProfileSocialInputs(profile.socialLinks || {});
       renderProfileCalendarTab();
+      syncNoDataCheckboxes();
       setDriveStatus(
-        driveAccessToken ? '☁️ Drive conectado (go2enjoy_cache.json)' : 'No conectado',
+        driveAccessToken ? 'Drive conectado (go2enjoy_cache.json)' : 'Drive no conectado',
         Boolean(driveAccessToken)
       );
     }
 
     function openProfileModal() {
       hydrateProfilePageUI();
-      switchProfileTab(1);
+      switchProfileTab(2);
       const view = document.getElementById('profileFullScreenView');
       if (view) view.classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
@@ -2608,6 +2710,8 @@
           avatarImage: draftProfileAvatarImage,
           politicalPhrase,
           politicalScale: draftPoliticalScale,
+          religion: draftReligion,
+          religionPractice: draftReligionPractice,
           appearance: draftAppearance,
           sexuality: draftSexuality,
           seekingPerson: draftSeekingPerson,
@@ -2732,6 +2836,8 @@
         email: false,
         politicalPhrase: false,
         politicalScale: false,
+        religion: false,
+        religionPractice: false,
         appearance: false,
         sexuality: false,
         seekingPerson: false,
@@ -2761,10 +2867,12 @@
           ]
         },
         {
-          title: '🏛️ Ideología',
+          title: '🏛️ Ideología y Religión',
           items: [
             { id: 'politicalPhrase', label: `Frase${profile.politicalPhrase ? `: "${profile.politicalPhrase}"` : ' (vacía)'}`, checked: Boolean(cfg.politicalPhrase) },
-            { id: 'politicalScale', label: `Ranking (1–5)${profile.politicalScale ? `: ${profile.politicalScale}` : ' (sin elegir)'}`, checked: Boolean(cfg.politicalScale) }
+            { id: 'politicalScale', label: `Ranking (1–5)${profile.politicalScale ? `: ${profile.politicalScale}` : ' (sin elegir)'}`, checked: Boolean(cfg.politicalScale) },
+            { id: 'religion', label: `Religión${profile.religion ? `: ${profile.religion}` : ' (sin elegir)'}`, checked: Boolean(cfg.religion) },
+            { id: 'religionPractice', label: `Practicante${profile.religionPractice ? `: ${profile.religionPractice}` : ' (sin elegir)'}`, checked: Boolean(cfg.religionPractice) }
           ]
         },
         {
@@ -2855,6 +2963,8 @@
         email: getVal('email'),
         politicalPhrase: getVal('politicalPhrase'),
         politicalScale: getVal('politicalScale'),
+        religion: getVal('religion'),
+        religionPractice: getVal('religionPractice'),
         appearance: getVal('appearance'),
         sexuality: getVal('sexuality'),
         seekingPerson: getVal('seekingPerson'),
@@ -3014,6 +3124,8 @@
           if (shareConfig.email && profile.email) publicProfile.email = profile.email;
           if (shareConfig.politicalPhrase && profile.politicalPhrase) publicProfile.politicalPhrase = profile.politicalPhrase;
           if (shareConfig.politicalScale && profile.politicalScale) publicProfile.politicalScale = profile.politicalScale;
+          if (shareConfig.religion && profile.religion) publicProfile.religion = profile.religion;
+          if (shareConfig.religionPractice && profile.religionPractice) publicProfile.religionPractice = profile.religionPractice;
           if (shareConfig.appearance && profile.appearance) publicProfile.appearance = profile.appearance;
           if (shareConfig.sexuality && profile.sexuality) publicProfile.sexuality = profile.sexuality;
           if (shareConfig.seekingPerson && profile.seekingPerson) publicProfile.seekingPerson = profile.seekingPerson;
@@ -3149,7 +3261,7 @@
             return `<a href="${fullHref}" target="_blank" rel="noopener noreferrer" class="aspect-square rounded-xl overflow-hidden border border-slate-700 bg-slate-900 block"><img src="${thumbSrc}" alt="Foto ${i + 1}" referrerpolicy="no-referrer" class="w-full h-full object-cover" /></a>`;
           }).join('')}</div>`
         : '';
-      const hasExtra = Boolean(p.alias || p.email || p.politicalPhrase || p.politicalScale || p.appearance || p.sexuality || p.seekingPerson || p.seekingRelation || photosHtml || socialsHtml);
+      const hasExtra = Boolean(p.alias || p.email || p.politicalPhrase || p.politicalScale || p.religion || p.religionPractice || p.appearance || p.sexuality || p.seekingPerson || p.seekingRelation || photosHtml || socialsHtml);
 
       body.innerHTML = `
         <div class="flex items-center gap-3.5">
@@ -3160,10 +3272,11 @@
             ${(currentModalEvent?.subType === 'Exposiciones' && att.chosenDate) ? `<p class="text-xs text-amber-300 font-semibold mt-0.5">📌 Día elegido: ${att.chosenDate}</p>` : ''}
           </div>
         </div>
-        ${p.politicalPhrase || p.politicalScale ? `
+        ${p.politicalPhrase || p.politicalScale || p.religion || p.religionPractice ? `
           <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 text-xs text-slate-300 space-y-1">
             ${p.politicalScale ? `<p>🏛️ <strong>Ideología:</strong> ${POLITICAL_SCALE_LABELS[p.politicalScale] || p.politicalScale}</p>` : ''}
             ${p.politicalPhrase ? `<p class="italic text-slate-400">"${p.politicalPhrase}"</p>` : ''}
+            ${(p.religion || p.religionPractice) ? `<p>🙏 <strong>Religión:</strong> ${[p.religion, p.religionPractice ? `Practicante (${p.religionPractice})` : ''].filter(Boolean).join(' · ')}</p>` : ''}
           </div>
         ` : ''}
         ${(p.appearance || p.sexuality || p.seekingPerson || p.seekingRelation) ? `
