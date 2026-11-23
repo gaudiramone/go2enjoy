@@ -627,10 +627,13 @@
             <input id="profileAliasInput" type="text" placeholder="Tu alias o apodo público..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
           </div>
 
-          <!-- Correo -->
+          <!-- Correo (solo lectura, vinculado al inicio de sesión) -->
           <div class="space-y-1.5">
-            <label for="profileEmailInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300">Correo electrónico</label>
-            <input id="profileEmailInput" type="email" placeholder="tuusuario@gmail.com" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+            <div class="flex items-center justify-between gap-2">
+              <label for="profileEmailInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300">Correo electrónico</label>
+              <span class="text-[11px] text-slate-400">🔒 Vinculado a tu sesión</span>
+            </div>
+            <input id="profileEmailInput" type="email" readonly tabindex="-1" placeholder="Sin sesión iniciada" class="w-full rounded-xl bg-slate-900/70 border border-slate-800 px-3.5 py-2.5 text-sm text-slate-400 cursor-not-allowed select-none focus:outline-none" />
           </div>
 
           <!-- Caché diaria en Google Drive (1 único fichero go2enjoy_cache.json) -->
@@ -1756,6 +1759,7 @@
         alert('Google Identity Services aún está cargando. Inténtalo en 1 segundo.');
         return;
       }
+      driveFileId = '';
       const activeEmail = localStorage.getItem('go2enjoy_user_email') || '';
       const tokenClient = window.google.accounts.oauth2.initTokenClient({
         client_id: clientId,
@@ -1767,11 +1771,35 @@
             return;
           }
           driveAccessToken = resp.access_token;
+          driveFileId = '';
           setDriveStatus('☁️ Drive conectado (go2enjoy_cache.json)', true);
+
+          try {
+            const driveJson = await readSingleDriveCache();
+            if (driveJson?.userProfile) {
+              const restored = {
+                ...getEmptyUserProfile(activeEmail),
+                ...driveJson.userProfile,
+                email: activeEmail || driveJson.userProfile.email || ''
+              };
+              setLocalUserProfile(restored);
+              if (appState) {
+                appState.userProfile = { ...(appState.userProfile || {}), ...restored };
+              }
+              await fetch('/api/user-profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(restored)
+              }).catch(() => {});
+              updateHeaderUserUI(restored.email);
+              hydrateProfilePageUI();
+            }
+          } catch {}
+
           await triggerCalendarUpdate(false);
         }
       });
-      tokenClient.requestAccessToken();
+      tokenClient.requestAccessToken({ prompt: 'select_account' });
     }
 
     async function findSingleDriveFileId() {
@@ -1972,15 +2000,55 @@
       { key: 'seekingRelation', elId: 'profileSeekingRelationGrid', single: true, options: ['Amistad', 'Conocer gente', 'Cita', 'Relación seria', 'Algo casual', 'Planes culturales'] }
     ];
 
+    function getEmptyUserProfile(email = '') {
+      return {
+        email,
+        alias: '',
+        avatar: '😎',
+        avatarImage: '',
+        politicalPhrase: '',
+        politicalScale: null,
+        appearance: '',
+        sexuality: '',
+        seekingPerson: '',
+        seekingRelation: '',
+        photos: ['', '', ''],
+        socialLinks: { instagram: '', tiktok: '', x: '', facebook: '', youtube: '', linkedin: '', web: '' },
+        profileCalendar: []
+      };
+    }
+
+    function getProfileStorageKey(email) {
+      const norm = String(email || localStorage.getItem('go2enjoy_user_email') || '').trim().toLowerCase();
+      return norm ? `go2enjoy_profile_${norm}` : 'go2enjoy_user_profile';
+    }
+
+    function getDrivePhotoCacheKey(email) {
+      const norm = String(email || localStorage.getItem('go2enjoy_user_email') || '').trim().toLowerCase();
+      return norm ? `go2enjoy_drive_photo_urls_${norm}` : 'go2enjoy_drive_photo_urls';
+    }
+
+    function setLocalUserProfile(profileObj) {
+      const key = getProfileStorageKey(profileObj?.email);
+      localStorage.setItem(key, JSON.stringify(profileObj));
+    }
+
     function getUserProfileSettings() {
+      const activeEmail = (localStorage.getItem('go2enjoy_user_email') || '').trim().toLowerCase();
       let local = {};
       try {
-        local = JSON.parse(localStorage.getItem('go2enjoy_user_profile') || '{}') || {};
+        local = JSON.parse(localStorage.getItem(getProfileStorageKey(activeEmail)) || '{}') || {};
       } catch {}
-      const srv = appState?.userProfile || {};
+      if (activeEmail && local.email && local.email.toLowerCase() !== activeEmail) {
+        local = {};
+      }
+      let srv = appState?.userProfile || {};
+      if (!activeEmail || !srv.email || srv.email.toLowerCase() !== activeEmail) {
+        srv = {};
+      }
       const rawScale = local.politicalScale !== undefined ? local.politicalScale : srv.politicalScale;
       return {
-        email: local.email || srv.email || localStorage.getItem('go2enjoy_user_email') || '',
+        email: activeEmail || local.email || srv.email || '',
         alias: typeof local.alias === 'string' ? local.alias : (srv.alias || ''),
         avatar: local.avatar || srv.avatar || '😎',
         avatarImage: typeof local.avatarImage === 'string' ? local.avatarImage : (srv.avatarImage || ''),
@@ -2405,54 +2473,71 @@
         alert('Conecta primero con Google Drive para poder guardar tu perfil y tus datos.');
         return;
       }
-      const alias = (document.getElementById('profileAliasInput').value || '').trim();
-      const email = (document.getElementById('profileEmailInput').value || '').trim().toLowerCase();
-      const politicalPhrase = (document.getElementById('profilePoliticalPhrase').value || '').trim();
-
-      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert('Introduce un correo electrónico válido.');
-        return;
-      }
-
-      const payload = {
-        alias,
-        email,
-        avatar: draftProfileAvatar,
-        avatarImage: draftProfileAvatarImage,
-        politicalPhrase,
-        politicalScale: draftPoliticalScale,
-        appearance: draftAppearance,
-        sexuality: draftSexuality,
-        seekingPerson: draftSeekingPerson,
-        seekingRelation: draftSeekingRelation,
-        photos: [...draftProfilePhotos],
-        socialLinks: collectProfileSocialLinks(),
-        profileCalendar: getProfileCalendarEvents()
-      };
-      localStorage.setItem('go2enjoy_user_profile', JSON.stringify(payload));
-      if (email) {
-        localStorage.setItem('go2enjoy_user_email', email);
-      } else {
-        localStorage.removeItem('go2enjoy_user_email');
-      }
-      if (appState?.userProfile) {
-        Object.assign(appState.userProfile, payload);
+      const btn = document.getElementById('btnSaveUserProfile');
+      const prevBtnText = btn ? btn.textContent : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Guardando en Drive...';
       }
 
       try {
-        await fetch('/api/user-profile', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-      } catch {}
+        const alias = (document.getElementById('profileAliasInput').value || '').trim();
+        const email = (localStorage.getItem('go2enjoy_user_email') || getUserProfileSettings().email || '').trim().toLowerCase();
+        const politicalPhrase = (document.getElementById('profilePoliticalPhrase').value || '').trim();
 
-      if (driveAccessToken) {
-        await writeSingleDriveCache(appState?.cityCache || {}).catch(() => {});
+        const payload = {
+          alias,
+          email,
+          avatar: draftProfileAvatar,
+          avatarImage: draftProfileAvatarImage,
+          politicalPhrase,
+          politicalScale: draftPoliticalScale,
+          appearance: draftAppearance,
+          sexuality: draftSexuality,
+          seekingPerson: draftSeekingPerson,
+          seekingRelation: draftSeekingRelation,
+          photos: [...draftProfilePhotos],
+          socialLinks: collectProfileSocialLinks(),
+          profileCalendar: getProfileCalendarEvents()
+        };
+        setLocalUserProfile(payload);
+        if (email) {
+          localStorage.setItem('go2enjoy_user_email', email);
+        } else {
+          localStorage.removeItem('go2enjoy_user_email');
+        }
+        if (appState?.userProfile) {
+          Object.assign(appState.userProfile, payload);
+        }
+
+        if (driveAccessToken) {
+          if (draftProfileAvatarImage) {
+            await uploadPhotoToDriveForShare('avatar', draftProfileAvatarImage, 'go2enjoy_profile_avatar.jpg').catch(() => {});
+          }
+          for (let i = 0; i < 3; i++) {
+            if (draftProfilePhotos[i]) {
+              await uploadPhotoToDriveForShare(i, draftProfilePhotos[i]).catch(() => {});
+            }
+          }
+          await writeSingleDriveCache(appState?.cityCache || {}).catch(() => {});
+        }
+
+        try {
+          await fetch('/api/user-profile', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+        } catch {}
+
+        updateHeaderUserUI(email);
+        closeProfileModal();
+      } finally {
+        if (btn) {
+          btn.disabled = !driveAccessToken;
+          btn.textContent = prevBtnText || '💾 Guardar Perfil';
+        }
       }
-
-      updateHeaderUserUI(email);
-      closeProfileModal();
     }
 
     function getProfileEventKey(ev) {
@@ -2475,7 +2560,7 @@
     async function persistProfileCalendarEvents(eventsList) {
       const current = getUserProfileSettings();
       const updated = { ...current, profileCalendar: eventsList };
-      localStorage.setItem('go2enjoy_user_profile', JSON.stringify(updated));
+      setLocalUserProfile(updated);
       if (appState?.userProfile) {
         appState.userProfile.profileCalendar = eventsList;
       }
@@ -2483,7 +2568,7 @@
         await fetch('/api/user-profile', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ profileCalendar: eventsList })
+          body: JSON.stringify({ email: current.email, profileCalendar: eventsList })
         });
       } catch {}
       if (driveAccessToken) {
@@ -2662,18 +2747,19 @@
       };
     }
 
-    async function uploadPhotoToDriveForShare(slotIdx, dataUrl) {
+    async function uploadPhotoToDriveForShare(slotIdx, dataUrl, customFileName = '') {
       if (!driveAccessToken || !dataUrl) return '';
+      const cacheKey = getDrivePhotoCacheKey();
       let cached = {};
       try {
-        cached = JSON.parse(localStorage.getItem('go2enjoy_drive_photo_urls') || '{}') || {};
+        cached = JSON.parse(localStorage.getItem(cacheKey) || '{}') || {};
       } catch {}
       const sig = `${dataUrl.length}:${dataUrl.slice(-32)}`;
       if (cached[slotIdx]?.sig === sig && cached[slotIdx]?.url) {
         return cached[slotIdx].url;
       }
 
-      const fileName = `go2enjoy_profile_photo_${slotIdx + 1}.jpg`;
+      const fileName = customFileName || `go2enjoy_profile_photo_${Number(slotIdx) + 1}.jpg`;
       const q = encodeURIComponent(`name='${fileName}' and trashed=false`);
       let existingId = '';
       const searchRes = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id)&pageSize=1`, {
@@ -2713,7 +2799,7 @@
 
       const publicUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
       cached[slotIdx] = { sig, url: publicUrl };
-      localStorage.setItem('go2enjoy_drive_photo_urls', JSON.stringify(cached));
+      localStorage.setItem(cacheKey, JSON.stringify(cached));
       return publicUrl;
     }
 
@@ -3034,6 +3120,20 @@
       modal.classList.remove('flex');
     }
 
+    function resetUserSessionData(newEmail = '') {
+      driveAccessToken = '';
+      driveFileId = '';
+      currentModalEvent = null;
+      const blank = getEmptyUserProfile(newEmail);
+      if (appState) {
+        appState.userProfile = {
+          ...(appState.userProfile || {}),
+          ...blank
+        };
+      }
+      setDriveStatus('No conectado', false);
+    }
+
     async function submitGoogleLogin(event) {
       event.preventDefault();
       const input = document.getElementById('loginGmailInput');
@@ -3044,6 +3144,11 @@
         errEl.textContent = 'Introduce una dirección de correo válida (p. ej. usuario@gmail.com).';
         errEl.classList.remove('hidden');
         return;
+      }
+
+      const prevEmail = (localStorage.getItem('go2enjoy_user_email') || appState?.userProfile?.email || '').trim().toLowerCase();
+      if (prevEmail && prevEmail !== email) {
+        resetUserSessionData(email);
       }
 
       const res = await fetch('/api/auth/login', {
@@ -3059,10 +3164,16 @@
       }
 
       localStorage.setItem('go2enjoy_user_email', data.email);
-      if (appState?.userProfile) {
-        appState.userProfile.email = data.email;
+      const userProfileForEmail = data.userProfile
+        ? { ...getEmptyUserProfile(data.email), ...data.userProfile, email: data.email }
+        : getEmptyUserProfile(data.email);
+      setLocalUserProfile(userProfileForEmail);
+      if (appState) {
+        appState.userProfile = { ...(appState.userProfile || {}), ...userProfileForEmail };
       }
+
       updateHeaderUserUI(data.email);
+      hydrateProfilePageUI();
       hideGoogleLoginModal();
 
       if (!appState?.calendarEvents?.length) {
@@ -3072,10 +3183,10 @@
 
     function logoutGoogleUser() {
       localStorage.removeItem('go2enjoy_user_email');
-      driveAccessToken = '';
-      driveFileId = '';
-      setDriveStatus('Caché local diaria activa', false);
+      resetUserSessionData('');
+      closeProfileModal();
       updateHeaderUserUI('');
+      hydrateProfilePageUI();
       showGoogleLoginModal('');
     }
 
@@ -3101,12 +3212,23 @@
       renderExhibitionVenueTags();
       onShowTypeCheckboxChange();
 
-      const savedEmail = localStorage.getItem('go2enjoy_user_email') || '';
+      const savedEmail = (localStorage.getItem('go2enjoy_user_email') || '').trim().toLowerCase();
       if (!savedEmail) {
+        resetUserSessionData('');
         updateHeaderUserUI('');
         showGoogleLoginModal('');
         return;
       }
+
+      try {
+        const pRes = await fetch(`/api/user-profile?email=${encodeURIComponent(savedEmail)}`);
+        const pData = await pRes.json();
+        if (pData?.userProfile) {
+          const merged = { ...getEmptyUserProfile(savedEmail), ...pData.userProfile, email: savedEmail };
+          setLocalUserProfile(merged);
+          appState.userProfile = { ...(appState.userProfile || {}), ...merged };
+        }
+      } catch {}
 
       updateHeaderUserUI(savedEmail);
       await triggerCalendarUpdate();
