@@ -764,7 +764,7 @@
         <div class="h-11 w-11 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-extrabold text-white text-lg">G</div>
         <div>
           <h2 class="text-lg font-extrabold text-white">Iniciar sesión con Google</h2>
-          <p class="text-xs text-slate-400">Se usará para guardar eventos en tu Google Calendar y para las consultas de IA.</p>
+          <p class="text-xs text-slate-400">Introduce tu Gmail y conecta con Google Drive para cargar tu perfil y tu caché privada.</p>
         </div>
       </div>
 
@@ -774,8 +774,8 @@
         <p id="loginErrorMsg" class="hidden text-xs text-rose-400 mt-1.5 font-semibold"></p>
       </div>
 
-      <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-sm font-extrabold shadow-lg shadow-indigo-600/30 transition">
-        Entrar con este usuario Google →
+      <button id="btnSubmitGoogleLogin" type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 disabled:opacity-50 text-white text-sm font-extrabold shadow-lg shadow-indigo-600/30 transition">
+        ☁️ Entrar y Conectar con Google Drive →
       </button>
     </form>
   </div>
@@ -1749,18 +1749,20 @@
 
     const DEFAULT_GOOGLE_CLIENT_ID = '108535358368-9rfnr7kk4iklcp6qd7rq9cu5luivr2l2.apps.googleusercontent.com';
 
-    function connectGoogleDrive() {
+    function connectGoogleDrive(options = {}) {
       const clientId = (appState?.appConfig?.googleClientId || DEFAULT_GOOGLE_CLIENT_ID).trim();
       if (!clientId) {
-        alert('Introduce primero tu Google OAuth Client ID en Configuración.');
+        if (options.onError) options.onError('Falta Google OAuth Client ID.');
+        else alert('Introduce primero tu Google OAuth Client ID en Configuración.');
         return;
       }
       if (!window.google?.accounts?.oauth2) {
-        alert('Google Identity Services aún está cargando. Inténtalo en 1 segundo.');
+        if (options.onError) options.onError('Google Drive aún está cargando. Espera 1 segundo y vuelve a intentarlo.');
+        else alert('Google Identity Services aún está cargando. Inténtalo en 1 segundo.');
         return;
       }
       driveFileId = '';
-      const activeEmail = localStorage.getItem('go2enjoy_user_email') || '';
+      const activeEmail = (options.hintEmail || localStorage.getItem('go2enjoy_user_email') || '').trim().toLowerCase();
       const tokenClient = window.google.accounts.oauth2.initTokenClient({
         client_id: clientId,
         scope: 'https://www.googleapis.com/auth/drive.file',
@@ -1768,6 +1770,7 @@
         callback: async (resp) => {
           if (resp.error || !resp.access_token) {
             setDriveStatus('Error al conectar Drive', false);
+            if (options.onError) options.onError('Debes autorizar Google Drive para entrar y cargar tu perfil.');
             return;
           }
           driveAccessToken = resp.access_token;
@@ -1776,27 +1779,32 @@
 
           try {
             const driveJson = await readSingleDriveCache();
-            if (driveJson?.userProfile) {
-              const restored = {
-                ...getEmptyUserProfile(activeEmail),
-                ...driveJson.userProfile,
-                email: activeEmail || driveJson.userProfile.email || ''
-              };
+            const restored = driveJson?.userProfile
+              ? { ...getEmptyUserProfile(activeEmail), ...driveJson.userProfile, email: activeEmail || driveJson.userProfile.email || '' }
+              : getEmptyUserProfile(activeEmail);
+
+            if (activeEmail) {
               setLocalUserProfile(restored);
-              if (appState) {
-                appState.userProfile = { ...(appState.userProfile || {}), ...restored };
-              }
+            }
+            if (appState) {
+              appState.userProfile = { ...(appState.userProfile || {}), ...restored };
+            }
+            if (activeEmail) {
               await fetch('/api/user-profile', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(restored)
               }).catch(() => {});
-              updateHeaderUserUI(restored.email);
-              hydrateProfilePageUI();
             }
+            updateHeaderUserUI(restored.email);
+            hydrateProfilePageUI();
           } catch {}
 
-          await triggerCalendarUpdate(false);
+          if (options.onConnected) {
+            await options.onConnected();
+          } else {
+            await triggerCalendarUpdate(false);
+          }
         }
       });
       tokenClient.requestAccessToken({ prompt: 'select_account' });
@@ -3134,10 +3142,11 @@
       setDriveStatus('No conectado', false);
     }
 
-    async function submitGoogleLogin(event) {
+    function submitGoogleLogin(event) {
       event.preventDefault();
       const input = document.getElementById('loginGmailInput');
       const errEl = document.getElementById('loginErrorMsg');
+      const submitBtn = document.getElementById('btnSubmitGoogleLogin');
       const email = (input.value || '').trim().toLowerCase();
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -3146,39 +3155,55 @@
         return;
       }
 
-      const prevEmail = (localStorage.getItem('go2enjoy_user_email') || appState?.userProfile?.email || '').trim().toLowerCase();
-      if (prevEmail && prevEmail !== email) {
-        resetUserSessionData(email);
+      errEl.classList.add('hidden');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Conectando con Google Drive...';
       }
 
-      const res = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
+      // Limpiar todos los datos anteriores antes de conectar con el Drive del usuario
+      localStorage.removeItem('go2enjoy_user_email');
+      localStorage.removeItem(getProfileStorageKey(email));
+      localStorage.removeItem(getDrivePhotoCacheKey(email));
+      resetUserSessionData(email);
+
+      connectGoogleDrive({
+        hintEmail: email,
+        onError: (msg) => {
+          errEl.textContent = msg;
+          errEl.classList.remove('hidden');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '☁️ Entrar y Conectar con Google Drive →';
+          }
+        },
+        onConnected: async () => {
+          try {
+            const res = await fetch('/api/auth/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            const finalEmail = data.ok ? data.email : email;
+            localStorage.setItem('go2enjoy_user_email', finalEmail);
+
+            const current = getUserProfileSettings();
+            if (appState) {
+              appState.userProfile = { ...(appState.userProfile || {}), ...current, email: finalEmail };
+            }
+            updateHeaderUserUI(finalEmail);
+            hydrateProfilePageUI();
+            hideGoogleLoginModal();
+            await triggerCalendarUpdate(false);
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = '☁️ Entrar y Conectar con Google Drive →';
+            }
+          }
+        }
       });
-      const data = await res.json();
-      if (!data.ok) {
-        errEl.textContent = data.error || 'Error al iniciar sesión';
-        errEl.classList.remove('hidden');
-        return;
-      }
-
-      localStorage.setItem('go2enjoy_user_email', data.email);
-      const userProfileForEmail = data.userProfile
-        ? { ...getEmptyUserProfile(data.email), ...data.userProfile, email: data.email }
-        : getEmptyUserProfile(data.email);
-      setLocalUserProfile(userProfileForEmail);
-      if (appState) {
-        appState.userProfile = { ...(appState.userProfile || {}), ...userProfileForEmail };
-      }
-
-      updateHeaderUserUI(data.email);
-      hydrateProfilePageUI();
-      hideGoogleLoginModal();
-
-      if (!appState?.calendarEvents?.length) {
-        await triggerCalendarUpdate();
-      }
     }
 
     function logoutGoogleUser() {
