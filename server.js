@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
+const USER_PROFILES_PATH = path.join(DATA_DIR, 'user_profiles.json');
 const SHARED_ATTENDANCE_PATH = path.join(DATA_DIR, 'shared_attendance.json');
 const DEFAULT_GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID ||
@@ -138,10 +139,34 @@ function saveDb(dbData) {
   fs.writeFileSync(DB_PATH, JSON.stringify(dbData, null, 2), 'utf8');
 }
 
-// GET full state
+function loadUserProfiles() {
+  try {
+    if (!fs.existsSync(USER_PROFILES_PATH)) return {};
+    const parsed = JSON.parse(fs.readFileSync(USER_PROFILES_PATH, 'utf8'));
+    return parsed && typeof parsed === 'object' ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveUserProfiles(profiles) {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  fs.writeFileSync(USER_PROFILES_PATH, JSON.stringify(profiles, null, 2), 'utf8');
+}
+
+// GET full state (without leaking any user's personal profile)
 app.get('/api/state', (req, res) => {
   const db = loadDb();
-  res.json(db);
+  res.json({
+    ...db,
+    userProfile: {
+      ...DEFAULT_DB.userProfile,
+      selectedCity: db.userProfile?.selectedCity || 'Zaragoza',
+      preferences: db.userProfile?.preferences || DEFAULT_DB.userProfile.preferences
+    }
+  });
 });
 
 // PUT Part 1: App Configuration
@@ -216,19 +241,25 @@ app.post('/api/cache/restore', (req, res) => {
   res.json({ ok: true });
 });
 
-// POST Google User Login (stores active Google/Gmail account for Calendar & AI)
+// POST Google User Login (returns isolated profile for that email if any)
 app.post('/api/auth/login', (req, res) => {
   const email = String(req.body?.email || '').trim().toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ ok: false, error: 'Introduce un correo de Google / Gmail válido' });
   }
-  const db = loadDb();
-  db.userProfile.email = email;
-  saveDb(db);
-  res.json({ ok: true, email });
+  const profiles = loadUserProfiles();
+  res.json({ ok: true, email, userProfile: profiles[email] || null });
 });
 
-// PUT Part 2: User Preferences & Profile
+// GET isolated profile by email
+app.get('/api/user-profile', (req, res) => {
+  const email = String(req.query.email || '').trim().toLowerCase();
+  if (!email) return res.json({ ok: true, userProfile: null });
+  const profiles = loadUserProfiles();
+  res.json({ ok: true, userProfile: profiles[email] || null });
+});
+
+// PUT Part 2: User Preferences & Isolated Profile by email
 app.put('/api/user-profile', (req, res) => {
   const db = loadDb();
   const {
@@ -238,8 +269,6 @@ app.put('/api/user-profile', (req, res) => {
     alias,
     avatar,
     avatarImage,
-    hideAlias,
-    hideEmail,
     politicalPhrase,
     politicalScale,
     appearance,
@@ -251,40 +280,6 @@ app.put('/api/user-profile', (req, res) => {
     profileCalendar
   } = req.body;
   if (selectedCity) db.userProfile.selectedCity = selectedCity;
-  if (typeof email === 'string') db.userProfile.email = email.trim().toLowerCase();
-  if (typeof alias === 'string') db.userProfile.alias = alias.trim();
-  if (typeof avatar === 'string' && avatar.trim()) db.userProfile.avatar = avatar.trim();
-  if (typeof avatarImage === 'string') db.userProfile.avatarImage = avatarImage;
-  if (typeof hideAlias === 'boolean') db.userProfile.hideAlias = hideAlias;
-  if (typeof hideEmail === 'boolean') db.userProfile.hideEmail = hideEmail;
-  if (typeof politicalPhrase === 'string') db.userProfile.politicalPhrase = politicalPhrase.trim();
-  if (politicalScale === null || (Number.isInteger(Number(politicalScale)) && Number(politicalScale) >= 1 && Number(politicalScale) <= 5)) {
-    db.userProfile.politicalScale = politicalScale === null ? null : Number(politicalScale);
-  }
-  if (typeof appearance === 'string') db.userProfile.appearance = appearance.trim();
-  if (typeof sexuality === 'string') db.userProfile.sexuality = sexuality.trim();
-  else if (Array.isArray(sexuality)) db.userProfile.sexuality = sexuality[0] ? String(sexuality[0]) : '';
-  if (typeof seekingPerson === 'string') db.userProfile.seekingPerson = seekingPerson.trim();
-  else if (Array.isArray(seekingPerson)) db.userProfile.seekingPerson = seekingPerson[0] ? String(seekingPerson[0]) : '';
-  if (typeof seekingRelation === 'string') db.userProfile.seekingRelation = seekingRelation.trim();
-  else if (Array.isArray(seekingRelation)) db.userProfile.seekingRelation = seekingRelation[0] ? String(seekingRelation[0]) : '';
-  if (Array.isArray(photos)) {
-    db.userProfile.photos = [0, 1, 2].map(i => (typeof photos[i] === 'string' ? photos[i] : ''));
-  }
-  if (socialLinks && typeof socialLinks === 'object') {
-    db.userProfile.socialLinks = {
-      instagram: String(socialLinks.instagram || '').trim(),
-      tiktok: String(socialLinks.tiktok || '').trim(),
-      x: String(socialLinks.x || '').trim(),
-      facebook: String(socialLinks.facebook || '').trim(),
-      youtube: String(socialLinks.youtube || '').trim(),
-      linkedin: String(socialLinks.linkedin || '').trim(),
-      web: String(socialLinks.web || '').trim()
-    };
-  }
-  if (Array.isArray(profileCalendar)) {
-    db.userProfile.profileCalendar = profileCalendar;
-  }
   if (preferences?.A) {
     db.userProfile.preferences = {
       A: {
@@ -294,7 +289,50 @@ app.put('/api/user-profile', (req, res) => {
     };
   }
   saveDb(db);
-  res.json({ ok: true, userProfile: db.userProfile });
+
+  const normalizedEmail = typeof email === 'string' ? email.trim().toLowerCase() : '';
+  let savedProfile = null;
+  if (normalizedEmail) {
+    const profiles = loadUserProfiles();
+    const target = profiles[normalizedEmail] || { ...DEFAULT_DB.userProfile, email: normalizedEmail };
+    target.email = normalizedEmail;
+    if (typeof alias === 'string') target.alias = alias.trim();
+    if (typeof avatar === 'string' && avatar.trim()) target.avatar = avatar.trim();
+    if (typeof avatarImage === 'string') target.avatarImage = avatarImage;
+    if (typeof politicalPhrase === 'string') target.politicalPhrase = politicalPhrase.trim();
+    if (politicalScale === null || (Number.isInteger(Number(politicalScale)) && Number(politicalScale) >= 1 && Number(politicalScale) <= 5)) {
+      target.politicalScale = politicalScale === null ? null : Number(politicalScale);
+    }
+    if (typeof appearance === 'string') target.appearance = appearance.trim();
+    if (typeof sexuality === 'string') target.sexuality = sexuality.trim();
+    else if (Array.isArray(sexuality)) target.sexuality = sexuality[0] ? String(sexuality[0]) : '';
+    if (typeof seekingPerson === 'string') target.seekingPerson = seekingPerson.trim();
+    else if (Array.isArray(seekingPerson)) target.seekingPerson = seekingPerson[0] ? String(seekingPerson[0]) : '';
+    if (typeof seekingRelation === 'string') target.seekingRelation = seekingRelation.trim();
+    else if (Array.isArray(seekingRelation)) target.seekingRelation = seekingRelation[0] ? String(seekingRelation[0]) : '';
+    if (Array.isArray(photos)) {
+      target.photos = [0, 1, 2].map(i => (typeof photos[i] === 'string' ? photos[i] : ''));
+    }
+    if (socialLinks && typeof socialLinks === 'object') {
+      target.socialLinks = {
+        instagram: String(socialLinks.instagram || '').trim(),
+        tiktok: String(socialLinks.tiktok || '').trim(),
+        x: String(socialLinks.x || '').trim(),
+        facebook: String(socialLinks.facebook || '').trim(),
+        youtube: String(socialLinks.youtube || '').trim(),
+        linkedin: String(socialLinks.linkedin || '').trim(),
+        web: String(socialLinks.web || '').trim()
+      };
+    }
+    if (Array.isArray(profileCalendar)) {
+      target.profileCalendar = profileCalendar;
+    }
+    profiles[normalizedEmail] = target;
+    saveUserProfiles(profiles);
+    savedProfile = target;
+  }
+
+  res.json({ ok: true, userProfile: savedProfile || db.userProfile });
 });
 
 function loadSharedAttendance() {
