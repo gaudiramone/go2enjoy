@@ -621,27 +621,15 @@
             <div id="profileAvatarGrid" class="grid grid-cols-6 gap-2"></div>
           </div>
 
-          <!-- Alias + Ocultar -->
+          <!-- Alias -->
           <div class="space-y-1.5">
-            <div class="flex items-center justify-between gap-2">
-              <label for="profileAliasInput" class="text-xs font-bold uppercase tracking-wider text-slate-300">Alias</label>
-              <label class="inline-flex items-center gap-1.5 text-xs text-slate-400 cursor-pointer select-none">
-                <input id="profileHideAlias" type="checkbox" class="rounded border-slate-600 bg-slate-950 text-indigo-500 focus:ring-indigo-500" />
-                <span>Ocultar</span>
-              </label>
-            </div>
+            <label for="profileAliasInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300">Alias</label>
             <input id="profileAliasInput" type="text" placeholder="Tu alias o apodo público..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
           </div>
 
-          <!-- Correo + Ocultar -->
+          <!-- Correo -->
           <div class="space-y-1.5">
-            <div class="flex items-center justify-between gap-2">
-              <label for="profileEmailInput" class="text-xs font-bold uppercase tracking-wider text-slate-300">Correo electrónico</label>
-              <label class="inline-flex items-center gap-1.5 text-xs text-slate-400 cursor-pointer select-none">
-                <input id="profileHideEmail" type="checkbox" class="rounded border-slate-600 bg-slate-950 text-indigo-500 focus:ring-indigo-500" />
-                <span>Ocultar</span>
-              </label>
-            </div>
+            <label for="profileEmailInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300">Correo electrónico</label>
             <input id="profileEmailInput" type="email" placeholder="tuusuario@gmail.com" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
           </div>
 
@@ -791,7 +779,7 @@
 
   <!-- Modal de Detalle de Evento al hacer clic en el Calendario -->
   <div id="eventModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-    <div class="w-full max-w-lg h-[510px] max-h-[92vh] rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl flex flex-col justify-between">
+    <div class="w-full max-w-lg h-[550px] max-h-[94vh] rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl flex flex-col justify-between">
       <div class="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1">
         <div class="flex items-start justify-between gap-3">
           <div class="flex flex-wrap items-center gap-2">
@@ -832,9 +820,86 @@
             <button id="modalProfileDateNextBtn" type="button" onclick="stepModalProfileDate(1)" class="w-7 h-7 rounded-lg bg-slate-900 hover:bg-slate-800 disabled:opacity-35 disabled:cursor-not-allowed border border-slate-700 text-xs font-bold text-white flex items-center justify-center transition">▶</button>
           </div>
         </div>
-        <button id="modalAddProfileCalBtn" type="button" onclick="toggleCurrentEventInProfileCalendar()" class="w-full px-3 py-2.5 rounded-xl bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white border border-amber-500/40 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition">
-          <span>👤 Añadir al calendario de Perfil</span>
+        <div id="modalProfileAddWrap">
+          <button id="modalAddProfileCalBtn" type="button" onclick="openEventShareModal()" class="w-full px-3 py-2.5 rounded-xl bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white border border-amber-500/40 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition">
+            <span>👤 Añadir al calendario de Perfil</span>
+          </button>
+        </div>
+        <div id="modalProfileEditWrap" class="hidden grid grid-cols-[1fr_110px] items-center gap-2">
+          <button type="button" onclick="openEventShareModal()" class="w-full px-3 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white border border-amber-400 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition">
+            <span id="modalShareStatusLabel">⚙️ Privacidad / Compartir</span>
+          </button>
+          <button type="button" onclick="removeCurrentEventFromProfileCalendar()" class="w-full px-3 py-2.5 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-200 hover:text-white border border-rose-500/40 text-xs font-bold whitespace-nowrap text-center transition">🗑️ Quitar</button>
+        </div>
+        <button id="modalAttendeesBtn" type="button" onclick="openEventAttendeesModal()" class="w-full px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-200 border border-slate-700 text-xs font-bold flex items-center justify-center gap-1.5 whitespace-nowrap transition">
+          <span>👥 ¿Quién se ha apuntado? (0)</span>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Privacidad y Compartir al añadir evento a Perfil -->
+  <div id="eventShareModal" class="fixed inset-0 z-[65] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-lg max-h-[90vh] flex flex-col rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-800 pb-3 shrink-0">
+        <div>
+          <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+            <span>🔐</span>
+            <span>Privacidad para este evento</span>
+          </h2>
+          <p id="shareModalEventTitle" class="text-xs text-slate-400 mt-0.5 truncate max-w-[360px]"></p>
+        </div>
+        <button type="button" onclick="closeEventShareModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
+      </div>
+
+      <div class="flex-1 min-h-0 overflow-y-auto py-4 space-y-4 pr-1">
+        <label class="flex items-center justify-between gap-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 p-3.5 cursor-pointer select-none">
+          <div>
+            <p class="text-sm font-extrabold text-white">🌐 Público</p>
+            <p class="text-[11px] text-emerald-200/80">Si lo activas, otros usuarios verán tu icono y lo que elijas debajo en este evento.</p>
+          </div>
+          <input id="shareIsPublic" type="checkbox" onchange="onSharePublicToggle()" class="w-5 h-5 rounded border-slate-600 bg-slate-950 text-emerald-500 focus:ring-emerald-500 shrink-0" />
+        </label>
+
+        <div id="shareFieldsContainer" class="space-y-4 transition-opacity">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-400 font-semibold">El icono de perfil se comparte siempre al marcar Público.</span>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" onclick="toggleAllShareFields(true)" class="text-indigo-400 hover:underline font-bold">Todo</button>
+              <span class="text-slate-600">|</span>
+              <button type="button" onclick="toggleAllShareFields(false)" class="text-slate-400 hover:underline font-bold">Nada</button>
+            </div>
+          </div>
+
+          <div id="shareCheckboxesList" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex items-center justify-end gap-2 shrink-0">
+        <button type="button" onclick="closeEventShareModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">Cancelar</button>
+        <button id="btnConfirmEventShare" type="button" onclick="confirmEventShareSave()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-indigo-600/30 transition">💾 Guardar en mi Perfil</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Apuntados Públicos en un Evento -->
+  <div id="eventAttendeesModal" class="fixed inset-0 z-[65] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-lg max-h-[88vh] flex flex-col rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-800 pb-3 shrink-0">
+        <div>
+          <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+            <span>👥</span>
+            <span>Apuntados a este evento</span>
+          </h2>
+          <p id="attendeesModalEventTitle" class="text-xs text-slate-400 mt-0.5 truncate max-w-[360px]"></p>
+        </div>
+        <button type="button" onclick="closeEventAttendeesModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
+      </div>
+
+      <div id="eventAttendeesList" class="flex-1 min-h-0 overflow-y-auto py-4 space-y-3 pr-1"></div>
+
+      <div class="pt-3 border-t border-slate-800 flex justify-end shrink-0">
+        <button type="button" onclick="closeEventAttendeesModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">Cerrar</button>
       </div>
     </div>
   </div>
@@ -1594,6 +1659,7 @@
       refLink.innerHTML = `<span>${label}</span><span>↗</span>`;
 
       updateModalProfileCalendarButton(ev);
+      fetchEventAttendees(ev);
 
       const modal = document.getElementById('eventModal');
       modal.classList.remove('hidden');
@@ -1960,10 +2026,8 @@
 
       renderAvatarInto(avatarEl, profile.avatar, profile.avatarImage);
 
-      const visibleAlias = !profile.hideAlias && profile.alias ? profile.alias : '';
-      const visibleEmail = !profile.hideEmail && effectiveEmail ? effectiveEmail : '';
       if (labelEl) {
-        labelEl.textContent = visibleAlias || visibleEmail || (effectiveEmail ? 'Mi perfil' : 'Sin sesión');
+        labelEl.textContent = profile.alias || effectiveEmail || (effectiveEmail ? 'Mi perfil' : 'Sin sesión');
       }
       if (logoutBtn) {
         logoutBtn.classList.toggle('hidden', !effectiveEmail);
@@ -2308,9 +2372,7 @@
       draftSeekingRelation = typeof profile.seekingRelation === 'string' ? profile.seekingRelation : '';
       draftProfilePhotos = [...(profile.photos || ['', '', ''])];
       document.getElementById('profileAliasInput').value = profile.alias || '';
-      document.getElementById('profileHideAlias').checked = Boolean(profile.hideAlias);
       document.getElementById('profileEmailInput').value = profile.email || '';
-      document.getElementById('profileHideEmail').checked = Boolean(profile.hideEmail);
       document.getElementById('profilePoliticalPhrase').value = profile.politicalPhrase || '';
       renderProfileAvatarGrid();
       renderPoliticalScaleButtons();
@@ -2344,9 +2406,7 @@
         return;
       }
       const alias = (document.getElementById('profileAliasInput').value || '').trim();
-      const hideAlias = document.getElementById('profileHideAlias').checked;
       const email = (document.getElementById('profileEmailInput').value || '').trim().toLowerCase();
-      const hideEmail = document.getElementById('profileHideEmail').checked;
       const politicalPhrase = (document.getElementById('profilePoliticalPhrase').value || '').trim();
 
       if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -2356,9 +2416,7 @@
 
       const payload = {
         alias,
-        hideAlias,
         email,
-        hideEmail,
         avatar: draftProfileAvatar,
         avatarImage: draftProfileAvatarImage,
         politicalPhrase,
@@ -2434,17 +2492,448 @@
     }
 
     function updateModalProfileCalendarButton(ev) {
-      const btn = document.getElementById('modalAddProfileCalBtn');
-      if (!btn || !ev) return;
+      const addWrap = document.getElementById('modalProfileAddWrap');
+      const editWrap = document.getElementById('modalProfileEditWrap');
+      const statusLabel = document.getElementById('modalShareStatusLabel');
+      if (!addWrap || !editWrap || !ev) return;
       const key = getProfileEventKey(ev);
-      const exists = getProfileCalendarEvents().some(item => getProfileEventKey(item) === key);
-      if (exists) {
-        btn.className = 'w-full px-3 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white border border-amber-400 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition';
-        btn.innerHTML = '<span>✓ En tu calendario de Perfil (pulsa para quitar)</span>';
+      const saved = getProfileCalendarEvents().find(item => getProfileEventKey(item) === key);
+      if (saved) {
+        addWrap.classList.add('hidden');
+        editWrap.classList.remove('hidden');
+        if (statusLabel) {
+          statusLabel.textContent = saved.shareConfig?.isPublic
+            ? '🌐 Público · Editar privacidad'
+            : '🔒 Privado · Editar privacidad';
+        }
       } else {
-        btn.className = 'w-full px-3 py-2.5 rounded-xl bg-amber-600/20 hover:bg-amber-600 text-amber-200 hover:text-white border border-amber-500/40 text-xs font-extrabold flex items-center justify-center gap-1.5 whitespace-nowrap transition';
-        btn.innerHTML = '<span>👤 Añadir al calendario de Perfil</span>';
+        addWrap.classList.remove('hidden');
+        editWrap.classList.add('hidden');
       }
+    }
+
+    function getCurrentUserId() {
+      const profile = getUserProfileSettings();
+      if (profile.email) return `email:${profile.email.toLowerCase()}`;
+      let anon = localStorage.getItem('go2enjoy_anon_uid');
+      if (!anon) {
+        anon = 'anon_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+        localStorage.setItem('go2enjoy_anon_uid', anon);
+      }
+      return anon;
+    }
+
+    function getDefaultShareConfig() {
+      return {
+        isPublic: false,
+        alias: false,
+        email: false,
+        politicalPhrase: false,
+        politicalScale: false,
+        appearance: false,
+        sexuality: false,
+        seekingPerson: false,
+        seekingRelation: false,
+        photos: [false, false, false],
+        socialLinks: {}
+      };
+    }
+
+    function openEventShareModal() {
+      if (!currentModalEvent) return;
+      const ev = currentModalEvent;
+      const key = getProfileEventKey(ev);
+      const saved = getProfileCalendarEvents().find(item => getProfileEventKey(item) === key);
+      const cfg = saved?.shareConfig ? { ...getDefaultShareConfig(), ...saved.shareConfig } : getDefaultShareConfig();
+      const profile = getUserProfileSettings();
+
+      document.getElementById('shareModalEventTitle').textContent = ev.title || '';
+      document.getElementById('shareIsPublic').checked = Boolean(cfg.isPublic);
+
+      const groups = [
+        {
+          title: '👤 Datos básicos',
+          items: [
+            { id: 'alias', label: `Alias${profile.alias ? `: "${profile.alias}"` : ' (vacío)'}`, checked: Boolean(cfg.alias) },
+            { id: 'email', label: `Correo${profile.email ? `: ${profile.email}` : ' (vacío)'}`, checked: Boolean(cfg.email) }
+          ]
+        },
+        {
+          title: '🏛️ Ideología',
+          items: [
+            { id: 'politicalPhrase', label: `Frase${profile.politicalPhrase ? `: "${profile.politicalPhrase}"` : ' (vacía)'}`, checked: Boolean(cfg.politicalPhrase) },
+            { id: 'politicalScale', label: `Ranking (1–5)${profile.politicalScale ? `: ${profile.politicalScale}` : ' (sin elegir)'}`, checked: Boolean(cfg.politicalScale) }
+          ]
+        },
+        {
+          title: '💞 Sexo',
+          items: [
+            { id: 'appearance', label: `Apariencia${profile.appearance ? `: ${profile.appearance}` : ''}`, checked: Boolean(cfg.appearance) },
+            { id: 'sexuality', label: `Sexo${profile.sexuality ? `: ${profile.sexuality}` : ''}`, checked: Boolean(cfg.sexuality) },
+            { id: 'seekingPerson', label: `Busco persona${profile.seekingPerson ? `: ${profile.seekingPerson}` : ''}`, checked: Boolean(cfg.seekingPerson) },
+            { id: 'seekingRelation', label: `Busco relación${profile.seekingRelation ? `: ${profile.seekingRelation}` : ''}`, checked: Boolean(cfg.seekingRelation) }
+          ]
+        },
+        {
+          title: `📸 Fotos (URL en Google Drive)${driveAccessToken ? '' : ' · Conecta Drive para subir URL'}`,
+          items: [0, 1, 2].map(i => {
+            const hasPhoto = Boolean(profile.photos?.[i]);
+            return {
+              id: `photo_${i}`,
+              label: `Foto ${i + 1}${hasPhoto ? '' : ' (sin foto)'}`,
+              checked: Boolean(cfg.photos?.[i]) && hasPhoto,
+              disabled: !hasPhoto
+            };
+          })
+        },
+        {
+          title: '🌐 Redes sociales',
+          items: PROFILE_SOCIAL_FIELDS.map(f => {
+            const val = profile.socialLinks?.[f.key] || '';
+            return {
+              id: `social_${f.key}`,
+              label: `${f.icon} ${f.label}${val ? `: ${val}` : ' (vacío)'}`,
+              checked: Boolean(cfg.socialLinks?.[f.key]) && Boolean(val),
+              disabled: !val
+            };
+          })
+        }
+      ];
+
+      document.getElementById('shareCheckboxesList').innerHTML = groups.map(g => `
+        <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 space-y-2">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-indigo-300">${g.title}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+            ${g.items.map(it => `
+              <label class="flex items-center gap-2 text-xs ${it.disabled ? 'text-slate-600 cursor-not-allowed' : 'text-slate-200 cursor-pointer'} select-none">
+                <input type="checkbox" data-share-field="${it.id}" ${it.checked ? 'checked' : ''} ${it.disabled ? 'disabled' : ''} class="rounded border-slate-600 bg-slate-900 text-indigo-500 focus:ring-indigo-500" />
+                <span class="truncate">${it.label}</span>
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      onSharePublicToggle();
+      const modal = document.getElementById('eventShareModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeEventShareModal() {
+      const modal = document.getElementById('eventShareModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function onSharePublicToggle() {
+      const isPublic = document.getElementById('shareIsPublic')?.checked;
+      const box = document.getElementById('shareFieldsContainer');
+      if (!box) return;
+      box.classList.toggle('opacity-40', !isPublic);
+      box.classList.toggle('pointer-events-none', !isPublic);
+    }
+
+    function toggleAllShareFields(state) {
+      document.querySelectorAll('#shareCheckboxesList input[data-share-field]:not(:disabled)').forEach(el => {
+        el.checked = state;
+      });
+    }
+
+    function collectShareConfigFromModal() {
+      const isPublic = Boolean(document.getElementById('shareIsPublic')?.checked);
+      const getVal = id => Boolean(document.querySelector(`#shareCheckboxesList input[data-share-field="${id}"]`)?.checked);
+      const socialLinks = {};
+      PROFILE_SOCIAL_FIELDS.forEach(f => {
+        socialLinks[f.key] = getVal(`social_${f.key}`);
+      });
+      return {
+        isPublic,
+        alias: getVal('alias'),
+        email: getVal('email'),
+        politicalPhrase: getVal('politicalPhrase'),
+        politicalScale: getVal('politicalScale'),
+        appearance: getVal('appearance'),
+        sexuality: getVal('sexuality'),
+        seekingPerson: getVal('seekingPerson'),
+        seekingRelation: getVal('seekingRelation'),
+        photos: [getVal('photo_0'), getVal('photo_1'), getVal('photo_2')],
+        socialLinks
+      };
+    }
+
+    async function uploadPhotoToDriveForShare(slotIdx, dataUrl) {
+      if (!driveAccessToken || !dataUrl) return '';
+      let cached = {};
+      try {
+        cached = JSON.parse(localStorage.getItem('go2enjoy_drive_photo_urls') || '{}') || {};
+      } catch {}
+      const sig = `${dataUrl.length}:${dataUrl.slice(-32)}`;
+      if (cached[slotIdx]?.sig === sig && cached[slotIdx]?.url) {
+        return cached[slotIdx].url;
+      }
+
+      const fileName = `go2enjoy_profile_photo_${slotIdx + 1}.jpg`;
+      const q = encodeURIComponent(`name='${fileName}' and trashed=false`);
+      let existingId = '';
+      const searchRes = await fetch(`https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id)&pageSize=1`, {
+        headers: { Authorization: `Bearer ${driveAccessToken}` }
+      });
+      if (searchRes.ok) {
+        const searchData = await searchRes.json();
+        existingId = searchData.files?.[0]?.id || '';
+      }
+
+      const blob = await (await fetch(dataUrl)).blob();
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify({ name: fileName, mimeType: 'image/jpeg' })], { type: 'application/json' }));
+      form.append('file', blob);
+
+      const uploadUrl = existingId
+        ? `https://www.googleapis.com/upload/drive/v3/files/${existingId}?uploadType=multipart&fields=id`
+        : 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id';
+      const uploadRes = await fetch(uploadUrl, {
+        method: existingId ? 'PATCH' : 'POST',
+        headers: { Authorization: `Bearer ${driveAccessToken}` },
+        body: form
+      });
+      if (!uploadRes.ok) return '';
+      const uploaded = await uploadRes.json();
+      const fileId = uploaded.id || existingId;
+      if (!fileId) return '';
+
+      await fetch(`https://www.googleapis.com/drive/v3/files/${fileId}/permissions`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${driveAccessToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ role: 'reader', type: 'anyone' })
+      }).catch(() => {});
+
+      const publicUrl = `https://lh3.googleusercontent.com/d/${fileId}`;
+      cached[slotIdx] = { sig, url: publicUrl };
+      localStorage.setItem('go2enjoy_drive_photo_urls', JSON.stringify(cached));
+      return publicUrl;
+    }
+
+    async function confirmEventShareSave() {
+      if (!currentModalEvent) return;
+      const btn = document.getElementById('btnConfirmEventShare');
+      const prevText = btn ? btn.textContent : '';
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Guardando...';
+      }
+
+      try {
+        const ev = currentModalEvent;
+        const key = getProfileEventKey(ev);
+        const shareConfig = collectShareConfigFromModal();
+        const list = getProfileCalendarEvents();
+        const idx = list.findIndex(item => getProfileEventKey(item) === key);
+        const expoRange = getExhibitionDateRange(ev);
+        const pickedDate = expoRange
+          ? (modalProfileChosenDate || ev.date || expoRange.start)
+          : (ev.date || '');
+
+        const eventRecord = {
+          id: ev.id || '',
+          subType: ev.subType || '',
+          title: ev.title || '',
+          artistName: ev.artistName || '',
+          date: pickedDate,
+          rangeStart: expoRange ? expoRange.start : '',
+          rangeEnd: expoRange ? expoRange.end : '',
+          time: ev.time || '',
+          venue: ev.venue || '',
+          venueTag: ev.venueTag || '',
+          musicStyle: ev.musicStyle || '',
+          styleTag: ev.styleTag || '',
+          styleColor: ev.styleColor || '',
+          price: ev.price || '',
+          url: ev.url || '',
+          isTicketUrl: Boolean(ev.isTicketUrl),
+          actionLabel: ev.actionLabel || '',
+          color: getEventColor(ev),
+          shareConfig
+        };
+
+        if (idx >= 0) {
+          list[idx] = eventRecord;
+        } else {
+          list.push(eventRecord);
+        }
+
+        const userId = getCurrentUserId();
+        if (shareConfig.isPublic) {
+          const profile = getUserProfileSettings();
+          const sharedPhotos = [];
+          for (let i = 0; i < 3; i++) {
+            if (shareConfig.photos[i] && profile.photos?.[i]) {
+              let photoUrl = '';
+              if (driveAccessToken) {
+                photoUrl = await uploadPhotoToDriveForShare(i, profile.photos[i]).catch(() => '');
+              }
+              if (photoUrl) sharedPhotos.push(photoUrl);
+            }
+          }
+          const sharedSocials = {};
+          PROFILE_SOCIAL_FIELDS.forEach(f => {
+            if (shareConfig.socialLinks[f.key] && profile.socialLinks?.[f.key]) {
+              sharedSocials[f.key] = profile.socialLinks[f.key];
+            }
+          });
+
+          const publicProfile = {
+            avatar: profile.avatar || '😎',
+            avatarImage: profile.avatarImage || ''
+          };
+          if (shareConfig.alias && profile.alias) publicProfile.alias = profile.alias;
+          if (shareConfig.email && profile.email) publicProfile.email = profile.email;
+          if (shareConfig.politicalPhrase && profile.politicalPhrase) publicProfile.politicalPhrase = profile.politicalPhrase;
+          if (shareConfig.politicalScale && profile.politicalScale) publicProfile.politicalScale = profile.politicalScale;
+          if (shareConfig.appearance && profile.appearance) publicProfile.appearance = profile.appearance;
+          if (shareConfig.sexuality && profile.sexuality) publicProfile.sexuality = profile.sexuality;
+          if (shareConfig.seekingPerson && profile.seekingPerson) publicProfile.seekingPerson = profile.seekingPerson;
+          if (shareConfig.seekingRelation && profile.seekingRelation) publicProfile.seekingRelation = profile.seekingRelation;
+          if (sharedPhotos.length > 0) publicProfile.photos = sharedPhotos;
+          if (Object.keys(sharedSocials).length > 0) publicProfile.socialLinks = sharedSocials;
+
+          await fetch('/api/events/attendance', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              eventKey: key,
+              userId,
+              chosenDate: pickedDate,
+              profile: publicProfile
+            })
+          });
+        } else {
+          await fetch('/api/events/attendance', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ eventKey: key, userId })
+          }).catch(() => {});
+        }
+
+        await persistProfileCalendarEvents(list);
+        updateModalProfileCalendarButton(ev);
+        renderProfileCalendarTab();
+        await fetchEventAttendees(ev);
+        closeEventShareModal();
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = prevText || '💾 Guardar en mi Perfil';
+        }
+      }
+    }
+
+    async function removeCurrentEventFromProfileCalendar() {
+      if (!currentModalEvent) return;
+      const ev = currentModalEvent;
+      const key = getProfileEventKey(ev);
+      const list = getProfileCalendarEvents().filter(item => getProfileEventKey(item) !== key);
+      await fetch('/api/events/attendance', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ eventKey: key, userId: getCurrentUserId() })
+      }).catch(() => {});
+      await persistProfileCalendarEvents(list);
+      updateModalProfileCalendarButton(ev);
+      renderProfileCalendarTab();
+      await fetchEventAttendees(ev);
+    }
+
+    let currentEventAttendees = [];
+
+    async function fetchEventAttendees(ev) {
+      const btn = document.getElementById('modalAttendeesBtn');
+      if (!ev) return;
+      const key = getProfileEventKey(ev);
+      try {
+        const res = await fetch(`/api/events/attendance?key=${encodeURIComponent(key)}`);
+        const data = await res.json();
+        currentEventAttendees = Array.isArray(data.attendees) ? data.attendees : [];
+      } catch {
+        currentEventAttendees = [];
+      }
+      if (btn) {
+        btn.innerHTML = `<span>👥 ¿Quién se ha apuntado? (${currentEventAttendees.length})</span>`;
+      }
+    }
+
+    function openEventAttendeesModal() {
+      if (!currentModalEvent) return;
+      document.getElementById('attendeesModalEventTitle').textContent = currentModalEvent.title || '';
+      const listEl = document.getElementById('eventAttendeesList');
+      if (currentEventAttendees.length === 0) {
+        listEl.innerHTML = `
+          <div class="rounded-xl border border-slate-800 bg-slate-950/60 p-6 text-center text-xs text-slate-400">
+            Todavía no hay perfiles públicos apuntados a este evento.
+          </div>
+        `;
+      } else {
+        listEl.innerHTML = currentEventAttendees.map(att => {
+          const p = att.profile || {};
+          const avatarHtml = p.avatarImage
+            ? `<img src="${p.avatarImage}" alt="Avatar" class="w-full h-full object-cover" />`
+            : `<span>${p.avatar || '😎'}</span>`;
+          const displayName = p.alias || 'Usuario público';
+          const socialsHtml = p.socialLinks
+            ? Object.entries(p.socialLinks).map(([k, v]) => {
+                const meta = PROFILE_SOCIAL_FIELDS.find(f => f.key === k);
+                const url = buildSocialNetworkUrl(k, v);
+                return url ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-[11px] font-bold transition">${meta?.icon || '🔗'} ${meta?.label || k} ↗</a>` : '';
+              }).join('')
+            : '';
+          const photosHtml = Array.isArray(p.photos) && p.photos.length > 0
+            ? `<div class="grid grid-cols-3 gap-2 pt-1">${p.photos.map((u, idx) => `<a href="${u}" target="_blank" rel="noopener noreferrer" class="aspect-square rounded-lg overflow-hidden border border-slate-700 bg-slate-900 block"><img src="${u}" alt="Foto ${idx + 1}" class="w-full h-full object-cover" /></a>`).join('')}</div>`
+            : '';
+
+          return `
+            <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-3.5 space-y-2.5">
+              <div class="flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-11 h-11 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-2xl overflow-hidden shrink-0">${avatarHtml}</div>
+                  <div class="min-w-0">
+                    <p class="text-sm font-extrabold text-white truncate">${displayName}</p>
+                    ${p.email ? `<p class="text-[11px] text-slate-400 truncate">✉️ ${p.email}</p>` : ''}
+                  </div>
+                </div>
+                ${att.chosenDate ? `<span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/15 text-amber-300 border border-amber-500/30 shrink-0">📅 ${att.chosenDate}</span>` : ''}
+              </div>
+              ${p.politicalPhrase || p.politicalScale ? `
+                <div class="text-xs text-slate-300 space-y-0.5">
+                  ${p.politicalScale ? `<p>🏛️ <strong>Ideología:</strong> ${POLITICAL_SCALE_LABELS[p.politicalScale] || p.politicalScale}</p>` : ''}
+                  ${p.politicalPhrase ? `<p class="italic text-slate-400">"${p.politicalPhrase}"</p>` : ''}
+                </div>
+              ` : ''}
+              ${(p.appearance || p.sexuality || p.seekingPerson || p.seekingRelation) ? `
+                <div class="flex flex-wrap gap-1.5 text-[11px]">
+                  ${p.appearance ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Apariencia: ${p.appearance}</span>` : ''}
+                  ${p.sexuality ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Sexo: ${p.sexuality}</span>` : ''}
+                  ${p.seekingPerson ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Busco: ${p.seekingPerson}</span>` : ''}
+                  ${p.seekingRelation ? `<span class="px-2 py-0.5 rounded bg-slate-800 text-slate-200 border border-slate-700">Relación: ${p.seekingRelation}</span>` : ''}
+                </div>
+              ` : ''}
+              ${photosHtml}
+              ${socialsHtml ? `<div class="flex flex-wrap gap-1.5 pt-1">${socialsHtml}</div>` : ''}
+            </div>
+          `;
+        }).join('');
+      }
+      const modal = document.getElementById('eventAttendeesModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeEventAttendeesModal() {
+      const modal = document.getElementById('eventAttendeesModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
     }
 
     async function stepModalProfileDate(delta) {
