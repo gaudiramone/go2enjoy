@@ -551,12 +551,48 @@
     <!-- PARTE 5: EVENTOS                                                      -->
     <!-- ===================================================================== -->
     <section id="part5Container" class="hidden space-y-6">
-      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-6 shadow-xl">
-        <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
-          <span>🍸</span>
-          <span>Eventos</span>
-        </h2>
-        <p class="text-xs text-slate-400 mt-1">Próximamente: aquí irá el contenido de Eventos.</p>
+      <!-- a) Lista de eventos creados en la ciudad -->
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+              <span>🍸</span>
+              <span>Eventos creados en <span id="communityEventsCityLabel" class="text-pink-300">tu ciudad</span></span>
+              <span id="communityEventsCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">0</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Eventos publicados por usuarios en esta ciudad. Pulsa en cualquiera para ver el detalle o apuntarte.</p>
+          </div>
+          <button type="button" onclick="renderCommunityEventsTab()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition">🔄 Actualizar</button>
+        </div>
+        <div id="communityEventsList" class="space-y-1.5"></div>
+      </div>
+
+      <!-- Crea tu evento -->
+      <div id="createCommunityEventCard" class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+            <span>✨</span>
+            <span>Crea tu evento</span>
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Publica tu evento en <strong id="createEventCityLabel" class="text-pink-300">tu ciudad</strong> para que otros usuarios puedan verlo y apuntarse.</p>
+        </div>
+        <button type="button" onclick="openCreateCommunityEventModal()" class="px-5 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 text-white text-sm font-extrabold shadow-lg shadow-pink-600/25 transition shrink-0">
+          ✨ Crea tu evento
+        </button>
+      </div>
+
+      <!-- Logs Eventos -->
+      <div id="communityEventsLogsCard" class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+          <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+            <span>📋</span>
+            <span>Logs Eventos</span>
+          </h3>
+          <span id="communityEventsLogsSummary" class="text-[11px] font-mono text-slate-400">Sin cargar</span>
+        </div>
+        <div id="communityEventsLogsBody" class="space-y-3 text-xs text-slate-300">
+          <p class="text-slate-400">Pulsa Actualizar o abre la pestaña para ver el log de eventos.</p>
+        </div>
       </div>
     </section>
 
@@ -564,12 +600,19 @@
     <!-- PARTE 6: AMIGOS                                                       -->
     <!-- ===================================================================== -->
     <section id="part6Container" class="hidden space-y-6">
-      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-6 shadow-xl">
-        <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
-          <span>👥</span>
-          <span>Amigos</span>
-        </h2>
-        <p class="text-xs text-slate-400 mt-1">Próximamente: aquí irá el contenido de Amigos.</p>
+      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+              <span>👥</span>
+              <span>Amigos · Mis eventos apuntados</span>
+              <span id="friendsAgendaCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">0</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-0.5">Consulta quién se ha apuntado públicamente y cambia tu privacidad (Público / Privado) en cada evento.</p>
+          </div>
+          <button type="button" onclick="renderFriendsTab()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition">🔄 Actualizar</button>
+        </div>
+        <div id="friendsAgendaList" class="space-y-3"></div>
       </div>
     </section>
   </main>
@@ -824,6 +867,7 @@
           <p id="modalExhibitionRangeRow" class="hidden"><strong>🗓️ Intervalo:</strong> <span id="modalExhibitionRange" class="text-emerald-300 font-semibold"></span></p>
           <p><strong>📍 Sala / Lugar:</strong> <span id="modalVenue"></span></p>
           <p><strong>💶 Precio:</strong> <span id="modalPrice"></span></p>
+          <p id="modalNotesRow" class="hidden"><strong>📝 Observaciones:</strong> <span id="modalNotes"></span></p>
         </div>
       </div>
       <div class="pt-4 border-t border-slate-800/80 space-y-2.5 shrink-0">
@@ -909,6 +953,98 @@
         <button type="button" onclick="closeEventShareModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">Cancelar</button>
         <button id="btnConfirmEventShare" type="button" onclick="confirmEventShareSave()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-extrabold shadow-lg shadow-indigo-600/30 transition">💾 Guardar en mi Perfil</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Modal de Crea tu evento -->
+  <div id="createCommunityEventModal" class="fixed inset-0 z-[65] hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4" onclick="if(event.target===this) closeCreateCommunityEventModal()">
+    <div class="w-full max-w-2xl max-h-[90vh] flex flex-col rounded-2xl bg-slate-900 border border-slate-700 p-6 shadow-2xl">
+      <div class="flex items-start justify-between gap-3 border-b border-slate-800 pb-3 shrink-0">
+        <div>
+          <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
+            <span>✨</span>
+            <span>Crea tu evento</span>
+          </h2>
+          <p class="text-xs text-slate-400 mt-0.5">Publica tu evento en <strong id="createEventModalCityLabel" class="text-pink-300">tu ciudad</strong> para que otros usuarios puedan verlo y apuntarse.</p>
+        </div>
+        <button type="button" onclick="closeCreateCommunityEventModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
+      </div>
+
+      <form onsubmit="submitCreateCommunityEvent(event)" class="flex-1 min-h-0 overflow-y-auto py-4 pr-1 space-y-5">
+        <!-- Tipo de evento -->
+        <div class="space-y-2">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">Tipo de evento</label>
+          <div id="newEventTypeGrid" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- Evento y Lugar -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label for="newEventTitle" class="block text-xs font-bold uppercase tracking-wider text-slate-300">🎉 Evento</label>
+            <input id="newEventTitle" type="text" required placeholder="Ej: Tardeo electrónico en terraza..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500" />
+          </div>
+          <div class="space-y-1.5">
+            <label for="newEventVenue" class="block text-xs font-bold uppercase tracking-wider text-slate-300">📍 Lugar</label>
+            <input id="newEventVenue" type="text" required placeholder="Ej: Terraza El Mirador, Sala..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-pink-500" />
+          </div>
+        </div>
+
+        <!-- Fecha y Hora (Mini Calendario + Hora) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between">
+              <button type="button" onclick="shiftMiniCalMonth(-1)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white flex items-center justify-center">◀</button>
+              <span id="miniCalMonthLabel" class="text-xs font-extrabold uppercase tracking-wider text-white"></span>
+              <button type="button" onclick="shiftMiniCalMonth(1)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white flex items-center justify-center">▶</button>
+            </div>
+            <div class="grid grid-cols-7 gap-1 text-center text-[10px] font-bold text-slate-500">
+              <span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span>
+            </div>
+            <div id="miniCalDaysGrid" class="grid grid-cols-7 gap-1"></div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-2">
+              <span class="block text-xs font-bold uppercase tracking-wider text-slate-300">📅 Fecha seleccionada</span>
+              <p id="newEventSelectedDateText" class="text-sm font-extrabold text-pink-300 font-mono"></p>
+            </div>
+            <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-2">
+              <label for="newEventTime" class="block text-xs font-bold uppercase tracking-wider text-slate-300">🕒 Hora</label>
+              <input id="newEventTime" type="time" value="20:00" required class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2 text-sm font-bold text-white focus:outline-none focus:border-pink-500" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Precio (3 opciones) -->
+        <div class="space-y-2.5">
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-300">💶 Precio</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button id="priceModeBtn_amount" type="button" onclick="selectNewEventPriceMode('amount')" class="py-2.5 px-2 rounded-xl border text-xs font-bold transition bg-pink-600 border-pink-400 text-white shadow-sm">💶 Cantidad</button>
+            <button id="priceModeBtn_inversa" type="button" onclick="selectNewEventPriceMode('inversa')" class="py-2.5 px-2 rounded-xl border text-xs font-bold transition bg-slate-800/70 border-slate-700 text-slate-300 hover:border-slate-500">🤝 Inversa / Voluntad</button>
+            <button id="priceModeBtn_gratis" type="button" onclick="selectNewEventPriceMode('gratis')" class="py-2.5 px-2 rounded-xl border text-xs font-bold transition bg-slate-800/70 border-slate-700 text-slate-300 hover:border-slate-500">🎁 Gratis</button>
+          </div>
+          <div id="newEventPriceAmountWrap" class="flex items-center gap-2 max-w-xs">
+            <input id="newEventPriceAmount" type="number" min="1" step="0.5" placeholder="Ej: 15" class="flex-1 rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2 text-sm font-bold text-white focus:outline-none focus:border-pink-500" />
+            <span class="text-sm font-extrabold text-slate-300">€</span>
+          </div>
+        </div>
+
+        <!-- Observaciones (100 caracteres) -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <label for="newEventNotes" class="block text-xs font-bold uppercase tracking-wider text-slate-300">📝 Observaciones</label>
+            <span id="newEventNotesCounter" class="text-[11px] font-mono text-slate-400">0/100</span>
+          </div>
+          <textarea id="newEventNotes" rows="2" maxlength="100" oninput="updateNewEventNotesCounter()" placeholder="Detalles rápidos del plan (máx. 100 caracteres)..." class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2 text-sm text-white focus:outline-none focus:border-pink-500 resize-none"></textarea>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-800">
+          <button type="button" onclick="closeCreateCommunityEventModal()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition">Cancelar</button>
+          <button id="btnCreateCommunityEvent" type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 text-white text-sm font-extrabold shadow-lg shadow-pink-600/25 transition">
+            ✨ Publicar evento
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -1297,6 +1433,10 @@
         setTimeout(() => calendarInstance.updateSize(), 50);
       } else if (partNum === 3) {
         renderEventsList();
+      } else if (partNum === 5) {
+        renderCommunityEventsTab();
+      } else if (partNum === 6) {
+        renderFriendsTab();
       }
     }
 
@@ -1723,6 +1863,16 @@
       document.getElementById('modalDateTime').textContent = `${ev.date} a las ${ev.time || '19:30'}`;
       document.getElementById('modalVenue').textContent = ev.venue || 'Zaragoza';
       document.getElementById('modalPrice').textContent = ev.price || 'Consultar en enlace';
+      const notesRow = document.getElementById('modalNotesRow');
+      const notesEl = document.getElementById('modalNotes');
+      if (notesRow && notesEl) {
+        if (ev.description) {
+          notesEl.textContent = ev.description;
+          notesRow.classList.remove('hidden');
+        } else {
+          notesRow.classList.add('hidden');
+        }
+      }
 
       const expoRange = getExhibitionDateRange(ev);
       modalProfileRange = expoRange;
@@ -3155,6 +3305,12 @@
         updateModalProfileCalendarButton(ev);
         renderProfileCalendarTab();
         await fetchEventAttendees(ev);
+        if (!document.getElementById('part5Container')?.classList.contains('hidden')) {
+          renderCommunityEventsTab();
+        }
+        if (!document.getElementById('part6Container')?.classList.contains('hidden')) {
+          renderFriendsTab();
+        }
         closeEventShareModal();
       } finally {
         hideSavingOverlay();
@@ -3179,6 +3335,12 @@
       updateModalProfileCalendarButton(ev);
       renderProfileCalendarTab();
       await fetchEventAttendees(ev);
+      if (!document.getElementById('part5Container')?.classList.contains('hidden')) {
+        renderCommunityEventsTab();
+      }
+      if (!document.getElementById('part6Container')?.classList.contains('hidden')) {
+        renderFriendsTab();
+      }
     }
 
     let currentEventAttendees = [];
@@ -3306,6 +3468,475 @@
       const modal = document.getElementById('eventAttendeesModal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
+    }
+
+    let orderedFriendsEvents = [];
+    let friendsAttendeesMap = {};
+
+    async function renderFriendsTab() {
+      const listEl = document.getElementById('friendsAgendaList');
+      const countEl = document.getElementById('friendsAgendaCount');
+      if (!listEl) return;
+
+      const list = getProfileCalendarEvents().map((ev, idx) => ({ ...ev, _modalIndex: idx }));
+      orderedFriendsEvents = list;
+      if (countEl) countEl.textContent = String(list.length);
+
+      if (list.length === 0) {
+        listEl.innerHTML = `
+          <div class="rounded-xl border border-slate-800 bg-slate-950/60 p-6 text-center text-xs text-slate-400">
+            Aún no te has apuntado a ningún evento en tu Calendario de Perfil.<br/>
+            Abre cualquier evento del calendario o búsqueda y pulsa <strong>👤 Añadir al calendario de Perfil</strong>.
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = `<div class="text-xs text-slate-400 py-4 text-center">Cargando asistentes...</div>`;
+
+      await Promise.all(
+        list.map(async ev => {
+          const key = getProfileEventKey(ev);
+          try {
+            const res = await fetch(`/api/events/attendance?key=${encodeURIComponent(key)}`);
+            const data = await res.json();
+            friendsAttendeesMap[key] = Array.isArray(data.attendees) ? data.attendees : [];
+          } catch {
+            friendsAttendeesMap[key] = [];
+          }
+        })
+      );
+
+      listEl.innerHTML = list.map((ev, idx) => {
+        const key = getProfileEventKey(ev);
+        const attendees = friendsAttendeesMap[key] || [];
+        const isPublic = Boolean(ev.shareConfig?.isPublic);
+        const color = ev.color || getEventColor(ev);
+        const venueTagHtml = ev.venueTag
+          ? `<span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded text-white shadow-sm" style="background-color: ${color};">${ev.venueTag}</span>`
+          : '';
+        const styleTagHtml = ev.subType === 'Conciertos' && (ev.styleTag || ev.musicStyle)
+          ? `<span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded border" style="background-color: ${ev.styleColor || '#6366f1'}25; border-color: ${ev.styleColor || '#6366f1'}; color: #f8fafc;">🎵 ${ev.styleTag || ev.musicStyle}</span>`
+          : '';
+
+        return `
+          <div class="rounded-xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/70 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition">
+            <div class="space-y-1.5 min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                ${ev.subType ? `<span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-slate-700 text-slate-200">${ev.subType}</span>` : ''}
+                ${venueTagHtml}
+                ${styleTagHtml}
+                <span class="text-xs font-bold text-slate-300">📅 ${ev.date || ''} ${ev.time ? `· ${ev.time}` : ''}</span>
+                ${ev.venue ? `<span class="text-[11px] text-slate-400">📍 ${ev.venue}</span>` : ''}
+              </div>
+              <p class="text-sm font-extrabold text-white truncate">${ev.title}</p>
+            </div>
+            <div class="shrink-0 flex flex-wrap items-center gap-2">
+              <button type="button" onclick="openFriendsEventAttendees(${idx})" class="px-3 py-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-xs font-bold transition whitespace-nowrap">
+                👥 Apuntados (${attendees.length})
+              </button>
+              <button type="button" onclick="openFriendsEventShare(${idx})" class="px-3 py-2 rounded-lg ${isPublic ? 'bg-emerald-600/25 hover:bg-emerald-600 text-emerald-200 border-emerald-500/40' : 'bg-amber-600/20 hover:bg-amber-600 text-amber-200 border-amber-500/40'} hover:text-white border text-xs font-bold transition whitespace-nowrap">
+                ${isPublic ? '🌐 Público · Editar' : '🔒 Privado · Editar'}
+              </button>
+              <button type="button" onclick="openEventModal(orderedFriendsEvents[${idx}], orderedFriendsEvents)" class="px-3 py-2 rounded-lg bg-slate-700/70 hover:bg-slate-600 text-slate-200 hover:text-white border border-slate-600 text-xs font-bold transition whitespace-nowrap">
+                👁️ Detalle
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openFriendsEventAttendees(idx) {
+      const ev = orderedFriendsEvents[idx];
+      if (!ev) return;
+      currentModalEvent = ev;
+      const key = getProfileEventKey(ev);
+      currentEventAttendees = friendsAttendeesMap[key] || [];
+      openEventAttendeesModal();
+    }
+
+    function openFriendsEventShare(idx) {
+      const ev = orderedFriendsEvents[idx];
+      if (!ev) return;
+      currentModalEvent = ev;
+      modalProfileRange = getExhibitionDateRange(ev);
+      modalProfileChosenDate = ev.date || '';
+      openEventShareModal();
+    }
+
+    let orderedCommunityEvents = [];
+    let communityAttendeesMap = {};
+
+    async function renderCommunityEventsTab() {
+      initCreateCommunityEventForm();
+      const city = (document.getElementById('userCitySelect')?.value || appState?.userProfile?.selectedCity || 'Zaragoza').trim();
+      const cityLabel = document.getElementById('communityEventsCityLabel');
+      const countEl = document.getElementById('communityEventsCount');
+      const listEl = document.getElementById('communityEventsList');
+      if (cityLabel) cityLabel.textContent = city;
+      if (!listEl) return;
+
+      listEl.innerHTML = `<div class="text-xs text-slate-400 py-4 text-center">Cargando eventos de ${city}...</div>`;
+
+      let events = [];
+      let apiMeta = null;
+      const t0 = performance.now();
+      try {
+        const res = await fetch(`/api/community-events?city=${encodeURIComponent(city)}`);
+        const data = await res.json();
+        events = Array.isArray(data.events) ? data.events : [];
+        apiMeta = data.meta || null;
+      } catch {
+        events = [];
+      }
+      const clientMs = Math.round(performance.now() - t0);
+      renderCommunityEventsLogs({
+        city,
+        clientMs,
+        meta: apiMeta,
+        records: Array.isArray(apiMeta?.allCityRecords) ? apiMeta.allCityRecords : events
+      });
+
+      const now = new Date();
+      const todayYMD = getTodayYMD();
+      const nowHHMM = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      const upcoming = events.filter(ev => {
+        if (!ev.date) return false;
+        const evTime = (ev.time || '23:59').padStart(5, '0');
+        return ev.date > todayYMD || (ev.date === todayYMD && evTime >= nowHHMM);
+      });
+
+      orderedCommunityEvents = upcoming.map((ev, idx) => ({ ...ev, _modalIndex: idx }));
+      if (countEl) countEl.textContent = String(orderedCommunityEvents.length);
+
+      if (orderedCommunityEvents.length === 0) {
+        listEl.innerHTML = `
+          <div class="rounded-xl border border-slate-800 bg-slate-950/60 p-6 text-center text-xs text-slate-400">
+            No hay ningún evento creado en <strong>${city}</strong> todavía.
+          </div>
+        `;
+        return;
+      }
+
+      await Promise.all(
+        orderedCommunityEvents.map(async ev => {
+          const key = getProfileEventKey(ev);
+          try {
+            const res = await fetch(`/api/events/attendance?key=${encodeURIComponent(key)}`);
+            const data = await res.json();
+            communityAttendeesMap[key] = Array.isArray(data.attendees) ? data.attendees : [];
+          } catch {
+            communityAttendeesMap[key] = [];
+          }
+        })
+      );
+
+      const savedProfileList = getProfileCalendarEvents();
+      listEl.innerHTML = orderedCommunityEvents.map((ev, idx) => {
+        const key = getProfileEventKey(ev);
+        const attendees = communityAttendeesMap[key] || [];
+        const savedItem = savedProfileList.find(item => getProfileEventKey(item) === key);
+        const isPublic = Boolean(savedItem?.shareConfig?.isPublic);
+        const color = ev.venueColor || '#ec4899';
+
+        return `
+          <div class="rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/70 px-2.5 py-2 flex items-center justify-between gap-2 transition">
+            <div class="min-w-0 flex-1 space-y-0.5">
+              <div class="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-300 truncate">
+                <span class="shrink-0 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded text-white" style="background-color: ${color};">${ev.venueTag || ev.subType || 'EVENTO'}</span>
+                <span class="font-extrabold text-white truncate">${ev.title || ev.subType || 'Evento'}</span>
+                <span class="shrink-0 text-slate-400">· ${ev.date || ''}${ev.time ? ` ${ev.time}` : ''}</span>
+                ${ev.venue ? `<span class="shrink-0 text-slate-400">· 📍${ev.venue}</span>` : ''}
+                ${ev.price ? `<span class="shrink-0 text-emerald-300 font-semibold">· ${ev.price}</span>` : ''}
+                ${ev.creatorAlias ? `<span class="shrink-0 text-slate-400">· ${ev.creatorAvatar || '🍸'}${ev.creatorAlias}</span>` : ''}
+              </div>
+              ${ev.description ? `<p class="text-[11px] text-slate-300/90 truncate">${ev.description}</p>` : ''}
+            </div>
+            <div class="shrink-0 flex items-center gap-1">
+              <button type="button" onclick="openCommunityEventAttendees(${idx})" title="Apuntados (${attendees.length})" class="px-2 py-1 rounded-md bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-[11px] font-bold transition whitespace-nowrap">
+                👥 ${attendees.length}
+              </button>
+              <button type="button" onclick="openCommunityEventShare(${idx})" class="px-2 py-1 rounded-md ${savedItem ? (isPublic ? 'bg-emerald-600/25 hover:bg-emerald-600 text-emerald-200 border-emerald-500/40' : 'bg-amber-600/20 hover:bg-amber-600 text-amber-200 border-amber-500/40') : 'bg-pink-600/20 hover:bg-pink-600 text-pink-200 border-pink-500/40'} hover:text-white border text-[11px] font-bold transition whitespace-nowrap">
+                ${savedItem ? (isPublic ? '🌐 Público' : '🔒 Privado') : '👤 Apuntarme'}
+              </button>
+              <button type="button" onclick="openEventModal(orderedCommunityEvents[${idx}], orderedCommunityEvents)" title="Ver detalle" class="px-2 py-1 rounded-md bg-slate-700/70 hover:bg-slate-600 text-slate-200 hover:text-white border border-slate-600 text-[11px] font-bold transition whitespace-nowrap">
+                👁️<span class="hidden sm:inline"> Detalle</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function escapeHtmlSafe(val) {
+      return String(val ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function renderCommunityEventsLogs({ city, clientMs, meta, records }) {
+      const summaryEl = document.getElementById('communityEventsLogsSummary');
+      const bodyEl = document.getElementById('communityEventsLogsBody');
+      if (!bodyEl) return;
+
+      const fileName = meta?.fileName || 'community_events.json';
+      const fileExists = meta ? (meta.fileExists ? 'Sí' : 'No (se creará al guardar el primero)') : 'Desconocido';
+      const serverMs = typeof meta?.loadTimeMs === 'number' ? `${meta.loadTimeMs} ms` : '—';
+      const totalSaved = Array.isArray(records) ? records.length : 0;
+
+      if (summaryEl) {
+        summaryEl.textContent = `${fileName} · ${city} · ${clientMs} ms (${totalSaved} guardados)`;
+      }
+
+      const headerInfo = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 rounded-xl bg-slate-950/70 border border-slate-800 p-3 font-mono text-[11px]">
+          <div><span class="text-slate-500 block">Fichero</span><strong class="text-pink-300">${escapeHtmlSafe(fileName)}</strong> <span class="text-slate-500">(${escapeHtmlSafe(fileExists)})</span></div>
+          <div><span class="text-slate-500 block">Ciudad</span><strong class="text-white">${escapeHtmlSafe(city)}</strong></div>
+          <div><span class="text-slate-500 block">Tiempo de carga</span><strong class="text-emerald-300">${clientMs} ms</strong> <span class="text-slate-500">(srv: ${serverMs})</span></div>
+          <div><span class="text-slate-500 block">Registros en fichero</span><strong class="text-indigo-300">${totalSaved}</strong></div>
+        </div>
+      `;
+
+      if (!records || records.length === 0) {
+        bodyEl.innerHTML = `${headerInfo}<p class="text-slate-400 italic">No hay campos guardados todavía para <strong>${escapeHtmlSafe(city)}</strong>.</p>`;
+        return;
+      }
+
+      const itemsHtml = records.map((ev, idx) => {
+        const entries = Object.entries(ev).map(([k, v]) => `
+          <div class="flex flex-wrap gap-x-2 py-0.5 border-b border-slate-800/60 last:border-b-0">
+            <span class="text-slate-400 font-mono min-w-[115px]">${escapeHtmlSafe(k)}:</span>
+            <span class="text-slate-100 break-all font-mono">${escapeHtmlSafe(typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v))}</span>
+          </div>
+        `).join('');
+        return `
+          <div class="rounded-xl bg-slate-950/70 border border-slate-800 p-3 space-y-1">
+            <div class="text-[11px] font-bold text-pink-300">Evento #${idx + 1} · ${escapeHtmlSafe(ev.title || ev.id || '')}</div>
+            <div class="text-[11px]">${entries}</div>
+          </div>
+        `;
+      }).join('');
+
+      bodyEl.innerHTML = `${headerInfo}<div class="space-y-2 max-h-80 overflow-y-auto pr-1">${itemsHtml}</div>`;
+    }
+
+    function openCommunityEventAttendees(idx) {
+      const ev = orderedCommunityEvents[idx];
+      if (!ev) return;
+      currentModalEvent = ev;
+      const key = getProfileEventKey(ev);
+      currentEventAttendees = communityAttendeesMap[key] || [];
+      openEventAttendeesModal();
+    }
+
+    function openCommunityEventShare(idx) {
+      const ev = orderedCommunityEvents[idx];
+      if (!ev) return;
+      currentModalEvent = ev;
+      modalProfileRange = getExhibitionDateRange(ev);
+      modalProfileChosenDate = ev.date || '';
+      openEventShareModal();
+    }
+
+    const COMMUNITY_EVENT_TYPES = [
+      'Brunch', 'Tardeo', 'DJ', 'Particular', 'VIP', 'Primavera', 'Halloween', 'Nochevieja',
+      'Afterwork', 'Rooftop', 'Acústico', 'Karaoke', 'Temática', 'Gastro & Wine', 'Pool Party', 'Silent Party', 'Networking'
+    ];
+    let newEventSelectedType = 'Brunch';
+    let newEventPriceMode = 'amount';
+    let newEventSelectedDate = getTodayYMD();
+    let miniCalViewDate = new Date();
+    let createEventFormInitialized = false;
+
+    function openCreateCommunityEventModal() {
+      initCreateCommunityEventForm();
+      const modal = document.getElementById('createCommunityEventModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCreateCommunityEventModal() {
+      const modal = document.getElementById('createCommunityEventModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function initCreateCommunityEventForm() {
+      const city = (document.getElementById('userCitySelect')?.value || appState?.userProfile?.selectedCity || 'Zaragoza').trim();
+      const cityLbl = document.getElementById('createEventCityLabel');
+      if (cityLbl) cityLbl.textContent = city;
+      const modalCityLbl = document.getElementById('createEventModalCityLabel');
+      if (modalCityLbl) modalCityLbl.textContent = city;
+      if (!createEventFormInitialized) {
+        createEventFormInitialized = true;
+        newEventSelectedDate = getTodayYMD();
+        miniCalViewDate = new Date();
+        renderNewEventTypeGrid();
+        selectNewEventPriceMode('amount');
+        updateNewEventNotesCounter();
+      }
+      renderMiniCalendar();
+    }
+
+    function renderNewEventTypeGrid() {
+      const grid = document.getElementById('newEventTypeGrid');
+      if (!grid) return;
+      grid.innerHTML = COMMUNITY_EVENT_TYPES.map(t => {
+        const active = newEventSelectedType === t;
+        return `
+          <button type="button" onclick="selectNewEventType('${t.replace(/'/g, "\\'")}')" class="px-3 py-1.5 rounded-xl border text-xs font-bold transition ${active ? 'bg-pink-600 border-pink-400 text-white shadow-sm' : 'bg-slate-800/70 border-slate-700 text-slate-300 hover:border-slate-500'}">
+            ${t}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectNewEventType(t) {
+      newEventSelectedType = t;
+      renderNewEventTypeGrid();
+    }
+
+    function selectNewEventPriceMode(mode) {
+      newEventPriceMode = mode;
+      ['amount', 'inversa', 'gratis'].forEach(m => {
+        const btn = document.getElementById(`priceModeBtn_${m}`);
+        if (!btn) return;
+        const active = m === mode;
+        btn.className = active
+          ? 'py-2.5 px-2 rounded-xl border text-xs font-bold transition bg-pink-600 border-pink-400 text-white shadow-sm'
+          : 'py-2.5 px-2 rounded-xl border text-xs font-bold transition bg-slate-800/70 border-slate-700 text-slate-300 hover:border-slate-500';
+      });
+      const wrap = document.getElementById('newEventPriceAmountWrap');
+      if (wrap) wrap.classList.toggle('hidden', mode !== 'amount');
+    }
+
+    function updateNewEventNotesCounter() {
+      const ta = document.getElementById('newEventNotes');
+      const counter = document.getElementById('newEventNotesCounter');
+      if (ta && counter) {
+        counter.textContent = `${ta.value.length}/100`;
+      }
+    }
+
+    function shiftMiniCalMonth(delta) {
+      miniCalViewDate = new Date(miniCalViewDate.getFullYear(), miniCalViewDate.getMonth() + delta, 1);
+      renderMiniCalendar();
+    }
+
+    function selectMiniCalDate(ymd) {
+      newEventSelectedDate = ymd;
+      renderMiniCalendar();
+    }
+
+    function renderMiniCalendar() {
+      const monthLabel = document.getElementById('miniCalMonthLabel');
+      const grid = document.getElementById('miniCalDaysGrid');
+      const selectedText = document.getElementById('newEventSelectedDateText');
+      if (!monthLabel || !grid) return;
+
+      const year = miniCalViewDate.getFullYear();
+      const month = miniCalViewDate.getMonth();
+      const todayYMD = getTodayYMD();
+      monthLabel.textContent = new Date(year, month, 1).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+      if (selectedText) selectedText.textContent = newEventSelectedDate;
+
+      const firstDay = new Date(year, month, 1);
+      const startOffset = (firstDay.getDay() + 6) % 7; // Lunes = 0
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      let html = '';
+      for (let i = 0; i < startOffset; i++) {
+        html += '<span></span>';
+      }
+      for (let d = 1; d <= daysInMonth; d++) {
+        const ymd = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const isPast = ymd < todayYMD;
+        const isSelected = ymd === newEventSelectedDate;
+        html += `
+          <button type="button" ${isPast ? 'disabled' : `onclick="selectMiniCalDate('${ymd}')"`} class="h-8 rounded-lg text-xs font-bold transition flex items-center justify-center ${isSelected ? 'bg-pink-600 text-white shadow-sm' : isPast ? 'text-slate-600 cursor-not-allowed' : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800'}">
+            ${d}
+          </button>
+        `;
+      }
+      grid.innerHTML = html;
+    }
+
+    async function submitCreateCommunityEvent(event) {
+      event.preventDefault();
+      const city = (document.getElementById('userCitySelect')?.value || appState?.userProfile?.selectedCity || 'Zaragoza').trim();
+      const title = (document.getElementById('newEventTitle')?.value || '').trim();
+      const venue = (document.getElementById('newEventVenue')?.value || '').trim();
+      const time = (document.getElementById('newEventTime')?.value || '20:00').trim();
+      const description = (document.getElementById('newEventNotes')?.value || '').trim().slice(0, 100);
+
+      let price = 'Gratis';
+      if (newEventPriceMode === 'inversa') {
+        price = 'Inversa / Voluntad';
+      } else if (newEventPriceMode === 'amount') {
+        const amt = (document.getElementById('newEventPriceAmount')?.value || '').trim();
+        if (!amt || Number(amt) <= 0) {
+          alert('Introduce una cantidad válida en euros.');
+          return;
+        }
+        price = `${amt} €`;
+      }
+
+      if (!title || !venue || !newEventSelectedDate) {
+        alert('Completa evento, lugar y fecha.');
+        return;
+      }
+
+      const profile = getUserProfileSettings();
+      const btn = document.getElementById('btnCreateCommunityEvent');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Publicando...';
+      }
+
+      try {
+        const res = await fetch('/api/community-events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            city,
+            title,
+            date: newEventSelectedDate,
+            time,
+            venue,
+            price,
+            category: newEventSelectedType,
+            description,
+            creatorEmail: profile.email || '',
+            creatorAlias: profile.alias || '',
+            creatorAvatar: profile.avatar || '🍸',
+            paid: true
+          })
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          alert(data.error || 'No se pudo publicar el evento.');
+          return;
+        }
+
+        document.getElementById('newEventTitle').value = '';
+        document.getElementById('newEventVenue').value = '';
+        document.getElementById('newEventPriceAmount').value = '';
+        document.getElementById('newEventNotes').value = '';
+        updateNewEventNotesCounter();
+        closeCreateCommunityEventModal();
+        await renderCommunityEventsTab();
+      } catch (err) {
+        alert('Error al publicar: ' + err.message);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '✨ Publicar evento';
+        }
+      }
     }
 
     async function stepModalProfileDate(delta) {
