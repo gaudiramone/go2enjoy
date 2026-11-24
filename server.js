@@ -10,6 +10,7 @@ const DATA_DIR = path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
 const USER_PROFILES_PATH = path.join(DATA_DIR, 'user_profiles.json');
 const SHARED_ATTENDANCE_PATH = path.join(DATA_DIR, 'shared_attendance.json');
+const COMMUNITY_EVENTS_PATH = path.join(DATA_DIR, 'community_events.json');
 const DEFAULT_GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID ||
   '108535358368-9rfnr7kk4iklcp6qd7rq9cu5luivr2l2.apps.googleusercontent.com';
@@ -419,6 +420,127 @@ app.delete('/api/events/attendance', (req, res) => {
   }
   saveSharedAttendance(store);
   res.json({ ok: true, attendees: store.events[eventKey] || [] });
+});
+
+function loadCommunityEvents() {
+  try {
+    if (!fs.existsSync(COMMUNITY_EVENTS_PATH)) {
+      return { cities: {} };
+    }
+    const parsed = JSON.parse(fs.readFileSync(COMMUNITY_EVENTS_PATH, 'utf8'));
+    if (!parsed || typeof parsed.cities !== 'object') return { cities: {} };
+    return parsed;
+  } catch {
+    return { cities: {} };
+  }
+}
+
+function saveCommunityEvents(data) {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  fs.writeFileSync(COMMUNITY_EVENTS_PATH, JSON.stringify(data, null, 2), 'utf8');
+}
+
+// GET paid community events by city
+app.get('/api/community-events', (req, res) => {
+  const startMs = Date.now();
+  const city = String(req.query.city || '').trim();
+  if (!city) {
+    return res.json({
+      ok: true,
+      city: '',
+      events: [],
+      meta: {
+        fileName: path.basename(COMMUNITY_EVENTS_PATH),
+        filePath: COMMUNITY_EVENTS_PATH,
+        fileExists: fs.existsSync(COMMUNITY_EVENTS_PATH),
+        city: '',
+        totalInCity: 0,
+        activeCount: 0,
+        loadTimeMs: Date.now() - startMs,
+        loadedAt: new Date().toISOString(),
+        allCityRecords: []
+      }
+    });
+  }
+  const store = loadCommunityEvents();
+  const list = Array.isArray(store.cities[city]) ? store.cities[city] : [];
+  const nowParts = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Madrid',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: false
+  }).format(new Date()); // "YYYY-MM-DD HH:MM"
+  const upcoming = list.filter(ev => {
+    if (!ev.date) return false;
+    const evKey = `${ev.date} ${(ev.time || '23:59').padStart(5, '0')}`;
+    return evKey >= nowParts;
+  });
+  const sorted = [...upcoming].sort((a, b) => {
+    const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
+    const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
+    if (ka !== kb) return ka.localeCompare(kb);
+    return (a.title || '').localeCompare(b.title || '', 'es');
+  });
+  res.json({
+    ok: true,
+    city,
+    events: sorted,
+    meta: {
+      fileName: path.basename(COMMUNITY_EVENTS_PATH),
+      filePath: COMMUNITY_EVENTS_PATH,
+      fileExists: fs.existsSync(COMMUNITY_EVENTS_PATH),
+      city,
+      totalInCity: list.length,
+      activeCount: sorted.length,
+      loadTimeMs: Date.now() - startMs,
+      loadedAt: new Date().toISOString(),
+      allCityRecords: list
+    }
+  });
+});
+
+// POST create a paid community event in a city
+app.post('/api/community-events', (req, res) => {
+  const { city, title, date, time, venue, price, category, description, url, creatorEmail, creatorAlias, creatorAvatar, paid } = req.body || {};
+  const cityName = String(city || '').trim();
+  const eventCategory = String(category || 'Eventos').trim();
+  const eventTitle = String(title || '').trim();
+  const eventDate = String(date || '').trim();
+  if (!paid) {
+    return res.status(402).json({ ok: false, error: 'El evento debe estar pagado para publicarse.' });
+  }
+  if (!cityName || !eventTitle || !eventDate) {
+    return res.status(400).json({ ok: false, error: 'Ciudad, evento y fecha son obligatorios.' });
+  }
+
+  const store = loadCommunityEvents();
+  if (!Array.isArray(store.cities[cityName])) {
+    store.cities[cityName] = [];
+  }
+  const newEv = {
+    id: 'ce_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7),
+    city: cityName,
+    title: eventTitle,
+    date: eventDate,
+    time: String(time || '20:00').trim(),
+    venue: String(venue || cityName).trim(),
+    venueTag: eventCategory.toUpperCase().slice(0, 18),
+    venueColor: '#ec4899',
+    price: String(price || 'Consultar').trim(),
+    subType: 'EVENTO',
+    description: String(description || '').trim(),
+    url: String(url || '').trim(),
+    actionLabel: 'Ir a Más info',
+    creatorEmail: String(creatorEmail || '').trim().toLowerCase(),
+    creatorAlias: String(creatorAlias || '').trim(),
+    creatorAvatar: String(creatorAvatar || '🍸').trim(),
+    paid: true,
+    createdAt: new Date().toISOString()
+  };
+  store.cities[cityName].push(newEv);
+  saveCommunityEvents(store);
+  res.json({ ok: true, event: newEv });
 });
 
 // POST Trigger AI Web & URL Update ("Botón Actualizar")
