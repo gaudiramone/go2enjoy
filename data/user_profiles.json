@@ -280,6 +280,53 @@
             "web": false
           }
         }
+      },
+      {
+        "id": "ce_mwwhousg_x0l3k",
+        "subType": "EVENTO",
+        "title": "JUeves de casino",
+        "artistName": "",
+        "date": "2026-11-26",
+        "rangeStart": "",
+        "rangeEnd": "",
+        "time": "20:00",
+        "venue": "el bingo",
+        "venueTag": "AFTERWORK",
+        "musicStyle": "",
+        "styleTag": "",
+        "styleColor": "",
+        "price": "33 €",
+        "url": "",
+        "isTicketUrl": false,
+        "actionLabel": "Ir a Más info",
+        "color": "#6366f1",
+        "shareConfig": {
+          "isPublic": true,
+          "alias": false,
+          "email": false,
+          "politicalPhrase": false,
+          "politicalScale": false,
+          "religion": false,
+          "religionPractice": false,
+          "appearance": false,
+          "sexuality": false,
+          "seekingPerson": false,
+          "seekingRelation": false,
+          "photos": [
+            false,
+            false,
+            false
+          ],
+          "socialLinks": {
+            "instagram": true,
+            "tiktok": false,
+            "x": false,
+            "facebook": false,
+            "youtube": false,
+            "linkedin": false,
+            "web": false
+          }
+        }
       }
     ],
     "selectedCity": "Zaragoza",
