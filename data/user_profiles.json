@@ -279,25 +279,6 @@
         }
       },
       {
-        "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-27",
-        "subType": "Conciertos",
-        "title": "Concierto Laura Blossom. Re-Cordis",
-        "artistName": "Laura Blossom. Re-Cordis",
-        "date": "2026-11-27",
-        "time": "19:00",
-        "venue": "Fundación / Espacio Ibercaja",
-        "venueTag": "IBERCAJA",
-        "musicStyle": "",
-        "styleTag": "SIN ESPECIFICAR",
-        "styleColor": "#64748b",
-        "price": "3 €",
-        "url": "https://www.fundacionibercaja.es/actividades/conciertos-y-recitales/concierto-laura-blossom-re-cordis-zaragoza/",
-        "isTicketUrl": false,
-        "actionLabel": "Comprar entradas",
-        "color": "#3b82f6",
-        "_modalIndex": 2
-      },
-      {
         "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-23",
         "subType": "Exposiciones",
         "title": "Explorar la Tierra: un viaje con Verne y las geociencias",
