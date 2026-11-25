@@ -973,7 +973,9 @@ app.get('/api/admin/overview', requireAdmin, (req, res) => {
   const mem = process.memoryUsage();
   const db = loadDb();
   const profiles = loadUserProfiles();
+  const ceStartMs = Date.now();
   const community = loadCommunityEvents();
+  const ceLoadTimeMs = Date.now() - ceStartMs;
   const attendance = loadSharedAttendance();
   const accessLogs = loadAccessLogs();
 
@@ -1045,6 +1047,12 @@ app.get('/api/admin/overview', requireAdmin, (req, res) => {
     },
     files,
     users,
+    communityEventsLog: {
+      fileName: path.basename(COMMUNITY_EVENTS_PATH),
+      fileExists: fs.existsSync(COMMUNITY_EVENTS_PATH),
+      loadTimeMs: ceLoadTimeMs,
+      cities: community.cities || {}
+    },
     accessLogs: accessLogs.slice(0, 100),
     recentErrors: serverStats.recentErrors
   });
