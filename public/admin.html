@@ -267,8 +267,15 @@
         </div>
       `).join('');
 
-      document.getElementById('adminFilesList').innerHTML = d.files.length === 0
-        ? '<p class="text-slate-400">Sin ficheros en data/.</p>'
+      const coreFiles = ['db.json', 'user_profiles.json', 'community_events.json', 'shared_attendance.json', 'access_logs.json'];
+      const existingNames = new Set(d.files.map(f => f.name));
+      const coreBadges = `<div class="flex flex-wrap gap-1.5 mb-3">${coreFiles.map(cf => {
+        const ok = existingNames.has(cf);
+        return `<span class="px-2 py-0.5 rounded text-[10px] font-mono border ${ok ? 'bg-emerald-950/50 border-emerald-500/40 text-emerald-300' : 'bg-slate-950 border-slate-800 text-slate-500'}">${ok ? '✓' : '○'} ${esc(cf)}</span>`;
+      }).join('')}</div>`;
+
+      document.getElementById('adminFilesList').innerHTML = coreBadges + (d.files.length === 0
+        ? '<p class="text-slate-400">Sin ficheros creados en data/ todavía.</p>'
         : `<table class="w-full text-left">
             <thead class="text-slate-400 border-b border-slate-800">
               <tr><th class="py-1.5">Fichero</th><th class="py-1.5">Tamaño</th><th class="py-1.5">Modificado</th><th class="py-1.5 text-right">Acción</th></tr>
@@ -279,11 +286,14 @@
                   <td class="py-1.5 font-mono text-pink-300">${esc(f.name)}</td>
                   <td class="py-1.5 font-mono text-slate-300">${fmtBytes(f.sizeBytes)}</td>
                   <td class="py-1.5 text-slate-400">${new Date(f.modifiedAt).toLocaleString('es-ES')}</td>
-                  <td class="py-1.5 text-right"><button onclick="viewAdminFile('${esc(f.name)}')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-bold text-white">👁️ Ver</button></td>
+                  <td class="py-1.5 text-right whitespace-nowrap space-x-1">
+                    <button onclick="viewAdminFile('${esc(f.name)}')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-bold text-white">👁️ Ver</button>
+                    <a href="/api/admin/file?name=${encodeURIComponent(f.name)}&download=1" class="inline-block px-2 py-1 rounded bg-indigo-600/30 hover:bg-indigo-600 text-[11px] font-bold text-indigo-200 hover:text-white">⬇️</a>
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
-          </table>`;
+          </table>`);
 
       document.getElementById('adminUsersList').innerHTML = d.users.length === 0
         ? '<p class="text-slate-400">Sin usuarios registrados.</p>'
@@ -351,7 +361,11 @@
         return;
       }
       document.getElementById('adminFileModalTitle').textContent = `${d.name} (${fmtBytes(d.sizeBytes)})`;
-      document.getElementById('adminFileModalContent').textContent = d.content;
+      let displayText = d.content;
+      try {
+        displayText = JSON.stringify(JSON.parse(d.content), null, 2);
+      } catch {}
+      document.getElementById('adminFileModalContent').textContent = displayText;
       const modal = document.getElementById('adminFileModal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
