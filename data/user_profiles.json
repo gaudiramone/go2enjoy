@@ -233,6 +233,53 @@
             "web": false
           }
         }
+      },
+      {
+        "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-26",
+        "subType": "Conciertos",
+        "title": "Ginebras",
+        "artistName": "Ginebras",
+        "date": "2027-02-26",
+        "rangeStart": "",
+        "rangeEnd": "",
+        "time": "21:00",
+        "venue": "Sala Oasis",
+        "venueTag": "SALA OASIS",
+        "musicStyle": "Electrónica",
+        "styleTag": "ELECTRÓNICA",
+        "styleColor": "#06b6d4",
+        "price": "Ver web",
+        "url": "https://www.salaoasis.com/events/ginebras-nada-es-para-tanto/",
+        "isTicketUrl": false,
+        "actionLabel": "Ir a Más info",
+        "color": "#ec4899",
+        "shareConfig": {
+          "isPublic": true,
+          "alias": true,
+          "email": false,
+          "politicalPhrase": false,
+          "politicalScale": false,
+          "religion": false,
+          "religionPractice": false,
+          "appearance": false,
+          "sexuality": false,
+          "seekingPerson": false,
+          "seekingRelation": false,
+          "photos": [
+            false,
+            false,
+            false
+          ],
+          "socialLinks": {
+            "instagram": false,
+            "tiktok": false,
+            "x": false,
+            "facebook": false,
+            "youtube": false,
+            "linkedin": false,
+            "web": false
+          }
+        }
       }
     ],
     "selectedCity": "Zaragoza",
