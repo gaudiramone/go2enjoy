@@ -2021,6 +2021,7 @@
             }
             updateHeaderUserUI(restored.email);
             hydrateProfilePageUI();
+            await syncPublicAttendancesToServer(restored.profileCalendar || []);
           } catch {}
 
           if (options.onConnected) {
@@ -3193,6 +3194,67 @@
       return publicUrl;
     }
 
+    function buildPublicProfileFromShareConfig(shareConfig, profile, sharedPhotos = []) {
+      const publicProfile = {
+        avatar: profile.avatar || '😎',
+        avatarImage: profile.avatarImage || ''
+      };
+      if (shareConfig?.alias && profile.alias) publicProfile.alias = profile.alias;
+      if (shareConfig?.email && profile.email) publicProfile.email = profile.email;
+      if (shareConfig?.politicalPhrase && profile.politicalPhrase) publicProfile.politicalPhrase = profile.politicalPhrase;
+      if (shareConfig?.politicalScale && profile.politicalScale) publicProfile.politicalScale = profile.politicalScale;
+      if (shareConfig?.religion && profile.religion) publicProfile.religion = profile.religion;
+      if (shareConfig?.religionPractice && profile.religionPractice) publicProfile.religionPractice = profile.religionPractice;
+      if (shareConfig?.appearance && profile.appearance) publicProfile.appearance = profile.appearance;
+      if (shareConfig?.sexuality && profile.sexuality) publicProfile.sexuality = profile.sexuality;
+      if (shareConfig?.seekingPerson && profile.seekingPerson) publicProfile.seekingPerson = profile.seekingPerson;
+      if (shareConfig?.seekingRelation && profile.seekingRelation) publicProfile.seekingRelation = profile.seekingRelation;
+      if (sharedPhotos.length > 0) publicProfile.photos = sharedPhotos;
+
+      const sharedSocials = {};
+      PROFILE_SOCIAL_FIELDS.forEach(f => {
+        if (shareConfig?.socialLinks?.[f.key] && profile.socialLinks?.[f.key]) {
+          sharedSocials[f.key] = profile.socialLinks[f.key];
+        }
+      });
+      if (Object.keys(sharedSocials).length > 0) publicProfile.socialLinks = sharedSocials;
+      return publicProfile;
+    }
+
+    async function syncPublicAttendancesToServer(eventsList, attendeesMap = null) {
+      const userId = getCurrentUserId();
+      if (!userId || !Array.isArray(eventsList) || eventsList.length === 0) return;
+      const profile = getUserProfileSettings();
+      const publicEvents = eventsList.filter(ev => ev && !isEventDatePast(ev) && ev.shareConfig?.isPublic);
+      if (publicEvents.length === 0) return;
+
+      await Promise.all(
+        publicEvents.map(async ev => {
+          const key = getProfileEventKey(ev);
+          if (attendeesMap && Array.isArray(attendeesMap[key]) && attendeesMap[key].some(a => a.userId === userId)) {
+            return;
+          }
+          const publicProfile = buildPublicProfileFromShareConfig(ev.shareConfig, profile);
+          try {
+            const res = await fetch('/api/events/attendance', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                eventKey: key,
+                userId,
+                chosenDate: ev.date || '',
+                profile: publicProfile
+              })
+            });
+            const data = await res.json();
+            if (attendeesMap && data?.ok && Array.isArray(data.attendees)) {
+              attendeesMap[key] = data.attendees;
+            }
+          } catch {}
+        })
+      );
+    }
+
     async function confirmEventShareSave() {
       if (!currentModalEvent) return;
       const btn = document.getElementById('btnConfirmEventShare');
@@ -3262,29 +3324,7 @@
               }
             }
           }
-          const sharedSocials = {};
-          PROFILE_SOCIAL_FIELDS.forEach(f => {
-            if (shareConfig.socialLinks[f.key] && profile.socialLinks?.[f.key]) {
-              sharedSocials[f.key] = profile.socialLinks[f.key];
-            }
-          });
-
-          const publicProfile = {
-            avatar: profile.avatar || '😎',
-            avatarImage: profile.avatarImage || ''
-          };
-          if (shareConfig.alias && profile.alias) publicProfile.alias = profile.alias;
-          if (shareConfig.email && profile.email) publicProfile.email = profile.email;
-          if (shareConfig.politicalPhrase && profile.politicalPhrase) publicProfile.politicalPhrase = profile.politicalPhrase;
-          if (shareConfig.politicalScale && profile.politicalScale) publicProfile.politicalScale = profile.politicalScale;
-          if (shareConfig.religion && profile.religion) publicProfile.religion = profile.religion;
-          if (shareConfig.religionPractice && profile.religionPractice) publicProfile.religionPractice = profile.religionPractice;
-          if (shareConfig.appearance && profile.appearance) publicProfile.appearance = profile.appearance;
-          if (shareConfig.sexuality && profile.sexuality) publicProfile.sexuality = profile.sexuality;
-          if (shareConfig.seekingPerson && profile.seekingPerson) publicProfile.seekingPerson = profile.seekingPerson;
-          if (shareConfig.seekingRelation && profile.seekingRelation) publicProfile.seekingRelation = profile.seekingRelation;
-          if (sharedPhotos.length > 0) publicProfile.photos = sharedPhotos;
-          if (Object.keys(sharedSocials).length > 0) publicProfile.socialLinks = sharedSocials;
+          const publicProfile = buildPublicProfileFromShareConfig(shareConfig, profile, sharedPhotos);
 
           await fetch('/api/events/attendance', {
             method: 'PUT',
@@ -3481,6 +3521,26 @@
       const countEl = document.getElementById('friendsAgendaCount');
       if (!listEl) return;
 
+      const activeEmail = (getUserProfileSettings().email || '').trim().toLowerCase();
+      if (activeEmail) {
+        try {
+          const profRes = await fetch(`/api/user-profile?email=${encodeURIComponent(activeEmail)}`);
+          const profData = await profRes.json();
+          const serverCal = Array.isArray(profData?.userProfile?.profileCalendar) ? profData.userProfile.profileCalendar : [];
+          const localCal = getProfileCalendarEvents();
+          if (serverCal.length > 0 || localCal.length > 0) {
+            const mergedMap = new Map();
+            [...serverCal, ...localCal].forEach(ev => {
+              if (ev && !isEventDatePast(ev)) mergedMap.set(getProfileEventKey(ev), ev);
+            });
+            const merged = Array.from(mergedMap.values());
+            const current = getUserProfileSettings();
+            setLocalUserProfile({ ...current, profileCalendar: merged });
+            if (appState?.userProfile) appState.userProfile.profileCalendar = merged;
+          }
+        } catch {}
+      }
+
       const list = getProfileCalendarEvents().map((ev, idx) => ({ ...ev, _modalIndex: idx }));
       orderedFriendsEvents = list;
       if (countEl) countEl.textContent = String(list.length);
@@ -3509,6 +3569,8 @@
           }
         })
       );
+
+      await syncPublicAttendancesToServer(list, friendsAttendeesMap);
 
       listEl.innerHTML = list.map((ev, idx) => {
         const key = getProfileEventKey(ev);
