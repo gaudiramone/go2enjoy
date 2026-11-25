@@ -977,18 +977,28 @@ app.get('/api/admin/overview', requireAdmin, (req, res) => {
   const attendance = loadSharedAttendance();
   const accessLogs = loadAccessLogs();
 
-  const files = fs.existsSync(DATA_DIR)
-    ? fs.readdirSync(DATA_DIR).map(name => {
-        const full = path.join(DATA_DIR, name);
+  const walkDataDir = (dir, prefix = '') => {
+    if (!fs.existsSync(dir)) return [];
+    let out = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const rel = prefix ? `${prefix}/${entry.name}` : entry.name;
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        out = out.concat(walkDataDir(full, rel));
+      } else if (entry.isFile()) {
         const st = fs.statSync(full);
-        return {
-          name,
-          isFile: st.isFile(),
+        out.push({
+          name: rel,
+          isFile: true,
           sizeBytes: st.size,
           modifiedAt: st.mtime.toISOString()
-        };
-      }).filter(f => f.isFile).sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt))
-    : [];
+        });
+      }
+    }
+    return out;
+  };
+
+  const files = walkDataDir(DATA_DIR).sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt));
 
   const users = Object.entries(profiles).map(([email, p]) => ({
     email,
@@ -1042,17 +1052,20 @@ app.get('/api/admin/overview', requireAdmin, (req, res) => {
 
 app.get('/api/admin/file', requireAdmin, (req, res) => {
   const rawName = String(req.query.name || '').trim();
-  const safeName = path.basename(rawName);
-  if (!safeName || safeName !== rawName) {
+  if (!rawName || rawName.includes('..')) {
     return res.status(400).json({ ok: false, error: 'Nombre de fichero inválido.' });
   }
-  const fullPath = path.join(DATA_DIR, safeName);
-  if (!fs.existsSync(fullPath)) {
+  const baseDir = path.resolve(DATA_DIR);
+  const fullPath = path.resolve(baseDir, rawName);
+  if (!fullPath.startsWith(baseDir + path.sep) || !fs.existsSync(fullPath) || !fs.statSync(fullPath).isFile()) {
     return res.status(404).json({ ok: false, error: 'Fichero no encontrado.' });
   }
   try {
+    if (req.query.download === '1') {
+      return res.download(fullPath, path.basename(fullPath));
+    }
     const content = fs.readFileSync(fullPath, 'utf8');
-    res.json({ ok: true, name: safeName, sizeBytes: Buffer.byteLength(content, 'utf8'), content });
+    res.json({ ok: true, name: rawName, sizeBytes: Buffer.byteLength(content, 'utf8'), content });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
