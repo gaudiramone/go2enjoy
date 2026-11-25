@@ -29,6 +29,181 @@ const serverStats = {
   recentErrors: []
 };
 
+// =========================================================================
+// GITHUB DATA-STORE SYNC (PERSISTENCIA EN RAMA DEDICADA `data-store`)
+// =========================================================================
+const GITHUB_TOKEN = String(process.env.GITHUB_TOKEN || '').trim();
+const GITHUB_REPO = String(process.env.GITHUB_REPO || 'gaudiramone/go2enjoy').trim();
+const GITHUB_DATA_BRANCH = String(process.env.GITHUB_DATA_BRANCH || 'data-store').trim();
+const GITHUB_SYNC_FILES = [
+  'db.json',
+  'user_profiles.json',
+  'shared_attendance.json',
+  'community_events.json',
+  'access_logs.json'
+];
+
+const githubDataStoreState = {
+  enabled: Boolean(GITHUB_TOKEN && GITHUB_REPO.includes('/')),
+  repo: GITHUB_REPO,
+  branch: GITHUB_DATA_BRANCH,
+  initialized: false,
+  lastSyncAt: null,
+  lastError: null,
+  fileShas: new Map(),
+  timers: new Map(),
+  queues: new Map()
+};
+
+async function githubApi(endpoint, options = {}) {
+  const url = `https://api.github.com${endpoint}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      Authorization: `Bearer ${GITHUB_TOKEN}`,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      'User-Agent': 'go2enjoy-server',
+      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+      ...(options.headers || {})
+    }
+  });
+  const text = await res.text();
+  let json = null;
+  try {
+    json = text ? JSON.parse(text) : null;
+  } catch {}
+  return { ok: res.ok, status: res.status, json, text };
+}
+
+async function ensureGitHubDataBranch() {
+  if (!githubDataStoreState.enabled) return false;
+  const refPath = `/repos/${GITHUB_REPO}/git/ref/heads/${encodeURIComponent(GITHUB_DATA_BRANCH)}`;
+  const check = await githubApi(refPath);
+  if (check.ok) return true;
+  if (check.status !== 404) {
+    throw new Error(`Error comprobando rama ${GITHUB_DATA_BRANCH}: HTTP ${check.status}`);
+  }
+
+  const repoInfo = await githubApi(`/repos/${GITHUB_REPO}`);
+  const baseBranch = repoInfo.json?.default_branch || 'main';
+  const baseRef = await githubApi(`/repos/${GITHUB_REPO}/git/ref/heads/${encodeURIComponent(baseBranch)}`);
+  const baseSha = baseRef.json?.object?.sha;
+  if (!baseSha) {
+    throw new Error(`No se encontró SHA base de la rama ${baseBranch}`);
+  }
+
+  const create = await githubApi(`/repos/${GITHUB_REPO}/git/refs`, {
+    method: 'POST',
+    body: JSON.stringify({
+      ref: `refs/heads/${GITHUB_DATA_BRANCH}`,
+      sha: baseSha
+    })
+  });
+  if (!create.ok && create.status !== 422) {
+    throw new Error(`No se pudo crear la rama ${GITHUB_DATA_BRANCH}: HTTP ${create.status}`);
+  }
+  console.log(`✅ Rama GitHub '${GITHUB_DATA_BRANCH}' lista en ${GITHUB_REPO}`);
+  return true;
+}
+
+async function pullFileFromGitHub(fileName) {
+  const res = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${encodeURIComponent(fileName)}?ref=${encodeURIComponent(GITHUB_DATA_BRANCH)}`);
+  if (res.status === 404) {
+    const localPath = path.join(DATA_DIR, fileName);
+    if (fs.existsSync(localPath)) {
+      await pushFileToGitHub(fileName);
+    }
+    return;
+  }
+  if (!res.ok || !res.json?.content) {
+    throw new Error(`Pull ${fileName} falló: HTTP ${res.status}`);
+  }
+  const decoded = Buffer.from(String(res.json.content).replace(/\n/g, ''), 'base64').toString('utf8');
+  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+  fs.writeFileSync(path.join(DATA_DIR, fileName), decoded, 'utf8');
+  githubDataStoreState.fileShas.set(fileName, res.json.sha);
+  githubDataStoreState.lastSyncAt = new Date().toISOString();
+}
+
+async function pushFileToGitHub(fileName, retryOnConflict = true) {
+  if (!githubDataStoreState.enabled) return;
+  const localPath = path.join(DATA_DIR, fileName);
+  if (!fs.existsSync(localPath)) return;
+
+  const contentB64 = fs.readFileSync(localPath).toString('base64');
+  let sha = githubDataStoreState.fileShas.get(fileName);
+  if (!sha) {
+    const existing = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${encodeURIComponent(fileName)}?ref=${encodeURIComponent(GITHUB_DATA_BRANCH)}`);
+    if (existing.ok && existing.json?.sha) {
+      sha = existing.json.sha;
+      githubDataStoreState.fileShas.set(fileName, sha);
+    }
+  }
+
+  const body = {
+    message: `chore(data-store): update data/${fileName}`,
+    content: contentB64,
+    branch: GITHUB_DATA_BRANCH,
+    ...(sha ? { sha } : {})
+  };
+  const putRes = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${encodeURIComponent(fileName)}`, {
+    method: 'PUT',
+    body: JSON.stringify(body)
+  });
+
+  if (putRes.status === 409 && retryOnConflict) {
+    githubDataStoreState.fileShas.delete(fileName);
+    return pushFileToGitHub(fileName, false);
+  }
+  if (!putRes.ok) {
+    throw new Error(`Push ${fileName} falló: HTTP ${putRes.status} ${putRes.json?.message || ''}`);
+  }
+  if (putRes.json?.content?.sha) {
+    githubDataStoreState.fileShas.set(fileName, putRes.json.content.sha);
+  }
+  githubDataStoreState.lastSyncAt = new Date().toISOString();
+  githubDataStoreState.lastError = null;
+}
+
+function scheduleGitHubSync(fileName, delayMs = 300) {
+  if (!githubDataStoreState.enabled) return;
+  const prevTimer = githubDataStoreState.timers.get(fileName);
+  if (prevTimer) clearTimeout(prevTimer);
+
+  const timer = setTimeout(() => {
+    githubDataStoreState.timers.delete(fileName);
+    const prevChain = githubDataStoreState.queues.get(fileName) || Promise.resolve();
+    const nextChain = prevChain
+      .then(() => pushFileToGitHub(fileName))
+      .catch(err => {
+        githubDataStoreState.lastError = `${fileName}: ${err.message}`;
+        console.error(`⚠️ GitHub data-store sync (${fileName}):`, err.message);
+      });
+    githubDataStoreState.queues.set(fileName, nextChain);
+  }, delayMs);
+  githubDataStoreState.timers.set(fileName, timer);
+}
+
+async function initGitHubDataStore() {
+  if (!githubDataStoreState.enabled) {
+    console.log('ℹ️ GitHub data-store desactivado (configura GITHUB_TOKEN para activarlo).');
+    return;
+  }
+  try {
+    await ensureGitHubDataBranch();
+    for (const fileName of GITHUB_SYNC_FILES) {
+      await pullFileFromGitHub(fileName);
+    }
+    githubDataStoreState.initialized = true;
+    githubDataStoreState.lastError = null;
+    console.log(`☁️ GitHub data-store sincronizado (${GITHUB_REPO} @ ${GITHUB_DATA_BRANCH})`);
+  } catch (err) {
+    githubDataStoreState.lastError = err.message;
+    console.error('⚠️ Error inicializando GitHub data-store:', err.message);
+  }
+}
+
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use((req, res, next) => {
@@ -161,6 +336,7 @@ function saveDb(dbData) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   fs.writeFileSync(DB_PATH, JSON.stringify(dbData, null, 2), 'utf8');
+  scheduleGitHubSync('db.json', 500);
 }
 
 function loadUserProfiles() {
@@ -178,6 +354,7 @@ function saveUserProfiles(profiles) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   fs.writeFileSync(USER_PROFILES_PATH, JSON.stringify(profiles, null, 2), 'utf8');
+  scheduleGitHubSync('user_profiles.json', 300);
 }
 
 // GET full state (without leaking any user's personal profile)
@@ -326,6 +503,7 @@ function recordAccessLog({ type, email = '', city = '', detail = '', req = null 
       detail: String(detail || '').slice(0, 200)
     });
     fs.writeFileSync(ACCESS_LOGS_PATH, JSON.stringify(logs.slice(0, 300), null, 2), 'utf8');
+    scheduleGitHubSync('access_logs.json', 15000);
   } catch {}
 }
 
@@ -453,6 +631,7 @@ function saveSharedAttendance(data) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   fs.writeFileSync(SHARED_ATTENDANCE_PATH, JSON.stringify(data, null, 2), 'utf8');
+  scheduleGitHubSync('shared_attendance.json', 300);
 }
 
 // GET public attendees for an event
@@ -533,6 +712,7 @@ function saveCommunityEvents(data) {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   fs.writeFileSync(COMMUNITY_EVENTS_PATH, JSON.stringify(data, null, 2), 'utf8');
+  scheduleGitHubSync('community_events.json', 300);
 }
 
 // GET paid community events by city
@@ -1034,7 +1214,16 @@ app.get('/api/admin/overview', requireAdmin, (req, res) => {
         heapTotalMB: Math.round(mem.heapTotal / 1024 / 1024)
       },
       totalRequests: serverStats.totalRequests,
-      apiRequests: serverStats.apiRequests
+      apiRequests: serverStats.apiRequests,
+      githubSync: {
+        enabled: githubDataStoreState.enabled,
+        repo: githubDataStoreState.repo,
+        branch: githubDataStoreState.branch,
+        initialized: githubDataStoreState.initialized,
+        lastSyncAt: githubDataStoreState.lastSyncAt,
+        lastError: githubDataStoreState.lastError,
+        syncedFiles: Array.from(githubDataStoreState.fileShas.keys())
+      }
     },
     stats: {
       totalUsers: users.length,
@@ -1080,9 +1269,12 @@ app.get('/api/admin/file', requireAdmin, (req, res) => {
 });
 
 if (require.main === module) {
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 go2enjoy.com server running on http://0.0.0.0:${PORT}`);
-  });
+  (async () => {
+    await initGitHubDataStore();
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 go2enjoy.com server running on http://0.0.0.0:${PORT}`);
+    });
+  })();
 }
 
 module.exports = app;
