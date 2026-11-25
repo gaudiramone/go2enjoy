@@ -124,6 +124,53 @@
         }
       },
       {
+        "id": "ce_mww7grbc_zjhnn",
+        "subType": "EVENTO",
+        "title": "Tardeo de mierda",
+        "artistName": "",
+        "date": "2026-11-25",
+        "rangeStart": "",
+        "rangeEnd": "",
+        "time": "20:00",
+        "venue": "pingpòn",
+        "venueTag": "ACÚSTICO",
+        "musicStyle": "",
+        "styleTag": "",
+        "styleColor": "",
+        "price": "Inversa / Voluntad",
+        "url": "",
+        "isTicketUrl": false,
+        "actionLabel": "Ir a Más info",
+        "color": "#6366f1",
+        "shareConfig": {
+          "isPublic": true,
+          "alias": false,
+          "email": false,
+          "politicalPhrase": false,
+          "politicalScale": false,
+          "religion": false,
+          "religionPractice": false,
+          "appearance": false,
+          "sexuality": false,
+          "seekingPerson": false,
+          "seekingRelation": false,
+          "photos": [
+            false,
+            false,
+            false
+          ],
+          "socialLinks": {
+            "instagram": false,
+            "tiktok": false,
+            "x": false,
+            "facebook": false,
+            "youtube": true,
+            "linkedin": false,
+            "web": false
+          }
+        }
+      },
+      {
         "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-27",
         "subType": "Conciertos",
         "title": "Concierto Laura Blossom. Re-Cordis",
@@ -229,53 +276,6 @@
             "x": false,
             "facebook": false,
             "youtube": false,
-            "linkedin": false,
-            "web": false
-          }
-        }
-      },
-      {
-        "id": "ce_mww7grbc_zjhnn",
-        "subType": "EVENTO",
-        "title": "Tardeo de mierda",
-        "artistName": "",
-        "date": "2026-11-25",
-        "rangeStart": "",
-        "rangeEnd": "",
-        "time": "20:00",
-        "venue": "pingpòn",
-        "venueTag": "ACÚSTICO",
-        "musicStyle": "",
-        "styleTag": "",
-        "styleColor": "",
-        "price": "Inversa / Voluntad",
-        "url": "",
-        "isTicketUrl": false,
-        "actionLabel": "Ir a Más info",
-        "color": "#6366f1",
-        "shareConfig": {
-          "isPublic": true,
-          "alias": false,
-          "email": false,
-          "politicalPhrase": false,
-          "politicalScale": false,
-          "religion": false,
-          "religionPractice": false,
-          "appearance": false,
-          "sexuality": false,
-          "seekingPerson": false,
-          "seekingRelation": false,
-          "photos": [
-            false,
-            false,
-            false
-          ],
-          "socialLinks": {
-            "instagram": false,
-            "tiktok": false,
-            "x": false,
-            "facebook": false,
-            "youtube": true,
             "linkedin": false,
             "web": false
           }
