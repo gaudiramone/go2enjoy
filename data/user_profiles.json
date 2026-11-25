@@ -186,6 +186,53 @@
             "web": false
           }
         }
+      },
+      {
+        "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-05-21",
+        "subType": "Conciertos",
+        "title": "Los Punsetes",
+        "artistName": "Los Punsetes",
+        "date": "2027-05-21",
+        "rangeStart": "",
+        "rangeEnd": "",
+        "time": "22:00",
+        "venue": "Sala Oasis",
+        "venueTag": "SALA OASIS",
+        "musicStyle": "Rock",
+        "styleTag": "ROCK",
+        "styleColor": "#ef4444",
+        "price": "Ver web",
+        "url": "https://www.salaoasis.com/events/los-punsetes/",
+        "isTicketUrl": false,
+        "actionLabel": "Ir a Más info",
+        "color": "#ec4899",
+        "shareConfig": {
+          "isPublic": true,
+          "alias": true,
+          "email": false,
+          "politicalPhrase": false,
+          "politicalScale": false,
+          "religion": false,
+          "religionPractice": false,
+          "appearance": false,
+          "sexuality": false,
+          "seekingPerson": false,
+          "seekingRelation": false,
+          "photos": [
+            false,
+            false,
+            false
+          ],
+          "socialLinks": {
+            "instagram": false,
+            "tiktok": false,
+            "x": false,
+            "facebook": false,
+            "youtube": false,
+            "linkedin": false,
+            "web": false
+          }
+        }
       }
     ],
     "selectedCity": "Zaragoza",
