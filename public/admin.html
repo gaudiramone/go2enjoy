@@ -60,7 +60,10 @@
     <main id="adminDashboardSection" class="hidden space-y-6">
       <div class="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-emerald-950/40 border border-emerald-500/30 px-4 py-2.5 text-xs">
         <span class="text-emerald-200">Sesión activa como <strong id="adminSessionEmail" class="text-white"></strong></span>
-        <span id="adminLastUpdated" class="text-slate-400 font-mono"></span>
+        <div class="flex flex-wrap items-center gap-3">
+          <span id="adminGithubSyncBadge" class="font-mono text-[11px]"></span>
+          <span id="adminLastUpdated" class="text-slate-400 font-mono"></span>
+        </div>
       </div>
 
       <!-- KPIs -->
@@ -259,6 +262,17 @@
       if (!d.ok) return;
 
       document.getElementById('adminLastUpdated').textContent = `Actualizado: ${new Date().toLocaleTimeString('es-ES')}`;
+      const gh = d.server?.githubSync;
+      const ghBadge = document.getElementById('adminGithubSyncBadge');
+      if (ghBadge && gh) {
+        if (!gh.enabled) {
+          ghBadge.innerHTML = `<span class="px-2 py-0.5 rounded bg-amber-950/60 border border-amber-500/40 text-amber-300">☁️ GitHub data-store: sin GITHUB_TOKEN</span>`;
+        } else if (gh.lastError) {
+          ghBadge.innerHTML = `<span class="px-2 py-0.5 rounded bg-rose-950/60 border border-rose-500/40 text-rose-300">⚠️ GitHub (${esc(gh.branch)}): ${esc(gh.lastError)}</span>`;
+        } else {
+          ghBadge.innerHTML = `<span class="px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-500/40 text-emerald-300">☁️ GitHub ${esc(gh.branch)} (${gh.syncedFiles?.length || 0} ficheros)</span>`;
+        }
+      }
 
       const kpis = [
         { label: 'Uptime', value: fmtUptime(d.server.uptimeSeconds), sub: d.server.nodeVersion },
