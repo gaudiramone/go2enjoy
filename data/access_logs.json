@@ -1,5 +1,15 @@
 [
   {
+    "timestamp": "2026-11-25T18:57:33.270Z",
+    "madridTime": "2026-11-25 19:57:33",
+    "type": "admin_login",
+    "email": "gaudiramone@gmail.com",
+    "city": "",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Acceso al panel de administración"
+  },
+  {
     "timestamp": "2026-11-25T18:46:17.671Z",
     "madridTime": "2026-11-25 19:46:17",
     "type": "admin_login",
