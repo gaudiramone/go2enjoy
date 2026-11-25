@@ -2265,13 +2265,13 @@
       "venue": "Belushi",
       "venueTag": "BELUSHI",
       "venueColor": "#f43f5e",
-      "url": "https://vivezaragoza.es/hoy/evento/pepi-labrador-viviendo-a-todo-gass",
+      "url": "https://aragonenvivo.com/evento/pepi-labrador-viviendo-a-todo-gass-2/",
       "section": "A",
       "subType": "Teatro",
       "prioritySource": 2,
-      "sourceName": "vivezaragoza.es",
+      "sourceName": "aragonenvivo.com",
       "price": "12 €",
-      "actionLabel": "Ir a Más info"
+      "actionLabel": "Comprar entradas"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-28",
@@ -4130,21 +4130,21 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-11",
       "title": "Banda y Coros de la Academia General Militar",
       "artistName": "Banda y Coros de la Academia General Militar",
-      "musicStyle": "",
+      "musicStyle": "Clásica",
       "date": "2026-12-11",
-      "time": "19:30",
+      "time": "19:00",
       "venue": "Auditorio de Zaragoza",
       "venueTag": "AUDITORIO ZGZ",
       "venueColor": "#6366f1",
-      "url": "https://vivezaragoza.es/hoy/evento/banda-y-coros-de-la-academia-general-militar",
+      "url": "https://entradas.ibercaja.es/compra/banda-y-coros-de-la-academia-general-militar/MAGM24/",
       "section": "A",
       "subType": "Conciertos",
       "prioritySource": 2,
-      "sourceName": "vivezaragoza.es",
-      "price": "15€",
-      "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "sourceName": "entradas.ibercaja.es",
+      "price": "15 €",
+      "actionLabel": "Comprar entradas",
+      "styleTag": "CLÁSICA",
+      "styleColor": "#6366f1"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-11",
@@ -4152,17 +4152,17 @@
       "artistName": "Dúo Lavanda. Recital de piano y trompeta",
       "musicStyle": "Clásica",
       "date": "2026-12-11",
-      "time": "19:30",
+      "time": "19:00",
       "venue": "Fundación / Espacio Ibercaja",
       "venueTag": "IBERCAJA",
       "venueColor": "#3b82f6",
-      "url": "https://vivezaragoza.es/hoy/evento/duo-lavanda-recital-de-piano-y-trompeta",
+      "url": "https://www.fundacionibercaja.es/actividades/conciertos-y-recitales/duo-lavanda-recital-de-piano-y-trompeta-zaragoza/",
       "section": "A",
       "subType": "Conciertos",
       "prioritySource": 2,
-      "sourceName": "vivezaragoza.es",
-      "price": "3€",
-      "actionLabel": "Ir a Más info",
+      "sourceName": "fundacionibercaja.es",
+      "price": "3 €",
+      "actionLabel": "Comprar entradas",
       "styleTag": "CLÁSICA",
       "styleColor": "#6366f1"
     },
@@ -4172,15 +4172,15 @@
       "artistName": "Honoris Tuna de Aragón",
       "musicStyle": "",
       "date": "2026-12-11",
-      "time": "19:30",
+      "time": "19:00",
       "venue": "Plaza del Pilar",
       "venueTag": "PLAZA DEL PILAR",
       "venueColor": "#f59e0b",
-      "url": "https://vivezaragoza.es/hoy/evento/honoris-tuna-de-aragon",
+      "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/317034",
       "section": "A",
       "subType": "Conciertos",
       "prioritySource": 2,
-      "sourceName": "vivezaragoza.es",
+      "sourceName": "zaragoza.es",
       "price": "Ver web",
       "actionLabel": "Ir a Más info",
       "styleTag": "SIN ESPECIFICAR",
@@ -4624,7 +4624,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
       "title": "Klack. Tributo a Motorhead",
       "artistName": "Klack. Tributo a Motorhead",
-      "musicStyle": "",
+      "musicStyle": "Metal / Heavy",
       "date": "2026-12-12",
       "time": "22:00",
       "venue": "Sala Z",
@@ -4638,8 +4638,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "METAL / HEAVY",
+      "styleColor": "#7c3aed"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-13",
@@ -5749,7 +5749,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
       "title": "Blue Brothers Tribute Band",
       "artistName": "Blue Brothers Tribute Band",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2026-12-19",
       "time": "21:00",
       "venue": "Sala Z",
@@ -5763,8 +5763,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-20",
@@ -6251,7 +6251,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-26",
       "title": "Múltipla",
       "artistName": "Múltipla",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-26",
       "time": "20:30",
       "venue": "La Lata de Bombillas",
@@ -6265,8 +6265,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "loco-QUxNQSBBTklNQUwgKEVu-2026-12-26",
@@ -6293,7 +6293,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-26",
       "title": "La Séptima Farola",
       "artistName": "La Séptima Farola",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-26",
       "time": "21:00",
       "venue": "La Ley Seca",
@@ -6307,8 +6307,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-26",
@@ -6875,16 +6875,34 @@
       "musicStyle": "",
       "date": "2027-01-07",
       "time": "19:30",
-      "venue": "Teatro Principal",
-      "venueTag": "TEATRO PRINCIPAL",
-      "venueColor": "#f43f5e",
-      "url": "https://compraentradas.ibercaja.es/teatroprincipal/public/janto/main.php?Nivel=Evento&idEvento=06013901",
+      "venue": "Parte de Duck Pond",
+      "venueTag": "PARTE DE DUCK POND",
+      "venueColor": "#8b5cf6",
+      "url": "https://vivezaragoza.es/hoy/evento/duck-pond-jue-sab",
       "section": "A",
       "subType": "Teatro",
       "prioritySource": 2,
-      "sourceName": "compraentradas.ibercaja.es",
-      "price": "30 €",
-      "actionLabel": "Comprar entradas"
+      "sourceName": "vivezaragoza.es",
+      "price": "30€",
+      "actionLabel": "Ir a Más info"
+    },
+    {
+      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
+      "title": "+dMANÁ (Tributo a Maná)",
+      "artistName": "+dMANÁ (Tributo a Maná)",
+      "musicStyle": "",
+      "date": "2027-01-08",
+      "time": "19:30",
+      "venue": "Teatro de las Esquinas",
+      "venueTag": "TEATRO ESQUINAS",
+      "venueColor": "#d946ef",
+      "url": "https://vivezaragoza.es/hoy/evento/dmana-tributo-a-mana",
+      "section": "A",
+      "subType": "Teatro",
+      "prioritySource": 2,
+      "sourceName": "vivezaragoza.es",
+      "price": "35€",
+      "actionLabel": "Ir a Más info"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-08",
@@ -6912,28 +6930,10 @@
       "styleColor": "#06b6d4"
     },
     {
-      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
-      "title": "+dMANÁ (Tributo a Maná)",
-      "artistName": "+dMANÁ (Tributo a Maná)",
-      "musicStyle": "",
-      "date": "2027-01-08",
-      "time": "21:00",
-      "venue": "Teatro de las Esquinas",
-      "venueTag": "TEATRO ESQUINAS",
-      "venueColor": "#d946ef",
-      "url": "https://www.teatrodelasesquinas.com/es/programacion/c/835-amar-es-combatir-show--aniversario.html",
-      "section": "A",
-      "subType": "Teatro",
-      "prioritySource": 2,
-      "sourceName": "teatrodelasesquinas.com",
-      "price": "35 €",
-      "actionLabel": "Comprar entradas"
-    },
-    {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-08",
       "title": "dMANÁ. Tributo a Maná",
       "artistName": "dMANÁ. Tributo a Maná",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-01-08",
       "time": "21:00",
       "venue": "Teatro de las Esquinas",
@@ -6947,8 +6947,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-09",
@@ -7208,7 +7208,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-15",
       "title": "PANCHO VARONA",
       "artistName": "PANCHO VARONA",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-15",
       "time": "20:00",
       "venue": "Auditorio de Zaragoza",
@@ -7226,8 +7226,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-15",
@@ -7559,7 +7559,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-19",
       "title": "El cascanueces",
       "artistName": "El cascanueces",
-      "musicStyle": "",
+      "musicStyle": "Clásica",
       "date": "2027-01-19",
       "time": "20:00",
       "venue": "Auditorio de Zaragoza",
@@ -7573,8 +7573,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "CLÁSICA",
+      "styleColor": "#6366f1"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-21",
@@ -8662,7 +8662,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-12",
       "title": "KIKO VENENO",
       "artistName": "KIKO VENENO",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-02-12",
       "time": "20:00",
       "venue": "Auditorio de Zaragoza",
@@ -8680,8 +8680,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-12",
@@ -8941,7 +8941,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-19",
       "title": "BEGUT",
       "artistName": "BEGUT",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-02-19",
       "time": "20:00",
       "venue": "Sala López",
@@ -8959,8 +8959,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-19",
@@ -10654,14 +10654,13 @@
     }
   ],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-25T20:57:45.167Z",
+    "updatedAt": "2026-11-25T19:00:56.558Z",
     "city": "Zaragoza",
     "referenceDate": "2026-11-25",
     "oneYearHorizon": "2027-11-25",
     "totalScanned": 724,
     "totalMatched": 520,
     "logs": [
-      "⚡ Caché diaria (2026-11-25) para Zaragoza: datos recuperados sin volver a acceder a internet.",
       "👤 Usuario Google activo (Agenda e IA): gaudiramone@gmail.com",
       "🚀 Iniciando búsqueda de Espectáculos (A) para Zaragoza",
       "🔗 URLs configuradas para Zaragoza: https://vivezaragoza.es/, https://aragonenvivo.com/, https://www.locozaragozadiscoteca.com/, https://conciertos.club/zaragoza, https://www.emfproducciones.com/",
@@ -10675,12 +10674,12 @@
       "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Zaragoza: 1 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Zaragoza: 32 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://negufest.com/) para Zaragoza: 2 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 364 conciertos catalogados (42 por IA, 68 sin especificar).",
+      "🤖 IA Estilos Musicales: 387 conciertos catalogados (64 por IA, 45 sin especificar).",
       "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 59], [ROCK & BLUES: 56], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [LATA BOMBILLAS: 19], [SALA LÓPEZ: 18], [CENTRO CÍVICO: 14], [SALA CREEDENCE: 13], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [PRÍNCIPE FELIPE: 5], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [IGLESIA SAN PABLO: 2], [ROZE: 2], [BEMBÉ CLUB: 2], [CENTRO JOAQUÍN RON: 1], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
       "🎪 Festivales en Zaragoza: [ROAD TO INVERFEST 2026: 17], [NEGUFEST: 2], [INVERFEST: 1]",
-      "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 62], [TEATRO PRINCIPAL: 19], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 8], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1]",
+      "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 62], [TEATRO PRINCIPAL: 18], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 8], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1], [PARTE DE DUCK POND: 1]",
       "🖼️ Salas de Exposiciones detectadas: [IAACC P. SERRANO: 12], [CENTRO CÍVICO: 11], [OTROS ESCENARIOS: 8], [CENTRO HISTORIAS: 5], [TEATRO ESQUINAS: 3], [PALACIO DE LA ALJA: 2], [BIBLIOTECA ANDRESA: 2], [BIBLIOTECA PARA JÓ: 2], [SALA DE EXPOSICION: 2], [LA LONJA: 2], [CAIXAFORUM: 2], [PARANINFO: 2], [ZONA JOVEN UNIVERS: 2], [CÁMARA DE COMERCIO: 2], [ZONA JOVEN MOVERA: 2], [GALERÍA SPECTRUM: 1], [CPI EL ESPARTIDERO: 1], [IBERCAJA: 1], [MOBILITY CITY (PAB: 1], [ALMA MATER: 1], [AMARILLO ESPACIO C: 1], [MUSEO DEL FUEGO Y: 1]",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 104], [CLÁSICA: 54], [SIN ESPECIFICAR: 46], [POP: 21], [URBANO / RAP: 16], [FOLK / CANTAUTOR: 16], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4], [METAL / HEAVY: 3]",
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 107], [CLÁSICA: 56], [SIN ESPECIFICAR: 36], [POP: 25], [URBANO / RAP: 16], [FOLK / CANTAUTOR: 16], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [METAL / HEAVY: 4], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4]",
       "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 520"
     ]
   },
@@ -10689,25 +10688,25 @@
       "tag": "ROCK",
       "name": "Rock",
       "color": "#ef4444",
-      "count": 104
+      "count": 107
     },
     {
       "tag": "CLÁSICA",
       "name": "Clásica",
       "color": "#6366f1",
-      "count": 54
+      "count": 56
     },
     {
       "tag": "SIN ESPECIFICAR",
       "name": "Otros / Sin especificar",
       "color": "#64748b",
-      "count": 46
+      "count": 36
     },
     {
       "tag": "POP",
       "name": "Pop",
       "color": "#ec4899",
-      "count": 21
+      "count": 25
     },
     {
       "tag": "URBANO / RAP",
@@ -10752,6 +10751,12 @@
       "count": 7
     },
     {
+      "tag": "METAL / HEAVY",
+      "name": "Metal / Heavy",
+      "color": "#7c3aed",
+      "count": 4
+    },
+    {
       "tag": "LATINO / SKA",
       "name": "Latino / Mestizaje",
       "color": "#14b8a6",
@@ -10768,12 +10773,6 @@
       "name": "Flamenco",
       "color": "#f97316",
       "count": 4
-    },
-    {
-      "tag": "METAL / HEAVY",
-      "name": "Metal / Heavy",
-      "color": "#7c3aed",
-      "count": 3
     }
   ],
   "theaterVenues": [
@@ -10787,7 +10786,7 @@
       "tag": "TEATRO PRINCIPAL",
       "name": "Teatro Principal",
       "color": "#f43f5e",
-      "count": 19
+      "count": 18
     },
     {
       "tag": "TEATRO ARBOLÉ",
@@ -10877,6 +10876,12 @@
       "tag": "CARPA DEL BARRIO S",
       "name": "Carpa del Barrio San Juan de Mozarrifar",
       "color": "#0ea5e9",
+      "count": 1
+    },
+    {
+      "tag": "PARTE DE DUCK POND",
+      "name": "Parte de Duck Pond",
+      "color": "#8b5cf6",
       "count": 1
     }
   ],
@@ -12801,13 +12806,13 @@
           "venue": "Belushi",
           "venueTag": "BELUSHI",
           "venueColor": "#f43f5e",
-          "url": "https://vivezaragoza.es/hoy/evento/pepi-labrador-viviendo-a-todo-gass",
+          "url": "https://aragonenvivo.com/evento/pepi-labrador-viviendo-a-todo-gass-2/",
           "section": "A",
           "subType": "Teatro",
           "prioritySource": 2,
-          "sourceName": "vivezaragoza.es",
+          "sourceName": "aragonenvivo.com",
           "price": "12 €",
-          "actionLabel": "Ir a Más info"
+          "actionLabel": "Comprar entradas"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-28",
@@ -14666,21 +14671,21 @@
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-11",
           "title": "Banda y Coros de la Academia General Militar",
           "artistName": "Banda y Coros de la Academia General Militar",
-          "musicStyle": "",
+          "musicStyle": "Clásica",
           "date": "2026-12-11",
-          "time": "19:30",
+          "time": "19:00",
           "venue": "Auditorio de Zaragoza",
           "venueTag": "AUDITORIO ZGZ",
           "venueColor": "#6366f1",
-          "url": "https://vivezaragoza.es/hoy/evento/banda-y-coros-de-la-academia-general-militar",
+          "url": "https://entradas.ibercaja.es/compra/banda-y-coros-de-la-academia-general-militar/MAGM24/",
           "section": "A",
           "subType": "Conciertos",
           "prioritySource": 2,
-          "sourceName": "vivezaragoza.es",
-          "price": "15€",
-          "actionLabel": "Ir a Más info",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "sourceName": "entradas.ibercaja.es",
+          "price": "15 €",
+          "actionLabel": "Comprar entradas",
+          "styleTag": "CLÁSICA",
+          "styleColor": "#6366f1"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-11",
@@ -14688,17 +14693,17 @@
           "artistName": "Dúo Lavanda. Recital de piano y trompeta",
           "musicStyle": "Clásica",
           "date": "2026-12-11",
-          "time": "19:30",
+          "time": "19:00",
           "venue": "Fundación / Espacio Ibercaja",
           "venueTag": "IBERCAJA",
           "venueColor": "#3b82f6",
-          "url": "https://vivezaragoza.es/hoy/evento/duo-lavanda-recital-de-piano-y-trompeta",
+          "url": "https://www.fundacionibercaja.es/actividades/conciertos-y-recitales/duo-lavanda-recital-de-piano-y-trompeta-zaragoza/",
           "section": "A",
           "subType": "Conciertos",
           "prioritySource": 2,
-          "sourceName": "vivezaragoza.es",
-          "price": "3€",
-          "actionLabel": "Ir a Más info",
+          "sourceName": "fundacionibercaja.es",
+          "price": "3 €",
+          "actionLabel": "Comprar entradas",
           "styleTag": "CLÁSICA",
           "styleColor": "#6366f1"
         },
@@ -14708,15 +14713,15 @@
           "artistName": "Honoris Tuna de Aragón",
           "musicStyle": "",
           "date": "2026-12-11",
-          "time": "19:30",
+          "time": "19:00",
           "venue": "Plaza del Pilar",
           "venueTag": "PLAZA DEL PILAR",
           "venueColor": "#f59e0b",
-          "url": "https://vivezaragoza.es/hoy/evento/honoris-tuna-de-aragon",
+          "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/317034",
           "section": "A",
           "subType": "Conciertos",
           "prioritySource": 2,
-          "sourceName": "vivezaragoza.es",
+          "sourceName": "zaragoza.es",
           "price": "Ver web",
           "actionLabel": "Ir a Más info",
           "styleTag": "SIN ESPECIFICAR",
@@ -15160,7 +15165,7 @@
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
           "title": "Klack. Tributo a Motorhead",
           "artistName": "Klack. Tributo a Motorhead",
-          "musicStyle": "",
+          "musicStyle": "Metal / Heavy",
           "date": "2026-12-12",
           "time": "22:00",
           "venue": "Sala Z",
@@ -15174,8 +15179,8 @@
           "prioritySource": 1,
           "sourceName": "conciertos.club",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "METAL / HEAVY",
+          "styleColor": "#7c3aed"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-13",
@@ -16285,7 +16290,7 @@
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
           "title": "Blue Brothers Tribute Band",
           "artistName": "Blue Brothers Tribute Band",
-          "musicStyle": "",
+          "musicStyle": "Pop",
           "date": "2026-12-19",
           "time": "21:00",
           "venue": "Sala Z",
@@ -16299,8 +16304,8 @@
           "prioritySource": 1,
           "sourceName": "conciertos.club",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "POP",
+          "styleColor": "#ec4899"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-20",
@@ -16787,7 +16792,7 @@
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-26",
           "title": "Múltipla",
           "artistName": "Múltipla",
-          "musicStyle": "",
+          "musicStyle": "Rock",
           "date": "2026-12-26",
           "time": "20:30",
           "venue": "La Lata de Bombillas",
@@ -16801,8 +16806,8 @@
           "prioritySource": 1,
           "sourceName": "conciertos.club",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "ROCK",
+          "styleColor": "#ef4444"
         },
         {
           "id": "loco-QUxNQSBBTklNQUwgKEVu-2026-12-26",
@@ -16829,7 +16834,7 @@
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-26",
           "title": "La Séptima Farola",
           "artistName": "La Séptima Farola",
-          "musicStyle": "",
+          "musicStyle": "Rock",
           "date": "2026-12-26",
           "time": "21:00",
           "venue": "La Ley Seca",
@@ -16843,8 +16848,8 @@
           "prioritySource": 1,
           "sourceName": "conciertos.club",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "ROCK",
+          "styleColor": "#ef4444"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-26",
@@ -17411,16 +17416,34 @@
           "musicStyle": "",
           "date": "2027-01-07",
           "time": "19:30",
-          "venue": "Teatro Principal",
-          "venueTag": "TEATRO PRINCIPAL",
-          "venueColor": "#f43f5e",
-          "url": "https://compraentradas.ibercaja.es/teatroprincipal/public/janto/main.php?Nivel=Evento&idEvento=06013901",
+          "venue": "Parte de Duck Pond",
+          "venueTag": "PARTE DE DUCK POND",
+          "venueColor": "#8b5cf6",
+          "url": "https://vivezaragoza.es/hoy/evento/duck-pond-jue-sab",
           "section": "A",
           "subType": "Teatro",
           "prioritySource": 2,
-          "sourceName": "compraentradas.ibercaja.es",
-          "price": "30 €",
-          "actionLabel": "Comprar entradas"
+          "sourceName": "vivezaragoza.es",
+          "price": "30€",
+          "actionLabel": "Ir a Más info"
+        },
+        {
+          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
+          "title": "+dMANÁ (Tributo a Maná)",
+          "artistName": "+dMANÁ (Tributo a Maná)",
+          "musicStyle": "",
+          "date": "2027-01-08",
+          "time": "19:30",
+          "venue": "Teatro de las Esquinas",
+          "venueTag": "TEATRO ESQUINAS",
+          "venueColor": "#d946ef",
+          "url": "https://vivezaragoza.es/hoy/evento/dmana-tributo-a-mana",
+          "section": "A",
+          "subType": "Teatro",
+          "prioritySource": 2,
+          "sourceName": "vivezaragoza.es",
+          "price": "35€",
+          "actionLabel": "Ir a Más info"
         },
         {
           "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-08",
@@ -17448,28 +17471,10 @@
           "styleColor": "#06b6d4"
         },
         {
-          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
-          "title": "+dMANÁ (Tributo a Maná)",
-          "artistName": "+dMANÁ (Tributo a Maná)",
-          "musicStyle": "",
-          "date": "2027-01-08",
-          "time": "21:00",
-          "venue": "Teatro de las Esquinas",
-          "venueTag": "TEATRO ESQUINAS",
-          "venueColor": "#d946ef",
-          "url": "https://www.teatrodelasesquinas.com/es/programacion/c/835-amar-es-combatir-show--aniversario.html",
-          "section": "A",
-          "subType": "Teatro",
-          "prioritySource": 2,
-          "sourceName": "teatrodelasesquinas.com",
-          "price": "35 €",
-          "actionLabel": "Comprar entradas"
-        },
-        {
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-08",
           "title": "dMANÁ. Tributo a Maná",
           "artistName": "dMANÁ. Tributo a Maná",
-          "musicStyle": "",
+          "musicStyle": "Rock",
           "date": "2027-01-08",
           "time": "21:00",
           "venue": "Teatro de las Esquinas",
@@ -17483,8 +17488,8 @@
           "prioritySource": 1,
           "sourceName": "conciertos.club",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "ROCK",
+          "styleColor": "#ef4444"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-09",
@@ -17744,7 +17749,7 @@
           "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-15",
           "title": "PANCHO VARONA",
           "artistName": "PANCHO VARONA",
-          "musicStyle": "",
+          "musicStyle": "Pop",
           "date": "2027-01-15",
           "time": "20:00",
           "venue": "Auditorio de Zaragoza",
@@ -17762,8 +17767,8 @@
           "prioritySource": 2,
           "sourceName": "inverfest.com",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "POP",
+          "styleColor": "#ec4899"
         },
         {
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-15",
@@ -18095,7 +18100,7 @@
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-19",
           "title": "El cascanueces",
           "artistName": "El cascanueces",
-          "musicStyle": "",
+          "musicStyle": "Clásica",
           "date": "2027-01-19",
           "time": "20:00",
           "venue": "Auditorio de Zaragoza",
@@ -18109,8 +18114,8 @@
           "prioritySource": 1,
           "sourceName": "conciertos.club",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "CLÁSICA",
+          "styleColor": "#6366f1"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-21",
@@ -19198,7 +19203,7 @@
           "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-12",
           "title": "KIKO VENENO",
           "artistName": "KIKO VENENO",
-          "musicStyle": "",
+          "musicStyle": "Pop",
           "date": "2027-02-12",
           "time": "20:00",
           "venue": "Auditorio de Zaragoza",
@@ -19216,8 +19221,8 @@
           "prioritySource": 2,
           "sourceName": "inverfest.com",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "POP",
+          "styleColor": "#ec4899"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-12",
@@ -19477,7 +19482,7 @@
           "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-19",
           "title": "BEGUT",
           "artistName": "BEGUT",
-          "musicStyle": "",
+          "musicStyle": "Pop",
           "date": "2027-02-19",
           "time": "20:00",
           "venue": "Sala López",
@@ -19495,8 +19500,8 @@
           "prioritySource": 2,
           "sourceName": "inverfest.com",
           "price": "Ver web",
-          "styleTag": "SIN ESPECIFICAR",
-          "styleColor": "#64748b"
+          "styleTag": "POP",
+          "styleColor": "#ec4899"
         },
         {
           "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-19",
@@ -21468,7 +21473,7 @@
           "tag": "TEATRO PRINCIPAL",
           "name": "Teatro Principal",
           "color": "#f43f5e",
-          "count": 19
+          "count": 18
         },
         {
           "tag": "TEATRO ARBOLÉ",
@@ -21558,6 +21563,12 @@
           "tag": "CARPA DEL BARRIO S",
           "name": "Carpa del Barrio San Juan de Mozarrifar",
           "color": "#0ea5e9",
+          "count": 1
+        },
+        {
+          "tag": "PARTE DE DUCK POND",
+          "name": "Parte de Duck Pond",
+          "color": "#8b5cf6",
           "count": 1
         }
       ],
@@ -21700,25 +21711,25 @@
           "tag": "ROCK",
           "name": "Rock",
           "color": "#ef4444",
-          "count": 104
+          "count": 107
         },
         {
           "tag": "CLÁSICA",
           "name": "Clásica",
           "color": "#6366f1",
-          "count": 54
+          "count": 56
         },
         {
           "tag": "SIN ESPECIFICAR",
           "name": "Otros / Sin especificar",
           "color": "#64748b",
-          "count": 46
+          "count": 36
         },
         {
           "tag": "POP",
           "name": "Pop",
           "color": "#ec4899",
-          "count": 21
+          "count": 25
         },
         {
           "tag": "URBANO / RAP",
@@ -21763,6 +21774,12 @@
           "count": 7
         },
         {
+          "tag": "METAL / HEAVY",
+          "name": "Metal / Heavy",
+          "color": "#7c3aed",
+          "count": 4
+        },
+        {
           "tag": "LATINO / SKA",
           "name": "Latino / Mestizaje",
           "color": "#14b8a6",
@@ -21779,16 +21796,10 @@
           "name": "Flamenco",
           "color": "#f97316",
           "count": 4
-        },
-        {
-          "tag": "METAL / HEAVY",
-          "name": "Metal / Heavy",
-          "color": "#7c3aed",
-          "count": 3
         }
       ],
       "meta": {
-        "updatedAt": "2026-11-25T20:57:45.167Z",
+        "updatedAt": "2026-11-25T19:00:56.558Z",
         "city": "Zaragoza",
         "referenceDate": "2026-11-25",
         "oneYearHorizon": "2027-11-25",
@@ -21808,12 +21819,12 @@
           "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Zaragoza: 1 eventos en esta ciudad",
           "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Zaragoza: 32 eventos en esta ciudad",
           "🎪 Escaneado Festival (https://negufest.com/) para Zaragoza: 2 eventos en esta ciudad",
-          "🤖 IA Estilos Musicales: 364 conciertos catalogados (42 por IA, 68 sin especificar).",
+          "🤖 IA Estilos Musicales: 387 conciertos catalogados (64 por IA, 45 sin especificar).",
           "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 59], [ROCK & BLUES: 56], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [LATA BOMBILLAS: 19], [SALA LÓPEZ: 18], [CENTRO CÍVICO: 14], [SALA CREEDENCE: 13], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [PRÍNCIPE FELIPE: 5], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [IGLESIA SAN PABLO: 2], [ROZE: 2], [BEMBÉ CLUB: 2], [CENTRO JOAQUÍN RON: 1], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
           "🎪 Festivales en Zaragoza: [ROAD TO INVERFEST 2026: 17], [NEGUFEST: 2], [INVERFEST: 1]",
-          "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 62], [TEATRO PRINCIPAL: 19], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 8], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1]",
+          "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 62], [TEATRO PRINCIPAL: 18], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 8], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1], [PARTE DE DUCK POND: 1]",
           "🖼️ Salas de Exposiciones detectadas: [IAACC P. SERRANO: 12], [CENTRO CÍVICO: 11], [OTROS ESCENARIOS: 8], [CENTRO HISTORIAS: 5], [TEATRO ESQUINAS: 3], [PALACIO DE LA ALJA: 2], [BIBLIOTECA ANDRESA: 2], [BIBLIOTECA PARA JÓ: 2], [SALA DE EXPOSICION: 2], [LA LONJA: 2], [CAIXAFORUM: 2], [PARANINFO: 2], [ZONA JOVEN UNIVERS: 2], [CÁMARA DE COMERCIO: 2], [ZONA JOVEN MOVERA: 2], [GALERÍA SPECTRUM: 1], [CPI EL ESPARTIDERO: 1], [IBERCAJA: 1], [MOBILITY CITY (PAB: 1], [ALMA MATER: 1], [AMARILLO ESPACIO C: 1], [MUSEO DEL FUEGO Y: 1]",
-          "🎵 Estilos musicales detectados en la descripción: [ROCK: 104], [CLÁSICA: 54], [SIN ESPECIFICAR: 46], [POP: 21], [URBANO / RAP: 16], [FOLK / CANTAUTOR: 16], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4], [METAL / HEAVY: 3]",
+          "🎵 Estilos musicales detectados en la descripción: [ROCK: 107], [CLÁSICA: 56], [SIN ESPECIFICAR: 36], [POP: 25], [URBANO / RAP: 16], [FOLK / CANTAUTOR: 16], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [METAL / HEAVY: 4], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4]",
           "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 520"
         ]
       }
