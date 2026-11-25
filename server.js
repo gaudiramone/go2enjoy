@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { runCalendarUpdate, formatDateYMD, VALID_SHOW_TYPES } = require('./scraperEngine');
@@ -11,12 +12,32 @@ const DB_PATH = path.join(DATA_DIR, 'db.json');
 const USER_PROFILES_PATH = path.join(DATA_DIR, 'user_profiles.json');
 const SHARED_ATTENDANCE_PATH = path.join(DATA_DIR, 'shared_attendance.json');
 const COMMUNITY_EVENTS_PATH = path.join(DATA_DIR, 'community_events.json');
+const ACCESS_LOGS_PATH = path.join(DATA_DIR, 'access_logs.json');
 const DEFAULT_GOOGLE_CLIENT_ID =
   process.env.GOOGLE_CLIENT_ID ||
   '108535358368-9rfnr7kk4iklcp6qd7rq9cu5luivr2l2.apps.googleusercontent.com';
 
+const ADMIN_COOKIE_NAME = 'go2enjoy_admin_session';
+const ADMIN_SESSION_SECRET =
+  process.env.ADMIN_SESSION_SECRET || crypto.randomBytes(32).toString('hex');
+const ADMIN_SESSION_TTL_MS = 8 * 60 * 60 * 1000;
+const adminLoginAttempts = new Map();
+const serverStats = {
+  startedAt: new Date().toISOString(),
+  totalRequests: 0,
+  apiRequests: 0,
+  recentErrors: []
+};
+
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
+app.use((req, res, next) => {
+  serverStats.totalRequests += 1;
+  if (req.path.startsWith('/api/')) {
+    serverStats.apiRequests += 1;
+  }
+  next();
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 const DEFAULT_DB = {
@@ -244,6 +265,70 @@ app.post('/api/cache/restore', (req, res) => {
   res.json({ ok: true });
 });
 
+function getMadridTodayYMD() {
+  return new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Madrid',
+    year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date()); // "YYYY-MM-DD"
+}
+
+function filterNonPastProfileCalendar(list) {
+  if (!Array.isArray(list)) return [];
+  const todayYMD = getMadridTodayYMD();
+  return list.filter(item => {
+    if (!item) return false;
+    const d = String(item.date || item.rangeEnd || '').trim();
+    return Boolean(d) && d >= todayYMD;
+  });
+}
+
+function sanitizeProfileCalendarResponse(profile) {
+  if (!profile) return null;
+  return {
+    ...profile,
+    profileCalendar: filterNonPastProfileCalendar(profile.profileCalendar)
+  };
+}
+
+function getClientIp(req) {
+  const fwd = String(req?.headers?.['x-forwarded-for'] || '').split(',')[0].trim();
+  return fwd || req?.socket?.remoteAddress || 'unknown';
+}
+
+function loadAccessLogs() {
+  try {
+    if (!fs.existsSync(ACCESS_LOGS_PATH)) return [];
+    const parsed = JSON.parse(fs.readFileSync(ACCESS_LOGS_PATH, 'utf8'));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function recordAccessLog({ type, email = '', city = '', detail = '', req = null }) {
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    const logs = loadAccessLogs();
+    const now = new Date();
+    const madridTime = new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'Europe/Madrid',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    }).format(now);
+    logs.unshift({
+      timestamp: now.toISOString(),
+      madridTime,
+      type: String(type || 'activity'),
+      email: String(email || '').trim().toLowerCase(),
+      city: String(city || '').trim(),
+      ip: req ? getClientIp(req) : '',
+      userAgent: req ? String(req.headers['user-agent'] || '').slice(0, 120) : '',
+      detail: String(detail || '').slice(0, 200)
+    });
+    fs.writeFileSync(ACCESS_LOGS_PATH, JSON.stringify(logs.slice(0, 300), null, 2), 'utf8');
+  } catch {}
+}
+
 // POST Google User Login (returns isolated profile for that email if any)
 app.post('/api/auth/login', (req, res) => {
   const email = String(req.body?.email || '').trim().toLowerCase();
@@ -251,7 +336,8 @@ app.post('/api/auth/login', (req, res) => {
     return res.status(400).json({ ok: false, error: 'Introduce un correo de Google / Gmail válido' });
   }
   const profiles = loadUserProfiles();
-  res.json({ ok: true, email, userProfile: profiles[email] || null });
+  recordAccessLog({ type: 'login', email, city: profiles[email]?.selectedCity || '', detail: 'Inicio de sesión usuario', req });
+  res.json({ ok: true, email, userProfile: sanitizeProfileCalendarResponse(profiles[email]) });
 });
 
 // GET isolated profile by email
@@ -259,7 +345,7 @@ app.get('/api/user-profile', (req, res) => {
   const email = String(req.query.email || '').trim().toLowerCase();
   if (!email) return res.json({ ok: true, userProfile: null });
   const profiles = loadUserProfiles();
-  res.json({ ok: true, userProfile: profiles[email] || null });
+  res.json({ ok: true, userProfile: sanitizeProfileCalendarResponse(profiles[email]) });
 });
 
 // PUT Part 2: User Preferences & Isolated Profile by email
@@ -332,11 +418,18 @@ app.put('/api/user-profile', (req, res) => {
       };
     }
     if (Array.isArray(profileCalendar)) {
-      target.profileCalendar = profileCalendar;
+      target.profileCalendar = filterNonPastProfileCalendar(profileCalendar);
     }
     profiles[normalizedEmail] = target;
     saveUserProfiles(profiles);
     savedProfile = target;
+    recordAccessLog({
+      type: 'profile_save',
+      email: normalizedEmail,
+      city: target.selectedCity || '',
+      detail: `Perfil actualizado (${Array.isArray(target.profileCalendar) ? target.profileCalendar.length : 0} apuntes)`,
+      req
+    });
   }
 
   res.json({ ok: true, userProfile: savedProfile || db.userProfile });
@@ -513,6 +606,9 @@ app.post('/api/community-events', (req, res) => {
   if (!cityName || !eventTitle || !eventDate) {
     return res.status(400).json({ ok: false, error: 'Ciudad, evento y fecha son obligatorios.' });
   }
+  if (eventDate < getMadridTodayYMD()) {
+    return res.status(400).json({ ok: false, error: 'No se pueden guardar eventos con fecha pasada.' });
+  }
 
   const store = loadCommunityEvents();
   if (!Array.isArray(store.cities[cityName])) {
@@ -540,6 +636,13 @@ app.post('/api/community-events', (req, res) => {
   };
   store.cities[cityName].push(newEv);
   saveCommunityEvents(store);
+  recordAccessLog({
+    type: 'community_event',
+    email: newEv.creatorEmail,
+    city: cityName,
+    detail: `Evento creado: ${newEv.title} (${newEv.venueTag})`,
+    req
+  });
   res.json({ ok: true, event: newEv });
 });
 
@@ -656,6 +759,301 @@ app.post('/api/calendar/update', async (req, res) => {
     });
   } catch (err) {
     console.error('Error in /api/calendar/update:', err);
+    serverStats.recentErrors.unshift({ timestamp: new Date().toISOString(), route: '/api/calendar/update', message: err.message });
+    serverStats.recentErrors = serverStats.recentErrors.slice(0, 50);
+    res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// =========================================================================
+// PANEL DE ADMINISTRACIÓN (DOBLE CAPA: GOOGLE OAUTH VERIFICADO + CLAVE)
+// =========================================================================
+function getAdminAllowedEmails() {
+  return String(process.env.ADMIN_EMAILS || '')
+    .split(',')
+    .map(e => e.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function getAdminPassword() {
+  return String(process.env.ADMIN_PASSWORD || '');
+}
+
+function parseCookies(req) {
+  const header = String(req.headers.cookie || '');
+  const out = {};
+  header.split(';').forEach(part => {
+    const idx = part.indexOf('=');
+    if (idx > 0) {
+      const k = part.slice(0, idx).trim();
+      const v = part.slice(idx + 1).trim();
+      try {
+        out[k] = decodeURIComponent(v);
+      } catch {
+        out[k] = v;
+      }
+    }
+  });
+  return out;
+}
+
+function signAdminSession(email) {
+  const payload = Buffer.from(JSON.stringify({
+    email,
+    exp: Date.now() + ADMIN_SESSION_TTL_MS
+  })).toString('base64url');
+  const sig = crypto
+    .createHmac('sha256', ADMIN_SESSION_SECRET)
+    .update(payload)
+    .digest('base64url');
+  return `${payload}.${sig}`;
+}
+
+function verifyAdminSession(token) {
+  if (!token || !token.includes('.')) return null;
+  const [payload, sig] = token.split('.');
+  const expectedSig = crypto
+    .createHmac('sha256', ADMIN_SESSION_SECRET)
+    .update(payload)
+    .digest('base64url');
+  const sigBuf = Buffer.from(sig);
+  const expBuf = Buffer.from(expectedSig);
+  if (sigBuf.length !== expBuf.length || !crypto.timingSafeEqual(sigBuf, expBuf)) {
+    return null;
+  }
+  try {
+    const parsed = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8'));
+    if (!parsed || !parsed.email || !parsed.exp || Date.now() > parsed.exp) return null;
+    const allowed = getAdminAllowedEmails();
+    if (allowed.length > 0 && !allowed.includes(String(parsed.email).toLowerCase())) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function getAdminSessionFromReq(req) {
+  const cookies = parseCookies(req);
+  return verifyAdminSession(cookies[ADMIN_COOKIE_NAME]);
+}
+
+function requireAdmin(req, res, next) {
+  const session = getAdminSessionFromReq(req);
+  if (!session) {
+    return res.status(401).json({ ok: false, error: 'Acceso no autorizado. Inicia sesión de administrador.' });
+  }
+  req.adminSession = session;
+  next();
+}
+
+function setAdminSessionCookie(req, res, token) {
+  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  const parts = [
+    `${ADMIN_COOKIE_NAME}=${encodeURIComponent(token)}`,
+    'HttpOnly',
+    'SameSite=Strict',
+    'Path=/',
+    `Max-Age=${Math.floor(ADMIN_SESSION_TTL_MS / 1000)}`
+  ];
+  if (isHttps) parts.push('Secure');
+  res.setHeader('Set-Cookie', parts.join('; '));
+}
+
+function clearAdminSessionCookie(req, res) {
+  const isHttps = req.secure || req.headers['x-forwarded-proto'] === 'https';
+  const parts = [
+    `${ADMIN_COOKIE_NAME}=`,
+    'HttpOnly',
+    'SameSite=Strict',
+    'Path=/',
+    'Max-Age=0'
+  ];
+  if (isHttps) parts.push('Secure');
+  res.setHeader('Set-Cookie', parts.join('; '));
+}
+
+function timingSafePasswordMatch(input, expected) {
+  const a = crypto.createHash('sha256').update(String(input || '')).digest();
+  const b = crypto.createHash('sha256').update(String(expected || '')).digest();
+  return crypto.timingSafeEqual(a, b);
+}
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+});
+
+app.get('/api/admin/session', (req, res) => {
+  const session = getAdminSessionFromReq(req);
+  const allowedEmails = getAdminAllowedEmails();
+  const hasPassword = Boolean(getAdminPassword());
+  res.json({
+    ok: true,
+    authenticated: Boolean(session),
+    email: session ? session.email : null,
+    configReady: {
+      hasEmails: allowedEmails.length > 0,
+      hasPassword
+    },
+    googleClientId: DEFAULT_GOOGLE_CLIENT_ID
+  });
+});
+
+app.post('/api/admin/login', async (req, res) => {
+  const ip = getClientIp(req);
+  const now = Date.now();
+  const attempt = adminLoginAttempts.get(ip);
+  if (attempt && attempt.lockUntil && now < attempt.lockUntil) {
+    const mins = Math.ceil((attempt.lockUntil - now) / 60000);
+    return res.status(429).json({ ok: false, error: `Demasiados intentos fallidos. Espera ${mins} min.` });
+  }
+
+  const allowedEmails = getAdminAllowedEmails();
+  const adminPassword = getAdminPassword();
+  if (allowedEmails.length === 0 || !adminPassword) {
+    return res.status(503).json({
+      ok: false,
+      error: 'Configura ADMIN_EMAILS y ADMIN_PASSWORD en las variables de entorno del servidor (Faable).'
+    });
+  }
+
+  const idToken = String(req.body?.idToken || '').trim();
+  const password = String(req.body?.password || '');
+
+  const registerFailure = (reason) => {
+    const prev = adminLoginAttempts.get(ip) || { count: 0, lockUntil: 0 };
+    const nextCount = prev.count + 1;
+    const lockUntil = nextCount >= 5 ? now + 15 * 60 * 1000 : 0;
+    adminLoginAttempts.set(ip, { count: nextCount, lockUntil });
+    recordAccessLog({ type: 'admin_login_failed', detail: reason, req });
+  };
+
+  if (!idToken || !password) {
+    registerFailure('Falta token de Google o contraseña');
+    return res.status(400).json({ ok: false, error: 'Se requiere verificación con Google y contraseña de administrador.' });
+  }
+
+  try {
+    const verifyRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`);
+    if (!verifyRes.ok) {
+      registerFailure('Token de Google inválido o caducado');
+      return res.status(401).json({ ok: false, error: 'Token de Google inválido o caducado. Vuelve a iniciar sesión con Google.' });
+    }
+    const tokenInfo = await verifyRes.json();
+    const verifiedEmail = String(tokenInfo.email || '').trim().toLowerCase();
+    const emailVerified = tokenInfo.email_verified === true || tokenInfo.email_verified === 'true';
+    const audOk = tokenInfo.aud === DEFAULT_GOOGLE_CLIENT_ID;
+
+    if (!emailVerified || !audOk || !allowedEmails.includes(verifiedEmail)) {
+      registerFailure(`Email Google no autorizado: ${verifiedEmail || 'desconocido'}`);
+      return res.status(403).json({ ok: false, error: 'Esta cuenta de Google no tiene permisos de administrador.' });
+    }
+
+    if (!timingSafePasswordMatch(password, adminPassword)) {
+      registerFailure(`Contraseña incorrecta para ${verifiedEmail}`);
+      return res.status(401).json({ ok: false, error: 'Contraseña de administrador incorrecta.' });
+    }
+
+    adminLoginAttempts.delete(ip);
+    const token = signAdminSession(verifiedEmail);
+    setAdminSessionCookie(req, res, token);
+    recordAccessLog({ type: 'admin_login', email: verifiedEmail, detail: 'Acceso al panel de administración', req });
+    res.json({ ok: true, email: verifiedEmail });
+  } catch (err) {
+    registerFailure(`Error verificando Google: ${err.message}`);
+    res.status(500).json({ ok: false, error: 'Error verificando credenciales: ' + err.message });
+  }
+});
+
+app.post('/api/admin/logout', (req, res) => {
+  clearAdminSessionCookie(req, res);
+  res.json({ ok: true });
+});
+
+app.get('/api/admin/overview', requireAdmin, (req, res) => {
+  const mem = process.memoryUsage();
+  const db = loadDb();
+  const profiles = loadUserProfiles();
+  const community = loadCommunityEvents();
+  const attendance = loadSharedAttendance();
+  const accessLogs = loadAccessLogs();
+
+  const files = fs.existsSync(DATA_DIR)
+    ? fs.readdirSync(DATA_DIR).map(name => {
+        const full = path.join(DATA_DIR, name);
+        const st = fs.statSync(full);
+        return {
+          name,
+          isFile: st.isFile(),
+          sizeBytes: st.size,
+          modifiedAt: st.mtime.toISOString()
+        };
+      }).filter(f => f.isFile).sort((a, b) => b.modifiedAt.localeCompare(a.modifiedAt))
+    : [];
+
+  const users = Object.entries(profiles).map(([email, p]) => ({
+    email,
+    alias: p?.alias || '',
+    selectedCity: p?.selectedCity || '',
+    savedEventsCount: Array.isArray(p?.profileCalendar) ? p.profileCalendar.length : 0
+  }));
+
+  const communityCities = {};
+  let totalCommunityEvents = 0;
+  Object.entries(community.cities || {}).forEach(([city, list]) => {
+    const count = Array.isArray(list) ? list.length : 0;
+    communityCities[city] = count;
+    totalCommunityEvents += count;
+  });
+
+  const attendanceKeys = Object.keys(attendance.events || {});
+  const totalAttendanceEntries = attendanceKeys.reduce((acc, k) => acc + (attendance.events[k]?.length || 0), 0);
+
+  res.json({
+    ok: true,
+    adminEmail: req.adminSession.email,
+    server: {
+      uptimeSeconds: Math.floor(process.uptime()),
+      startedAt: serverStats.startedAt,
+      nodeVersion: process.version,
+      platform: process.platform,
+      memory: {
+        rssMB: Math.round(mem.rss / 1024 / 1024),
+        heapUsedMB: Math.round(mem.heapUsed / 1024 / 1024),
+        heapTotalMB: Math.round(mem.heapTotal / 1024 / 1024)
+      },
+      totalRequests: serverStats.totalRequests,
+      apiRequests: serverStats.apiRequests
+    },
+    stats: {
+      totalUsers: users.length,
+      totalProfileEvents: users.reduce((acc, u) => acc + u.savedEventsCount, 0),
+      totalCommunityEvents,
+      communityCities,
+      totalAttendanceKeys: attendanceKeys.length,
+      totalAttendanceEntries,
+      cachedCities: Object.keys(db.cityCache || {})
+    },
+    files,
+    users,
+    accessLogs: accessLogs.slice(0, 100),
+    recentErrors: serverStats.recentErrors
+  });
+});
+
+app.get('/api/admin/file', requireAdmin, (req, res) => {
+  const rawName = String(req.query.name || '').trim();
+  const safeName = path.basename(rawName);
+  if (!safeName || safeName !== rawName) {
+    return res.status(400).json({ ok: false, error: 'Nombre de fichero inválido.' });
+  }
+  const fullPath = path.join(DATA_DIR, safeName);
+  if (!fs.existsSync(fullPath)) {
+    return res.status(404).json({ ok: false, error: 'Fichero no encontrado.' });
+  }
+  try {
+    const content = fs.readFileSync(fullPath, 'utf8');
+    res.json({ ok: true, name: safeName, sizeBytes: Buffer.byteLength(content, 'utf8'), content });
+  } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
 });
