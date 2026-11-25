@@ -232,53 +232,6 @@
     },
     "profileCalendar": [
       {
-        "id": "ce_mww4wb0c_fzami",
-        "subType": "EVENTO",
-        "title": "miercoles de brunch",
-        "artistName": "",
-        "date": "2026-11-25",
-        "rangeStart": "",
-        "rangeEnd": "",
-        "time": "20:00",
-        "venue": "Las ocas",
-        "venueTag": "BRUNCH",
-        "musicStyle": "",
-        "styleTag": "",
-        "styleColor": "",
-        "price": "10 €",
-        "url": "",
-        "isTicketUrl": false,
-        "actionLabel": "Ir a Más info",
-        "color": "#6366f1",
-        "shareConfig": {
-          "isPublic": true,
-          "alias": false,
-          "email": false,
-          "politicalPhrase": false,
-          "politicalScale": false,
-          "religion": false,
-          "religionPractice": false,
-          "appearance": false,
-          "sexuality": false,
-          "seekingPerson": false,
-          "seekingRelation": false,
-          "photos": [
-            false,
-            false,
-            false
-          ],
-          "socialLinks": {
-            "instagram": false,
-            "tiktok": false,
-            "x": false,
-            "facebook": false,
-            "youtube": false,
-            "linkedin": false,
-            "web": false
-          }
-        }
-      },
-      {
         "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-30",
         "subType": "Exposiciones",
         "title": "Exposición Bibliográfica",
@@ -390,53 +343,6 @@
         "actionLabel": "Comprar entradas",
         "color": "#3b82f6",
         "_modalIndex": 2
-      },
-      {
-        "id": "ce_mwusaml2_8ryg2",
-        "subType": "DJ",
-        "title": "DJ PEPITO",
-        "artistName": "",
-        "date": "2026-11-27",
-        "rangeStart": "",
-        "rangeEnd": "",
-        "time": "20:00",
-        "venue": "Las ocas",
-        "venueTag": "DJ",
-        "musicStyle": "",
-        "styleTag": "",
-        "styleColor": "",
-        "price": "15 €",
-        "url": "",
-        "isTicketUrl": false,
-        "actionLabel": "Ir a Más info",
-        "color": "#6366f1",
-        "shareConfig": {
-          "isPublic": true,
-          "alias": false,
-          "email": false,
-          "politicalPhrase": false,
-          "politicalScale": false,
-          "religion": false,
-          "religionPractice": false,
-          "appearance": false,
-          "sexuality": false,
-          "seekingPerson": false,
-          "seekingRelation": false,
-          "photos": [
-            true,
-            false,
-            false
-          ],
-          "socialLinks": {
-            "instagram": false,
-            "tiktok": false,
-            "x": false,
-            "facebook": false,
-            "youtube": false,
-            "linkedin": false,
-            "web": false
-          }
-        }
       },
       {
         "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-23",
