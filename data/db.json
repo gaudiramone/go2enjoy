@@ -308,12 +308,6 @@
       "count": 6
     },
     {
-      "tag": "PRÍNCIPE FELIPE",
-      "name": "Pabellón Príncipe Felipe",
-      "color": "#06b6d4",
-      "count": 5
-    },
-    {
       "tag": "OTROS ESCENARIOS",
       "name": "Otros Escenarios (Zaragoza)",
       "color": "#64748b",
@@ -371,6 +365,12 @@
       "tag": "BEMBÉ CLUB",
       "name": "Bembé Club",
       "color": "#8b5cf6",
+      "count": 2
+    },
+    {
+      "tag": "PRÍNCIPE FELIPE",
+      "name": "Pabellón Príncipe Felipe",
+      "color": "#06b6d4",
       "count": 2
     },
     {
@@ -500,6 +500,60 @@
       "sourceName": "museonat.es",
       "price": "Gratis",
       "actionLabel": "Ir a Más info"
+    },
+    {
+      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-25",
+      "title": "El Florido Pensil (niñas). Teatro a la Fresca",
+      "artistName": "El Florido Pensil (niñas). Teatro a la Fresca",
+      "musicStyle": "",
+      "date": "2026-11-25",
+      "time": "18:00",
+      "venue": "Centros Cívicos Zaragoza",
+      "venueTag": "CENTRO CÍVICO",
+      "venueColor": "#e11d48",
+      "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/316733",
+      "section": "A",
+      "subType": "Teatro",
+      "prioritySource": 2,
+      "sourceName": "zaragoza.es",
+      "price": "Gratis",
+      "actionLabel": "Ir a Más info"
+    },
+    {
+      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-29",
+      "title": "Economía doméstica: Goya y el dinero",
+      "artistName": "Economía doméstica: Goya y el dinero",
+      "musicStyle": "",
+      "date": "2026-11-25",
+      "time": "18:30",
+      "venue": "Fundación / Espacio Ibercaja",
+      "venueTag": "IBERCAJA",
+      "venueColor": "#3b82f6",
+      "url": "https://www.fundacionibercaja.es/actividades/conferencias-y-mesas-redondas/economia-domestica-goya-y-el-dinero-zaragoza/",
+      "section": "A",
+      "subType": "Exposiciones",
+      "prioritySource": 2,
+      "sourceName": "fundacionibercaja.es",
+      "price": "Gratis",
+      "actionLabel": "Ir a Más info"
+    },
+    {
+      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-25",
+      "title": "COSAS QUE CAEN DEL CIELO",
+      "artistName": "COSAS QUE CAEN DEL CIELO",
+      "musicStyle": "",
+      "date": "2026-11-25",
+      "time": "19:00",
+      "venue": "Teatro de las Esquinas",
+      "venueTag": "TEATRO ESQUINAS",
+      "venueColor": "#d946ef",
+      "url": "https://www.teatrodelasesquinas.com/es/programacion/c/903-cosas-que-caen-del-cielo.html",
+      "section": "A",
+      "subType": "Teatro",
+      "prioritySource": 2,
+      "sourceName": "teatrodelasesquinas.com",
+      "price": "17.5 €",
+      "actionLabel": "Comprar entradas"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-25",
@@ -6648,24 +6702,6 @@
       "actionLabel": "Ir a Más info"
     },
     {
-      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-31",
-      "title": "XXI San Silvestre Zaragoza El Rincón",
-      "artistName": "XXI San Silvestre Zaragoza El Rincón",
-      "musicStyle": "",
-      "date": "2026-12-31",
-      "time": "18:00",
-      "venue": "Teatro Principal",
-      "venueTag": "TEATRO PRINCIPAL",
-      "venueColor": "#f43f5e",
-      "url": "https://www.avaibooksports.com/inscripcion/xxi-san-silvestre-zaragoza-el-rincon-2026/",
-      "section": "A",
-      "subType": "Teatro",
-      "prioritySource": 2,
-      "sourceName": "avaibooksports.com",
-      "price": "14 €",
-      "actionLabel": "Comprar entradas"
-    },
-    {
       "id": "loco-Tk9DSEVWSUVKQTIwMjYt-2026-12-31",
       "title": "NOCHEVIEJA",
       "artistName": "NOCHEVIEJA",
@@ -6875,34 +6911,16 @@
       "musicStyle": "",
       "date": "2027-01-07",
       "time": "19:30",
-      "venue": "Parte de Duck Pond",
-      "venueTag": "PARTE DE DUCK POND",
-      "venueColor": "#8b5cf6",
-      "url": "https://vivezaragoza.es/hoy/evento/duck-pond-jue-sab",
+      "venue": "Teatro Principal",
+      "venueTag": "TEATRO PRINCIPAL",
+      "venueColor": "#f43f5e",
+      "url": "https://compraentradas.ibercaja.es/teatroprincipal/public/janto/main.php?Nivel=Evento&idEvento=06013901",
       "section": "A",
       "subType": "Teatro",
       "prioritySource": 2,
-      "sourceName": "vivezaragoza.es",
-      "price": "30€",
-      "actionLabel": "Ir a Más info"
-    },
-    {
-      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
-      "title": "+dMANÁ (Tributo a Maná)",
-      "artistName": "+dMANÁ (Tributo a Maná)",
-      "musicStyle": "",
-      "date": "2027-01-08",
-      "time": "19:30",
-      "venue": "Teatro de las Esquinas",
-      "venueTag": "TEATRO ESQUINAS",
-      "venueColor": "#d946ef",
-      "url": "https://vivezaragoza.es/hoy/evento/dmana-tributo-a-mana",
-      "section": "A",
-      "subType": "Teatro",
-      "prioritySource": 2,
-      "sourceName": "vivezaragoza.es",
-      "price": "35€",
-      "actionLabel": "Ir a Más info"
+      "sourceName": "compraentradas.ibercaja.es",
+      "price": "30 €",
+      "actionLabel": "Comprar entradas"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-08",
@@ -6928,6 +6946,24 @@
       "price": "Ver web",
       "styleTag": "ELECTRÓNICA",
       "styleColor": "#06b6d4"
+    },
+    {
+      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
+      "title": "+dMANÁ (Tributo a Maná)",
+      "artistName": "+dMANÁ (Tributo a Maná)",
+      "musicStyle": "",
+      "date": "2027-01-08",
+      "time": "21:00",
+      "venue": "Teatro de las Esquinas",
+      "venueTag": "TEATRO ESQUINAS",
+      "venueColor": "#d946ef",
+      "url": "https://www.teatrodelasesquinas.com/es/programacion/c/835-amar-es-combatir-show--aniversario.html",
+      "section": "A",
+      "subType": "Teatro",
+      "prioritySource": 2,
+      "sourceName": "teatrodelasesquinas.com",
+      "price": "35 €",
+      "actionLabel": "Comprar entradas"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-08",
@@ -9049,26 +9085,6 @@
       "styleColor": "#ef4444"
     },
     {
-      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-20",
-      "title": "Kase.O. Gira Camisa de Fuerza 2027",
-      "artistName": "Kase.O. Gira Camisa de Fuerza 2027",
-      "musicStyle": "Urbano / Rap",
-      "date": "2027-02-20",
-      "time": "21:00",
-      "venue": "Pabellón Príncipe Felipe",
-      "venueTag": "PRÍNCIPE FELIPE",
-      "venueColor": "#06b6d4",
-      "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/315793",
-      "section": "A",
-      "subType": "Conciertos",
-      "prioritySource": 2,
-      "sourceName": "zaragoza.es",
-      "price": "Ver web",
-      "actionLabel": "Ir a Más info",
-      "styleTag": "URBANO / RAP",
-      "styleColor": "#8b5cf6"
-    },
-    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-20",
       "title": "PIGNOISE",
       "artistName": "PIGNOISE",
@@ -10318,26 +10334,6 @@
       "styleColor": "#ef4444"
     },
     {
-      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-05-07",
-      "title": "Siloé. Gira Terrorismo Emocional Deluxe Tour",
-      "artistName": "Siloé. Gira Terrorismo Emocional Deluxe Tour",
-      "musicStyle": "Rock",
-      "date": "2027-05-07",
-      "time": "21:30",
-      "venue": "Pabellón Príncipe Felipe",
-      "venueTag": "PRÍNCIPE FELIPE",
-      "venueColor": "#06b6d4",
-      "url": "https://entradas.ibercaja.es/compra/siloe-zaragoza/20270507PPF/",
-      "section": "A",
-      "subType": "Conciertos",
-      "prioritySource": 2,
-      "sourceName": "entradas.ibercaja.es",
-      "price": "43 €",
-      "actionLabel": "Comprar entradas",
-      "styleTag": "ROCK",
-      "styleColor": "#ef4444"
-    },
-    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-05-14",
       "title": "Índigo",
       "artistName": "Índigo",
@@ -10496,26 +10492,6 @@
       "styleColor": "#6366f1"
     },
     {
-      "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-06-12",
-      "title": "David Bisbal. Tour Eternos 2027",
-      "artistName": "David Bisbal. Tour Eternos 2027",
-      "musicStyle": "Pop",
-      "date": "2027-06-12",
-      "time": "21:30",
-      "venue": "Pabellón Príncipe Felipe",
-      "venueTag": "PRÍNCIPE FELIPE",
-      "venueColor": "#06b6d4",
-      "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/315795",
-      "section": "A",
-      "subType": "Conciertos",
-      "prioritySource": 2,
-      "sourceName": "zaragoza.es",
-      "price": "Ver web",
-      "actionLabel": "Ir a Más info",
-      "styleTag": "POP",
-      "styleColor": "#ec4899"
-    },
-    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-06-22",
       "title": "Orquesta Sinfónica Reino de Aragón",
       "artistName": "Orquesta Sinfónica Reino de Aragón",
@@ -10654,20 +10630,19 @@
     }
   ],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-25T19:00:56.558Z",
+    "updatedAt": "2026-11-25T14:03:47.723Z",
     "city": "Zaragoza",
     "referenceDate": "2026-11-25",
     "oneYearHorizon": "2027-11-25",
-    "totalScanned": 724,
-    "totalMatched": 520,
+    "totalScanned": 721,
+    "totalMatched": 519,
     "logs": [
-      "⚡ Caché diaria (2026-11-25) para Zaragoza: datos recuperados sin volver a acceder a internet.",
       "👤 Usuario Google activo (Agenda e IA): gaudiramone@gmail.com",
       "🚀 Iniciando búsqueda de Espectáculos (A) para Zaragoza",
       "🔗 URLs configuradas para Zaragoza: https://vivezaragoza.es/, https://aragonenvivo.com/, https://www.locozaragozadiscoteca.com/, https://conciertos.club/zaragoza, https://www.emfproducciones.com/",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Vive Zaragoza (https://vivezaragoza.es/): 535 eventos extraídos",
+      "✓ Escaneado Vive Zaragoza (https://vivezaragoza.es/): 532 eventos extraídos",
       "✓ Escaneado Aragón en Vivo (https://aragonenvivo.com/eventos/): 12 eventos extraídos",
       "✓ Escaneado Sala [LOCO ZARAGOZA] (https://www.locozaragozadiscoteca.com/): 23 eventos extraídos",
       "✓ Escaneado Conciertos.club (https://conciertos.club/zaragoza): 119 eventos extraídos",
@@ -10675,13 +10650,13 @@
       "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Zaragoza: 1 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Zaragoza: 32 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://negufest.com/) para Zaragoza: 2 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 387 conciertos catalogados (64 por IA, 45 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 59], [ROCK & BLUES: 56], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [LATA BOMBILLAS: 19], [SALA LÓPEZ: 18], [CENTRO CÍVICO: 14], [SALA CREEDENCE: 13], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [PRÍNCIPE FELIPE: 5], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [IGLESIA SAN PABLO: 2], [ROZE: 2], [BEMBÉ CLUB: 2], [CENTRO JOAQUÍN RON: 1], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
+      "🤖 IA Estilos Musicales: 382 conciertos catalogados (64 por IA, 44 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 59], [ROCK & BLUES: 56], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [LATA BOMBILLAS: 19], [SALA LÓPEZ: 18], [CENTRO CÍVICO: 14], [SALA CREEDENCE: 13], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [IGLESIA SAN PABLO: 2], [ROZE: 2], [BEMBÉ CLUB: 2], [PRÍNCIPE FELIPE: 2], [CENTRO JOAQUÍN RON: 1], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
       "🎪 Festivales en Zaragoza: [ROAD TO INVERFEST 2026: 17], [NEGUFEST: 2], [INVERFEST: 1]",
-      "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 62], [TEATRO PRINCIPAL: 18], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 8], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1], [PARTE DE DUCK POND: 1]",
-      "🖼️ Salas de Exposiciones detectadas: [IAACC P. SERRANO: 12], [CENTRO CÍVICO: 11], [OTROS ESCENARIOS: 8], [CENTRO HISTORIAS: 5], [TEATRO ESQUINAS: 3], [PALACIO DE LA ALJA: 2], [BIBLIOTECA ANDRESA: 2], [BIBLIOTECA PARA JÓ: 2], [SALA DE EXPOSICION: 2], [LA LONJA: 2], [CAIXAFORUM: 2], [PARANINFO: 2], [ZONA JOVEN UNIVERS: 2], [CÁMARA DE COMERCIO: 2], [ZONA JOVEN MOVERA: 2], [GALERÍA SPECTRUM: 1], [CPI EL ESPARTIDERO: 1], [IBERCAJA: 1], [MOBILITY CITY (PAB: 1], [ALMA MATER: 1], [AMARILLO ESPACIO C: 1], [MUSEO DEL FUEGO Y: 1]",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 107], [CLÁSICA: 56], [SIN ESPECIFICAR: 36], [POP: 25], [URBANO / RAP: 16], [FOLK / CANTAUTOR: 16], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [METAL / HEAVY: 4], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 520"
+      "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 63], [TEATRO PRINCIPAL: 18], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 9], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1]",
+      "🖼️ Salas de Exposiciones detectadas: [IAACC P. SERRANO: 12], [CENTRO CÍVICO: 11], [OTROS ESCENARIOS: 8], [CENTRO HISTORIAS: 5], [TEATRO ESQUINAS: 3], [IBERCAJA: 2], [PALACIO DE LA ALJA: 2], [BIBLIOTECA ANDRESA: 2], [BIBLIOTECA PARA JÓ: 2], [SALA DE EXPOSICION: 2], [LA LONJA: 2], [CAIXAFORUM: 2], [PARANINFO: 2], [ZONA JOVEN UNIVERS: 2], [CÁMARA DE COMERCIO: 2], [ZONA JOVEN MOVERA: 2], [GALERÍA SPECTRUM: 1], [CPI EL ESPARTIDERO: 1], [MOBILITY CITY (PAB: 1], [ALMA MATER: 1], [AMARILLO ESPACIO C: 1], [MUSEO DEL FUEGO Y: 1]",
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 106], [CLÁSICA: 56], [SIN ESPECIFICAR: 36], [POP: 24], [FOLK / CANTAUTOR: 16], [URBANO / RAP: 15], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [METAL / HEAVY: 4], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 519"
     ]
   },
   "concertStyles": [
@@ -10689,7 +10664,7 @@
       "tag": "ROCK",
       "name": "Rock",
       "color": "#ef4444",
-      "count": 107
+      "count": 106
     },
     {
       "tag": "CLÁSICA",
@@ -10707,19 +10682,19 @@
       "tag": "POP",
       "name": "Pop",
       "color": "#ec4899",
-      "count": 25
-    },
-    {
-      "tag": "URBANO / RAP",
-      "name": "Urbano / Rap",
-      "color": "#8b5cf6",
-      "count": 16
+      "count": 24
     },
     {
       "tag": "FOLK / CANTAUTOR",
       "name": "Folk / Cantautor",
       "color": "#84cc16",
       "count": 16
+    },
+    {
+      "tag": "URBANO / RAP",
+      "name": "Urbano / Rap",
+      "color": "#8b5cf6",
+      "count": 15
     },
     {
       "tag": "INDIE / ALT",
@@ -10781,7 +10756,7 @@
       "tag": "TEATRO ESQUINAS",
       "name": "Teatro de las Esquinas",
       "color": "#d946ef",
-      "count": 62
+      "count": 63
     },
     {
       "tag": "TEATRO PRINCIPAL",
@@ -10799,7 +10774,7 @@
       "tag": "CENTRO CÍVICO",
       "name": "Centros Cívicos Zaragoza",
       "color": "#e11d48",
-      "count": 8
+      "count": 9
     },
     {
       "tag": "T. DEL MERCADO",
@@ -10878,12 +10853,6 @@
       "name": "Carpa del Barrio San Juan de Mozarrifar",
       "color": "#0ea5e9",
       "count": 1
-    },
-    {
-      "tag": "PARTE DE DUCK POND",
-      "name": "Parte de Duck Pond",
-      "color": "#8b5cf6",
-      "count": 1
     }
   ],
   "exhibitionVenues": [
@@ -10916,6 +10885,12 @@
       "name": "Teatro de las Esquinas",
       "color": "#d946ef",
       "count": 3
+    },
+    {
+      "tag": "IBERCAJA",
+      "name": "Fundación / Espacio Ibercaja",
+      "color": "#3b82f6",
+      "count": 2
     },
     {
       "tag": "PALACIO DE LA ALJA",
@@ -10990,12 +10965,6 @@
       "count": 1
     },
     {
-      "tag": "IBERCAJA",
-      "name": "Fundación / Espacio Ibercaja",
-      "color": "#3b82f6",
-      "count": 1
-    },
-    {
       "tag": "MOBILITY CITY (PAB",
       "name": "Mobility City (Pabellón Puente)",
       "color": "#8b5cf6",
@@ -11042,6 +11011,60 @@
           "sourceName": "museonat.es",
           "price": "Gratis",
           "actionLabel": "Ir a Más info"
+        },
+        {
+          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-25",
+          "title": "El Florido Pensil (niñas). Teatro a la Fresca",
+          "artistName": "El Florido Pensil (niñas). Teatro a la Fresca",
+          "musicStyle": "",
+          "date": "2026-11-25",
+          "time": "18:00",
+          "venue": "Centros Cívicos Zaragoza",
+          "venueTag": "CENTRO CÍVICO",
+          "venueColor": "#e11d48",
+          "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/316733",
+          "section": "A",
+          "subType": "Teatro",
+          "prioritySource": 2,
+          "sourceName": "zaragoza.es",
+          "price": "Gratis",
+          "actionLabel": "Ir a Más info"
+        },
+        {
+          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-29",
+          "title": "Economía doméstica: Goya y el dinero",
+          "artistName": "Economía doméstica: Goya y el dinero",
+          "musicStyle": "",
+          "date": "2026-11-25",
+          "time": "18:30",
+          "venue": "Fundación / Espacio Ibercaja",
+          "venueTag": "IBERCAJA",
+          "venueColor": "#3b82f6",
+          "url": "https://www.fundacionibercaja.es/actividades/conferencias-y-mesas-redondas/economia-domestica-goya-y-el-dinero-zaragoza/",
+          "section": "A",
+          "subType": "Exposiciones",
+          "prioritySource": 2,
+          "sourceName": "fundacionibercaja.es",
+          "price": "Gratis",
+          "actionLabel": "Ir a Más info"
+        },
+        {
+          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-25",
+          "title": "COSAS QUE CAEN DEL CIELO",
+          "artistName": "COSAS QUE CAEN DEL CIELO",
+          "musicStyle": "",
+          "date": "2026-11-25",
+          "time": "19:00",
+          "venue": "Teatro de las Esquinas",
+          "venueTag": "TEATRO ESQUINAS",
+          "venueColor": "#d946ef",
+          "url": "https://www.teatrodelasesquinas.com/es/programacion/c/903-cosas-que-caen-del-cielo.html",
+          "section": "A",
+          "subType": "Teatro",
+          "prioritySource": 2,
+          "sourceName": "teatrodelasesquinas.com",
+          "price": "17.5 €",
+          "actionLabel": "Comprar entradas"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-25",
@@ -17190,24 +17213,6 @@
           "actionLabel": "Ir a Más info"
         },
         {
-          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-31",
-          "title": "XXI San Silvestre Zaragoza El Rincón",
-          "artistName": "XXI San Silvestre Zaragoza El Rincón",
-          "musicStyle": "",
-          "date": "2026-12-31",
-          "time": "18:00",
-          "venue": "Teatro Principal",
-          "venueTag": "TEATRO PRINCIPAL",
-          "venueColor": "#f43f5e",
-          "url": "https://www.avaibooksports.com/inscripcion/xxi-san-silvestre-zaragoza-el-rincon-2026/",
-          "section": "A",
-          "subType": "Teatro",
-          "prioritySource": 2,
-          "sourceName": "avaibooksports.com",
-          "price": "14 €",
-          "actionLabel": "Comprar entradas"
-        },
-        {
           "id": "loco-Tk9DSEVWSUVKQTIwMjYt-2026-12-31",
           "title": "NOCHEVIEJA",
           "artistName": "NOCHEVIEJA",
@@ -17417,34 +17422,16 @@
           "musicStyle": "",
           "date": "2027-01-07",
           "time": "19:30",
-          "venue": "Parte de Duck Pond",
-          "venueTag": "PARTE DE DUCK POND",
-          "venueColor": "#8b5cf6",
-          "url": "https://vivezaragoza.es/hoy/evento/duck-pond-jue-sab",
+          "venue": "Teatro Principal",
+          "venueTag": "TEATRO PRINCIPAL",
+          "venueColor": "#f43f5e",
+          "url": "https://compraentradas.ibercaja.es/teatroprincipal/public/janto/main.php?Nivel=Evento&idEvento=06013901",
           "section": "A",
           "subType": "Teatro",
           "prioritySource": 2,
-          "sourceName": "vivezaragoza.es",
-          "price": "30€",
-          "actionLabel": "Ir a Más info"
-        },
-        {
-          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
-          "title": "+dMANÁ (Tributo a Maná)",
-          "artistName": "+dMANÁ (Tributo a Maná)",
-          "musicStyle": "",
-          "date": "2027-01-08",
-          "time": "19:30",
-          "venue": "Teatro de las Esquinas",
-          "venueTag": "TEATRO ESQUINAS",
-          "venueColor": "#d946ef",
-          "url": "https://vivezaragoza.es/hoy/evento/dmana-tributo-a-mana",
-          "section": "A",
-          "subType": "Teatro",
-          "prioritySource": 2,
-          "sourceName": "vivezaragoza.es",
-          "price": "35€",
-          "actionLabel": "Ir a Más info"
+          "sourceName": "compraentradas.ibercaja.es",
+          "price": "30 €",
+          "actionLabel": "Comprar entradas"
         },
         {
           "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-08",
@@ -17470,6 +17457,24 @@
           "price": "Ver web",
           "styleTag": "ELECTRÓNICA",
           "styleColor": "#06b6d4"
+        },
+        {
+          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-08",
+          "title": "+dMANÁ (Tributo a Maná)",
+          "artistName": "+dMANÁ (Tributo a Maná)",
+          "musicStyle": "",
+          "date": "2027-01-08",
+          "time": "21:00",
+          "venue": "Teatro de las Esquinas",
+          "venueTag": "TEATRO ESQUINAS",
+          "venueColor": "#d946ef",
+          "url": "https://www.teatrodelasesquinas.com/es/programacion/c/835-amar-es-combatir-show--aniversario.html",
+          "section": "A",
+          "subType": "Teatro",
+          "prioritySource": 2,
+          "sourceName": "teatrodelasesquinas.com",
+          "price": "35 €",
+          "actionLabel": "Comprar entradas"
         },
         {
           "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-08",
@@ -19591,26 +19596,6 @@
           "styleColor": "#ef4444"
         },
         {
-          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-20",
-          "title": "Kase.O. Gira Camisa de Fuerza 2027",
-          "artistName": "Kase.O. Gira Camisa de Fuerza 2027",
-          "musicStyle": "Urbano / Rap",
-          "date": "2027-02-20",
-          "time": "21:00",
-          "venue": "Pabellón Príncipe Felipe",
-          "venueTag": "PRÍNCIPE FELIPE",
-          "venueColor": "#06b6d4",
-          "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/315793",
-          "section": "A",
-          "subType": "Conciertos",
-          "prioritySource": 2,
-          "sourceName": "zaragoza.es",
-          "price": "Ver web",
-          "actionLabel": "Ir a Más info",
-          "styleTag": "URBANO / RAP",
-          "styleColor": "#8b5cf6"
-        },
-        {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-20",
           "title": "PIGNOISE",
           "artistName": "PIGNOISE",
@@ -20860,26 +20845,6 @@
           "styleColor": "#ef4444"
         },
         {
-          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-05-07",
-          "title": "Siloé. Gira Terrorismo Emocional Deluxe Tour",
-          "artistName": "Siloé. Gira Terrorismo Emocional Deluxe Tour",
-          "musicStyle": "Rock",
-          "date": "2027-05-07",
-          "time": "21:30",
-          "venue": "Pabellón Príncipe Felipe",
-          "venueTag": "PRÍNCIPE FELIPE",
-          "venueColor": "#06b6d4",
-          "url": "https://entradas.ibercaja.es/compra/siloe-zaragoza/20270507PPF/",
-          "section": "A",
-          "subType": "Conciertos",
-          "prioritySource": 2,
-          "sourceName": "entradas.ibercaja.es",
-          "price": "43 €",
-          "actionLabel": "Comprar entradas",
-          "styleTag": "ROCK",
-          "styleColor": "#ef4444"
-        },
-        {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-05-14",
           "title": "Índigo",
           "artistName": "Índigo",
@@ -21036,26 +21001,6 @@
           "actionLabel": "Ir a Más info",
           "styleTag": "CLÁSICA",
           "styleColor": "#6366f1"
-        },
-        {
-          "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-06-12",
-          "title": "David Bisbal. Tour Eternos 2027",
-          "artistName": "David Bisbal. Tour Eternos 2027",
-          "musicStyle": "Pop",
-          "date": "2027-06-12",
-          "time": "21:30",
-          "venue": "Pabellón Príncipe Felipe",
-          "venueTag": "PRÍNCIPE FELIPE",
-          "venueColor": "#06b6d4",
-          "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/315795",
-          "section": "A",
-          "subType": "Conciertos",
-          "prioritySource": 2,
-          "sourceName": "zaragoza.es",
-          "price": "Ver web",
-          "actionLabel": "Ir a Más info",
-          "styleTag": "POP",
-          "styleColor": "#ec4899"
         },
         {
           "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-06-22",
@@ -21269,12 +21214,6 @@
           "count": 6
         },
         {
-          "tag": "PRÍNCIPE FELIPE",
-          "name": "Pabellón Príncipe Felipe",
-          "color": "#06b6d4",
-          "count": 5
-        },
-        {
           "tag": "OTROS ESCENARIOS",
           "name": "Otros Escenarios (Zaragoza)",
           "color": "#64748b",
@@ -21332,6 +21271,12 @@
           "tag": "BEMBÉ CLUB",
           "name": "Bembé Club",
           "color": "#8b5cf6",
+          "count": 2
+        },
+        {
+          "tag": "PRÍNCIPE FELIPE",
+          "name": "Pabellón Príncipe Felipe",
+          "color": "#06b6d4",
           "count": 2
         },
         {
@@ -21468,7 +21413,7 @@
           "tag": "TEATRO ESQUINAS",
           "name": "Teatro de las Esquinas",
           "color": "#d946ef",
-          "count": 62
+          "count": 63
         },
         {
           "tag": "TEATRO PRINCIPAL",
@@ -21486,7 +21431,7 @@
           "tag": "CENTRO CÍVICO",
           "name": "Centros Cívicos Zaragoza",
           "color": "#e11d48",
-          "count": 8
+          "count": 9
         },
         {
           "tag": "T. DEL MERCADO",
@@ -21565,12 +21510,6 @@
           "name": "Carpa del Barrio San Juan de Mozarrifar",
           "color": "#0ea5e9",
           "count": 1
-        },
-        {
-          "tag": "PARTE DE DUCK POND",
-          "name": "Parte de Duck Pond",
-          "color": "#8b5cf6",
-          "count": 1
         }
       ],
       "exhibitionVenues": [
@@ -21603,6 +21542,12 @@
           "name": "Teatro de las Esquinas",
           "color": "#d946ef",
           "count": 3
+        },
+        {
+          "tag": "IBERCAJA",
+          "name": "Fundación / Espacio Ibercaja",
+          "color": "#3b82f6",
+          "count": 2
         },
         {
           "tag": "PALACIO DE LA ALJA",
@@ -21677,12 +21622,6 @@
           "count": 1
         },
         {
-          "tag": "IBERCAJA",
-          "name": "Fundación / Espacio Ibercaja",
-          "color": "#3b82f6",
-          "count": 1
-        },
-        {
           "tag": "MOBILITY CITY (PAB",
           "name": "Mobility City (Pabellón Puente)",
           "color": "#8b5cf6",
@@ -21712,7 +21651,7 @@
           "tag": "ROCK",
           "name": "Rock",
           "color": "#ef4444",
-          "count": 107
+          "count": 106
         },
         {
           "tag": "CLÁSICA",
@@ -21730,19 +21669,19 @@
           "tag": "POP",
           "name": "Pop",
           "color": "#ec4899",
-          "count": 25
-        },
-        {
-          "tag": "URBANO / RAP",
-          "name": "Urbano / Rap",
-          "color": "#8b5cf6",
-          "count": 16
+          "count": 24
         },
         {
           "tag": "FOLK / CANTAUTOR",
           "name": "Folk / Cantautor",
           "color": "#84cc16",
           "count": 16
+        },
+        {
+          "tag": "URBANO / RAP",
+          "name": "Urbano / Rap",
+          "color": "#8b5cf6",
+          "count": 15
         },
         {
           "tag": "INDIE / ALT",
@@ -21800,19 +21739,19 @@
         }
       ],
       "meta": {
-        "updatedAt": "2026-11-25T19:00:56.558Z",
+        "updatedAt": "2026-11-25T14:03:47.723Z",
         "city": "Zaragoza",
         "referenceDate": "2026-11-25",
         "oneYearHorizon": "2027-11-25",
-        "totalScanned": 724,
-        "totalMatched": 520,
+        "totalScanned": 721,
+        "totalMatched": 519,
         "logs": [
           "👤 Usuario Google activo (Agenda e IA): gaudiramone@gmail.com",
           "🚀 Iniciando búsqueda de Espectáculos (A) para Zaragoza",
           "🔗 URLs configuradas para Zaragoza: https://vivezaragoza.es/, https://aragonenvivo.com/, https://www.locozaragozadiscoteca.com/, https://conciertos.club/zaragoza, https://www.emfproducciones.com/",
           "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
           "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-          "✓ Escaneado Vive Zaragoza (https://vivezaragoza.es/): 535 eventos extraídos",
+          "✓ Escaneado Vive Zaragoza (https://vivezaragoza.es/): 532 eventos extraídos",
           "✓ Escaneado Aragón en Vivo (https://aragonenvivo.com/eventos/): 12 eventos extraídos",
           "✓ Escaneado Sala [LOCO ZARAGOZA] (https://www.locozaragozadiscoteca.com/): 23 eventos extraídos",
           "✓ Escaneado Conciertos.club (https://conciertos.club/zaragoza): 119 eventos extraídos",
@@ -21820,13 +21759,13 @@
           "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Zaragoza: 1 eventos en esta ciudad",
           "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Zaragoza: 32 eventos en esta ciudad",
           "🎪 Escaneado Festival (https://negufest.com/) para Zaragoza: 2 eventos en esta ciudad",
-          "🤖 IA Estilos Musicales: 387 conciertos catalogados (64 por IA, 45 sin especificar).",
-          "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 59], [ROCK & BLUES: 56], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [LATA BOMBILLAS: 19], [SALA LÓPEZ: 18], [CENTRO CÍVICO: 14], [SALA CREEDENCE: 13], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [PRÍNCIPE FELIPE: 5], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [IGLESIA SAN PABLO: 2], [ROZE: 2], [BEMBÉ CLUB: 2], [CENTRO JOAQUÍN RON: 1], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
+          "🤖 IA Estilos Musicales: 382 conciertos catalogados (64 por IA, 44 sin especificar).",
+          "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 59], [ROCK & BLUES: 56], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [LATA BOMBILLAS: 19], [SALA LÓPEZ: 18], [CENTRO CÍVICO: 14], [SALA CREEDENCE: 13], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [IGLESIA SAN PABLO: 2], [ROZE: 2], [BEMBÉ CLUB: 2], [PRÍNCIPE FELIPE: 2], [CENTRO JOAQUÍN RON: 1], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
           "🎪 Festivales en Zaragoza: [ROAD TO INVERFEST 2026: 17], [NEGUFEST: 2], [INVERFEST: 1]",
-          "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 62], [TEATRO PRINCIPAL: 18], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 8], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1], [PARTE DE DUCK POND: 1]",
-          "🖼️ Salas de Exposiciones detectadas: [IAACC P. SERRANO: 12], [CENTRO CÍVICO: 11], [OTROS ESCENARIOS: 8], [CENTRO HISTORIAS: 5], [TEATRO ESQUINAS: 3], [PALACIO DE LA ALJA: 2], [BIBLIOTECA ANDRESA: 2], [BIBLIOTECA PARA JÓ: 2], [SALA DE EXPOSICION: 2], [LA LONJA: 2], [CAIXAFORUM: 2], [PARANINFO: 2], [ZONA JOVEN UNIVERS: 2], [CÁMARA DE COMERCIO: 2], [ZONA JOVEN MOVERA: 2], [GALERÍA SPECTRUM: 1], [CPI EL ESPARTIDERO: 1], [IBERCAJA: 1], [MOBILITY CITY (PAB: 1], [ALMA MATER: 1], [AMARILLO ESPACIO C: 1], [MUSEO DEL FUEGO Y: 1]",
-          "🎵 Estilos musicales detectados en la descripción: [ROCK: 107], [CLÁSICA: 56], [SIN ESPECIFICAR: 36], [POP: 25], [URBANO / RAP: 16], [FOLK / CANTAUTOR: 16], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [METAL / HEAVY: 4], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4]",
-          "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 520"
+          "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 63], [TEATRO PRINCIPAL: 18], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 9], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 3], [EL TÚNEL: 2], [ZONA JOVEN MIGUEL: 1], [BIBLIOTECA PÚBLICA: 1], [IBERCAJA: 1], [PABELLÓN DE FESTEJ: 1], [ROCK & BLUES: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1]",
+          "🖼️ Salas de Exposiciones detectadas: [IAACC P. SERRANO: 12], [CENTRO CÍVICO: 11], [OTROS ESCENARIOS: 8], [CENTRO HISTORIAS: 5], [TEATRO ESQUINAS: 3], [IBERCAJA: 2], [PALACIO DE LA ALJA: 2], [BIBLIOTECA ANDRESA: 2], [BIBLIOTECA PARA JÓ: 2], [SALA DE EXPOSICION: 2], [LA LONJA: 2], [CAIXAFORUM: 2], [PARANINFO: 2], [ZONA JOVEN UNIVERS: 2], [CÁMARA DE COMERCIO: 2], [ZONA JOVEN MOVERA: 2], [GALERÍA SPECTRUM: 1], [CPI EL ESPARTIDERO: 1], [MOBILITY CITY (PAB: 1], [ALMA MATER: 1], [AMARILLO ESPACIO C: 1], [MUSEO DEL FUEGO Y: 1]",
+          "🎵 Estilos musicales detectados en la descripción: [ROCK: 106], [CLÁSICA: 56], [SIN ESPECIFICAR: 36], [POP: 24], [FOLK / CANTAUTOR: 16], [URBANO / RAP: 15], [INDIE / ALT: 11], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [METAL / HEAVY: 4], [LATINO / SKA: 4], [BLUES: 4], [FLAMENCO: 4]",
+          "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 519"
         ]
       }
     },
