@@ -116,10 +116,22 @@ async function pullFileFromGitHub(fileName) {
     }
     return;
   }
-  if (!res.ok || !res.json?.content) {
+  if (!res.ok) {
     throw new Error(`Pull ${fileName} falló: HTTP ${res.status}`);
   }
-  const decoded = Buffer.from(String(res.json.content).replace(/\n/g, ''), 'base64').toString('utf8');
+  let base64Content = res.json?.content || '';
+  if (!base64Content && res.json?.sha) {
+    // GitHub Contents API devuelve content vacío para ficheros > 1 MB; usar Git Blobs API
+    const blobRes = await githubApi(`/repos/${GITHUB_REPO}/git/blobs/${encodeURIComponent(res.json.sha)}`);
+    if (!blobRes.ok || !blobRes.json?.content) {
+      throw new Error(`Pull blob ${fileName} falló: HTTP ${blobRes.status}`);
+    }
+    base64Content = blobRes.json.content;
+  }
+  if (!base64Content) {
+    throw new Error(`Pull ${fileName} sin contenido (HTTP ${res.status})`);
+  }
+  const decoded = Buffer.from(String(base64Content).replace(/\n/g, ''), 'base64').toString('utf8');
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
   fs.writeFileSync(path.join(DATA_DIR, fileName), decoded, 'utf8');
   githubDataStoreState.fileShas.set(fileName, res.json.sha);
