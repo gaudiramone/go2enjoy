@@ -1,0 +1,26 @@
+{
+  "cities": {
+    "Zaragoza": [
+      {
+        "id": "ce_mwwhousg_x0l3k",
+        "city": "Zaragoza",
+        "title": "JUeves de casino",
+        "date": "2026-11-26",
+        "time": "20:00",
+        "venue": "el bingo",
+        "venueTag": "AFTERWORK",
+        "venueColor": "#ec4899",
+        "price": "33 €",
+        "subType": "EVENTO",
+        "description": "Va a ir mucha gente",
+        "url": "",
+        "actionLabel": "Ir a Más info",
+        "creatorEmail": "gaudiramone@gmail.com",
+        "creatorAlias": "Gaudiramone",
+        "creatorAvatar": "🎭",
+        "paid": true,
+        "createdAt": "2026-11-25T19:01:15.616Z"
+      }
+    ]
+  }
+}
