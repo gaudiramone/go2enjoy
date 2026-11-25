@@ -1598,8 +1598,11 @@
     function getVisibleEvents() {
       const allEvents = appState.calendarEvents || [];
       const checkedTypes = Array.from(document.querySelectorAll('input[name="showTypes"]:checked')).map(el => el.value);
+      const todayYMD = getTodayYMD();
 
       return allEvents.filter(ev => {
+        const endYMD = String(ev?.rangeEnd || ev?.date || '').trim();
+        if (endYMD && endYMD < todayYMD) return false;
         if (!checkedTypes.includes(ev.subType)) return false;
         if (ev.subType === 'Conciertos') {
           if (activeVenueTags.size > 0 && !activeVenueTags.has(ev.venueTag)) {
@@ -2919,27 +2922,37 @@
       return `${ev.date || ''}||${ev.time || ''}||${ev.title || ''}||${ev.url || ''}`;
     }
 
+    function isEventDatePast(ev) {
+      if (!ev) return true;
+      const d = String(ev.date || ev.rangeEnd || '').trim();
+      if (!d) return false;
+      return d < getTodayYMD();
+    }
+
     function getProfileCalendarEvents() {
-      return [...(getUserProfileSettings().profileCalendar || [])].sort((a, b) => {
-        const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
-        const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
-        if (ka !== kb) return ka.localeCompare(kb);
-        return (a.title || '').localeCompare(b.title || '', 'es');
-      });
+      return [...(getUserProfileSettings().profileCalendar || [])]
+        .filter(ev => !isEventDatePast(ev))
+        .sort((a, b) => {
+          const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
+          const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
+          if (ka !== kb) return ka.localeCompare(kb);
+          return (a.title || '').localeCompare(b.title || '', 'es');
+        });
     }
 
     async function persistProfileCalendarEvents(eventsList) {
+      const cleanList = Array.isArray(eventsList) ? eventsList.filter(ev => !isEventDatePast(ev)) : [];
       const current = getUserProfileSettings();
-      const updated = { ...current, profileCalendar: eventsList };
+      const updated = { ...current, profileCalendar: cleanList };
       setLocalUserProfile(updated);
       if (appState?.userProfile) {
-        appState.userProfile.profileCalendar = eventsList;
+        appState.userProfile.profileCalendar = cleanList;
       }
       try {
         await fetch('/api/user-profile', {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: current.email, profileCalendar: eventsList })
+          body: JSON.stringify({ email: current.email, profileCalendar: cleanList })
         });
       } catch {}
       if (driveAccessToken) {
@@ -3214,6 +3227,10 @@
         const pickedDate = expoRange
           ? (modalProfileChosenDate || ev.date || expoRange.start)
           : (ev.date || '');
+        if (!pickedDate || pickedDate < getTodayYMD()) {
+          alert('No se pueden guardar apuntes con fecha pasada.');
+          return;
+        }
 
         const eventRecord = {
           id: ev.id || '',
@@ -3889,6 +3906,10 @@
         alert('Completa evento, lugar y fecha.');
         return;
       }
+      if (newEventSelectedDate < getTodayYMD()) {
+        alert('No se pueden guardar eventos con fecha pasada.');
+        return;
+      }
 
       const profile = getUserProfileSettings();
       const btn = document.getElementById('btnCreateCommunityEvent');
@@ -3970,6 +3991,10 @@
         const pickedDate = expoRange
           ? (modalProfileChosenDate || ev.date || expoRange.start)
           : (ev.date || '');
+        if (!pickedDate || pickedDate < getTodayYMD()) {
+          alert('No se pueden guardar apuntes con fecha pasada.');
+          return;
+        }
         list.push({
           id: ev.id || '',
           subType: ev.subType || '',

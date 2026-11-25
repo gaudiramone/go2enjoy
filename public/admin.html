@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>go2enjoy · Panel de Administración</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased">
+  <div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+    <!-- Header -->
+    <header class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
+      <div>
+        <h1 class="text-xl font-extrabold text-white flex items-center gap-2">
+          <span>🛡️</span>
+          <span>go2enjoy · Administración</span>
+        </h1>
+        <p class="text-xs text-slate-400 mt-0.5">Acceso protegido de doble capa (Google verificado + Clave maestra)</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="/" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition">← Volver a la app</a>
+        <button id="btnAdminRefresh" onclick="loadAdminOverview()" class="hidden px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">🔄 Actualizar</button>
+        <button id="btnAdminLogout" onclick="adminLogout()" class="hidden px-3.5 py-2 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-200 hover:text-white border border-rose-500/40 text-xs font-bold transition">🚪 Salir</button>
+      </div>
+    </header>
+
+    <!-- Login View (Double Layer) -->
+    <section id="adminLoginSection" class="max-w-md mx-auto rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-2xl space-y-5">
+      <div class="space-y-1">
+        <h2 class="text-lg font-extrabold text-white">🔐 Acceso de Administrador</h2>
+        <p class="text-xs text-slate-400">Completa ambas verificaciones para entrar al panel.</p>
+      </div>
+
+      <div id="adminConfigWarn" class="hidden rounded-xl bg-amber-950/60 border border-amber-500/40 p-3 text-xs text-amber-200">
+        ⚠️ Faltan variables de entorno en el servidor: configura <code class="font-mono font-bold">ADMIN_EMAILS</code> y <code class="font-mono font-bold">ADMIN_PASSWORD</code> en Faable.
+      </div>
+
+      <!-- Paso 1: Google -->
+      <div class="rounded-xl bg-slate-950/70 border border-slate-800 p-4 space-y-2.5">
+        <div class="text-xs font-bold uppercase tracking-wider text-slate-300">1. Verificación con Google</div>
+        <div id="googleBtnContainer"></div>
+        <p id="googleSignedStatus" class="text-xs text-slate-400">Inicia sesión con tu cuenta Google autorizada.</p>
+      </div>
+
+      <!-- Paso 2: Contraseña -->
+      <form onsubmit="submitAdminLogin(event)" class="space-y-4">
+        <div class="space-y-1.5">
+          <label for="adminPasswordInput" class="block text-xs font-bold uppercase tracking-wider text-slate-300">2. Contraseña de administrador</label>
+          <input id="adminPasswordInput" type="password" required autocomplete="current-password" placeholder="••••••••••••" class="w-full rounded-xl bg-slate-950 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
+        </div>
+        <p id="adminLoginError" class="hidden text-xs text-rose-400 font-semibold"></p>
+        <button id="btnAdminLoginSubmit" type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white text-sm font-extrabold shadow-lg transition">
+          🔐 Acceder al Panel
+        </button>
+      </form>
+    </section>
+
+    <!-- Dashboard View -->
+    <main id="adminDashboardSection" class="hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-emerald-950/40 border border-emerald-500/30 px-4 py-2.5 text-xs">
+        <span class="text-emerald-200">Sesión activa como <strong id="adminSessionEmail" class="text-white"></strong></span>
+        <span id="adminLastUpdated" class="text-slate-400 font-mono"></span>
+      </div>
+
+      <!-- KPIs -->
+      <div id="adminKpiGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+
+      <!-- Ciudades y Eventos -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-3">
+          <h3 class="text-sm font-extrabold text-white">📁 Ficheros en <code class="text-pink-300 font-mono">data/</code></h3>
+          <div id="adminFilesList" class="overflow-x-auto text-xs"></div>
+        </div>
+
+        <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-3">
+          <h3 class="text-sm font-extrabold text-white">👥 Usuarios registrados</h3>
+          <div id="adminUsersList" class="overflow-x-auto text-xs max-h-72 overflow-y-auto"></div>
+        </div>
+      </div>
+
+      <!-- Eventos comunitarios por ciudad & Caché -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-3">
+        <h3 class="text-sm font-extrabold text-white">🍸 Eventos por ciudad y cachés activas</h3>
+        <div id="adminCitiesSummary" class="text-xs text-slate-300 flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- Últimos Accesos -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-3">
+        <h3 class="text-sm font-extrabold text-white">🕒 Últimos accesos y actividad</h3>
+        <div id="adminAccessLogsList" class="overflow-x-auto text-xs max-h-96 overflow-y-auto"></div>
+      </div>
+
+      <!-- Errores recientes -->
+      <div id="adminErrorsCard" class="hidden rounded-2xl bg-rose-950/30 border border-rose-500/40 p-5 space-y-2">
+        <h3 class="text-sm font-extrabold text-rose-300">⚠️ Errores recientes del servidor</h3>
+        <div id="adminErrorsList" class="text-xs text-rose-200 space-y-1 font-mono"></div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Visor de Fichero -->
+  <div id="adminFileModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4" onclick="if(event.target===this) closeAdminFileModal()">
+    <div class="w-full max-w-3xl max-h-[88vh] flex flex-col rounded-2xl bg-slate-900 border border-slate-700 p-5 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3 shrink-0">
+        <h3 id="adminFileModalTitle" class="text-sm font-extrabold text-white font-mono"></h3>
+        <button type="button" onclick="closeAdminFileModal()" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+      <pre id="adminFileModalContent" class="flex-1 min-h-0 overflow-auto py-3 text-[11px] font-mono text-slate-200 whitespace-pre-wrap break-all"></pre>
+    </div>
+  </div>
+
+  <script>
+    let googleIdToken = '';
+    let googleClientId = '';
+
+    function esc(v) {
+      return String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function fmtUptime(sec) {
+      const h = Math.floor(sec / 3600);
+      const m = Math.floor((sec % 3600) / 60);
+      const s = sec % 60;
+      return `${h}h ${m}m ${s}s`;
+    }
+
+    function fmtBytes(b) {
+      if (b < 1024) return `${b} B`;
+      if (b < 1024 * 1024) return `${(b / 1024).toFixed(1)} KB`;
+      return `${(b / (1024 * 1024)).toFixed(2)} MB`;
+    }
+
+    function initGoogleButton() {
+      if (!googleClientId || !window.google?.accounts?.id) return;
+      const container = document.getElementById('googleBtnContainer');
+      if (!container) return;
+      container.innerHTML = '';
+      window.google.accounts.id.initialize({
+        client_id: googleClientId,
+        callback: (res) => {
+          googleIdToken = res?.credential || '';
+          const statusEl = document.getElementById('googleSignedStatus');
+          if (googleIdToken && statusEl) {
+            try {
+              const payload = JSON.parse(atob(googleIdToken.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+              statusEl.innerHTML = `✅ Cuenta Google verificada: <strong class="text-emerald-300">${esc(payload.email)}</strong>`;
+            } catch {
+              statusEl.textContent = '✅ Cuenta Google lista. Introduce la contraseña.';
+            }
+          }
+        }
+      });
+      window.google.accounts.id.renderButton(container, {
+        theme: 'filled_black',
+        size: 'large',
+        shape: 'pill',
+        text: 'signin_with'
+      });
+    }
+
+    async function checkAdminSession() {
+      const res = await fetch('/api/admin/session');
+      const data = await res.json();
+      googleClientId = data.googleClientId || '';
+
+      const warn = document.getElementById('adminConfigWarn');
+      if (warn) {
+        warn.classList.toggle('hidden', Boolean(data.configReady?.hasEmails && data.configReady?.hasPassword));
+      }
+
+      if (data.authenticated) {
+        showDashboard(data.email);
+      } else {
+        showLogin();
+        setTimeout(initGoogleButton, 300);
+      }
+    }
+
+    function showLogin() {
+      document.getElementById('adminLoginSection').classList.remove('hidden');
+      document.getElementById('adminDashboardSection').classList.add('hidden');
+      document.getElementById('btnAdminRefresh').classList.add('hidden');
+      document.getElementById('btnAdminLogout').classList.add('hidden');
+    }
+
+    function showDashboard(email) {
+      document.getElementById('adminLoginSection').classList.add('hidden');
+      document.getElementById('adminDashboardSection').classList.remove('hidden');
+      document.getElementById('btnAdminRefresh').classList.remove('hidden');
+      document.getElementById('btnAdminLogout').classList.remove('hidden');
+      document.getElementById('adminSessionEmail').textContent = email || '';
+      loadAdminOverview();
+    }
+
+    async function submitAdminLogin(e) {
+      e.preventDefault();
+      const errEl = document.getElementById('adminLoginError');
+      const btn = document.getElementById('btnAdminLoginSubmit');
+      errEl.classList.add('hidden');
+
+      if (!googleIdToken) {
+        errEl.textContent = 'Primero inicia sesión con tu cuenta de Google en el paso 1.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      const password = document.getElementById('adminPasswordInput').value;
+      btn.disabled = true;
+      btn.textContent = 'Verificando...';
+
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idToken: googleIdToken, password })
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          errEl.textContent = data.error || 'No se pudo iniciar sesión.';
+          errEl.classList.remove('hidden');
+          return;
+        }
+        document.getElementById('adminPasswordInput').value = '';
+        showDashboard(data.email);
+      } catch (err) {
+        errEl.textContent = 'Error de red: ' + err.message;
+        errEl.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🔐 Acceder al Panel';
+      }
+    }
+
+    async function adminLogout() {
+      await fetch('/api/admin/logout', { method: 'POST' });
+      googleIdToken = '';
+      showLogin();
+      setTimeout(initGoogleButton, 200);
+    }
+
+    async function loadAdminOverview() {
+      const res = await fetch('/api/admin/overview');
+      if (res.status === 401) {
+        showLogin();
+        setTimeout(initGoogleButton, 200);
+        return;
+      }
+      const d = await res.json();
+      if (!d.ok) return;
+
+      document.getElementById('adminLastUpdated').textContent = `Actualizado: ${new Date().toLocaleTimeString('es-ES')}`;
+
+      const kpis = [
+        { label: 'Uptime', value: fmtUptime(d.server.uptimeSeconds), sub: d.server.nodeVersion },
+        { label: 'Memoria RAM', value: `${d.server.memory.heapUsedMB} MB`, sub: `RSS ${d.server.memory.rssMB} MB` },
+        { label: 'Peticiones', value: d.server.totalRequests, sub: `${d.server.apiRequests} API` },
+        { label: 'Usuarios', value: d.stats.totalUsers, sub: `${d.stats.totalProfileEvents} apuntes` },
+        { label: 'Eventos creados', value: d.stats.totalCommunityEvents, sub: `${Object.keys(d.stats.communityCities).length} ciudades` },
+        { label: 'Asistencias púb.', value: d.stats.totalAttendanceEntries, sub: `${d.stats.totalAttendanceKeys} eventos` }
+      ];
+      document.getElementById('adminKpiGrid').innerHTML = kpis.map(k => `
+        <div class="rounded-xl bg-slate-900 border border-slate-800 p-3.5">
+          <div class="text-[11px] text-slate-400 uppercase font-bold">${esc(k.label)}</div>
+          <div class="text-lg font-extrabold text-white mt-0.5">${esc(k.value)}</div>
+          <div class="text-[11px] text-slate-500 font-mono">${esc(k.sub)}</div>
+        </div>
+      `).join('');
+
+      document.getElementById('adminFilesList').innerHTML = d.files.length === 0
+        ? '<p class="text-slate-400">Sin ficheros en data/.</p>'
+        : `<table class="w-full text-left">
+            <thead class="text-slate-400 border-b border-slate-800">
+              <tr><th class="py-1.5">Fichero</th><th class="py-1.5">Tamaño</th><th class="py-1.5">Modificado</th><th class="py-1.5 text-right">Acción</th></tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/70">
+              ${d.files.map(f => `
+                <tr>
+                  <td class="py-1.5 font-mono text-pink-300">${esc(f.name)}</td>
+                  <td class="py-1.5 font-mono text-slate-300">${fmtBytes(f.sizeBytes)}</td>
+                  <td class="py-1.5 text-slate-400">${new Date(f.modifiedAt).toLocaleString('es-ES')}</td>
+                  <td class="py-1.5 text-right"><button onclick="viewAdminFile('${esc(f.name)}')" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-[11px] font-bold text-white">👁️ Ver</button></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>`;
+
+      document.getElementById('adminUsersList').innerHTML = d.users.length === 0
+        ? '<p class="text-slate-400">Sin usuarios registrados.</p>'
+        : `<table class="w-full text-left">
+            <thead class="text-slate-400 border-b border-slate-800">
+              <tr><th class="py-1.5">Email</th><th class="py-1.5">Alias</th><th class="py-1.5">Ciudad</th><th class="py-1.5 text-right">Apuntes</th></tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/70">
+              ${d.users.map(u => `
+                <tr>
+                  <td class="py-1.5 font-mono text-slate-200">${esc(u.email)}</td>
+                  <td class="py-1.5 text-slate-300">${esc(u.alias || '—')}</td>
+                  <td class="py-1.5 text-slate-300">${esc(u.selectedCity || '—')}</td>
+                  <td class="py-1.5 text-right font-bold text-indigo-300">${u.savedEventsCount}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>`;
+
+      const cityBadges = Object.entries(d.stats.communityCities).map(([c, n]) =>
+        `<span class="px-2.5 py-1 rounded-lg bg-pink-600/20 border border-pink-500/30 text-pink-200 font-semibold">${esc(c)}: ${n} eventos</span>`
+      );
+      const cacheBadges = (d.stats.cachedCities || []).map(c =>
+        `<span class="px-2.5 py-1 rounded-lg bg-slate-800 border border-slate-700 text-slate-300">Caché: ${esc(c)}</span>`
+      );
+      document.getElementById('adminCitiesSummary').innerHTML =
+        (cityBadges.length || cacheBadges.length) ? [...cityBadges, ...cacheBadges].join('') : '<span class="text-slate-400">Sin datos de ciudades todavía.</span>';
+
+      document.getElementById('adminAccessLogsList').innerHTML = d.accessLogs.length === 0
+        ? '<p class="text-slate-400">Todavía no hay accesos registrados.</p>'
+        : `<table class="w-full text-left">
+            <thead class="text-slate-400 border-b border-slate-800">
+              <tr><th class="py-1.5">Hora (Madrid)</th><th class="py-1.5">Tipo</th><th class="py-1.5">Usuario</th><th class="py-1.5">Ciudad</th><th class="py-1.5">IP</th><th class="py-1.5">Detalle</th></tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/70">
+              ${d.accessLogs.map(l => `
+                <tr>
+                  <td class="py-1.5 font-mono text-slate-400 whitespace-nowrap">${esc(l.madridTime || l.timestamp)}</td>
+                  <td class="py-1.5 font-mono text-indigo-300">${esc(l.type)}</td>
+                  <td class="py-1.5 font-mono text-slate-200">${esc(l.email || '—')}</td>
+                  <td class="py-1.5 text-slate-300">${esc(l.city || '—')}</td>
+                  <td class="py-1.5 font-mono text-slate-400">${esc(l.ip || '—')}</td>
+                  <td class="py-1.5 text-slate-300">${esc(l.detail || '')}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>`;
+
+      const errCard = document.getElementById('adminErrorsCard');
+      if (d.recentErrors?.length) {
+        errCard.classList.remove('hidden');
+        document.getElementById('adminErrorsList').innerHTML = d.recentErrors.map(e =>
+          `<div>[${esc(e.timestamp)}] ${esc(e.route)}: ${esc(e.message)}</div>`
+        ).join('');
+      } else {
+        errCard.classList.add('hidden');
+      }
+    }
+
+    async function viewAdminFile(name) {
+      const res = await fetch(`/api/admin/file?name=${encodeURIComponent(name)}`);
+      const d = await res.json();
+      if (!d.ok) {
+        alert(d.error || 'No se pudo leer el fichero');
+        return;
+      }
+      document.getElementById('adminFileModalTitle').textContent = `${d.name} (${fmtBytes(d.sizeBytes)})`;
+      document.getElementById('adminFileModalContent').textContent = d.content;
+      const modal = document.getElementById('adminFileModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAdminFileModal() {
+      const modal = document.getElementById('adminFileModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    window.addEventListener('load', checkAdminSession);
+  </script>
+</body>
+</html>
