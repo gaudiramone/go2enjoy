@@ -580,20 +580,6 @@
           ✨ Crea tu evento
         </button>
       </div>
-
-      <!-- Logs Eventos -->
-      <div id="communityEventsLogsCard" class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
-          <h3 class="text-base font-extrabold text-white flex items-center gap-2">
-            <span>📋</span>
-            <span>Logs Eventos</span>
-          </h3>
-          <span id="communityEventsLogsSummary" class="text-[11px] font-mono text-slate-400">Sin cargar</span>
-        </div>
-        <div id="communityEventsLogsBody" class="space-y-3 text-xs text-slate-300">
-          <p class="text-slate-400">Pulsa Actualizar o abre la pestaña para ver el log de eventos.</p>
-        </div>
-      </div>
     </section>
 
     <!-- ===================================================================== -->
@@ -3597,23 +3583,13 @@
       listEl.innerHTML = `<div class="text-xs text-slate-400 py-4 text-center">Cargando eventos de ${city}...</div>`;
 
       let events = [];
-      let apiMeta = null;
-      const t0 = performance.now();
       try {
         const res = await fetch(`/api/community-events?city=${encodeURIComponent(city)}`);
         const data = await res.json();
         events = Array.isArray(data.events) ? data.events : [];
-        apiMeta = data.meta || null;
       } catch {
         events = [];
       }
-      const clientMs = Math.round(performance.now() - t0);
-      renderCommunityEventsLogs({
-        city,
-        clientMs,
-        meta: apiMeta,
-        records: Array.isArray(apiMeta?.allCityRecords) ? apiMeta.allCityRecords : events
-      });
 
       const now = new Date();
       const todayYMD = getTodayYMD();
@@ -3684,59 +3660,6 @@
           </div>
         `;
       }).join('');
-    }
-
-    function escapeHtmlSafe(val) {
-      return String(val ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
-
-    function renderCommunityEventsLogs({ city, clientMs, meta, records }) {
-      const summaryEl = document.getElementById('communityEventsLogsSummary');
-      const bodyEl = document.getElementById('communityEventsLogsBody');
-      if (!bodyEl) return;
-
-      const fileName = meta?.fileName || 'community_events.json';
-      const fileExists = meta ? (meta.fileExists ? 'Sí' : 'No (se creará al guardar el primero)') : 'Desconocido';
-      const serverMs = typeof meta?.loadTimeMs === 'number' ? `${meta.loadTimeMs} ms` : '—';
-      const totalSaved = Array.isArray(records) ? records.length : 0;
-
-      if (summaryEl) {
-        summaryEl.textContent = `${fileName} · ${city} · ${clientMs} ms (${totalSaved} guardados)`;
-      }
-
-      const headerInfo = `
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 rounded-xl bg-slate-950/70 border border-slate-800 p-3 font-mono text-[11px]">
-          <div><span class="text-slate-500 block">Fichero</span><strong class="text-pink-300">${escapeHtmlSafe(fileName)}</strong> <span class="text-slate-500">(${escapeHtmlSafe(fileExists)})</span></div>
-          <div><span class="text-slate-500 block">Ciudad</span><strong class="text-white">${escapeHtmlSafe(city)}</strong></div>
-          <div><span class="text-slate-500 block">Tiempo de carga</span><strong class="text-emerald-300">${clientMs} ms</strong> <span class="text-slate-500">(srv: ${serverMs})</span></div>
-          <div><span class="text-slate-500 block">Registros en fichero</span><strong class="text-indigo-300">${totalSaved}</strong></div>
-        </div>
-      `;
-
-      if (!records || records.length === 0) {
-        bodyEl.innerHTML = `${headerInfo}<p class="text-slate-400 italic">No hay campos guardados todavía para <strong>${escapeHtmlSafe(city)}</strong>.</p>`;
-        return;
-      }
-
-      const itemsHtml = records.map((ev, idx) => {
-        const entries = Object.entries(ev).map(([k, v]) => `
-          <div class="flex flex-wrap gap-x-2 py-0.5 border-b border-slate-800/60 last:border-b-0">
-            <span class="text-slate-400 font-mono min-w-[115px]">${escapeHtmlSafe(k)}:</span>
-            <span class="text-slate-100 break-all font-mono">${escapeHtmlSafe(typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v))}</span>
-          </div>
-        `).join('');
-        return `
-          <div class="rounded-xl bg-slate-950/70 border border-slate-800 p-3 space-y-1">
-            <div class="text-[11px] font-bold text-pink-300">Evento #${idx + 1} · ${escapeHtmlSafe(ev.title || ev.id || '')}</div>
-            <div class="text-[11px]">${entries}</div>
-          </div>
-        `;
-      }).join('');
-
-      bodyEl.innerHTML = `${headerInfo}<div class="space-y-2 max-h-80 overflow-y-auto pr-1">${itemsHtml}</div>`;
     }
 
     function openCommunityEventAttendees(idx) {

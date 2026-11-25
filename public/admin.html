@@ -85,6 +85,15 @@
         <div id="adminCitiesSummary" class="text-xs text-slate-300 flex flex-wrap gap-2"></div>
       </div>
 
+      <!-- Logs Eventos -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
+          <h3 class="text-sm font-extrabold text-white">📋 Logs Eventos</h3>
+          <span id="adminCommunityLogsSummary" class="text-[11px] font-mono text-slate-400"></span>
+        </div>
+        <div id="adminCommunityLogsBody" class="space-y-3 text-xs text-slate-300"></div>
+      </div>
+
       <!-- Últimos Accesos -->
       <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-3">
         <h3 class="text-sm font-extrabold text-white">🕒 Últimos accesos y actividad</h3>
@@ -321,6 +330,47 @@
       );
       document.getElementById('adminCitiesSummary').innerHTML =
         (cityBadges.length || cacheBadges.length) ? [...cityBadges, ...cacheBadges].join('') : '<span class="text-slate-400">Sin datos de ciudades todavía.</span>';
+
+      const ceLog = d.communityEventsLog || {};
+      const ceCities = ceLog.cities || {};
+      const ceRecords = Object.entries(ceCities).flatMap(([cityName, list]) =>
+        (Array.isArray(list) ? list : []).map(ev => ({ _cityGroup: cityName, ...ev }))
+      );
+      const ceSummaryEl = document.getElementById('adminCommunityLogsSummary');
+      if (ceSummaryEl) {
+        ceSummaryEl.textContent = `${ceLog.fileName || 'community_events.json'} · ${ceLog.loadTimeMs ?? 0} ms · ${ceRecords.length} eventos`;
+      }
+      const ceHeader = `
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 rounded-xl bg-slate-950/70 border border-slate-800 p-3 font-mono text-[11px]">
+          <div><span class="text-slate-500 block">Fichero</span><strong class="text-pink-300">${esc(ceLog.fileName || 'community_events.json')}</strong> <span class="text-slate-500">(${ceLog.fileExists ? 'Sí existe' : 'No creado aún'})</span></div>
+          <div><span class="text-slate-500 block">Tiempo de carga</span><strong class="text-emerald-300">${ceLog.loadTimeMs ?? 0} ms</strong></div>
+          <div><span class="text-slate-500 block">Eventos guardados</span><strong class="text-indigo-300">${ceRecords.length}</strong></div>
+        </div>
+      `;
+      const ceBodyEl = document.getElementById('adminCommunityLogsBody');
+      if (ceBodyEl) {
+        if (ceRecords.length === 0) {
+          ceBodyEl.innerHTML = `${ceHeader}<p class="text-slate-400 italic">Todavía no hay eventos guardados en community_events.json.</p>`;
+        } else {
+          const ceCards = ceRecords.map((ev, idx) => {
+            const entries = Object.entries(ev)
+              .filter(([k]) => k !== '_cityGroup')
+              .map(([k, v]) => `
+                <div class="flex flex-wrap gap-x-2 py-0.5 border-b border-slate-800/60 last:border-b-0">
+                  <span class="text-slate-400 font-mono min-w-[115px]">${esc(k)}:</span>
+                  <span class="text-slate-100 break-all font-mono">${esc(typeof v === 'object' && v !== null ? JSON.stringify(v) : String(v))}</span>
+                </div>
+              `).join('');
+            return `
+              <div class="rounded-xl bg-slate-950/70 border border-slate-800 p-3 space-y-1">
+                <div class="text-[11px] font-bold text-pink-300">Evento #${idx + 1} · ${esc(ev._cityGroup)} · ${esc(ev.title || ev.id || '')}</div>
+                <div class="text-[11px]">${entries}</div>
+              </div>
+            `;
+          }).join('');
+          ceBodyEl.innerHTML = `${ceHeader}<div class="space-y-2 max-h-80 overflow-y-auto pr-1">${ceCards}</div>`;
+        }
+      }
 
       document.getElementById('adminAccessLogsList').innerHTML = d.accessLogs.length === 0
         ? '<p class="text-slate-400">Todavía no hay accesos registrados.</p>'
