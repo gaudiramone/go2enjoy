@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Jaen",
+    "selectedCity": "Cordoba",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,28 +100,29 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:14:54.485Z",
-    "city": "Jaen",
+    "updatedAt": "2026-11-26T20:15:11.262Z",
+    "city": "Cordoba",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 6,
-    "totalMatched": 6,
+    "totalScanned": 46,
+    "totalMatched": 45,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Jaen",
-      "🔗 URLs configuradas para Jaen: https://conciertos.club/jaen",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Cordoba",
+      "🔗 URLs configuradas para Cordoba: https://conciertos.club/cordoba",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/jaen): 6 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Jaen: 0 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Jaen: 0 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Jaen: 0 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 5 conciertos catalogados (1 por IA, 1 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [INFERNO: 2], [DÉJÀ VU 4.8: 2], [CAFÉ TEATRO CENTRA: 1], [ROCK STATES: 1]",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/cordoba): 45 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Cordoba: 1 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Cordoba: 0 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Cordoba: 0 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 33 conciertos catalogados (1 por IA, 13 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [AMBIGÚ AXERQUÍA: 7], [SALA IMPALA: 6], [SALA M100: 6], [LONG ROCK CÓRDOBA: 4], [PALACIO CONGRESOS: 4], [TEATRO AVANTI: 3], [GRAN TEATRO DE CÓR: 3], [PLAZA DE TOROS DE: 2], [TEATRO EL BRILLANT: 2], [TEATRO EL SILO: 2], [PEÑA MOTERA & ROCK: 1], [PLAZA DE TOROS: 1], [TEATRO GÓNGORA: 1], [TEATRO VICTORIA: 1], [LA RIVIERA: 1], [HANGAR: 1]",
+      "🎪 Festivales en Cordoba: [INVERFEST: 1]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 3], [LATINO / SKA: 2], [SIN ESPECIFICAR: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 6"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 14], [SIN ESPECIFICAR: 13], [FLAMENCO: 6], [LATINO / SKA: 3], [FOLK / CANTAUTOR: 2], [ELECTRÓNICA: 2], [CLÁSICA: 2], [BLUES: 1], [URBANO / RAP: 1], [PUNK: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 45"
     ]
   },
   "concertStyles": [],
