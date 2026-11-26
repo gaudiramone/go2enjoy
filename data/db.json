@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Sevilla",
+    "selectedCity": "Jaen",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,29 +100,28 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:09:33.291Z",
-    "city": "Sevilla",
+    "updatedAt": "2026-11-26T20:14:54.485Z",
+    "city": "Jaen",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 85,
-    "totalMatched": 56,
+    "totalScanned": 6,
+    "totalMatched": 6,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Sevilla",
-      "🔗 URLs configuradas para Sevilla: https://www.escenaensevilla.es/",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Jaen",
+      "🔗 URLs configuradas para Jaen: https://conciertos.club/jaen",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Escena en Sevilla (https://www.escenaensevilla.es/): 77 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Sevilla: 8 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Sevilla: 0 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Sevilla: 0 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 47 conciertos catalogados (0 por IA, 38 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [CASALA TEATRO: 8], [ECLIPSO CULTURAL A: 6], [IGLESIA DE SAN JAC: 4], [FUNDACIÓN CAJASOL: 4], [PEÑA FLAMENCA TORR: 3], [SEDE DE ASSEJAZZ: 3], [MOVISTAR ARENA: 3], [CARTUJA CENTER CIT: 2], [PANDORA SEVILLA: 2], [SUPRA MUSIC HALL: 2], [SALA CUSTOM: 2], [SALA X: 2], [MALANDAR MUSIC CLU: 2], [TEATRO LOPE DE VEG: 2], [LA RIVIERA: 2], [FUN CLUB SEVILLA: 1], [LA TREGUA: 1], [HOTEL ALFONSO XIII: 1], [AUDITORIO ZGZ: 1], [TEATRO MAESTRANZA: 1], [CUATROGATOS: 1], [SIROCO: 1], [SALA VILLANOS: 1], [TEATRO ALBÉNIZ: 1]",
-      "🎪 Festivales en Sevilla: [INVERFEST: 8]",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/jaen): 6 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Jaen: 0 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Jaen: 0 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Jaen: 0 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 5 conciertos catalogados (1 por IA, 1 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [INFERNO: 2], [DÉJÀ VU 4.8: 2], [CAFÉ TEATRO CENTRA: 1], [ROCK STATES: 1]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [SIN ESPECIFICAR: 14], [FLAMENCO: 13], [CLÁSICA: 9], [ROCK: 8], [JAZZ: 5], [ELECTRÓNICA: 2], [LATINO / SKA: 2], [SOUL / FUNK: 1], [INDIE / ALT: 1], [URBANO / RAP: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 56"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 3], [LATINO / SKA: 2], [SIN ESPECIFICAR: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 6"
     ]
   },
   "concertStyles": [],
