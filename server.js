@@ -532,8 +532,8 @@ app.get('/api/state', (req, res) => {
   });
 });
 
-// PUT Part 1: App Configuration
-app.put('/api/app-config', (req, res) => {
+// PUT Part 1: App Configuration (solo Admin)
+app.put('/api/app-config', requireAdmin, (req, res) => {
   const appConfig = loadAppConfig();
   const { activeCity, cities } = req.body;
   if (activeCity) appConfig.activeCity = activeCity;
@@ -544,8 +544,8 @@ app.put('/api/app-config', (req, res) => {
   res.json({ ok: true, appConfig: saved });
 });
 
-// POST add or update a single city
-app.post('/api/app-config/city', (req, res) => {
+// POST add or update a single city (solo Admin)
+app.post('/api/app-config/city', requireAdmin, (req, res) => {
   const appConfig = loadAppConfig();
   const { name, urls } = req.body;
   if (!name || !name.trim()) {
@@ -564,8 +564,8 @@ app.post('/api/app-config/city', (req, res) => {
   res.json({ ok: true, city: saved.cities[cleanName], appConfig: saved });
 });
 
-// PUT General Festival URLs (scanned for all cities, filtered per selected city)
-app.put('/api/app-config/festivals', (req, res) => {
+// PUT General Festival URLs (solo Admin)
+app.put('/api/app-config/festivals', requireAdmin, (req, res) => {
   const appConfig = loadAppConfig();
   const raw = req.body?.festivalUrls;
   const cleanUrls = Array.isArray(raw)
@@ -576,8 +576,8 @@ app.put('/api/app-config/festivals', (req, res) => {
   res.json({ ok: true, festivalUrls: saved.festivalUrls, appConfig: saved });
 });
 
-// PUT Google Client ID for Google Drive OAuth
-app.put('/api/app-config/google-client-id', (req, res) => {
+// PUT Google Client ID for Google Drive OAuth (solo Admin)
+app.put('/api/app-config/google-client-id', requireAdmin, (req, res) => {
   const appConfig = loadAppConfig();
   appConfig.googleClientId = String(req.body?.googleClientId || '').trim();
   const saved = saveAppConfig(appConfig);
@@ -1009,8 +1009,30 @@ app.post('/api/community-events', (req, res) => {
   res.json({ ok: true, event: newEv });
 });
 
-// POST Trigger AI Web & URL Update ("Botón Actualizar")
-app.post('/api/calendar/update', async (req, res) => {
+// GET read-only cached events for a city (usuarios normales, sin scraping)
+app.get('/api/city-events', (req, res) => {
+  const appConfig = loadAppConfig();
+  const cityName = String(req.query.city || appConfig.activeCity || 'Zaragoza').trim();
+  const entry = loadCityCacheEntry(cityName);
+  res.json({
+    ok: true,
+    city: cityName,
+    cached: Boolean(entry),
+    events: entry?.events || [],
+    concertVenues: entry?.concertVenues || [],
+    concertFestivals: entry?.concertFestivals || [],
+    theaterVenues: entry?.theaterVenues || [],
+    exhibitionVenues: entry?.exhibitionVenues || [],
+    concertStyles: entry?.concertStyles || [],
+    meta: entry?.meta || {
+      city: cityName,
+      logs: [`ℹ️ ${cityName} aún no tiene eventos generados por el administrador.`]
+    }
+  });
+});
+
+// POST Trigger AI Web & URL Update (solo Admin)
+app.post('/api/calendar/update', requireAdmin, async (req, res) => {
   try {
     const db = loadDb();
     if (req.body.preferences?.A) {
@@ -1407,6 +1429,7 @@ app.get('/api/admin/overview', requireAdmin, (req, res) => {
     },
     files,
     users,
+    appConfig: loadAppConfig(),
     communityEventsLog: {
       fileName: path.basename(COMMUNITY_EVENTS_PATH),
       fileExists: fs.existsSync(COMMUNITY_EVENTS_PATH),
