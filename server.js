@@ -8,6 +8,7 @@ const { runCalendarUpdate, formatDateYMD, VALID_SHOW_TYPES } = require('./scrape
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
+const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
 const USER_PROFILES_PATH = path.join(DATA_DIR, 'user_profiles.json');
 const SHARED_ATTENDANCE_PATH = path.join(DATA_DIR, 'shared_attendance.json');
@@ -36,6 +37,7 @@ const GITHUB_TOKEN = String(process.env.GITHUB_TOKEN || '').trim();
 const GITHUB_REPO = String(process.env.GITHUB_REPO || 'gaudiramone/go2enjoy').trim();
 const GITHUB_DATA_BRANCH = String(process.env.GITHUB_DATA_BRANCH || 'data-store').trim();
 const GITHUB_SYNC_FILES = [
+  'config.json',
   'db.json',
   'user_profiles.json',
   'shared_attendance.json',
@@ -369,11 +371,55 @@ function saveUserProfiles(profiles) {
   scheduleGitHubSync('user_profiles.json', 300);
 }
 
+function normalizeAppConfig(raw) {
+  const base = JSON.parse(JSON.stringify(DEFAULT_DB.appConfig));
+  if (!raw || typeof raw !== 'object') return base;
+  return {
+    ...base,
+    ...raw,
+    googleClientId: raw.googleClientId || base.googleClientId,
+    festivalUrls: Array.isArray(raw.festivalUrls) ? raw.festivalUrls : base.festivalUrls,
+    activeCity: raw.activeCity || base.activeCity,
+    cities: raw.cities && typeof raw.cities === 'object' ? raw.cities : base.cities
+  };
+}
+
+function saveAppConfig(appConfig) {
+  if (!fs.existsSync(DATA_DIR)) {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+  }
+  const normalized = normalizeAppConfig(appConfig);
+  fs.writeFileSync(CONFIG_PATH, JSON.stringify(normalized, null, 2), 'utf8');
+  scheduleGitHubSync('config.json', 300);
+  return normalized;
+}
+
+function loadAppConfig() {
+  try {
+    if (fs.existsSync(CONFIG_PATH)) {
+      const parsed = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+      return normalizeAppConfig(parsed);
+    }
+    // Migración automática desde db.json si config.json aún no existe
+    if (fs.existsSync(DB_PATH)) {
+      const dbParsed = JSON.parse(fs.readFileSync(DB_PATH, 'utf8'));
+      if (dbParsed?.appConfig && typeof dbParsed.appConfig === 'object') {
+        return saveAppConfig(dbParsed.appConfig);
+      }
+    }
+  } catch (err) {
+    console.error('Error loading config.json, using default:', err.message);
+  }
+  return normalizeAppConfig(null);
+}
+
 // GET full state (without leaking any user's personal profile)
 app.get('/api/state', (req, res) => {
   const db = loadDb();
+  const appConfig = loadAppConfig();
   res.json({
     ...db,
+    appConfig,
     userProfile: {
       ...DEFAULT_DB.userProfile,
       selectedCity: db.userProfile?.selectedCity || 'Zaragoza',
@@ -384,19 +430,19 @@ app.get('/api/state', (req, res) => {
 
 // PUT Part 1: App Configuration
 app.put('/api/app-config', (req, res) => {
-  const db = loadDb();
+  const appConfig = loadAppConfig();
   const { activeCity, cities } = req.body;
-  if (activeCity) db.appConfig.activeCity = activeCity;
+  if (activeCity) appConfig.activeCity = activeCity;
   if (cities && typeof cities === 'object') {
-    db.appConfig.cities = cities;
+    appConfig.cities = cities;
   }
-  saveDb(db);
-  res.json({ ok: true, appConfig: db.appConfig });
+  const saved = saveAppConfig(appConfig);
+  res.json({ ok: true, appConfig: saved });
 });
 
 // POST add or update a single city
 app.post('/api/app-config/city', (req, res) => {
-  const db = loadDb();
+  const appConfig = loadAppConfig();
   const { name, urls } = req.body;
   if (!name || !name.trim()) {
     return res.status(400).json({ error: 'El nombre de la ciudad es obligatorio' });
@@ -406,32 +452,32 @@ app.post('/api/app-config/city', (req, res) => {
     ? urls.map(u => u.trim()).filter(Boolean)
     : String(urls || '').split('\n').map(u => u.trim()).filter(Boolean);
 
-  db.appConfig.cities[cleanName] = {
+  appConfig.cities[cleanName] = {
     name: cleanName,
     urls: cleanUrls
   };
-  saveDb(db);
-  res.json({ ok: true, city: db.appConfig.cities[cleanName], appConfig: db.appConfig });
+  const saved = saveAppConfig(appConfig);
+  res.json({ ok: true, city: saved.cities[cleanName], appConfig: saved });
 });
 
 // PUT General Festival URLs (scanned for all cities, filtered per selected city)
 app.put('/api/app-config/festivals', (req, res) => {
-  const db = loadDb();
+  const appConfig = loadAppConfig();
   const raw = req.body?.festivalUrls;
   const cleanUrls = Array.isArray(raw)
     ? raw.map(u => String(u || '').trim()).filter(Boolean)
     : String(raw || '').split('\n').map(u => u.trim()).filter(Boolean);
-  db.appConfig.festivalUrls = cleanUrls;
-  saveDb(db);
-  res.json({ ok: true, festivalUrls: db.appConfig.festivalUrls, appConfig: db.appConfig });
+  appConfig.festivalUrls = cleanUrls;
+  const saved = saveAppConfig(appConfig);
+  res.json({ ok: true, festivalUrls: saved.festivalUrls, appConfig: saved });
 });
 
 // PUT Google Client ID for Google Drive OAuth
 app.put('/api/app-config/google-client-id', (req, res) => {
-  const db = loadDb();
-  db.appConfig.googleClientId = String(req.body?.googleClientId || '').trim();
-  saveDb(db);
-  res.json({ ok: true, googleClientId: db.appConfig.googleClientId, appConfig: db.appConfig });
+  const appConfig = loadAppConfig();
+  appConfig.googleClientId = String(req.body?.googleClientId || '').trim();
+  const saved = saveAppConfig(appConfig);
+  res.json({ ok: true, googleClientId: saved.googleClientId, appConfig: saved });
 });
 
 // POST Restore daily cache loaded from Google Drive (1 single file go2enjoy_cache.json)
@@ -857,14 +903,15 @@ app.post('/api/calendar/update', async (req, res) => {
       db.userProfile.email = String(req.body.userEmail).trim().toLowerCase();
     }
 
-    const cityName = db.userProfile.selectedCity || db.appConfig.activeCity || 'Zaragoza';
-    const cityConfig = db.appConfig.cities[cityName] || {
+    const appConfig = loadAppConfig();
+    const cityName = db.userProfile.selectedCity || appConfig.activeCity || 'Zaragoza';
+    const cityConfig = appConfig.cities[cityName] || {
       name: cityName,
       urls: []
     };
 
     const todayYMD = formatDateYMD(new Date());
-    const festivalUrls = db.appConfig.festivalUrls || [];
+    const festivalUrls = appConfig.festivalUrls || [];
     const urlsKey = JSON.stringify({ city: cityConfig.urls || [], festivals: festivalUrls });
     const forceRefresh = req.body.forceRefresh === true;
     if (!db.cityCache) db.cityCache = {};
