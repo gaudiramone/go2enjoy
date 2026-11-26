@@ -290,7 +290,7 @@
         </div>
       `).join('');
 
-      const coreFiles = ['db.json', 'user_profiles.json', 'community_events.json', 'shared_attendance.json', 'access_logs.json'];
+      const coreFiles = ['config.json', 'db.json', 'user_profiles.json', 'community_events.json', 'shared_attendance.json', 'access_logs.json'];
       const existingNames = new Set(d.files.map(f => f.name));
       const coreBadges = `<div class="flex flex-wrap gap-1.5 mb-3">${coreFiles.map(cf => {
         const ok = existingNames.has(cf);

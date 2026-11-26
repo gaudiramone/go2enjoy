@@ -107,7 +107,7 @@
       </div>
 
       <!-- Navigation Tabs for the Separated Parts -->
-      <div class="w-full sm:w-auto grid grid-cols-6 sm:flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
+      <div class="w-full sm:w-auto grid grid-cols-5 sm:flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
         <button id="tabBtnPart1" onclick="switchPart(1)" title="Conf." aria-label="Conf." class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
           <span>⚙️</span>
           <span>Conf.</span>
@@ -127,10 +127,6 @@
         <button id="tabBtnPart5" onclick="switchPart(5)" title="Eventos" aria-label="Eventos" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
           <span>🍸</span>
           <span>Eventos</span>
-        </button>
-        <button id="tabBtnPart6" onclick="switchPart(6)" title="Amigos" aria-label="Amigos" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
-          <span>👥</span>
-          <span>Amigos</span>
         </button>
       </div>
     </div>
@@ -581,26 +577,6 @@
         </button>
       </div>
     </section>
-
-    <!-- ===================================================================== -->
-    <!-- PARTE 6: AMIGOS                                                       -->
-    <!-- ===================================================================== -->
-    <section id="part6Container" class="hidden space-y-6">
-      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl space-y-4">
-        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
-          <div>
-            <h2 class="text-lg font-extrabold text-white flex items-center gap-2">
-              <span>👥</span>
-              <span>Amigos · Mis eventos apuntados</span>
-              <span id="friendsAgendaCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">0</span>
-            </h2>
-            <p class="text-xs text-slate-400 mt-0.5">Consulta quién se ha apuntado públicamente y cambia tu privacidad (Público / Privado) en cada evento.</p>
-          </div>
-          <button type="button" onclick="renderFriendsTab()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition">🔄 Actualizar</button>
-        </div>
-        <div id="friendsAgendaList" class="space-y-3"></div>
-      </div>
-    </section>
   </main>
 
   <!-- ===================================================================== -->
@@ -641,16 +617,48 @@
         <button type="button" onclick="closeProfileModal()" class="text-slate-400 hover:text-white text-lg font-bold shrink-0">✕</button>
       </div>
 
-      <!-- 5 Tabs dentro del Perfil -->
-      <div class="grid grid-cols-3 sm:grid-cols-5 gap-1.5 bg-slate-800/80 p-1 rounded-xl border border-slate-700/70 my-4 shrink-0">
-        <button id="profileTabBtn2" type="button" onclick="switchProfileTab(2)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap">🏛️ Ideología</button>
-        <button id="profileTabBtn3" type="button" onclick="switchProfileTab(3)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">💞 Sexo</button>
-        <button id="profileTabBtn4" type="button" onclick="switchProfileTab(4)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">📸 Fotos</button>
-        <button id="profileTabBtn5" type="button" onclick="switchProfileTab(5)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">🌐 Redes</button>
-        <button id="profileTabBtn6" type="button" onclick="switchProfileTab(6)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">📅 Calendario</button>
+      <!-- 3 Tabs principales dentro del Perfil: Calendario, Amigos y Datos -->
+      <div class="grid grid-cols-3 gap-1.5 bg-slate-800/80 p-1 rounded-xl border border-slate-700/70 my-4 shrink-0">
+        <button id="profileTabBtn6" type="button" onclick="switchProfileTab(6)" class="py-2.5 px-2 rounded-lg text-xs font-extrabold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap">📅 Calendario</button>
+        <button id="profileTabBtnFriends" type="button" onclick="switchProfileTab('friends')" class="py-2.5 px-2 rounded-lg text-xs font-extrabold transition text-slate-300 hover:text-white whitespace-nowrap">👥 Amigos</button>
+        <button id="profileTabBtnData" type="button" onclick="switchProfileTab('data')" class="py-2.5 px-2 rounded-lg text-xs font-extrabold transition text-slate-300 hover:text-white whitespace-nowrap">📋 Datos</button>
       </div>
 
       <div class="space-y-5">
+        <!-- TAB 6: Calendario (por defecto primero) -->
+        <div id="profileTabPanel6" class="space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">📅 Mi Calendario de Perfil</h3>
+            <span id="profileCalendarCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">0 eventos</span>
+          </div>
+          <div id="profileCalendarEl" class="min-h-[520px]"></div>
+        </div>
+
+        <!-- TAB Amigos (movido a continuación de Calendario) -->
+        <div id="profileTabPanelFriends" class="hidden space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+            <div>
+              <h3 class="text-sm font-extrabold text-white flex items-center gap-2">
+                <span>👥</span>
+                <span>Amigos · Mis eventos apuntados</span>
+                <span id="friendsAgendaCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">0</span>
+              </h3>
+              <p class="text-xs text-slate-400 mt-0.5">Consulta quién se ha apuntado públicamente y cambia tu privacidad (Público / Privado) en cada evento.</p>
+            </div>
+            <button type="button" onclick="renderFriendsTab()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition">🔄 Actualizar</button>
+          </div>
+          <div id="friendsAgendaList" class="space-y-3"></div>
+        </div>
+
+        <!-- TAB Datos (agrupa Ideología, Sexo, Fotos, Redes) -->
+        <div id="profileTabPanelData" class="hidden space-y-4">
+          <div class="grid grid-cols-4 gap-1.5 bg-slate-800/60 p-1 rounded-xl border border-slate-700/60">
+            <button id="profileTabBtn2" type="button" onclick="switchProfileDataSubTab(2)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap">🏛️ Ideología</button>
+            <button id="profileTabBtn3" type="button" onclick="switchProfileDataSubTab(3)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">💞 Sexo</button>
+            <button id="profileTabBtn4" type="button" onclick="switchProfileDataSubTab(4)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">📸 Fotos</button>
+            <button id="profileTabBtn5" type="button" onclick="switchProfileDataSubTab(5)" class="py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap">🌐 Redes</button>
+          </div>
+
         <!-- TAB 2: Ideología (Apartado político) -->
         <div id="profileTabPanel2" class="space-y-4">
           <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">🏛️ Apartado político</h3>
@@ -766,14 +774,6 @@
           <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">🌐 Redes sociales</h3>
           <div id="profileSocialLinksContainer" class="space-y-2.5"></div>
         </div>
-
-        <!-- TAB 6: Calendario -->
-        <div id="profileTabPanel6" class="hidden space-y-3">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <h3 class="text-xs font-bold uppercase tracking-wider text-indigo-300">📅 Mi Calendario de Perfil</h3>
-            <span id="profileCalendarCount" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">0 eventos</span>
-          </div>
-          <div id="profileCalendarEl" class="min-h-[520px]"></div>
         </div>
       </div>
 
@@ -1404,10 +1404,15 @@
     }
 
     function switchPart(partNum) {
+      if (partNum === 6) {
+        openProfileModal();
+        switchProfileTab('friends');
+        return;
+      }
       const activeCls = 'px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 whitespace-nowrap';
       const inactiveCls = 'px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap';
 
-      [1, 2, 3, 4, 5, 6].forEach(n => {
+      [1, 2, 3, 4, 5].forEach(n => {
         const container = document.getElementById(`part${n}Container`);
         const btn = document.getElementById(`tabBtnPart${n}`);
         const isActive = n === partNum;
@@ -1421,8 +1426,6 @@
         renderEventsList();
       } else if (partNum === 5) {
         renderCommunityEventsTab();
-      } else if (partNum === 6) {
-        renderFriendsTab();
       }
     }
 
@@ -2702,22 +2705,58 @@
       }
     }
 
-    function switchProfileTab(tabNum) {
+    let currentProfileDataSubTab = 2;
+
+    function switchProfileDataSubTab(subNum) {
+      currentProfileDataSubTab = subNum;
       const activeCls = 'py-2 px-1.5 rounded-lg text-[11px] font-bold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap';
       const inactiveCls = 'py-2 px-1.5 rounded-lg text-[11px] font-bold transition text-slate-300 hover:text-white whitespace-nowrap';
-      [2, 3, 4, 5, 6].forEach(n => {
+      [2, 3, 4, 5].forEach(n => {
         const panel = document.getElementById(`profileTabPanel${n}`);
         const btn = document.getElementById(`profileTabBtn${n}`);
-        const active = n === tabNum;
+        const active = n === subNum;
         if (panel) panel.classList.toggle('hidden', !active);
         if (btn) btn.className = active ? activeCls : inactiveCls;
       });
-      if (tabNum === 6) {
+    }
+
+    function switchProfileTab(tabNum) {
+      const mainActiveCls = 'py-2.5 px-2 rounded-lg text-xs font-extrabold transition bg-indigo-600 text-white shadow-sm whitespace-nowrap';
+      const mainInactiveCls = 'py-2.5 px-2 rounded-lg text-xs font-extrabold transition text-slate-300 hover:text-white whitespace-nowrap';
+      const btnCal = document.getElementById('profileTabBtn6');
+      const btnFriends = document.getElementById('profileTabBtnFriends');
+      const btnData = document.getElementById('profileTabBtnData');
+      const panelCal = document.getElementById('profileTabPanel6');
+      const panelFriends = document.getElementById('profileTabPanelFriends');
+      const panelData = document.getElementById('profileTabPanelData');
+
+      if ([2, 3, 4, 5].includes(tabNum)) {
+        switchProfileDataSubTab(tabNum);
+        tabNum = 'data';
+      }
+
+      const isCal = tabNum === 6;
+      const isFriends = tabNum === 'friends';
+      const isData = tabNum === 'data';
+
+      if (panelCal) panelCal.classList.toggle('hidden', !isCal);
+      if (panelFriends) panelFriends.classList.toggle('hidden', !isFriends);
+      if (panelData) panelData.classList.toggle('hidden', !isData);
+
+      if (btnCal) btnCal.className = isCal ? mainActiveCls : mainInactiveCls;
+      if (btnFriends) btnFriends.className = isFriends ? mainActiveCls : mainInactiveCls;
+      if (btnData) btnData.className = isData ? mainActiveCls : mainInactiveCls;
+
+      if (isCal) {
         setTimeout(() => {
           initProfileCalendar();
           renderProfileCalendarTab();
           if (profileCalendarInstance) profileCalendarInstance.updateSize();
         }, 50);
+      } else if (isFriends) {
+        renderFriendsTab();
+      } else {
+        switchProfileDataSubTab(currentProfileDataSubTab);
       }
     }
 
@@ -2795,7 +2834,7 @@
 
     function openProfileModal() {
       hydrateProfilePageUI();
-      switchProfileTab(2);
+      switchProfileTab(6);
       const view = document.getElementById('profileFullScreenView');
       if (view) view.classList.remove('hidden');
       document.body.classList.add('overflow-hidden');
@@ -3351,7 +3390,7 @@
         if (!document.getElementById('part5Container')?.classList.contains('hidden')) {
           renderCommunityEventsTab();
         }
-        if (!document.getElementById('part6Container')?.classList.contains('hidden')) {
+        if (!document.getElementById('profileTabPanelFriends')?.classList.contains('hidden')) {
           renderFriendsTab();
         }
         closeEventShareModal();
@@ -3366,23 +3405,28 @@
 
     async function removeCurrentEventFromProfileCalendar() {
       if (!currentModalEvent) return;
-      const ev = currentModalEvent;
-      const key = getProfileEventKey(ev);
-      const list = getProfileCalendarEvents().filter(item => getProfileEventKey(item) !== key);
-      await fetch('/api/events/attendance', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ eventKey: key, userId: getCurrentUserId() })
-      }).catch(() => {});
-      await persistProfileCalendarEvents(list);
-      updateModalProfileCalendarButton(ev);
-      renderProfileCalendarTab();
-      await fetchEventAttendees(ev);
-      if (!document.getElementById('part5Container')?.classList.contains('hidden')) {
-        renderCommunityEventsTab();
-      }
-      if (!document.getElementById('part6Container')?.classList.contains('hidden')) {
-        renderFriendsTab();
+      showSavingOverlay('QUITANDO ESPERA');
+      try {
+        const ev = currentModalEvent;
+        const key = getProfileEventKey(ev);
+        const list = getProfileCalendarEvents().filter(item => getProfileEventKey(item) !== key);
+        await fetch('/api/events/attendance', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ eventKey: key, userId: getCurrentUserId() })
+        }).catch(() => {});
+        await persistProfileCalendarEvents(list);
+        updateModalProfileCalendarButton(ev);
+        renderProfileCalendarTab();
+        await fetchEventAttendees(ev);
+        if (!document.getElementById('part5Container')?.classList.contains('hidden')) {
+          renderCommunityEventsTab();
+        }
+        if (!document.getElementById('profileTabPanelFriends')?.classList.contains('hidden')) {
+          renderFriendsTab();
+        }
+      } finally {
+        hideSavingOverlay();
       }
     }
 
