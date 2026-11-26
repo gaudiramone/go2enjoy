@@ -3700,14 +3700,26 @@
       const now = new Date();
       const todayYMD = getTodayYMD();
       const nowHHMM = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-      const upcoming = events.filter(ev => {
-        if (!ev.date) return false;
+      const sortChrono = (a, b) => {
+        const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
+        const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
+        if (ka !== kb) return ka.localeCompare(kb);
+        return (a.title || '').localeCompare(b.title || '', 'es');
+      };
+
+      const validEvents = events.filter(ev => Boolean(ev?.date)).sort(sortChrono);
+      const upcoming = [];
+      const past = [];
+      validEvents.forEach(ev => {
         const evTime = (ev.time || '23:59').padStart(5, '0');
-        return ev.date > todayYMD || (ev.date === todayYMD && evTime >= nowHHMM);
+        const isPast = ev.date < todayYMD || (ev.date === todayYMD && evTime < nowHHMM);
+        if (isPast) past.push({ ...ev, _isPast: true });
+        else upcoming.push({ ...ev, _isPast: false });
       });
 
-      orderedCommunityEvents = upcoming.map((ev, idx) => ({ ...ev, _modalIndex: idx }));
-      if (countEl) countEl.textContent = String(orderedCommunityEvents.length);
+      const combined = [...upcoming, ...past];
+      orderedCommunityEvents = combined.map((ev, idx) => ({ ...ev, _modalIndex: idx }));
+      if (countEl) countEl.textContent = String(upcoming.length);
 
       if (orderedCommunityEvents.length === 0) {
         listEl.innerHTML = `
@@ -3732,15 +3744,35 @@
       );
 
       const savedProfileList = getProfileCalendarEvents();
-      listEl.innerHTML = orderedCommunityEvents.map((ev, idx) => {
+      const renderRow = (ev, idx) => {
         const key = getProfileEventKey(ev);
         const attendees = communityAttendeesMap[key] || [];
         const savedItem = savedProfileList.find(item => getProfileEventKey(item) === key);
         const isPublic = Boolean(savedItem?.shareConfig?.isPublic);
         const color = ev.venueColor || '#ec4899';
+        const isPast = Boolean(ev._isPast);
+
+        const actionsHtml = isPast
+          ? `
+            <span class="px-2 py-1 rounded-md bg-slate-900 text-slate-500 border border-slate-800 text-[10px] font-bold uppercase whitespace-nowrap">Pasado</span>
+            <button type="button" onclick="openCommunityEventAttendees(${idx})" title="Apuntados (${attendees.length})" class="px-2 py-1 rounded-md bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-[11px] font-bold transition whitespace-nowrap">
+              👥 ${attendees.length}
+            </button>
+          `
+          : `
+            <button type="button" onclick="openCommunityEventAttendees(${idx})" title="Apuntados (${attendees.length})" class="px-2 py-1 rounded-md bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-[11px] font-bold transition whitespace-nowrap">
+              👥 ${attendees.length}
+            </button>
+            <button type="button" onclick="openCommunityEventShare(${idx})" class="px-2 py-1 rounded-md ${savedItem ? (isPublic ? 'bg-emerald-600/25 hover:bg-emerald-600 text-emerald-200 border-emerald-500/40' : 'bg-amber-600/20 hover:bg-amber-600 text-amber-200 border-amber-500/40') : 'bg-pink-600/20 hover:bg-pink-600 text-pink-200 border-pink-500/40'} hover:text-white border text-[11px] font-bold transition whitespace-nowrap">
+              ${savedItem ? (isPublic ? '🌐 Público' : '🔒 Privado') : '👤 Apuntarme'}
+            </button>
+            <button type="button" onclick="openEventModal(orderedCommunityEvents[${idx}], orderedCommunityEvents)" title="Ver detalle" class="px-2 py-1 rounded-md bg-slate-700/70 hover:bg-slate-600 text-slate-200 hover:text-white border border-slate-600 text-[11px] font-bold transition whitespace-nowrap">
+              👁️<span class="hidden sm:inline"> Detalle</span>
+            </button>
+          `;
 
         return `
-          <div class="rounded-lg bg-slate-800/60 hover:bg-slate-800 border border-slate-700/70 px-2.5 py-2 flex items-center justify-between gap-2 transition">
+          <div class="rounded-lg ${isPast ? 'bg-slate-900/60 opacity-75 border-slate-800' : 'bg-slate-800/60 hover:bg-slate-800 border-slate-700/70'} border px-2.5 py-2 flex items-center justify-between gap-2 transition">
             <div class="min-w-0 flex-1 space-y-0.5">
               <div class="flex items-center gap-1.5 text-[11px] sm:text-xs text-slate-300 truncate">
                 <span class="shrink-0 text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded text-white" style="background-color: ${color};">${ev.venueTag || ev.subType || 'EVENTO'}</span>
@@ -3753,19 +3785,28 @@
               ${ev.description ? `<p class="text-[11px] text-slate-300/90 truncate">${ev.description}</p>` : ''}
             </div>
             <div class="shrink-0 flex items-center gap-1">
-              <button type="button" onclick="openCommunityEventAttendees(${idx})" title="Apuntados (${attendees.length})" class="px-2 py-1 rounded-md bg-indigo-600/20 hover:bg-indigo-600 text-indigo-200 hover:text-white border border-indigo-500/40 text-[11px] font-bold transition whitespace-nowrap">
-                👥 ${attendees.length}
-              </button>
-              <button type="button" onclick="openCommunityEventShare(${idx})" class="px-2 py-1 rounded-md ${savedItem ? (isPublic ? 'bg-emerald-600/25 hover:bg-emerald-600 text-emerald-200 border-emerald-500/40' : 'bg-amber-600/20 hover:bg-amber-600 text-amber-200 border-amber-500/40') : 'bg-pink-600/20 hover:bg-pink-600 text-pink-200 border-pink-500/40'} hover:text-white border text-[11px] font-bold transition whitespace-nowrap">
-                ${savedItem ? (isPublic ? '🌐 Público' : '🔒 Privado') : '👤 Apuntarme'}
-              </button>
-              <button type="button" onclick="openEventModal(orderedCommunityEvents[${idx}], orderedCommunityEvents)" title="Ver detalle" class="px-2 py-1 rounded-md bg-slate-700/70 hover:bg-slate-600 text-slate-200 hover:text-white border border-slate-600 text-[11px] font-bold transition whitespace-nowrap">
-                👁️<span class="hidden sm:inline"> Detalle</span>
-              </button>
+              ${actionsHtml}
             </div>
           </div>
         `;
-      }).join('');
+      };
+
+      const upcomingHtml = upcoming.map((_, i) => renderRow(orderedCommunityEvents[i], i)).join('');
+      const pastHtml = past.length > 0
+        ? `
+          <div class="pt-3 mt-3 border-t border-slate-800">
+            <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+              <span>🕒</span>
+              <span>Pasados (${past.length})</span>
+            </h4>
+            <div class="space-y-1.5">
+              ${past.map((_, i) => renderRow(orderedCommunityEvents[upcoming.length + i], upcoming.length + i)).join('')}
+            </div>
+          </div>
+        `
+        : '';
+
+      listEl.innerHTML = (upcomingHtml || `<div class="rounded-xl border border-slate-800 bg-slate-950/60 p-4 text-center text-xs text-slate-400">No hay eventos próximos en <strong>${city}</strong>.</div>`) + pastHtml;
     }
 
     function openCommunityEventAttendees(idx) {

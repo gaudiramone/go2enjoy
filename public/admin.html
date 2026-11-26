@@ -18,8 +18,9 @@
         </h1>
         <p class="text-xs text-slate-400 mt-0.5">Acceso protegido de doble capa (Google verificado + Clave maestra)</p>
       </div>
-      <div class="flex items-center gap-2">
+      <div class="flex flex-wrap items-center gap-2">
         <a href="/" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 border border-slate-700 transition">← Volver a la app</a>
+        <a id="btnAdminExportMonth" href="/api/admin/export-month" class="hidden px-3.5 py-2 rounded-xl bg-emerald-600/25 hover:bg-emerald-600 text-emerald-200 hover:text-white border border-emerald-500/40 text-xs font-bold transition">📦 Exportar mes</a>
         <button id="btnAdminRefresh" onclick="loadAdminOverview()" class="hidden px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">🔄 Actualizar</button>
         <button id="btnAdminLogout" onclick="adminLogout()" class="hidden px-3.5 py-2 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-200 hover:text-white border border-rose-500/40 text-xs font-bold transition">🚪 Salir</button>
       </div>
@@ -192,6 +193,7 @@
     function showLogin() {
       document.getElementById('adminLoginSection').classList.remove('hidden');
       document.getElementById('adminDashboardSection').classList.add('hidden');
+      document.getElementById('btnAdminExportMonth').classList.add('hidden');
       document.getElementById('btnAdminRefresh').classList.add('hidden');
       document.getElementById('btnAdminLogout').classList.add('hidden');
     }
@@ -199,6 +201,7 @@
     function showDashboard(email) {
       document.getElementById('adminLoginSection').classList.add('hidden');
       document.getElementById('adminDashboardSection').classList.remove('hidden');
+      document.getElementById('btnAdminExportMonth').classList.remove('hidden');
       document.getElementById('btnAdminRefresh').classList.remove('hidden');
       document.getElementById('btnAdminLogout').classList.remove('hidden');
       document.getElementById('adminSessionEmail').textContent = email || '';
