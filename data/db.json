@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Granada",
+    "selectedCity": "Salamanca",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,29 +100,29 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:09:08.235Z",
-    "city": "Granada",
+    "updatedAt": "2026-11-26T20:09:25.563Z",
+    "city": "Salamanca",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 105,
-    "totalMatched": 104,
+    "totalScanned": 31,
+    "totalMatched": 31,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Granada",
-      "🔗 URLs configuradas para Granada: https://www.conciertosengranada.es/",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Salamanca",
+      "🔗 URLs configuradas para Salamanca: https://conciertos.club/salamanca",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Conciertos en Granada (https://www.conciertosengranada.es/): 103 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Granada: 1 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Granada: 1 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Granada: 0 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 87 conciertos catalogados (0 por IA, 18 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [OOL YA KOO: 12], [ROCKNROLLA: 9], [PALACIO CONGRESOS: 8], [PLANTA BAJA: 8], [LEMON ROCK: 7], [SALA RIFF: 7], [LA LOLAINA: 7], [EL TREN: 5], [JJ TABERNA: 4], [SALA PREMIER: 4], [HOTEL PALACIO DE S: 4], [LA CHISTERA: 3], [AUDITORIO ZGZ: 3], [INDUSTRIAL COPERA: 3], [PALACIO MUNICIPAL: 2], [ALIATAR: 2], [CATEDRAL: 2], [NOIR CAFÉ: 1], [LIBERIA CAFÉ PUB: 1], [BACKSTAGE: 1], [VAGOMUNDO CAFÉ: 1], [EL ACORDE: 1], [MONASTERIO DE SAN: 1], [TABERNA TERRA BLUE: 1], [SIN SENTIDO: 1], [ESTACIÓN DE METRO: 1], [SALA VÍBORA: 1], [TEATRO MUNICIPAL M: 1], [TABERNA DEL BESO: 1], [TEATRO PRINCIPAL: 1], [TEATRO ALBÉNIZ: 1]",
-      "🎪 Festivales en Granada: [ROAD TO INVERFEST 2026: 1], [INVERFEST: 1]",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/salamanca): 10 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Salamanca: 21 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Salamanca: 0 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Salamanca: 0 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 20 conciertos catalogados (2 por IA, 11 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [MOVISTAR ARENA: 21], [PALACIO CONGRESOS: 6], [CASINO DE SALAMANC: 2], [POTEMKIM: 1], [CAMELOT: 1]",
+      "🎪 Festivales en Salamanca: [INVERFEST: 21]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 32], [SIN ESPECIFICAR: 18], [JAZZ: 11], [LATINO / SKA: 8], [CLÁSICA: 8], [BLUES: 6], [FOLK / CANTAUTOR: 5], [FLAMENCO: 4], [POP: 2], [PUNK: 2], [SOUL / FUNK: 2], [ELECTRÓNICA: 2], [URBANO / RAP: 2], [INDIE / ALT: 1], [METAL / HEAVY: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 104"
+      "🎵 Estilos musicales detectados en la descripción: [SIN ESPECIFICAR: 11], [ROCK: 7], [POP: 4], [INDIE / ALT: 3], [ELECTRÓNICA: 2], [SOUL / FUNK: 2], [FOLK / CANTAUTOR: 1], [CLÁSICA: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 31"
     ]
   },
   "concertStyles": [],
