@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "VALENCIA",
+    "selectedCity": "Murcia",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,29 +100,29 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:08:22.746Z",
-    "city": "VALENCIA",
+    "updatedAt": "2026-11-26T20:08:30.861Z",
+    "city": "Murcia",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 204,
-    "totalMatched": 195,
+    "totalScanned": 123,
+    "totalMatched": 118,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para VALENCIA",
-      "🔗 URLs configuradas para VALENCIA: https://conciertos.club/valencia",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Murcia",
+      "🔗 URLs configuradas para Murcia: https://conciertos.club/murcia",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/valencia): 198 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para VALENCIA: 4 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para VALENCIA: 0 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para VALENCIA: 2 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 157 conciertos catalogados (3 por IA, 47 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [OTROS ESCENARIOS: 27], [BLACK NOTE CLUB: 24], [ROIG ARENA: 23], [LOCO CLUB: 23], [DUBLÍN: 13], [ATENEO MERCANTIL: 9], [SALA JERUSALEM: 8], [SALA MOON: 8], [PALACIO CONGRESOS: 8], [AUDITORIO ZGZ: 6], [LA PÉRGOLA DE LA M: 5], [SALA REPVBLICCA: 4], [OCEANOGRÀFIC: 4], [LA RAMBLETA: 3], [PETER ROCK CLUB: 3], [PALAU ALAMEDA: 2], [EL VOLANDER: 2], [SALA LÓPEZ: 2], [LA RIVIERA: 2], [RADIO CITY: 2], [SALA RUSSAFA: 1], [CASA DE CULTURA MA: 1], [LA 3 CLUB: 1], [RUTA 69 ROCK BAR: 1], [TEATRO FLUMEN: 1], [TEATRE DEL RAVAL: 1], [JOY VALENCIA: 1], [CA REVOLTA: 1], [LA CASA DE LA MAR: 1], [ZULÚ KLUB: 1], [SALA MOON VALENCIA: 1], [REINA SOFÍA: 1], [TEATRO LA PLAZETA: 1], [CIRCO PRICE: 1], [AZKENA: 1], [SALA VILLANOS: 1], [KAFE ANTZOKIA: 1]",
-      "🎪 Festivales en VALENCIA: [INVERFEST: 4], [NEGUFEST: 2]",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/murcia): 122 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Murcia: 1 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Murcia: 0 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Murcia: 0 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 86 conciertos catalogados (0 por IA, 37 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [GARAJE BEAT CLUB: 14], [SALA MAMBA!: 14], [SALA REM: 13], [AUDITORIO ZGZ: 11], [REAL CASINO DE MUR: 7], [ARIZONA RUTA 66: 6], [LA CASA DE LA LUZ: 6], [LA YESERÍA: 5], [CAFÉ DE ALBA: 5], [TEATRO CIRCO MURCI: 5], [PARQUE DE LA RAMBL: 5], [SALA REVÓLVER: 4], [SALA SPECTRUM: 4], [MUSIK: 3], [MISTER WITT: 2], [LOS PÁJAROS: 2], [PABELLÓN DEPORTIVO: 2], [TEATRO CERVANTES: 1], [LA ALMAZARA CENTRO: 1], [LA PUERTA FALSA: 1], [TEATRO CIRCO APOLO: 1], [SALA Z: 1], [CASINO DE ÁGUILAS: 1], [CENTRO CULTURAL RA: 1], [LA RIVIERA: 1], [TEATRO ROMEA: 1], [CASA DE LA CULTURA: 1]",
+      "🎪 Festivales en Murcia: [INVERFEST: 1]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 78], [SIN ESPECIFICAR: 47], [URBANO / RAP: 12], [JAZZ: 8], [POP: 8], [ELECTRÓNICA: 8], [LATINO / SKA: 7], [FOLK / CANTAUTOR: 6], [FLAMENCO: 6], [SOUL / FUNK: 4], [CLÁSICA: 4], [PUNK: 3], [BLUES: 2], [INDIE / ALT: 2]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 195"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 42], [SIN ESPECIFICAR: 33], [FOLK / CANTAUTOR: 10], [CLÁSICA: 7], [LATINO / SKA: 5], [URBANO / RAP: 4], [JAZZ: 4], [FLAMENCO: 4], [POP: 3], [ELECTRÓNICA: 2], [PUNK: 2], [SOUL / FUNK: 1], [INDIE / ALT: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 118"
     ]
   },
   "concertStyles": [],
