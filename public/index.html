@@ -107,11 +107,7 @@
       </div>
 
       <!-- Navigation Tabs for the Separated Parts -->
-      <div class="w-full sm:w-auto grid grid-cols-5 sm:flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
-        <button id="tabBtnPart1" onclick="switchPart(1)" title="Conf." aria-label="Conf." class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
-          <span>⚙️</span>
-          <span>Conf.</span>
-        </button>
+      <div class="w-full sm:w-auto grid grid-cols-4 sm:flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
         <button id="tabBtnPart4" onclick="switchPart(4)" title="Filtro" aria-label="Filtro" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
           <span>🎛️</span>
           <span>Filtro</span>
@@ -136,123 +132,62 @@
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
 
     <!-- ===================================================================== -->
-    <!-- PARTE 1: CONFIGURACIÓN DE LA APP (Ciudades, URLs concretas e IA)      -->
-    <!-- ===================================================================== -->
-    <section id="part1Container" class="hidden space-y-6">
-      <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-6 shadow-xl">
-        <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-800 pb-5">
-          <div>
-            <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Parte 1 · Configuración de la APP</span>
-            <h1 class="text-2xl font-extrabold text-white mt-1">Ciudades y Webs de Referencia</h1>
-          </div>
-          <button onclick="switchPart(2)" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition">
-            Ir al Calendario de Usuario →
-          </button>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
-          <div class="lg:col-span-5 space-y-4">
-            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400">Ciudades Disponibles</h2>
-            <div id="citiesListContainer" class="space-y-3"></div>
-          </div>
-
-          <div class="lg:col-span-7 rounded-xl bg-slate-800/50 border border-slate-700/70 p-5 space-y-4">
-            <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <span>🌐</span> Añadir o Editar Ciudad
-            </h2>
-
-            <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Nombre de la Ciudad</label>
-              <input id="cfgCityName" type="text" placeholder="Ej: Zaragoza, Huesca, Teruel, Madrid..." class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-indigo-500" />
-            </div>
-
-            <div>
-              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                URLs principales para esta ciudad (una por línea)
-              </label>
-              <textarea id="cfgCityUrls" rows="4" placeholder="https://www.locozaragozadiscoteca.com/&#10;https://salalopez.com/eventos/&#10;https://www.rockandbluescafe.com/conciertos/" class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2.5 text-sm text-indigo-200 font-mono focus:outline-none focus:border-indigo-500"></textarea>
-            </div>
-
-            <div class="pt-2 flex items-center justify-between gap-3">
-              <span id="cfgSaveFeedback" class="text-xs font-semibold text-emerald-400"></span>
-              <button onclick="saveCityConfig()" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-bold shadow-lg shadow-indigo-600/25 transition">
-                💾 Guardar Ciudad
-              </button>
-            </div>
-
-            <!-- Apartado General: Festivales (multi-ciudad) -->
-            <div class="mt-4 pt-4 border-t border-slate-700/80 space-y-2.5">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <label for="cfgFestivalUrls" class="text-xs font-bold uppercase tracking-wider text-pink-300">🎪 Festivales (URLs generales multi-ciudad, una por línea)</label>
-                <span id="cfgFestSaveFeedback" class="text-xs font-semibold text-emerald-400"></span>
-              </div>
-              <p class="text-[11px] text-slate-400">Se escanean siempre y se muestran en el calendario únicamente los conciertos que suceden en la ciudad seleccionada.</p>
-              <textarea id="cfgFestivalUrls" rows="2" placeholder="https://ejemplo-festival.com/..." class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3.5 py-2 text-xs text-pink-200 font-mono focus:outline-none focus:border-pink-500"></textarea>
-              <div class="flex justify-end">
-                <button type="button" onclick="saveFestivalUrls()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold shadow-lg shadow-pink-600/25 transition">💾 Guardar Festivales</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================================== -->
     <!-- PARTE 2: CALENDARIO Y CONTADORES                                      -->
-    <!-- ===================================================================== -->
     <section id="part2Container" class="space-y-6">
 
-      <!-- Contadores por tipo de espectáculo -->
-      <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
-        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-2 sm:p-3.5 text-center sm:text-left flex flex-col justify-between">
-          <span class="block truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total en Calendario</span></span>
-          <p data-stat="total" class="text-base sm:text-2xl font-extrabold text-white mt-0.5">0</p>
+      <!-- Contadores por tipo de espectáculo (compacto) -->
+      <div class="space-y-1">
+        <div class="grid grid-cols-5 gap-1 sm:gap-2">
+          <div class="rounded-lg bg-slate-900/90 border border-slate-800 px-1.5 py-1 sm:px-2.5 sm:py-1.5 flex items-center justify-between gap-1 min-w-0">
+            <span class="truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total</span></span>
+            <span data-stat="total" class="text-xs sm:text-sm font-extrabold text-white shrink-0">0</span>
+          </div>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-indigo-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-indigo-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Mús</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
+              </div>
+              <span data-stat="Conciertos" class="text-xs sm:text-sm font-extrabold text-indigo-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-rose-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-rose-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Tea</span><span class="hidden sm:inline">🎭 Teatro</span></span>
+              </div>
+              <span data-stat="Teatro" class="text-xs sm:text-sm font-extrabold text-rose-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-amber-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-amber-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
+              </div>
+              <span data-stat="Cine" class="text-xs sm:text-sm font-extrabold text-amber-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-emerald-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-emerald-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
+              </div>
+              <span data-stat="Exposiciones" class="text-xs sm:text-sm font-extrabold text-emerald-400 shrink-0">0</span>
+            </div>
+          </label>
         </div>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-indigo-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Música</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Conciertos" class="text-base sm:text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-rose-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Teatro</span><span class="hidden sm:inline">🎭 Teatro</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Teatro" class="text-base sm:text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-amber-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Cine" class="text-base sm:text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-emerald-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Exposiciones" class="text-base sm:text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
-          </div>
-        </label>
-      </div>
-      <div class="flex items-center justify-end gap-3 text-[11px] sm:text-xs -mt-3">
-        <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
-        <span class="text-slate-600">|</span>
-        <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
+        <div class="flex items-center justify-end gap-2 text-[10px]">
+          <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
+          <span class="text-slate-600">|</span>
+          <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
+        </div>
       </div>
 
       <!-- Calendario Visual (FullCalendar) -->
@@ -283,57 +218,59 @@
     <!-- PARTE 3: BÚSQUEDA DE EVENTOS                                          -->
     <!-- ===================================================================== -->
     <section id="part3Container" class="hidden space-y-6">
-      <!-- Contadores por tipo de espectáculo -->
-      <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
-        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-2 sm:p-3.5 text-center sm:text-left flex flex-col justify-between">
-          <span class="block truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total en Calendario</span></span>
-          <p data-stat="total" class="text-base sm:text-2xl font-extrabold text-white mt-0.5">0</p>
+      <!-- Contadores por tipo de espectáculo (compacto) -->
+      <div class="space-y-1">
+        <div class="grid grid-cols-5 gap-1 sm:gap-2">
+          <div class="rounded-lg bg-slate-900/90 border border-slate-800 px-1.5 py-1 sm:px-2.5 sm:py-1.5 flex items-center justify-between gap-1 min-w-0">
+            <span class="truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total</span></span>
+            <span data-stat="total" class="text-xs sm:text-sm font-extrabold text-white shrink-0">0</span>
+          </div>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-indigo-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-indigo-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Mús</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
+              </div>
+              <span data-stat="Conciertos" class="text-xs sm:text-sm font-extrabold text-indigo-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-rose-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-rose-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Tea</span><span class="hidden sm:inline">🎭 Teatro</span></span>
+              </div>
+              <span data-stat="Teatro" class="text-xs sm:text-sm font-extrabold text-rose-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-amber-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-amber-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
+              </div>
+              <span data-stat="Cine" class="text-xs sm:text-sm font-extrabold text-amber-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-emerald-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-emerald-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
+              </div>
+              <span data-stat="Exposiciones" class="text-xs sm:text-sm font-extrabold text-emerald-400 shrink-0">0</span>
+            </div>
+          </label>
         </div>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-indigo-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Música</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Conciertos" class="text-base sm:text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-rose-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Teatro</span><span class="hidden sm:inline">🎭 Teatro</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Teatro" class="text-base sm:text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-amber-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Cine" class="text-base sm:text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-emerald-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Exposiciones" class="text-base sm:text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
-          </div>
-        </label>
-      </div>
-      <div class="flex items-center justify-end gap-3 text-[11px] sm:text-xs -mt-3">
-        <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
-        <span class="text-slate-600">|</span>
-        <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
+        <div class="flex items-center justify-end gap-2 text-[10px]">
+          <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
+          <span class="text-slate-600">|</span>
+          <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
+        </div>
       </div>
 
       <!-- Lista de Eventos con TAG de Sala, Color y Enlace Directo -->
@@ -353,57 +290,59 @@
     <!-- PARTE 4: FILTROS (CIUDAD, ACTUALIZAR, ESPECTÁCULOS Y TAGS)            -->
     <!-- ===================================================================== -->
     <section id="part4Container" class="hidden space-y-6">
-      <!-- Contadores por tipo de espectáculo -->
-      <div class="grid grid-cols-5 gap-1.5 sm:gap-3">
-        <div class="rounded-xl bg-slate-900/90 border border-slate-800 p-2 sm:p-3.5 text-center sm:text-left flex flex-col justify-between">
-          <span class="block truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total en Calendario</span></span>
-          <p data-stat="total" class="text-base sm:text-2xl font-extrabold text-white mt-0.5">0</p>
+      <!-- Contadores por tipo de espectáculo (compacto) -->
+      <div class="space-y-1">
+        <div class="grid grid-cols-5 gap-1 sm:gap-2">
+          <div class="rounded-lg bg-slate-900/90 border border-slate-800 px-1.5 py-1 sm:px-2.5 sm:py-1.5 flex items-center justify-between gap-1 min-w-0">
+            <span class="truncate text-[9px] sm:text-[11px] text-slate-400 font-semibold uppercase"><span class="sm:hidden">Total</span><span class="hidden sm:inline">Total</span></span>
+            <span data-stat="total" class="text-xs sm:text-sm font-extrabold text-white shrink-0">0</span>
+          </div>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-indigo-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-indigo-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Mús</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
+              </div>
+              <span data-stat="Conciertos" class="text-xs sm:text-sm font-extrabold text-indigo-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-rose-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-rose-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Tea</span><span class="hidden sm:inline">🎭 Teatro</span></span>
+              </div>
+              <span data-stat="Teatro" class="text-xs sm:text-sm font-extrabold text-rose-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-amber-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-amber-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
+              </div>
+              <span data-stat="Cine" class="text-xs sm:text-sm font-extrabold text-amber-400 shrink-0">0</span>
+            </div>
+          </label>
+          <label class="show-card-checkbox cursor-pointer select-none block min-w-0">
+            <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
+            <div class="rounded-lg bg-slate-900/90 border border-emerald-500/30 px-1.5 py-1 sm:px-2.5 sm:py-1.5 transition flex items-center justify-between gap-1 h-full hover:border-emerald-400/60 min-w-0">
+              <div class="flex items-center gap-1 min-w-0">
+                <span class="check-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-transparent shrink-0 transition">✓</span>
+                <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
+              </div>
+              <span data-stat="Exposiciones" class="text-xs sm:text-sm font-extrabold text-emerald-400 shrink-0">0</span>
+            </div>
+          </label>
         </div>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Conciertos" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-indigo-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-indigo-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-indigo-300 font-semibold uppercase"><span class="sm:hidden">Música</span><span class="hidden sm:inline">🎵 Conciertos</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Conciertos" class="text-base sm:text-2xl font-extrabold text-indigo-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Teatro" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-rose-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-rose-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-rose-300 font-semibold uppercase"><span class="sm:hidden">Teatro</span><span class="hidden sm:inline">🎭 Teatro</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Teatro" class="text-base sm:text-2xl font-extrabold text-rose-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Cine" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-amber-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-amber-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-amber-300 font-semibold uppercase"><span class="sm:hidden">Cine</span><span class="hidden sm:inline">🎬 Cine</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Cine" class="text-base sm:text-2xl font-extrabold text-amber-400 mt-0.5">0</p>
-          </div>
-        </label>
-        <label class="show-card-checkbox cursor-pointer select-none block">
-          <input type="checkbox" name="showTypes" value="Exposiciones" onchange="onShowTypeCheckboxChange(this)" checked class="sr-only" />
-          <div class="rounded-xl bg-slate-900/90 border border-emerald-500/30 p-2 sm:p-3.5 text-center sm:text-left transition flex flex-col justify-between h-full hover:border-emerald-400/60">
-            <div class="flex items-center justify-center sm:justify-between gap-1 min-w-0">
-              <span class="truncate text-[9px] sm:text-[11px] text-emerald-300 font-semibold uppercase"><span class="sm:hidden">Expo</span><span class="hidden sm:inline">🖼️ Exposiciones</span></span>
-              <span class="check-indicator w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-slate-600 bg-slate-950 flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-transparent shrink-0 transition">✓</span>
-            </div>
-            <p data-stat="Exposiciones" class="text-base sm:text-2xl font-extrabold text-emerald-400 mt-0.5">0</p>
-          </div>
-        </label>
-      </div>
-      <div class="flex items-center justify-end gap-3 text-[11px] sm:text-xs -mt-3">
-        <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
-        <span class="text-slate-600">|</span>
-        <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
+        <div class="flex items-center justify-end gap-2 text-[10px]">
+          <button type="button" onclick="toggleAllShowTypes(true)" class="text-indigo-400 hover:underline font-semibold">Marcar todos</button>
+          <span class="text-slate-600">|</span>
+          <button type="button" onclick="toggleAllShowTypes(false)" class="text-slate-400 hover:underline font-semibold">Desmarcar todos</button>
+        </div>
       </div>
 
       <div class="rounded-2xl bg-slate-900/95 border border-slate-800 p-6 shadow-xl space-y-5">
@@ -413,26 +352,8 @@
               <label class="block text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1">📍 Ciudad a consultar</label>
               <div class="flex items-center gap-2">
                 <select id="userCitySelect" onchange="onUserCityChange()" class="rounded-xl bg-slate-950 border border-slate-700 px-4 py-2.5 text-sm font-bold text-white focus:outline-none focus:border-indigo-500"></select>
-                <button onclick="switchPart(1)" title="Añadir otra ciudad" class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 border border-slate-700 transition">
-                  + Otra ciudad
-                </button>
               </div>
             </div>
-          </div>
-
-          <!-- Botones Actualizar -->
-          <div class="flex flex-wrap items-center gap-2.5">
-            <button id="btnUpdateCalendar" onclick="triggerCalendarUpdate(false)" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-extrabold text-sm shadow-xl shadow-indigo-600/30 flex items-center gap-2.5 transition transform active:scale-95">
-              <svg id="updateSpinner" class="hidden animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-              </svg>
-              <span id="btnUpdateIcon">🔄</span>
-              <span id="btnUpdateText">Actualizar Calendario</span>
-            </button>
-            <button type="button" onclick="triggerCalendarUpdate(true)" title="Ignora la caché de hoy y vuelve a consultar internet" class="px-4 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-bold transition">
-              ⚡ Forzar recarga
-            </button>
           </div>
         </div>
 
@@ -1409,10 +1330,13 @@
         switchProfileTab('friends');
         return;
       }
+      if (partNum === 1) {
+        partNum = 2;
+      }
       const activeCls = 'px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 whitespace-nowrap';
       const inactiveCls = 'px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap';
 
-      [1, 2, 3, 4, 5].forEach(n => {
+      [2, 3, 4, 5].forEach(n => {
         const container = document.getElementById(`part${n}Container`);
         const btn = document.getElementById(`tabBtnPart${n}`);
         const isActive = n === partNum;
@@ -2106,15 +2030,13 @@
       const icon = document.getElementById('btnUpdateIcon');
       const txt = document.getElementById('btnUpdateText');
 
-      btn.disabled = true;
-      spinner.classList.remove('hidden');
-      icon.classList.add('hidden');
-      txt.textContent = 'Buscando Espectáculos, Salas y Estilos...';
+      if (btn) btn.disabled = true;
+      if (spinner) spinner.classList.remove('hidden');
+      if (icon) icon.classList.add('hidden');
+      if (txt) txt.textContent = 'Cargando eventos...';
 
       try {
-        const preferences = collectPreferencesFromUI();
         const selectedCity = document.getElementById('userCitySelect').value || 'Zaragoza';
-        const userEmail = localStorage.getItem('go2enjoy_user_email') || appState?.userProfile?.email || '';
         const todayYMD = getTodayYMD();
         const cityUrlsKey = JSON.stringify({
           city: appState?.appConfig?.cities?.[selectedCity]?.urls || [],
@@ -2127,11 +2049,6 @@
             const driveJson = await readSingleDriveCache();
             const entry = driveJson?.cities?.[selectedCity];
             if (entry && entry.date === todayYMD && entry.urlsKey === cityUrlsKey) {
-              await fetch('/api/cache/restore', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ city: selectedCity, entry })
-              });
               appState.calendarEvents = entry.events || [];
               appState.concertVenues = entry.concertVenues || [];
               appState.concertFestivals = entry.concertFestivals || [];
@@ -2158,20 +2075,16 @@
           } catch (_) {}
         }
 
-        const res = await fetch('/api/calendar/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ selectedCity, preferences, userEmail, forceRefresh })
-        });
+        const res = await fetch(`/api/city-events?city=${encodeURIComponent(selectedCity)}`);
         const data = await res.json();
         if (data.ok) {
-          appState.calendarEvents = data.events;
+          appState.calendarEvents = data.events || [];
           appState.concertVenues = data.concertVenues || [];
           appState.concertFestivals = data.concertFestivals || [];
           appState.theaterVenues = data.theaterVenues || [];
           appState.exhibitionVenues = data.exhibitionVenues || [];
           appState.concertStyles = data.concertStyles || [];
-          appState.lastUpdateMeta = data.meta;
+          appState.lastUpdateMeta = data.meta || null;
           activeVenueTags.clear();
           activeStyleTags.clear();
           activeFestivalTags.clear();
@@ -2183,21 +2096,16 @@
           renderTheaterVenueTags();
           renderExhibitionVenueTags();
           refreshCalendarAndStats();
-          document.getElementById('aiLogsAccordion').open = true;
-
-          if (driveAccessToken && data.cityCache) {
-            writeSingleDriveCache(data.cityCache).catch(() => {});
-          }
         } else {
-          alert('Error al actualizar: ' + (data.error || 'Desconocido'));
+          alert('Error al cargar eventos: ' + (data.error || 'Desconocido'));
         }
       } catch (err) {
         alert('Error de conexión: ' + err.message);
       } finally {
-        btn.disabled = false;
-        spinner.classList.add('hidden');
-        icon.classList.remove('hidden');
-        txt.textContent = 'Actualizar Calendario';
+        if (btn) btn.disabled = false;
+        if (spinner) spinner.classList.add('hidden');
+        if (icon) icon.classList.remove('hidden');
+        if (txt) txt.textContent = 'Actualizar Calendario';
       }
     }
 

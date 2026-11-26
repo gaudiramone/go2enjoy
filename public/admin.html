@@ -70,6 +70,57 @@
       <!-- KPIs -->
       <div id="adminKpiGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"></div>
 
+      <!-- Configuración de Ciudades, Webs y Scraping (movido desde Conf.) -->
+      <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <h3 class="text-sm font-extrabold text-white">⚙️ Configuración de Ciudades, Webs y Scraping</h3>
+            <p class="text-[11px] text-slate-400 mt-0.5">Solo los administradores pueden editar URLs y generar ficheros de eventos (<code class="text-pink-300 font-mono">data/cities/*.json</code>).</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="adminScrapeCitySelect" class="rounded-xl bg-slate-950 border border-slate-700 px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-indigo-500"></select>
+            <button id="btnAdminScrapeCity" type="button" onclick="adminRunScrape(false)" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-extrabold text-white transition">🔄 Actualizar ciudad</button>
+            <button id="btnAdminForceScrapeCity" type="button" onclick="adminRunScrape(true)" class="px-3.5 py-2 rounded-xl bg-pink-600/80 hover:bg-pink-600 text-xs font-extrabold text-white transition">⚡ Forzar recarga</button>
+            <button id="btnAdminScrapeAll" type="button" onclick="adminScrapeAllCities()" class="px-3.5 py-2 rounded-xl bg-emerald-600/25 hover:bg-emerald-600 text-emerald-200 hover:text-white border border-emerald-500/40 text-xs font-extrabold transition">🌍 Generar todas</button>
+          </div>
+        </div>
+
+        <div id="adminScrapeStatus" class="hidden rounded-xl bg-slate-950 border border-slate-800 p-3 text-xs space-y-1.5">
+          <div id="adminScrapeStatusText" class="font-bold text-indigo-300"></div>
+          <pre id="adminScrapeLogs" class="text-[11px] font-mono text-slate-300 max-h-40 overflow-y-auto whitespace-pre-wrap"></pre>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <div class="lg:col-span-5 space-y-2">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400">Ciudades configuradas (pulsa para editar)</div>
+            <div id="adminCfgCitiesList" class="space-y-2 max-h-80 overflow-y-auto pr-1 text-xs"></div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-4">
+            <div class="rounded-xl bg-slate-950/60 border border-slate-800 p-4 space-y-3">
+              <div class="text-xs font-bold text-white">🌐 Añadir o Editar Ciudad</div>
+              <input id="adminCfgCityName" type="text" placeholder="Ej: Zaragoza, Madrid..." class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" />
+              <textarea id="adminCfgCityUrls" rows="4" placeholder="Una URL por línea..." class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-xs font-mono text-indigo-200 focus:outline-none focus:border-indigo-500"></textarea>
+              <div class="flex items-center justify-between gap-2">
+                <span id="adminCfgSaveMsg" class="text-xs text-emerald-400 font-semibold"></span>
+                <button type="button" onclick="adminSaveCityConfig()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-xs font-bold text-white transition">💾 Guardar Ciudad</button>
+              </div>
+            </div>
+
+            <div class="rounded-xl bg-slate-950/60 border border-slate-800 p-4 space-y-2.5">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold text-pink-300">🎪 Festivales (URLs multi-ciudad, una por línea)</span>
+                <span id="adminCfgFestMsg" class="text-xs text-emerald-400 font-semibold"></span>
+              </div>
+              <textarea id="adminCfgFestivalUrls" rows="2" placeholder="https://ejemplo-festival.com/..." class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-xs font-mono text-pink-200 focus:outline-none focus:border-pink-500"></textarea>
+              <div class="flex justify-end">
+                <button type="button" onclick="adminSaveFestivalUrls()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-xs font-bold text-white transition">💾 Guardar Festivales</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Ciudades y Eventos -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div class="rounded-2xl bg-slate-900 border border-slate-800 p-5 space-y-3">
@@ -409,6 +460,10 @@
             </tbody>
           </table>`;
 
+      if (d.appConfig) {
+        renderAdminConfigSection(d.appConfig, d.stats?.cachedCities || []);
+      }
+
       const errCard = document.getElementById('adminErrorsCard');
       if (d.recentErrors?.length) {
         errCard.classList.remove('hidden');
@@ -442,6 +497,160 @@
       const modal = document.getElementById('adminFileModal');
       modal.classList.add('hidden');
       modal.classList.remove('flex');
+    }
+
+    let adminAppConfig = null;
+
+    function renderAdminConfigSection(appConfig, cachedCities = []) {
+      adminAppConfig = appConfig || { cities: {}, festivalUrls: [] };
+      const citiesObj = adminAppConfig.cities || {};
+      const cityNames = Object.keys(citiesObj);
+      const cachedSet = new Set(cachedCities);
+
+      const sel = document.getElementById('adminScrapeCitySelect');
+      if (sel) {
+        const prev = sel.value || adminAppConfig.activeCity || 'Zaragoza';
+        sel.innerHTML = cityNames.map(c => `<option value="${esc(c)}">${esc(c)} ${cachedSet.has(c) ? '✓' : ''}</option>`).join('');
+        if (cityNames.includes(prev)) sel.value = prev;
+      }
+
+      const listEl = document.getElementById('adminCfgCitiesList');
+      if (listEl) {
+        listEl.innerHTML = cityNames.length === 0
+          ? '<p class="text-slate-400">No hay ciudades configuradas.</p>'
+          : cityNames.map(name => {
+              const c = citiesObj[name];
+              const urls = Array.isArray(c?.urls) ? c.urls : [];
+              const hasCache = cachedSet.has(name);
+              return `
+                <div onclick="adminLoadCityForm('${esc(name).replace(/'/g, "\\'")}')" class="cursor-pointer rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 p-3 transition space-y-1">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="font-bold text-white">📍 ${esc(name)}</span>
+                    <div class="flex items-center gap-1.5">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-mono ${hasCache ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-500/30' : 'bg-slate-900 text-slate-500 border border-slate-700'}">${hasCache ? '✓ Caché' : 'Sin caché'}</span>
+                      <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px]">${urls.length} URLs</span>
+                    </div>
+                  </div>
+                  <div class="text-[11px] font-mono text-indigo-300 truncate">${esc(urls.join(' · '))}</div>
+                </div>
+              `;
+            }).join('');
+      }
+
+      const festEl = document.getElementById('adminCfgFestivalUrls');
+      if (festEl) {
+        festEl.value = (adminAppConfig.festivalUrls || []).join('\n');
+      }
+    }
+
+    function adminLoadCityForm(name) {
+      const c = adminAppConfig?.cities?.[name];
+      if (!c) return;
+      document.getElementById('adminCfgCityName').value = c.name || name;
+      document.getElementById('adminCfgCityUrls').value = (c.urls || []).join('\n');
+      const sel = document.getElementById('adminScrapeCitySelect');
+      if (sel) sel.value = name;
+    }
+
+    async function adminSaveCityConfig() {
+      const name = document.getElementById('adminCfgCityName').value.trim();
+      const urls = document.getElementById('adminCfgCityUrls').value.split('\n').map(u => u.trim()).filter(Boolean);
+      const msg = document.getElementById('adminCfgSaveMsg');
+      if (!name) {
+        alert('Introduce el nombre de la ciudad.');
+        return;
+      }
+      const res = await fetch('/api/app-config/city', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, urls })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        msg.textContent = `✅ ${name} guardada en config.json`;
+        setTimeout(() => { msg.textContent = ''; }, 3000);
+        await loadAdminOverview();
+      } else {
+        alert(data.error || 'No se pudo guardar la ciudad.');
+      }
+    }
+
+    async function adminSaveFestivalUrls() {
+      const festivalUrls = document.getElementById('adminCfgFestivalUrls').value.split('\n').map(u => u.trim()).filter(Boolean);
+      const msg = document.getElementById('adminCfgFestMsg');
+      const res = await fetch('/api/app-config/festivals', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ festivalUrls })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        msg.textContent = `✅ ${festivalUrls.length} URLs guardadas`;
+        setTimeout(() => { msg.textContent = ''; }, 3000);
+        await loadAdminOverview();
+      } else {
+        alert(data.error || 'No se pudieron guardar los festivales.');
+      }
+    }
+
+    function setAdminScrapeButtonsDisabled(disabled) {
+      ['btnAdminScrapeCity', 'btnAdminForceScrapeCity', 'btnAdminScrapeAll'].forEach(id => {
+        const b = document.getElementById(id);
+        if (b) b.disabled = disabled;
+      });
+    }
+
+    async function adminRunScrape(forceRefresh, targetCity = null) {
+      const city = targetCity || document.getElementById('adminScrapeCitySelect')?.value || 'Zaragoza';
+      const box = document.getElementById('adminScrapeStatus');
+      const statusText = document.getElementById('adminScrapeStatusText');
+      const logsEl = document.getElementById('adminScrapeLogs');
+      if (box) box.classList.remove('hidden');
+      if (statusText) statusText.textContent = `⏳ Generando eventos de ${city} (${forceRefresh ? 'recarga forzada' : 'normal'})...`;
+      if (logsEl && !targetCity) logsEl.textContent = '';
+      if (!targetCity) setAdminScrapeButtonsDisabled(true);
+
+      try {
+        const res = await fetch('/api/calendar/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ selectedCity: city, forceRefresh })
+        });
+        const data = await res.json();
+        if (!data.ok) {
+          if (statusText) statusText.textContent = `❌ Error en ${city}: ${data.error || 'Desconocido'}`;
+          return false;
+        }
+        if (statusText) statusText.textContent = `✅ ${city}: ${(data.events || []).length} eventos guardados (${data.cached ? 'caché' : 'scraping nuevo'}).`;
+        if (logsEl) {
+          const lines = (data.meta?.logs || []).join('\n');
+          logsEl.textContent = targetCity ? `${logsEl.textContent}\n--- ${city} (${(data.events || []).length} eventos) ---\n${lines}`.trim() : lines;
+        }
+        if (!targetCity) await loadAdminOverview();
+        return true;
+      } catch (err) {
+        if (statusText) statusText.textContent = `❌ Error de red en ${city}: ${err.message}`;
+        return false;
+      } finally {
+        if (!targetCity) setAdminScrapeButtonsDisabled(false);
+      }
+    }
+
+    async function adminScrapeAllCities() {
+      const cityNames = Object.keys(adminAppConfig?.cities || {});
+      if (cityNames.length === 0) return;
+      if (!confirm(`¿Generar/actualizar los ficheros de las ${cityNames.length} ciudades? Puede tardar varios minutos.`)) return;
+      setAdminScrapeButtonsDisabled(true);
+      const logsEl = document.getElementById('adminScrapeLogs');
+      if (logsEl) logsEl.textContent = '';
+      for (let i = 0; i < cityNames.length; i++) {
+        const c = cityNames[i];
+        document.getElementById('adminScrapeStatusText').textContent = `🌍 [${i + 1}/${cityNames.length}] Procesando ${c}...`;
+        await adminRunScrape(true, c);
+      }
+      document.getElementById('adminScrapeStatusText').textContent = `✅ Proceso completado para ${cityNames.length} ciudades.`;
+      setAdminScrapeButtonsDisabled(false);
+      await loadAdminOverview();
     }
 
     window.addEventListener('load', checkAdminSession);
