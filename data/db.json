@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Salamanca",
+    "selectedCity": "Sevilla",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,29 +100,29 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:09:25.563Z",
-    "city": "Salamanca",
+    "updatedAt": "2026-11-26T20:09:33.291Z",
+    "city": "Sevilla",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 31,
-    "totalMatched": 31,
+    "totalScanned": 85,
+    "totalMatched": 56,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Salamanca",
-      "🔗 URLs configuradas para Salamanca: https://conciertos.club/salamanca",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Sevilla",
+      "🔗 URLs configuradas para Sevilla: https://www.escenaensevilla.es/",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/salamanca): 10 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Salamanca: 21 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Salamanca: 0 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Salamanca: 0 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 20 conciertos catalogados (2 por IA, 11 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [MOVISTAR ARENA: 21], [PALACIO CONGRESOS: 6], [CASINO DE SALAMANC: 2], [POTEMKIM: 1], [CAMELOT: 1]",
-      "🎪 Festivales en Salamanca: [INVERFEST: 21]",
+      "✓ Escaneado Escena en Sevilla (https://www.escenaensevilla.es/): 77 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Sevilla: 8 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Sevilla: 0 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Sevilla: 0 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 47 conciertos catalogados (0 por IA, 38 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [CASALA TEATRO: 8], [ECLIPSO CULTURAL A: 6], [IGLESIA DE SAN JAC: 4], [FUNDACIÓN CAJASOL: 4], [PEÑA FLAMENCA TORR: 3], [SEDE DE ASSEJAZZ: 3], [MOVISTAR ARENA: 3], [CARTUJA CENTER CIT: 2], [PANDORA SEVILLA: 2], [SUPRA MUSIC HALL: 2], [SALA CUSTOM: 2], [SALA X: 2], [MALANDAR MUSIC CLU: 2], [TEATRO LOPE DE VEG: 2], [LA RIVIERA: 2], [FUN CLUB SEVILLA: 1], [LA TREGUA: 1], [HOTEL ALFONSO XIII: 1], [AUDITORIO ZGZ: 1], [TEATRO MAESTRANZA: 1], [CUATROGATOS: 1], [SIROCO: 1], [SALA VILLANOS: 1], [TEATRO ALBÉNIZ: 1]",
+      "🎪 Festivales en Sevilla: [INVERFEST: 8]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [SIN ESPECIFICAR: 11], [ROCK: 7], [POP: 4], [INDIE / ALT: 3], [ELECTRÓNICA: 2], [SOUL / FUNK: 2], [FOLK / CANTAUTOR: 1], [CLÁSICA: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 31"
+      "🎵 Estilos musicales detectados en la descripción: [SIN ESPECIFICAR: 14], [FLAMENCO: 13], [CLÁSICA: 9], [ROCK: 8], [JAZZ: 5], [ELECTRÓNICA: 2], [LATINO / SKA: 2], [SOUL / FUNK: 1], [INDIE / ALT: 1], [URBANO / RAP: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 56"
     ]
   },
   "concertStyles": [],
