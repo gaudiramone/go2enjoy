@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Murcia",
+    "selectedCity": "Alicante",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,29 +100,29 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:08:30.861Z",
-    "city": "Murcia",
+    "updatedAt": "2026-11-26T20:09:01.396Z",
+    "city": "Alicante",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 123,
-    "totalMatched": 118,
+    "totalScanned": 97,
+    "totalMatched": 91,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Murcia",
-      "🔗 URLs configuradas para Murcia: https://conciertos.club/murcia",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Alicante",
+      "🔗 URLs configuradas para Alicante: https://conciertos.club/alicante",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/murcia): 122 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Murcia: 1 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Murcia: 0 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Murcia: 0 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 86 conciertos catalogados (0 por IA, 37 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [GARAJE BEAT CLUB: 14], [SALA MAMBA!: 14], [SALA REM: 13], [AUDITORIO ZGZ: 11], [REAL CASINO DE MUR: 7], [ARIZONA RUTA 66: 6], [LA CASA DE LA LUZ: 6], [LA YESERÍA: 5], [CAFÉ DE ALBA: 5], [TEATRO CIRCO MURCI: 5], [PARQUE DE LA RAMBL: 5], [SALA REVÓLVER: 4], [SALA SPECTRUM: 4], [MUSIK: 3], [MISTER WITT: 2], [LOS PÁJAROS: 2], [PABELLÓN DEPORTIVO: 2], [TEATRO CERVANTES: 1], [LA ALMAZARA CENTRO: 1], [LA PUERTA FALSA: 1], [TEATRO CIRCO APOLO: 1], [SALA Z: 1], [CASINO DE ÁGUILAS: 1], [CENTRO CULTURAL RA: 1], [LA RIVIERA: 1], [TEATRO ROMEA: 1], [CASA DE LA CULTURA: 1]",
-      "🎪 Festivales en Murcia: [INVERFEST: 1]",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/alicante): 92 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Alicante: 4 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Alicante: 1 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Alicante: 0 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 71 conciertos catalogados (5 por IA, 26 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [MUSEO ARQUEOLÓGICO: 15], [SALA MAREAROCK: 12], [SALA EUTERPE: 8], [SALA THE ONE: 5], [OVERDRIVE ROCK CAF: 4], [GRAN TEATRO: 4], [SALA STEREO: 4], [LA GRAMOLA: 3], [CRESOL 66: 3], [AUDITORIO ZGZ: 3], [CIRCO PRICE: 3], [EL BUNKER: 2], [DAYTONA BIKER'S MO: 2], [TNT BLUES: 2], [FRONTERA ROCK BAR: 2], [MARMARELA: 2], [TEATRO PRINCIPAL: 2], [FUNDACIÓN MEDITERR: 2], [REAL LICEO CASINO: 1], [EL TRÉBOL RESTAURA: 1], [LA FARÁNDULA: 1], [LA PUERTA FALSA: 1], [SÖDA BAR: 1], [LA LLOTJA: 1], [TEATRO CHAPÍ: 1], [AVINGUDA DE L'ANTO: 1], [TEATRO CIRCO ATANA: 1], [LA RIVIERA: 1], [CONFETTI: 1], [AUDITORI LA NUCIA: 1], [TEATRO RÍO: 1]",
+      "🎪 Festivales en Alicante: [INVERFEST: 4], [ROAD TO INVERFEST 2026: 1]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 42], [SIN ESPECIFICAR: 33], [FOLK / CANTAUTOR: 10], [CLÁSICA: 7], [LATINO / SKA: 5], [URBANO / RAP: 4], [JAZZ: 4], [FLAMENCO: 4], [POP: 3], [ELECTRÓNICA: 2], [PUNK: 2], [SOUL / FUNK: 1], [INDIE / ALT: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 118"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 29], [SIN ESPECIFICAR: 25], [POP: 9], [LATINO / SKA: 6], [CLÁSICA: 5], [URBANO / RAP: 4], [PUNK: 3], [FLAMENCO: 3], [BLUES: 2], [JAZZ: 1], [METAL / HEAVY: 1], [SOUL / FUNK: 1], [FOLK / CANTAUTOR: 1], [ELECTRÓNICA: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 91"
     ]
   },
   "concertStyles": [],
