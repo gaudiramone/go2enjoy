@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Madrid",
+    "selectedCity": "Barcelona",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,34 +100,30 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T17:08:55.357Z",
-    "city": "Madrid",
+    "updatedAt": "2026-11-26T20:08:00.641Z",
+    "city": "Barcelona",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 1159,
-    "totalMatched": 1085,
+    "totalScanned": 405,
+    "totalMatched": 391,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Madrid",
-      "🔗 URLs configuradas para Madrid: https://www.esmadrid.com/agenda-exposiciones-madrid, https://www.esmadrid.com/agenda-musica-madrid, https://www.esmadrid.com/agenda-teatro-madrid, https://www.esmadrid.com/agenda-musicales, https://madridenvivo.com/, https://conciertos.club/madrid",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Barcelona",
+      "🔗 URLs configuradas para Barcelona: https://guia.barcelona.cat/es, https://conciertos.club/barcelona",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado esMADRID (https://www.esmadrid.com/agenda-exposiciones-madrid): 61 eventos extraídos",
-      "✓ Escaneado esMADRID (https://www.esmadrid.com/agenda-musica-madrid): 7 eventos extraídos",
-      "✓ Escaneado esMADRID (https://www.esmadrid.com/agenda-teatro-madrid): 35 eventos extraídos",
-      "✓ Escaneado esMADRID (https://www.esmadrid.com/agenda-musicales): 17 eventos extraídos",
-      "✓ Escaneado Madrid en Vivo (https://madridenvivo.com/): 462 eventos extraídos",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/madrid): 439 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Madrid: 134 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Madrid: 3 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Madrid: 1 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 775 conciertos catalogados (30 por IA, 226 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [MOVISTAR ARENA: 50], [LA RIVIERA: 39], [SALA EL SOL: 39], [LA COQUETTE: 30], [SALA VILLANOS: 29], [RINCÓN DEL ARTE NU: 29], [MOE: 28], [HONKY TONK: 27], [INTRUSO BAR: 25], [SIROCO: 25], [FUN HOUSE: 21], [EL DESPERTAR CAFÉ: 20], [CIRCO PRICE: 20], [CAFÉ BERLÍN: 19], [THUNDERCAT: 19], [CADAVRA CLUB: 18], [CAFÉ CENTRAL: 17], [JAZZVILLE: 16], [GALILEO GALILEI: 16], [SALA CLAMORES: 15], [OTROS ESCENARIOS: 14], [TABLAO DE LA VILLA: 14], [TABLAO ÓPERA FLAME: 14], [TEATRO ALBÉNIZ: 14], [TABLAO FLAMENCO TO: 13], [TEMPO AUDIOPHILE C: 13], [MOBY DICK: 13], [MARAVILLAS: 12], [EL CAFÉ DE LA ÓPER: 11], [BIG MAMA BALLROOM: 11], [DIME QUE ME QUIERE: 11], [CAFÉ LA PALMA: 11], [SALA VESTA: 11], [FOUR SEASONS HOTEL: 11], [CÍRCULO DE BELLAS: 11], [BARRACUDAS ROCK BA: 10], [SALA UNI: 10], [LIBERTAD 8: 9], [ROCKVILLE: 9], [PALACIO DE VISTALE: 9], [MARAVILLAS CLUB: 8], [VESTA: 7], [SALA NAZCA: 7], [CADILLAC SOLITARIO: 7], [SALA BUT: 7], [ATENEO DE MADRID: 7], [C.C.C. CONDE DUQUE: 7], [FULANITA DE TAL: 6], [LIVE LAS VENTAS: 6], [BASÍLICA PONTIFICI: 6], [CAFÉ EL DESPERTAR: 6], [REVI LIVE: 6], [IFEMA: 6], [EL PERRO CLUB: 5], [GRUTA 77: 5], [BABYLON: 5], [HANGAR 48: 5], [INDEPENDANCE CLUB: 5], [STAIRWAY: 5], [CIEN POR CIEN: 4], [EL PERRO DE LA PAR: 4], [TEATRO ESLAVA: 4], [EL SÓTANO: 4], [CARDAMOMO: 3], [SALA OLVIDO: 3], [AUTOCINE MADRID: 3], [SILIKONA: 3], [ELEFANTE BLANCO: 3], [CANDELA: 3], [TEATRO CALDERÓN: 2], [COPÉRNICO: 2], [SALA ROCKVILLE: 2], [CANOPY BY HILTON M: 2], [CONTRACLUB: 2], [SALA B: 2], [FOTOMATÓN: 2], [SALA MON LIVE: 2], [LA CUBIERTA DE LEG: 2], [TEATRO ALCALÁ: 2], [SALA LA TRINCHERA: 2], [WURLITZER BALLROOM: 2], [LA VEGA DEL HENARE: 2], [CHANGÓ CLUB: 1], [PLAZA MAHOU: 1], [CRICKET PUB: 1], [TABLAO FLAMENCO 19: 1], [ESPACIO AL MARGEN: 1], [GRAN TEATRO CAIXAB: 1], [SALA TARAMBANA: 1], [TEATRO JOSÉ MARÍA: 1], [SALA OESTE: 1], [WELLINGTON HOTEL: 1], [COLEGIO MAYOR ELÍA: 1], [EXE VICTORIA PALAC: 1], [MUSIC STATION PRÍN: 1], [SALA LÓPEZ: 1], [LATA BOMBILLAS: 1], [AUDITORIO ZGZ: 1], [TEATRO DE LA ZARZU: 1], [KAFE ANTZOKIA: 1], [TEATRO REAL: 1]",
-      "🎪 Festivales en Madrid: [INVERFEST: 134], [ROAD TO INVERFEST 2026: 3], [NEGUFEST: 1]",
-      "🎭 Teatros / Salas detectadas: [OTROS ESCENARIOS: 51], [MICROTEATRO: 34], [T. FLAMENCO MAD: 4], [TEATRO RIALTO: 3], [TEATRO ESLAVA: 2], [SALA CLAMORES: 1], [INDEPENDANCE CLUB: 1]",
-      "🖼️ Salas de Exposiciones detectadas: [OTROS ESCENARIOS: 61]",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 346], [SIN ESPECIFICAR: 201], [JAZZ: 80], [FLAMENCO: 64], [BLUES: 47], [POP: 35], [ELECTRÓNICA: 29], [LATINO / SKA: 25], [SOUL / FUNK: 23], [URBANO / RAP: 23], [CLÁSICA: 20], [FOLK / CANTAUTOR: 16], [INDIE / ALT: 14], [PUNK: 4], [METAL / HEAVY: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 1085"
+      "✓ Escaneado guia.barcelona.cat (https://guia.barcelona.cat/es): 0 eventos extraídos",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/barcelona): 397 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Barcelona: 6 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Barcelona: 1 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Barcelona: 1 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 337 conciertos catalogados (82 por IA, 68 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [TEATRE TÍVOLI: 49], [JAMBOREE JAZZ CLUB: 37], [APOLO: 26], [LA NAU: 20], [RAZZMATAZZ 1: 20], [MARULA CAFÉ: 20], [REAL CÍRCULO ARTÍS: 18], [BASÍLICA DE LA MER: 15], [SALA UPLOAD: 14], [RAZZMATAZZ 3: 14], [RAZZMATAZZ 2: 12], [LA 2 DE APOLO: 11], [SAUVAGE CLUB: 11], [PALAU SANT JORDI: 11], [PALAU DE LA MÚSICA: 11], [MUSEO EUROPEO DE A: 8], [SALAMANDRA: 8], [LA JAZZ CAVA: 8], [HARLEM JAZZ CLUB: 7], [PARROQUIA DE SAN F: 7], [LUZ DE GAS: 7], [SANT JORDI CLUB: 7], [IGLESIA DEL SAGRAD: 7], [DOSROMBOS: 5], [ALMO2BAR: 3], [GARAGE 1950'S DINE: 3], [MUSEO DEL AGUA Y E: 3], [SALA PARAL: 2], [ESPAI CULTURA FUND: 2], [ANTIGUA FÁBRICA ES: 2], [LA CINC DE APOLO: 2], [CASA MUSEO NURIA P: 2], [LA RIVIERA: 2], [DIOBAR: 1], [LENNON'S CLUB: 1], [CRIPTA GAUDÍ: 1], [AUDITORI L’ILLA: 1], [LA FARGA: 1], [MOVISTAR ARENA: 1], [BAR MEDITERRÁNEO: 1], [LEGENDS DANCE HALL: 1], [AUDITORI JOAN BORD: 1], [FACTORÍA CULTURAL: 1], [GRAN TEATRE DEL LI: 1], [NEW FIZZ: 1], [C.C.C. CONDE DUQUE: 1], [CIRCO PRICE: 1], [TEATRO ESQUINAS: 1], [SALA VILLANOS: 1], [KAFE ANTZOKIA: 1]",
+      "🎪 Festivales en Barcelona: [INVERFEST: 6], [ROAD TO INVERFEST 2026: 1], [NEGUFEST: 1]",
+      "🎭 Teatros / Salas detectadas: ",
+      "🖼️ Salas de Exposiciones detectadas: ",
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 93], [POP: 61], [SIN ESPECIFICAR: 58], [JAZZ: 51], [LATINO / SKA: 30], [URBANO / RAP: 29], [CLÁSICA: 24], [BLUES: 12], [FOLK / CANTAUTOR: 10], [ELECTRÓNICA: 7], [SOUL / FUNK: 5], [INDIE / ALT: 5], [METAL / HEAVY: 2], [PUNK: 2], [FLAMENCO: 2]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 391"
     ]
   },
   "concertStyles": [],
