@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Alicante",
+    "selectedCity": "Granada",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,29 +100,29 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:09:01.396Z",
-    "city": "Alicante",
+    "updatedAt": "2026-11-26T20:09:08.235Z",
+    "city": "Granada",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 97,
-    "totalMatched": 91,
+    "totalScanned": 105,
+    "totalMatched": 104,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Alicante",
-      "🔗 URLs configuradas para Alicante: https://conciertos.club/alicante",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Granada",
+      "🔗 URLs configuradas para Granada: https://www.conciertosengranada.es/",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/alicante): 92 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Alicante: 4 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Alicante: 1 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Alicante: 0 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 71 conciertos catalogados (5 por IA, 26 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [MUSEO ARQUEOLÓGICO: 15], [SALA MAREAROCK: 12], [SALA EUTERPE: 8], [SALA THE ONE: 5], [OVERDRIVE ROCK CAF: 4], [GRAN TEATRO: 4], [SALA STEREO: 4], [LA GRAMOLA: 3], [CRESOL 66: 3], [AUDITORIO ZGZ: 3], [CIRCO PRICE: 3], [EL BUNKER: 2], [DAYTONA BIKER'S MO: 2], [TNT BLUES: 2], [FRONTERA ROCK BAR: 2], [MARMARELA: 2], [TEATRO PRINCIPAL: 2], [FUNDACIÓN MEDITERR: 2], [REAL LICEO CASINO: 1], [EL TRÉBOL RESTAURA: 1], [LA FARÁNDULA: 1], [LA PUERTA FALSA: 1], [SÖDA BAR: 1], [LA LLOTJA: 1], [TEATRO CHAPÍ: 1], [AVINGUDA DE L'ANTO: 1], [TEATRO CIRCO ATANA: 1], [LA RIVIERA: 1], [CONFETTI: 1], [AUDITORI LA NUCIA: 1], [TEATRO RÍO: 1]",
-      "🎪 Festivales en Alicante: [INVERFEST: 4], [ROAD TO INVERFEST 2026: 1]",
+      "✓ Escaneado Conciertos en Granada (https://www.conciertosengranada.es/): 103 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Granada: 1 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Granada: 1 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Granada: 0 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 87 conciertos catalogados (0 por IA, 18 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [OOL YA KOO: 12], [ROCKNROLLA: 9], [PALACIO CONGRESOS: 8], [PLANTA BAJA: 8], [LEMON ROCK: 7], [SALA RIFF: 7], [LA LOLAINA: 7], [EL TREN: 5], [JJ TABERNA: 4], [SALA PREMIER: 4], [HOTEL PALACIO DE S: 4], [LA CHISTERA: 3], [AUDITORIO ZGZ: 3], [INDUSTRIAL COPERA: 3], [PALACIO MUNICIPAL: 2], [ALIATAR: 2], [CATEDRAL: 2], [NOIR CAFÉ: 1], [LIBERIA CAFÉ PUB: 1], [BACKSTAGE: 1], [VAGOMUNDO CAFÉ: 1], [EL ACORDE: 1], [MONASTERIO DE SAN: 1], [TABERNA TERRA BLUE: 1], [SIN SENTIDO: 1], [ESTACIÓN DE METRO: 1], [SALA VÍBORA: 1], [TEATRO MUNICIPAL M: 1], [TABERNA DEL BESO: 1], [TEATRO PRINCIPAL: 1], [TEATRO ALBÉNIZ: 1]",
+      "🎪 Festivales en Granada: [ROAD TO INVERFEST 2026: 1], [INVERFEST: 1]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 29], [SIN ESPECIFICAR: 25], [POP: 9], [LATINO / SKA: 6], [CLÁSICA: 5], [URBANO / RAP: 4], [PUNK: 3], [FLAMENCO: 3], [BLUES: 2], [JAZZ: 1], [METAL / HEAVY: 1], [SOUL / FUNK: 1], [FOLK / CANTAUTOR: 1], [ELECTRÓNICA: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 91"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 32], [SIN ESPECIFICAR: 18], [JAZZ: 11], [LATINO / SKA: 8], [CLÁSICA: 8], [BLUES: 6], [FOLK / CANTAUTOR: 5], [FLAMENCO: 4], [POP: 2], [PUNK: 2], [SOUL / FUNK: 2], [ELECTRÓNICA: 2], [URBANO / RAP: 2], [INDIE / ALT: 1], [METAL / HEAVY: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 104"
     ]
   },
   "concertStyles": [],
