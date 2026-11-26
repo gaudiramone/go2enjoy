@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Barcelona",
+    "selectedCity": "VALENCIA",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,30 +100,29 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:08:00.641Z",
-    "city": "Barcelona",
+    "updatedAt": "2026-11-26T20:08:22.746Z",
+    "city": "VALENCIA",
     "referenceDate": "2026-11-26",
     "oneYearHorizon": "2027-11-26",
-    "totalScanned": 405,
-    "totalMatched": 391,
+    "totalScanned": 204,
+    "totalMatched": 195,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Barcelona",
-      "🔗 URLs configuradas para Barcelona: https://guia.barcelona.cat/es, https://conciertos.club/barcelona",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para VALENCIA",
+      "🔗 URLs configuradas para VALENCIA: https://conciertos.club/valencia",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado guia.barcelona.cat (https://guia.barcelona.cat/es): 0 eventos extraídos",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/barcelona): 397 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Barcelona: 6 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Barcelona: 1 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Barcelona: 1 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 337 conciertos catalogados (82 por IA, 68 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [TEATRE TÍVOLI: 49], [JAMBOREE JAZZ CLUB: 37], [APOLO: 26], [LA NAU: 20], [RAZZMATAZZ 1: 20], [MARULA CAFÉ: 20], [REAL CÍRCULO ARTÍS: 18], [BASÍLICA DE LA MER: 15], [SALA UPLOAD: 14], [RAZZMATAZZ 3: 14], [RAZZMATAZZ 2: 12], [LA 2 DE APOLO: 11], [SAUVAGE CLUB: 11], [PALAU SANT JORDI: 11], [PALAU DE LA MÚSICA: 11], [MUSEO EUROPEO DE A: 8], [SALAMANDRA: 8], [LA JAZZ CAVA: 8], [HARLEM JAZZ CLUB: 7], [PARROQUIA DE SAN F: 7], [LUZ DE GAS: 7], [SANT JORDI CLUB: 7], [IGLESIA DEL SAGRAD: 7], [DOSROMBOS: 5], [ALMO2BAR: 3], [GARAGE 1950'S DINE: 3], [MUSEO DEL AGUA Y E: 3], [SALA PARAL: 2], [ESPAI CULTURA FUND: 2], [ANTIGUA FÁBRICA ES: 2], [LA CINC DE APOLO: 2], [CASA MUSEO NURIA P: 2], [LA RIVIERA: 2], [DIOBAR: 1], [LENNON'S CLUB: 1], [CRIPTA GAUDÍ: 1], [AUDITORI L’ILLA: 1], [LA FARGA: 1], [MOVISTAR ARENA: 1], [BAR MEDITERRÁNEO: 1], [LEGENDS DANCE HALL: 1], [AUDITORI JOAN BORD: 1], [FACTORÍA CULTURAL: 1], [GRAN TEATRE DEL LI: 1], [NEW FIZZ: 1], [C.C.C. CONDE DUQUE: 1], [CIRCO PRICE: 1], [TEATRO ESQUINAS: 1], [SALA VILLANOS: 1], [KAFE ANTZOKIA: 1]",
-      "🎪 Festivales en Barcelona: [INVERFEST: 6], [ROAD TO INVERFEST 2026: 1], [NEGUFEST: 1]",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/valencia): 198 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para VALENCIA: 4 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para VALENCIA: 0 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para VALENCIA: 2 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 157 conciertos catalogados (3 por IA, 47 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [OTROS ESCENARIOS: 27], [BLACK NOTE CLUB: 24], [ROIG ARENA: 23], [LOCO CLUB: 23], [DUBLÍN: 13], [ATENEO MERCANTIL: 9], [SALA JERUSALEM: 8], [SALA MOON: 8], [PALACIO CONGRESOS: 8], [AUDITORIO ZGZ: 6], [LA PÉRGOLA DE LA M: 5], [SALA REPVBLICCA: 4], [OCEANOGRÀFIC: 4], [LA RAMBLETA: 3], [PETER ROCK CLUB: 3], [PALAU ALAMEDA: 2], [EL VOLANDER: 2], [SALA LÓPEZ: 2], [LA RIVIERA: 2], [RADIO CITY: 2], [SALA RUSSAFA: 1], [CASA DE CULTURA MA: 1], [LA 3 CLUB: 1], [RUTA 69 ROCK BAR: 1], [TEATRO FLUMEN: 1], [TEATRE DEL RAVAL: 1], [JOY VALENCIA: 1], [CA REVOLTA: 1], [LA CASA DE LA MAR: 1], [ZULÚ KLUB: 1], [SALA MOON VALENCIA: 1], [REINA SOFÍA: 1], [TEATRO LA PLAZETA: 1], [CIRCO PRICE: 1], [AZKENA: 1], [SALA VILLANOS: 1], [KAFE ANTZOKIA: 1]",
+      "🎪 Festivales en VALENCIA: [INVERFEST: 4], [NEGUFEST: 2]",
       "🎭 Teatros / Salas detectadas: ",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 93], [POP: 61], [SIN ESPECIFICAR: 58], [JAZZ: 51], [LATINO / SKA: 30], [URBANO / RAP: 29], [CLÁSICA: 24], [BLUES: 12], [FOLK / CANTAUTOR: 10], [ELECTRÓNICA: 7], [SOUL / FUNK: 5], [INDIE / ALT: 5], [METAL / HEAVY: 2], [PUNK: 2], [FLAMENCO: 2]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 391"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 78], [SIN ESPECIFICAR: 47], [URBANO / RAP: 12], [JAZZ: 8], [POP: 8], [ELECTRÓNICA: 8], [LATINO / SKA: 7], [FOLK / CANTAUTOR: 6], [FLAMENCO: 6], [SOUL / FUNK: 4], [CLÁSICA: 4], [PUNK: 3], [BLUES: 2], [INDIE / ALT: 2]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 195"
     ]
   },
   "concertStyles": [],
