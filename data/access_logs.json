@@ -1,5 +1,15 @@
 [
   {
+    "timestamp": "2026-11-26T10:42:36.895Z",
+    "madridTime": "2026-11-26 11:42:36",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (4 apuntes)"
+  },
+  {
     "timestamp": "2026-11-26T10:39:49.834Z",
     "madridTime": "2026-11-26 11:39:49",
     "type": "admin_login",
