@@ -8,6 +8,7 @@ const { runCalendarUpdate, formatDateYMD, VALID_SHOW_TYPES } = require('./scrape
 const app = express();
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = path.join(__dirname, 'data');
+const CITIES_DIR = path.join(DATA_DIR, 'cities');
 const CONFIG_PATH = path.join(DATA_DIR, 'config.json');
 const DB_PATH = path.join(DATA_DIR, 'db.json');
 const USER_PROFILES_PATH = path.join(DATA_DIR, 'user_profiles.json');
@@ -109,8 +110,13 @@ async function ensureGitHubDataBranch() {
   return true;
 }
 
+function encodeDataRelPath(relPath) {
+  return String(relPath).split('/').map(encodeURIComponent).join('/');
+}
+
 async function pullFileFromGitHub(fileName) {
-  const res = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${encodeURIComponent(fileName)}?ref=${encodeURIComponent(GITHUB_DATA_BRANCH)}`);
+  const relEncoded = encodeDataRelPath(fileName);
+  const res = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${relEncoded}?ref=${encodeURIComponent(GITHUB_DATA_BRANCH)}`);
   if (res.status === 404) {
     const localPath = path.join(DATA_DIR, fileName);
     if (fs.existsSync(localPath)) {
@@ -134,8 +140,9 @@ async function pullFileFromGitHub(fileName) {
     throw new Error(`Pull ${fileName} sin contenido (HTTP ${res.status})`);
   }
   const decoded = Buffer.from(String(base64Content).replace(/\n/g, ''), 'base64').toString('utf8');
-  if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-  fs.writeFileSync(path.join(DATA_DIR, fileName), decoded, 'utf8');
+  const localPath = path.join(DATA_DIR, fileName);
+  fs.mkdirSync(path.dirname(localPath), { recursive: true });
+  fs.writeFileSync(localPath, decoded, 'utf8');
   githubDataStoreState.fileShas.set(fileName, res.json.sha);
   githubDataStoreState.lastSyncAt = new Date().toISOString();
 }
@@ -145,10 +152,11 @@ async function pushFileToGitHub(fileName, retryOnConflict = true) {
   const localPath = path.join(DATA_DIR, fileName);
   if (!fs.existsSync(localPath)) return;
 
+  const relEncoded = encodeDataRelPath(fileName);
   const contentB64 = fs.readFileSync(localPath).toString('base64');
   let sha = githubDataStoreState.fileShas.get(fileName);
   if (!sha) {
-    const existing = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${encodeURIComponent(fileName)}?ref=${encodeURIComponent(GITHUB_DATA_BRANCH)}`);
+    const existing = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${relEncoded}?ref=${encodeURIComponent(GITHUB_DATA_BRANCH)}`);
     if (existing.ok && existing.json?.sha) {
       sha = existing.json.sha;
       githubDataStoreState.fileShas.set(fileName, sha);
@@ -161,7 +169,7 @@ async function pushFileToGitHub(fileName, retryOnConflict = true) {
     branch: GITHUB_DATA_BRANCH,
     ...(sha ? { sha } : {})
   };
-  const putRes = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${encodeURIComponent(fileName)}`, {
+  const putRes = await githubApi(`/repos/${GITHUB_REPO}/contents/data/${relEncoded}`, {
     method: 'PUT',
     body: JSON.stringify(body)
   });
@@ -209,6 +217,17 @@ async function initGitHubDataStore() {
     for (const fileName of GITHUB_SYNC_FILES) {
       await pullFileFromGitHub(fileName);
     }
+    const citiesRes = await githubApi(`/repos/${GITHUB_REPO}/contents/data/cities?ref=${encodeURIComponent(GITHUB_DATA_BRANCH)}`);
+    if (citiesRes.ok && Array.isArray(citiesRes.json)) {
+      for (const item of citiesRes.json) {
+        if (item?.type === 'file' && item.name?.endsWith('.json')) {
+          await pullFileFromGitHub(`cities/${item.name}`);
+        }
+      }
+    }
+    // Ejecutar migración automática de db.json si todavía contenía cityCache o appConfig
+    loadAppConfig();
+    loadDb();
     githubDataStoreState.initialized = true;
     githubDataStoreState.lastError = null;
     console.log(`☁️ GitHub data-store sincronizado (${GITHUB_REPO} @ ${GITHUB_DATA_BRANCH})`);
@@ -330,13 +349,34 @@ function loadDb() {
         parsed.userProfile.preferences.A.showTypes = [...VALID_SHOW_TYPES];
       }
     }
-    if (!Array.isArray(parsed.concertVenues)) {
-      parsed.concertVenues = [];
+    let needsCompactSave = false;
+    if (parsed.cityCache && typeof parsed.cityCache === 'object' && Object.keys(parsed.cityCache).length > 0) {
+      for (const [cityKey, entry] of Object.entries(parsed.cityCache)) {
+        if (entry && Array.isArray(entry.events)) {
+          saveCityCacheEntry(cityKey, entry);
+        }
+      }
+      parsed.cityCache = {};
+      needsCompactSave = true;
     }
-    if (!parsed.appConfig) {
-      parsed.appConfig = JSON.parse(JSON.stringify(DEFAULT_DB.appConfig));
-    } else if (!parsed.appConfig.googleClientId) {
-      parsed.appConfig.googleClientId = DEFAULT_GOOGLE_CLIENT_ID;
+    if (Array.isArray(parsed.calendarEvents) && parsed.calendarEvents.length > 0) {
+      parsed.calendarEvents = [];
+      parsed.concertVenues = [];
+      parsed.concertFestivals = [];
+      parsed.theaterVenues = [];
+      parsed.exhibitionVenues = [];
+      parsed.concertStyles = [];
+      needsCompactSave = true;
+    }
+    if (parsed.appConfig) {
+      if (!fs.existsSync(CONFIG_PATH)) {
+        saveAppConfig(parsed.appConfig);
+      }
+      delete parsed.appConfig;
+      needsCompactSave = true;
+    }
+    if (needsCompactSave) {
+      saveDb(parsed);
     }
     return parsed;
   } catch (err) {
@@ -413,16 +453,80 @@ function loadAppConfig() {
   return normalizeAppConfig(null);
 }
 
+function getCitySlug(cityName) {
+  const normalized = String(cityName || 'unknown')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+  return normalized || 'unknown';
+}
+
+function getCityCacheRelPath(cityName) {
+  return `cities/${getCitySlug(cityName)}.json`;
+}
+
+function saveCityCacheEntry(cityName, entry) {
+  if (!cityName || !entry) return;
+  if (!fs.existsSync(CITIES_DIR)) {
+    fs.mkdirSync(CITIES_DIR, { recursive: true });
+  }
+  const rel = getCityCacheRelPath(cityName);
+  const payload = { city: cityName, ...entry };
+  fs.writeFileSync(path.join(DATA_DIR, rel), JSON.stringify(payload, null, 2), 'utf8');
+  scheduleGitHubSync(rel, 400);
+}
+
+function loadCityCacheEntry(cityName) {
+  if (!cityName) return null;
+  try {
+    const full = path.join(DATA_DIR, getCityCacheRelPath(cityName));
+    if (!fs.existsSync(full)) return null;
+    return JSON.parse(fs.readFileSync(full, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function loadAllCityCaches() {
+  const out = {};
+  try {
+    if (!fs.existsSync(CITIES_DIR)) return out;
+    for (const file of fs.readdirSync(CITIES_DIR)) {
+      if (!file.endsWith('.json')) continue;
+      try {
+        const parsed = JSON.parse(fs.readFileSync(path.join(CITIES_DIR, file), 'utf8'));
+        const cityKey = parsed?.city || parsed?.meta?.city || file.replace(/\.json$/i, '');
+        if (cityKey) out[cityKey] = parsed;
+      } catch {}
+    }
+  } catch {}
+  return out;
+}
+
 // GET full state (without leaking any user's personal profile)
 app.get('/api/state', (req, res) => {
   const db = loadDb();
   const appConfig = loadAppConfig();
+  const cityCache = loadAllCityCaches();
+  const activeCity = db.userProfile?.selectedCity || appConfig.activeCity || 'Zaragoza';
+  const activeEntry = cityCache[activeCity] || loadCityCacheEntry(activeCity);
+
   res.json({
     ...db,
     appConfig,
+    cityCache,
+    calendarEvents: activeEntry?.events || db.calendarEvents || [],
+    concertVenues: activeEntry?.concertVenues || db.concertVenues || [],
+    concertFestivals: activeEntry?.concertFestivals || db.concertFestivals || [],
+    theaterVenues: activeEntry?.theaterVenues || db.theaterVenues || [],
+    exhibitionVenues: activeEntry?.exhibitionVenues || db.exhibitionVenues || [],
+    concertStyles: activeEntry?.concertStyles || db.concertStyles || [],
+    lastUpdateMeta: activeEntry?.meta || db.lastUpdateMeta || null,
     userProfile: {
       ...DEFAULT_DB.userProfile,
-      selectedCity: db.userProfile?.selectedCity || 'Zaragoza',
+      selectedCity: activeCity,
       preferences: db.userProfile?.preferences || DEFAULT_DB.userProfile.preferences
     }
   });
@@ -487,14 +591,7 @@ app.post('/api/cache/restore', (req, res) => {
   if (!city || !entry || !Array.isArray(entry.events)) {
     return res.status(400).json({ ok: false, error: 'Datos de caché inválidos' });
   }
-  if (!db.cityCache) db.cityCache = {};
-  db.cityCache[city] = entry;
-  db.calendarEvents = entry.events;
-  db.concertVenues = entry.concertVenues || [];
-  db.concertFestivals = entry.concertFestivals || [];
-  db.theaterVenues = entry.theaterVenues || [];
-  db.exhibitionVenues = entry.exhibitionVenues || [];
-  db.concertStyles = entry.concertStyles || [];
+  saveCityCacheEntry(city, entry);
   db.lastUpdateMeta = entry.meta || null;
   saveDb(db);
   res.json({ ok: true });
@@ -752,6 +849,29 @@ app.delete('/api/events/attendance', (req, res) => {
   res.json({ ok: true, attendees: store.events[eventKey] || [] });
 });
 
+function getMadridCutoffYMD(daysAgo = 30) {
+  const cutoffDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
+  return new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Madrid',
+    year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(cutoffDate); // "YYYY-MM-DD"
+}
+
+function pruneExpiredCommunityEvents(store, retentionDays = 30) {
+  if (!store || typeof store.cities !== 'object') return false;
+  const cutoffYMD = getMadridCutoffYMD(retentionDays);
+  let changed = false;
+  for (const [cityName, list] of Object.entries(store.cities)) {
+    if (!Array.isArray(list)) continue;
+    const kept = list.filter(ev => !ev?.date || ev.date >= cutoffYMD);
+    if (kept.length !== list.length) {
+      store.cities[cityName] = kept;
+      changed = true;
+    }
+  }
+  return changed;
+}
+
 function loadCommunityEvents() {
   try {
     if (!fs.existsSync(COMMUNITY_EVENTS_PATH)) {
@@ -759,6 +879,9 @@ function loadCommunityEvents() {
     }
     const parsed = JSON.parse(fs.readFileSync(COMMUNITY_EVENTS_PATH, 'utf8'));
     if (!parsed || typeof parsed.cities !== 'object') return { cities: {} };
+    if (pruneExpiredCommunityEvents(parsed, 30)) {
+      saveCommunityEvents(parsed);
+    }
     return parsed;
   } catch {
     return { cities: {} };
@@ -802,17 +925,19 @@ app.get('/api/community-events', (req, res) => {
     year: 'numeric', month: '2-digit', day: '2-digit',
     hour: '2-digit', minute: '2-digit', hour12: false
   }).format(new Date()); // "YYYY-MM-DD HH:MM"
-  const upcoming = list.filter(ev => {
-    if (!ev.date) return false;
-    const evKey = `${ev.date} ${(ev.time || '23:59').padStart(5, '0')}`;
-    return evKey >= nowParts;
-  });
-  const sorted = [...upcoming].sort((a, b) => {
-    const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
-    const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
-    if (ka !== kb) return ka.localeCompare(kb);
-    return (a.title || '').localeCompare(b.title || '', 'es');
-  });
+  const sorted = [...list]
+    .filter(ev => Boolean(ev?.date))
+    .map(ev => {
+      const evKey = `${ev.date} ${(ev.time || '23:59').padStart(5, '0')}`;
+      return { ...ev, isPast: evKey < nowParts };
+    })
+    .sort((a, b) => {
+      const ka = `${a.date || '9999-99-99'} ${(a.time || '23:59').padStart(5, '0')}`;
+      const kb = `${b.date || '9999-99-99'} ${(b.time || '23:59').padStart(5, '0')}`;
+      if (ka !== kb) return ka.localeCompare(kb);
+      return (a.title || '').localeCompare(b.title || '', 'es');
+    });
+  const activeCount = sorted.filter(ev => !ev.isPast).length;
   res.json({
     ok: true,
     city,
@@ -823,7 +948,7 @@ app.get('/api/community-events', (req, res) => {
       fileExists: fs.existsSync(COMMUNITY_EVENTS_PATH),
       city,
       totalInCity: list.length,
-      activeCount: sorted.length,
+      activeCount,
       loadTimeMs: Date.now() - startMs,
       loadedAt: new Date().toISOString(),
       allCityRecords: list
@@ -914,16 +1039,9 @@ app.post('/api/calendar/update', async (req, res) => {
     const festivalUrls = appConfig.festivalUrls || [];
     const urlsKey = JSON.stringify({ city: cityConfig.urls || [], festivals: festivalUrls });
     const forceRefresh = req.body.forceRefresh === true;
-    if (!db.cityCache) db.cityCache = {};
 
-    const cachedEntry = db.cityCache[cityName];
+    const cachedEntry = loadCityCacheEntry(cityName);
     if (!forceRefresh && cachedEntry && cachedEntry.date === todayYMD && cachedEntry.urlsKey === urlsKey) {
-      db.calendarEvents = cachedEntry.events || [];
-      db.concertVenues = cachedEntry.concertVenues || [];
-      db.concertFestivals = cachedEntry.concertFestivals || [];
-      db.theaterVenues = cachedEntry.theaterVenues || [];
-      db.exhibitionVenues = cachedEntry.exhibitionVenues || [];
-      db.concertStyles = cachedEntry.concertStyles || [];
       const cachedLogs = [
         `⚡ Caché diaria (${todayYMD}) para ${cityName}: datos recuperados sin volver a acceder a internet.`,
         ...(cachedEntry.meta?.logs || [])
@@ -933,13 +1051,13 @@ app.post('/api/calendar/update', async (req, res) => {
       return res.json({
         ok: true,
         cached: true,
-        events: db.calendarEvents,
-        concertVenues: db.concertVenues,
-        concertFestivals: db.concertFestivals,
-        theaterVenues: db.theaterVenues,
-        exhibitionVenues: db.exhibitionVenues,
-        concertStyles: db.concertStyles,
-        cityCache: db.cityCache,
+        events: cachedEntry.events || [],
+        concertVenues: cachedEntry.concertVenues || [],
+        concertFestivals: cachedEntry.concertFestivals || [],
+        theaterVenues: cachedEntry.theaterVenues || [],
+        exhibitionVenues: cachedEntry.exhibitionVenues || [],
+        concertStyles: cachedEntry.concertStyles || [],
+        cityCache: loadAllCityCaches(),
         meta: db.lastUpdateMeta
       });
     }
@@ -962,8 +1080,8 @@ app.post('/api/calendar/update', async (req, res) => {
       logs: updateResult.logs
     };
 
-    // Sobrescribir la entrada de la ciudad con los datos de hoy (descartando fechas antiguas)
-    db.cityCache[cityName] = {
+    // Guardar la caché de esta ciudad en su propio fichero data/cities/<ciudad>.json
+    const newCityEntry = {
       date: todayYMD,
       urlsKey,
       events: updateResult.events,
@@ -974,26 +1092,20 @@ app.post('/api/calendar/update', async (req, res) => {
       concertStyles: updateResult.concertStyles || [],
       meta
     };
+    saveCityCacheEntry(cityName, newCityEntry);
 
-    db.calendarEvents = updateResult.events;
-    db.concertVenues = updateResult.concertVenues || [];
-    db.concertFestivals = updateResult.concertFestivals || [];
-    db.theaterVenues = updateResult.theaterVenues || [];
-    db.exhibitionVenues = updateResult.exhibitionVenues || [];
-    db.concertStyles = updateResult.concertStyles || [];
     db.lastUpdateMeta = meta;
-
     saveDb(db);
     res.json({
       ok: true,
       cached: false,
-      events: db.calendarEvents,
-      concertVenues: db.concertVenues,
-      concertFestivals: db.concertFestivals,
-      theaterVenues: db.theaterVenues,
-      exhibitionVenues: db.exhibitionVenues,
-      concertStyles: db.concertStyles,
-      cityCache: db.cityCache,
+      events: newCityEntry.events,
+      concertVenues: newCityEntry.concertVenues,
+      concertFestivals: newCityEntry.concertFestivals,
+      theaterVenues: newCityEntry.theaterVenues,
+      exhibitionVenues: newCityEntry.exhibitionVenues,
+      concertStyles: newCityEntry.concertStyles,
+      cityCache: loadAllCityCaches(),
       meta: db.lastUpdateMeta
     });
   } catch (err) {
@@ -1291,7 +1403,7 @@ app.get('/api/admin/overview', requireAdmin, (req, res) => {
       communityCities,
       totalAttendanceKeys: attendanceKeys.length,
       totalAttendanceEntries,
-      cachedCities: Object.keys(db.cityCache || {})
+      cachedCities: Object.keys(loadAllCityCaches())
     },
     files,
     users,
@@ -1325,6 +1437,79 @@ app.get('/api/admin/file', requireAdmin, (req, res) => {
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
   }
+});
+
+app.get('/api/admin/export-month', requireAdmin, (req, res) => {
+  const defaultMonth = getMadridTodayYMD().slice(0, 7); // "YYYY-MM"
+  const rawMonth = String(req.query.month || defaultMonth).trim();
+  const month = /^\d{4}-\d{2}$/.test(rawMonth) ? rawMonth : defaultMonth;
+
+  const community = loadCommunityEvents();
+  const profiles = loadUserProfiles();
+  const attendance = loadSharedAttendance();
+  const accessLogs = loadAccessLogs();
+
+  const communityEventsByCity = {};
+  let totalCommunityEvents = 0;
+  for (const [cityName, list] of Object.entries(community.cities || {})) {
+    if (!Array.isArray(list)) continue;
+    const matched = list.filter(ev => String(ev?.date || '').startsWith(month));
+    if (matched.length > 0) {
+      communityEventsByCity[cityName] = matched;
+      totalCommunityEvents += matched.length;
+    }
+  }
+
+  const usersMonth = Object.entries(profiles).map(([email, p]) => {
+    const monthEvents = Array.isArray(p?.profileCalendar)
+      ? p.profileCalendar.filter(ev => String(ev?.date || '').startsWith(month))
+      : [];
+    return {
+      email,
+      alias: p?.alias || '',
+      selectedCity: p?.selectedCity || '',
+      monthEventsCount: monthEvents.length,
+      monthEvents
+    };
+  });
+
+  const attendanceMonth = {};
+  for (const [eventKey, entries] of Object.entries(attendance.events || {})) {
+    if (!Array.isArray(entries)) continue;
+    const matched = entries.filter(e =>
+      String(e?.chosenDate || '').startsWith(month) ||
+      String(e?.updatedAt || '').startsWith(month) ||
+      eventKey.startsWith(month)
+    );
+    if (matched.length > 0) {
+      attendanceMonth[eventKey] = matched;
+    }
+  }
+
+  const logsMonth = accessLogs.filter(l =>
+    String(l?.madridTime || l?.timestamp || '').startsWith(month)
+  );
+
+  const exportPayload = {
+    app: 'go2enjoy.com',
+    month,
+    exportedAt: new Date().toISOString(),
+    exportedBy: req.adminSession.email,
+    summary: {
+      totalCommunityEvents,
+      totalUsers: usersMonth.length,
+      totalAttendanceEvents: Object.keys(attendanceMonth).length,
+      totalAccessLogs: logsMonth.length
+    },
+    communityEvents: communityEventsByCity,
+    sharedAttendance: attendanceMonth,
+    users: usersMonth,
+    accessLogs: logsMonth
+  };
+
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="go2enjoy-export-${month}.json"`);
+  res.send(JSON.stringify(exportPayload, null, 2));
 });
 
 if (require.main === module) {
