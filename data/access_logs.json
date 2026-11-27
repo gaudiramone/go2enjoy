@@ -1,5 +1,15 @@
 [
   {
+    "timestamp": "2026-11-27T10:29:36.493Z",
+    "madridTime": "2026-11-27 11:29:36",
+    "type": "profile_save",
+    "email": "gaudiramone@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (4 apuntes)"
+  },
+  {
     "timestamp": "2026-11-27T10:22:18.482Z",
     "madridTime": "2026-11-27 11:22:18",
     "type": "profile_save",
