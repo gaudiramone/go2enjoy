@@ -194,7 +194,7 @@
       <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-800">
           <div class="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-300">
-            <span>Coloreados según filtros</span>
+            <span>Coloreados según filtros · Ciudad de <strong id="calendarCityLabel" class="text-indigo-300">tu ciudad</strong></span>
           </div>
           <span id="lastUpdatedBadge" class="text-xs text-slate-400">Sin actualizar aún</span>
         </div>
@@ -277,7 +277,7 @@
       <div class="rounded-2xl bg-slate-900/90 border border-slate-800 p-5 shadow-xl">
         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div>
-            <h3 class="text-base font-extrabold text-white">🔗 Eventos del Calendario (con TAG de Sala y Enlace Directo)</h3>
+            <h3 class="text-base font-extrabold text-white">🔗 Eventos del Calendario en <span id="searchCityLabel" class="text-indigo-300">tu ciudad</span> (con TAG de Sala y Enlace Directo)</h3>
             <p class="text-xs text-slate-400">Cada concierto muestra el TAG y color de su sala junto con su enlace directo (Ir a Más info / Comprar entradas)</p>
           </div>
           <input id="searchEventsInput" oninput="renderEventsList()" type="text" placeholder="Buscar por evento o sala..." class="rounded-xl bg-slate-800 border border-slate-700 px-3.5 py-2 text-xs text-white focus:outline-none focus:border-indigo-500" />
@@ -1383,6 +1383,11 @@
           citySelect.value = appState.userProfile.selectedCity;
         }
       }
+      const activeCity = citySelect?.value || appState?.userProfile?.selectedCity || 'Zaragoza';
+      const calLbl = document.getElementById('calendarCityLabel');
+      const searchLbl = document.getElementById('searchCityLabel');
+      if (calLbl) calLbl.textContent = activeCity;
+      if (searchLbl) searchLbl.textContent = activeCity;
     }
 
     function loadCityIntoForm(cityName) {
@@ -1576,6 +1581,12 @@
     }
 
     function refreshCalendarAndStats() {
+      const activeCity = document.getElementById('userCitySelect')?.value || appState?.userProfile?.selectedCity || 'Zaragoza';
+      const calLbl = document.getElementById('calendarCityLabel');
+      const searchLbl = document.getElementById('searchCityLabel');
+      if (calLbl) calLbl.textContent = activeCity;
+      if (searchLbl) searchLbl.textContent = activeCity;
+
       const events = getVisibleEvents();
       events.forEach((ev, idx) => {
         ev._modalIndex = idx;
