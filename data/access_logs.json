@@ -1,5 +1,55 @@
 [
   {
+    "timestamp": "2026-11-27T08:24:51.607Z",
+    "madridTime": "2026-11-27 09:24:51",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T08:24:43.634Z",
+    "madridTime": "2026-11-27 09:24:43",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T08:24:41.305Z",
+    "madridTime": "2026-11-27 09:24:41",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T08:24:36.212Z",
+    "madridTime": "2026-11-27 09:24:36",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T08:24:32.968Z",
+    "madridTime": "2026-11-27 09:24:32",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
     "timestamp": "2026-11-27T08:14:52.083Z",
     "madridTime": "2026-11-27 09:14:52",
     "type": "admin_login",
