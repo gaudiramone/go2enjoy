@@ -1,5 +1,25 @@
 [
   {
+    "timestamp": "2026-11-27T10:35:19.460Z",
+    "madridTime": "2026-11-27 11:35:19",
+    "type": "login",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Madrid",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Inicio de sesión usuario"
+  },
+  {
+    "timestamp": "2026-11-27T10:35:18.896Z",
+    "madridTime": "2026-11-27 11:35:18",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Madrid",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (5 apuntes)"
+  },
+  {
     "timestamp": "2026-11-27T10:34:54.227Z",
     "madridTime": "2026-11-27 11:34:54",
     "type": "login",
