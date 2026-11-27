@@ -985,6 +985,137 @@ async function scrapeEsMadrid(targetUrl, city, referenceDate) {
   }
 }
 
+async function scrapeAdiccine(targetUrl, city, referenceDate) {
+  const events = [];
+  const seenKeys = new Set();
+  const monthsMap = {
+    ene: 1, enero: 1,
+    feb: 2, febrero: 2,
+    mar: 3, marzo: 3,
+    abr: 4, abril: 4,
+    may: 5, mayo: 5,
+    jun: 6, junio: 6,
+    jul: 7, julio: 7,
+    ago: 8, agosto: 8,
+    sep: 9, sept: 9, septiembre: 9, setiembre: 9,
+    oct: 10, octubre: 10,
+    nov: 11, noviembre: 11,
+    dic: 12, diciembre: 12
+  };
+  const norm = s => String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const cityNorm = norm(city);
+  const cityAliases = [cityNorm];
+  if (cityNorm.includes('barcelona')) cityAliases.push('bcn');
+  if (cityNorm.includes('vigo')) cityAliases.push('vigo');
+  if (cityNorm.includes('coruna')) cityAliases.push('coruna');
+
+  try {
+    const html = await fetchHtmlWithTimeout(targetUrl, 10000);
+    const $ = cheerio.load(html);
+    const detailUrls = [];
+    const seenUrls = new Set();
+
+    $('a[href]').each((_, el) => {
+      const href = String($(el).attr('href') || '').trim();
+      if (!href || !/adiccine\.net\/eventos\/[^/]+\/?$/i.test(href)) return;
+      const abs = href.startsWith('http') ? href : new URL(href, targetUrl).href;
+      if (!seenUrls.has(abs)) {
+        seenUrls.add(abs);
+        detailUrls.push(abs);
+      }
+    });
+
+    const refYear = referenceDate.getFullYear();
+    const refMonth = referenceDate.getMonth() + 1;
+    const refDay = referenceDate.getDate();
+
+    const results = await Promise.allSettled(
+      detailUrls.slice(0, 30).map(async detailUrl => {
+        const dHtml = await fetchHtmlWithTimeout(detailUrl, 9000);
+        const $d = cheerio.load(dHtml);
+        const title = $d('h1').first().text().replace(/\s+/g, ' ').trim();
+        if (!title) return null;
+
+        const bodyText = $d('body').text().replace(/\s+/g, ' ').trim();
+        const startIdx = bodyText.indexOf(title);
+        const slice = startIdx >= 0 ? bodyText.slice(startIdx, startIdx + 1600) : bodyText;
+
+        const lugarMatch = slice.match(/Lugar\s+(.+?)\s+(?=D[ií]a\b|Hora\b|Comprar\b|Organiza\b|$)/i);
+        const venueRaw = lugarMatch ? lugarMatch[1].trim() : '';
+        const diaMatch = slice.match(/D[ií]a\s+(\d{1,2})\s+([A-Za-zÁÉÍÓÚáéíóúñÑ]+)(?:\s+(\d{4}))?/i);
+        if (!diaMatch) return null;
+
+        const day = Number(diaMatch[1]);
+        const monKey = norm(diaMatch[2]).replace(/[^a-z]/g, '');
+        const month = monthsMap[monKey] || monthsMap[monKey.slice(0, 3)];
+        if (!month || !day) return null;
+
+        let year = diaMatch[3] ? Number(diaMatch[3]) : refYear;
+        if (!diaMatch[3]) {
+          // Si la fecha (día/mes) queda > 60 días atrás en refYear, asumir el año siguiente
+          const diffDays = (month - refMonth) * 30 + (day - refDay);
+          if (diffDays < -60) year = refYear + 1;
+        }
+        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+        const horaMatch = slice.match(/Hora\s+(\d{1,2}:\d{2})/i);
+        const timeStr = horaMatch ? horaMatch[1].padStart(5, '0') : '19:30';
+
+        // Filtrar por ciudad si se especificó ciudad
+        const combinedLoc = norm(`${title} ${venueRaw}`);
+        const matchesCity = cityAliases.some(a => a && combinedLoc.includes(a)) || combinedLoc.includes('varias localidades');
+        if (cityNorm && !matchesCity) return null;
+
+        let ticketUrl = detailUrl;
+        let isTicketUrl = false;
+        $d('a[href]').each((_, aEl) => {
+          const aTxt = norm($d(aEl).text());
+          const aHref = String($d(aEl).attr('href') || '').trim();
+          if (aHref && aHref.startsWith('http') && !aHref.includes('adiccine.net/eventos/') && (aTxt.includes('comprar') || aTxt.includes('ticket') || aTxt.includes('entrada'))) {
+            ticketUrl = aHref;
+            isTicketUrl = true;
+            return false;
+          }
+        });
+
+        const cleanVenue = venueRaw || 'Adiccine';
+        const dedupKey = `${title.toLowerCase()}|${dateStr}|${timeStr}`;
+        if (seenKeys.has(dedupKey)) return null;
+        seenKeys.add(dedupKey);
+
+        return {
+          id: `adiccine-${Buffer.from(dedupKey).toString('base64').slice(0, 20)}-${dateStr}`,
+          title,
+          date: dateStr,
+          time: timeStr,
+          city: city || '',
+          venue: cleanVenue,
+          venueTag: 'ADICCINE',
+          venueColor: '#f59e0b',
+          url: ticketUrl,
+          isTicketUrl,
+          actionLabel: isTicketUrl ? 'Comprar entradas' : 'Ir a Más info',
+          section: 'A',
+          subType: 'Cine',
+          hasOriginalSource: true,
+          prioritySource: 2,
+          sourceName: 'adiccine.net',
+          price: 'Ver web'
+        };
+      })
+    );
+
+    for (const r of results) {
+      if (r.status === 'fulfilled' && r.value) {
+        events.push(r.value);
+      }
+    }
+    return { ok: true, targetUrl, count: events.length, events };
+  } catch (err) {
+    return { ok: false, targetUrl, error: err.message, count: 0, events: [] };
+  }
+}
+
 async function scrapeMadridEnVivo(targetUrl, city, referenceDate) {
   const events = [];
   const seenKeys = new Set();
@@ -1652,6 +1783,10 @@ async function runCalendarUpdate({ cityConfig, festivalUrls = [], preferences, u
         const res = await scrapeMadridEnVivo(rawUrl, city, referenceDate);
         return { label: 'Madrid en Vivo', res };
       }
+      if (cleanBase.includes('adiccine.net')) {
+        const res = await scrapeAdiccine(rawUrl, city, referenceDate);
+        return { label: 'Adiccine', res };
+      }
       if (cleanBase.includes('conciertos.club') || cleanBase.includes('escenaensevilla.es') || cleanBase.includes('conciertosengranada.es')) {
         const res = await scrapeConciertosClub(rawUrl, city, referenceDate);
         const label = cleanBase.includes('escenaensevilla.es')
@@ -2040,6 +2175,7 @@ module.exports = {
   scrapeAuditorioZaragoza,
   scrapeEsMadrid,
   scrapeMadridEnVivo,
+  scrapeAdiccine,
   scrapeConciertosClub,
   scrapeFestivalUrl,
   scrapeGenericUrl,
