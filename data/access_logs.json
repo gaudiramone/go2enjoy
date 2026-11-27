@@ -1,5 +1,55 @@
 [
   {
+    "timestamp": "2026-11-27T08:51:21.223Z",
+    "madridTime": "2026-11-27 09:51:21",
+    "type": "login",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "VALENCIA",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Inicio de sesión usuario"
+  },
+  {
+    "timestamp": "2026-11-27T08:51:20.932Z",
+    "madridTime": "2026-11-27 09:51:20",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "VALENCIA",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T08:51:09.439Z",
+    "madridTime": "2026-11-27 09:51:09",
+    "type": "login",
+    "email": "gaudiramone@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Inicio de sesión usuario"
+  },
+  {
+    "timestamp": "2026-11-27T08:51:09.104Z",
+    "madridTime": "2026-11-27 09:51:09",
+    "type": "profile_save",
+    "email": "gaudiramone@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (3 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T08:50:54.165Z",
+    "madridTime": "2026-11-27 09:50:54",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "VALENCIA",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
     "timestamp": "2026-11-27T08:50:31.817Z",
     "madridTime": "2026-11-27 09:50:31",
     "type": "profile_save",
