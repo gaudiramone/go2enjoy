@@ -139,6 +139,54 @@
             "web": false
           }
         }
+      },
+      {
+        "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-04",
+        "city": "Madrid",
+        "subType": "Conciertos",
+        "title": "Bunbury",
+        "artistName": "Bunbury",
+        "date": "2026-12-04",
+        "rangeStart": "",
+        "rangeEnd": "",
+        "time": "19:30",
+        "venue": "Movistar Arena",
+        "venueTag": "MOVISTAR ARENA",
+        "musicStyle": "Rock",
+        "styleTag": "ROCK",
+        "styleColor": "#ef4444",
+        "price": "Ver web",
+        "url": "https://conciertos.club/madrid/conciertos/114262-bunbury",
+        "isTicketUrl": false,
+        "actionLabel": "Ir a Más info",
+        "color": "#6366f1",
+        "shareConfig": {
+          "isPublic": true,
+          "alias": true,
+          "email": false,
+          "politicalPhrase": false,
+          "politicalScale": false,
+          "religion": false,
+          "religionPractice": false,
+          "appearance": false,
+          "sexuality": false,
+          "seekingPerson": false,
+          "seekingRelation": false,
+          "photos": [
+            false,
+            true,
+            false
+          ],
+          "socialLinks": {
+            "instagram": false,
+            "tiktok": false,
+            "x": false,
+            "facebook": false,
+            "youtube": false,
+            "linkedin": false,
+            "web": false
+          }
+        }
       }
     ],
     "selectedCity": "Madrid",
