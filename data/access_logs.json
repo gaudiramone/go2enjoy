@@ -1,5 +1,15 @@
 [
   {
+    "timestamp": "2026-11-27T10:32:54.268Z",
+    "madridTime": "2026-11-27 11:32:54",
+    "type": "community_event",
+    "email": "gaudiramone@gmail.com",
+    "city": "Madrid",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Evento creado: Fieston en la piscina (POOL PARTY)"
+  },
+  {
     "timestamp": "2026-11-27T10:32:06.290Z",
     "madridTime": "2026-11-27 11:32:06",
     "type": "profile_save",
