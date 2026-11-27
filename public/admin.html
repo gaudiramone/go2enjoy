@@ -174,6 +174,18 @@
     </div>
   </div>
 
+  <!-- Overlay de bloqueo durante scraping / recarga -->
+  <div id="adminBlockingOverlay" class="fixed inset-0 z-[100] hidden items-center justify-center bg-slate-950/85 backdrop-blur-sm p-4 select-none">
+    <div class="rounded-2xl bg-slate-900 border border-indigo-500/40 px-7 py-6 shadow-2xl flex flex-col items-center gap-3 text-center max-w-sm">
+      <svg class="animate-spin h-8 w-8 text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+      </svg>
+      <div id="adminBlockingOverlayText" class="text-sm font-extrabold text-white">PROCESANDO, ESPERA...</div>
+      <p class="text-[11px] text-slate-400">No cierres ni pulses nada hasta que finalice.</p>
+    </div>
+  </div>
+
   <script>
     let googleIdToken = '';
     let googleClientId = '';
@@ -593,6 +605,24 @@
       }
     }
 
+    function showAdminOverlay(msg = 'ACTUALIZANDO, ESPERA...') {
+      const ov = document.getElementById('adminBlockingOverlay');
+      const txt = document.getElementById('adminBlockingOverlayText');
+      if (txt) txt.textContent = msg;
+      if (ov) {
+        ov.classList.remove('hidden');
+        ov.classList.add('flex');
+      }
+    }
+
+    function hideAdminOverlay() {
+      const ov = document.getElementById('adminBlockingOverlay');
+      if (ov) {
+        ov.classList.add('hidden');
+        ov.classList.remove('flex');
+      }
+    }
+
     function setAdminScrapeButtonsDisabled(disabled) {
       ['btnAdminScrapeCity', 'btnAdminForceScrapeCity', 'btnAdminScrapeAll'].forEach(id => {
         const b = document.getElementById(id);
@@ -608,7 +638,10 @@
       if (box) box.classList.remove('hidden');
       if (statusText) statusText.textContent = `⏳ Generando eventos de ${city} (${forceRefresh ? 'recarga forzada' : 'normal'})...`;
       if (logsEl && !targetCity) logsEl.textContent = '';
-      if (!targetCity) setAdminScrapeButtonsDisabled(true);
+      if (!targetCity) {
+        setAdminScrapeButtonsDisabled(true);
+        showAdminOverlay(`⚡ ${forceRefresh ? 'Forzando recarga' : 'Actualizando'} ${city}...`);
+      }
 
       try {
         const res = await fetch('/api/calendar/update', {
@@ -632,7 +665,10 @@
         if (statusText) statusText.textContent = `❌ Error de red en ${city}: ${err.message}`;
         return false;
       } finally {
-        if (!targetCity) setAdminScrapeButtonsDisabled(false);
+        if (!targetCity) {
+          setAdminScrapeButtonsDisabled(false);
+          hideAdminOverlay();
+        }
       }
     }
 
@@ -643,14 +679,20 @@
       setAdminScrapeButtonsDisabled(true);
       const logsEl = document.getElementById('adminScrapeLogs');
       if (logsEl) logsEl.textContent = '';
-      for (let i = 0; i < cityNames.length; i++) {
-        const c = cityNames[i];
-        document.getElementById('adminScrapeStatusText').textContent = `🌍 [${i + 1}/${cityNames.length}] Procesando ${c}...`;
-        await adminRunScrape(true, c);
+      try {
+        for (let i = 0; i < cityNames.length; i++) {
+          const c = cityNames[i];
+          const msg = `🌍 [${i + 1}/${cityNames.length}] Generando ${c}...`;
+          document.getElementById('adminScrapeStatusText').textContent = msg;
+          showAdminOverlay(msg);
+          await adminRunScrape(true, c);
+        }
+        document.getElementById('adminScrapeStatusText').textContent = `✅ Proceso completado para ${cityNames.length} ciudades.`;
+        await loadAdminOverview();
+      } finally {
+        setAdminScrapeButtonsDisabled(false);
+        hideAdminOverlay();
       }
-      document.getElementById('adminScrapeStatusText').textContent = `✅ Proceso completado para ${cityNames.length} ciudades.`;
-      setAdminScrapeButtonsDisabled(false);
-      await loadAdminOverview();
     }
 
     window.addEventListener('load', checkAdminSession);
