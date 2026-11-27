@@ -720,6 +720,7 @@ app.put('/api/user-profile', (req, res) => {
     const profiles = loadUserProfiles();
     const target = profiles[normalizedEmail] || { ...DEFAULT_DB.userProfile, email: normalizedEmail };
     target.email = normalizedEmail;
+    if (typeof selectedCity === 'string' && selectedCity.trim()) target.selectedCity = selectedCity.trim();
     if (typeof alias === 'string') target.alias = alias.trim();
     if (typeof avatar === 'string' && avatar.trim()) target.avatar = avatar.trim();
     if (typeof avatarImage === 'string') target.avatarImage = avatarImage;
