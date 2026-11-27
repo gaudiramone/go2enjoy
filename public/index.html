@@ -1416,11 +1416,29 @@
       }
     }
 
-    function onUserCityChange() {
-      const selectedCity = document.getElementById('userCitySelect').value;
-      appState.userProfile.selectedCity = selectedCity;
+    async function onUserCityChange() {
+      const selectedCity = document.getElementById('userCitySelect')?.value || 'Zaragoza';
+      const current = getUserProfileSettings();
+      const updated = { ...current, selectedCity };
+      setLocalUserProfile(updated);
+      if (appState?.userProfile) {
+        appState.userProfile.selectedCity = selectedCity;
+      }
       loadCityIntoForm(selectedCity);
       renderPart1Cities();
+
+      if (current.email) {
+        fetch('/api/user-profile', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: current.email, selectedCity })
+        }).catch(() => {});
+      }
+      if (driveAccessToken) {
+        writeSingleDriveCache(appState?.cityCache || {}).catch(() => {});
+      }
+
+      await triggerCalendarUpdate(false);
     }
 
     let profileCalendarInstance = null;
