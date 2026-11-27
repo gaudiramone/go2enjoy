@@ -4459,7 +4459,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-05",
       "title": "Minibús Intergalàctic",
       "artistName": "Minibús Intergalàctic",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-05",
       "time": "19:30",
       "venue": "Maravillas Club",
@@ -4473,8 +4473,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-05",
@@ -4627,7 +4627,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-06",
       "title": "La Argenta",
       "artistName": "La Argenta",
-      "musicStyle": "",
+      "musicStyle": "Clásica",
       "date": "2026-12-06",
       "time": "19:30",
       "venue": "Café Berlín",
@@ -4641,8 +4641,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "CLÁSICA",
+      "styleColor": "#6366f1"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-06",
@@ -4795,7 +4795,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-06",
       "title": "P0RN + Last Whisper + Warriors",
       "artistName": "P0RN + Last Whisper + Warriors",
-      "musicStyle": "",
+      "musicStyle": "Electrónica",
       "date": "2026-12-06",
       "time": "19:30",
       "venue": "Sala La Trinchera",
@@ -4809,8 +4809,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ELECTRÓNICA",
+      "styleColor": "#06b6d4"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-06",
@@ -5532,6 +5532,27 @@
     },
     {
       "id": "mev-aHR0cHM6Ly9tYWRyaWRl-2026-12-09",
+      "title": "ON FIRE JAM SESSION!",
+      "artistName": "ON FIRE JAM SESSION!",
+      "musicStyle": "Rock",
+      "date": "2026-12-09",
+      "time": "19:30",
+      "venue": "Intruso Bar",
+      "venueTag": "INTRUSO BAR",
+      "venueColor": "#14b8a6",
+      "url": "https://madridenvivo.com/evento/on-fire-jam-session-107/",
+      "actionLabel": "Ir a Más info",
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "madridenvivo.com",
+      "price": "Entrada libre",
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
+    },
+    {
+      "id": "mev-aHR0cHM6Ly9tYWRyaWRl-2026-12-09",
       "title": "THUNDER BLUES",
       "artistName": "THUNDER BLUES",
       "musicStyle": "Blues",
@@ -5655,27 +5676,6 @@
       "price": "Ver web",
       "styleTag": "JAZZ",
       "styleColor": "#f59e0b"
-    },
-    {
-      "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-09",
-      "title": "On Fire Jam!",
-      "artistName": "On Fire Jam!",
-      "musicStyle": "Pop",
-      "date": "2026-12-09",
-      "time": "19:30",
-      "venue": "Intruso Bar",
-      "venueTag": "INTRUSO BAR",
-      "venueColor": "#14b8a6",
-      "url": "https://conciertos.club/madrid/conciertos/126350-on-fire-jam/1796855400",
-      "actionLabel": "Ir a Más info",
-      "section": "A",
-      "subType": "Conciertos",
-      "hasOriginalSource": true,
-      "prioritySource": 1,
-      "sourceName": "conciertos.club",
-      "price": "Ver web",
-      "styleTag": "POP",
-      "styleColor": "#ec4899"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-10",
@@ -6328,6 +6328,27 @@
     },
     {
       "id": "mev-aHR0cHM6Ly9tYWRyaWRl-2026-12-10",
+      "title": "OCELOT JAM SESSION",
+      "artistName": "OCELOT JAM SESSION",
+      "musicStyle": "",
+      "date": "2026-12-10",
+      "time": "19:30",
+      "venue": "Intruso Bar",
+      "venueTag": "INTRUSO BAR",
+      "venueColor": "#14b8a6",
+      "url": "https://madridenvivo.com/evento/ocelot-jam-session-68/",
+      "actionLabel": "Ir a Más info",
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "madridenvivo.com",
+      "price": "Entrada libre",
+      "styleTag": "SIN ESPECIFICAR",
+      "styleColor": "#64748b"
+    },
+    {
+      "id": "mev-aHR0cHM6Ly9tYWRyaWRl-2026-12-10",
       "title": "PIANO BAR",
       "artistName": "PIANO BAR",
       "musicStyle": "Clásica",
@@ -6496,7 +6517,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-10",
       "title": "Pablo y los Ciervos Dorados + Troya",
       "artistName": "Pablo y los Ciervos Dorados + Troya",
-      "musicStyle": "",
+      "musicStyle": "Indie / Alternativo",
       "date": "2026-12-10",
       "time": "21:00",
       "venue": "Wurlitzer Ballroom",
@@ -6510,14 +6531,14 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "INDIE / ALT",
+      "styleColor": "#10b981"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-10",
       "title": "Zed Leppelin. Tributo a Led Zeppelin",
       "artistName": "Zed Leppelin. Tributo a Led Zeppelin",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-10",
       "time": "21:00",
       "venue": "El Sótano",
@@ -6531,8 +6552,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-10",
@@ -6622,7 +6643,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-11",
       "title": "Rancore",
       "artistName": "Rancore",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2026-12-11",
       "time": "20:00",
       "venue": "Sala Clamores",
@@ -6636,8 +6657,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-11",
@@ -7042,7 +7063,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
       "title": "ORA ET LABORA",
       "artistName": "ORA ET LABORA",
-      "musicStyle": "",
+      "musicStyle": "Indie / Alternativo",
       "date": "2026-12-12",
       "time": "20:00",
       "venue": "Moby Dick",
@@ -7056,8 +7077,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "INDIE / ALT",
+      "styleColor": "#10b981"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
@@ -7168,7 +7189,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
       "title": "Cepeda",
       "artistName": "Cepeda",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2026-12-12",
       "time": "21:00",
       "venue": "Movistar Arena",
@@ -7182,8 +7203,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
@@ -7252,7 +7273,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
       "title": "María Parrado",
       "artistName": "María Parrado",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2026-12-12",
       "time": "21:00",
       "venue": "Sala Galileo Galilei",
@@ -7266,8 +7287,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
@@ -7315,7 +7336,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
       "title": "Hijos del Invierno",
       "artistName": "Hijos del Invierno",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2026-12-12",
       "time": "21:00",
       "venue": "Cadillac Solitario",
@@ -7329,8 +7350,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-12",
@@ -7731,7 +7752,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-13",
       "title": "Tasha & Tracie",
       "artistName": "Tasha & Tracie",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2026-12-13",
       "time": "20:00",
       "venue": "Sala Mon Live",
@@ -7745,8 +7766,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-13",
@@ -8235,7 +8256,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-17",
       "title": "Great Straits. Tributo a Dire Straits",
       "artistName": "Great Straits. Tributo a Dire Straits",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-17",
       "time": "20:00",
       "venue": "Palacio de Vistalegre",
@@ -8249,8 +8270,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-17",
@@ -8693,7 +8714,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-18",
       "title": "Tranceuntes",
       "artistName": "Tranceuntes",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2026-12-18",
       "time": "22:30",
       "venue": "Café Berlín",
@@ -8707,8 +8728,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
@@ -8756,7 +8777,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
       "title": "Ballet of Lights: Cenicienta",
       "artistName": "Ballet of Lights: Cenicienta",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-19",
       "time": "16:00",
       "venue": "Colegio Mayor Elías Ahuja",
@@ -8770,8 +8791,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
@@ -8819,7 +8840,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
       "title": "Astor. La música de Astor Piazzolla",
       "artistName": "Astor. La música de Astor Piazzolla",
-      "musicStyle": "",
+      "musicStyle": "Latino / Mestizaje",
       "date": "2026-12-19",
       "time": "20:00",
       "venue": "Café Berlín",
@@ -8833,8 +8854,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "LATINO / SKA",
+      "styleColor": "#14b8a6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
@@ -8924,7 +8945,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
       "title": "Hechizo. Tributo a Héroes del Silencio",
       "artistName": "Hechizo. Tributo a Héroes del Silencio",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-19",
       "time": "21:00",
       "venue": "Movistar Arena",
@@ -8938,8 +8959,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-19",
@@ -9155,7 +9176,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-20",
       "title": "SOLO EN CASA en concierto",
       "artistName": "SOLO EN CASA",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2026-12-20",
       "time": "19:30",
       "venue": "Palacio de Vistalegre",
@@ -9169,8 +9190,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-20",
@@ -9571,7 +9592,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-23",
       "title": "MANU MASAEDO",
       "artistName": "MANU MASAEDO",
-      "musicStyle": "",
+      "musicStyle": "Latino / Mestizaje",
       "date": "2026-12-23",
       "time": "22:00",
       "venue": "Sala Villanos",
@@ -9585,8 +9606,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "LATINO / SKA",
+      "styleColor": "#14b8a6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-23",
@@ -9865,7 +9886,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-26",
       "title": "Alchemy Project. Tributo a Dire Straits",
       "artistName": "Alchemy Project. Tributo a Dire Straits",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-26",
       "time": "20:00",
       "venue": "Teatro Eslava",
@@ -9879,8 +9900,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-26",
@@ -10323,7 +10344,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-29",
       "title": "Abbey Road. Tributo a The Beatles",
       "artistName": "Abbey Road. Tributo a The Beatles",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-29",
       "time": "21:00",
       "venue": "Music Station Príncipe Pío",
@@ -10337,8 +10358,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-29",
@@ -10426,7 +10447,7 @@
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-30",
       "title": "Señor Aliaga",
       "artistName": "Señor Aliaga",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2026-12-30",
       "time": "21:30",
       "venue": "Moby Dick",
@@ -10440,8 +10461,8 @@
       "prioritySource": 1,
       "sourceName": "conciertos.club",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-30",
@@ -10724,7 +10745,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-08",
       "title": "QUERIDO",
       "artistName": "QUERIDO",
-      "musicStyle": "",
+      "musicStyle": "Electrónica",
       "date": "2027-01-08",
       "time": "21:00",
       "venue": "Sala El Sol",
@@ -10742,8 +10763,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ELECTRÓNICA",
+      "styleColor": "#06b6d4"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-08",
@@ -11139,7 +11160,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-14",
       "title": "casino",
       "artistName": "casino",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2027-01-14",
       "time": "20:00",
       "venue": "Sala El Sol",
@@ -11157,8 +11178,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-14",
@@ -11214,7 +11235,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-15",
       "title": "VIOLETA",
       "artistName": "VIOLETA",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-15",
       "time": "19:00",
       "venue": "Teatro Circo Price",
@@ -11232,8 +11253,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-15",
@@ -11514,7 +11535,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-16",
       "title": "VERA FAUNA",
       "artistName": "VERA FAUNA",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-16",
       "time": "21:00",
       "venue": "La Riviera",
@@ -11532,8 +11553,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-16",
@@ -11564,7 +11585,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-16",
       "title": "Carmesí",
       "artistName": "Carmesí",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-16",
       "time": "21:30",
       "venue": "Sala Siroco",
@@ -11582,8 +11603,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-17",
@@ -11709,7 +11730,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-17",
       "title": "Alberto Vela",
       "artistName": "Alberto Vela",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-17",
       "time": "20:00",
       "venue": "Sala El Sol",
@@ -11727,8 +11748,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-17",
@@ -11834,7 +11855,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-21",
       "title": "MARWÁN",
       "artistName": "MARWÁN",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-21",
       "time": "20:00",
       "venue": "Teatro Circo Price",
@@ -11852,8 +11873,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-21",
@@ -11953,7 +11974,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-22",
       "title": "PONY BRAVO",
       "artistName": "PONY BRAVO",
-      "musicStyle": "",
+      "musicStyle": "Indie / Alternativo",
       "date": "2027-01-22",
       "time": "20:30",
       "venue": "Movistar Arena",
@@ -11971,8 +11992,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "INDIE / ALT",
+      "styleColor": "#10b981"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-22",
@@ -12178,7 +12199,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-23",
       "title": "CARLOS NÚÑEZ",
       "artistName": "CARLOS NÚÑEZ",
-      "musicStyle": "",
+      "musicStyle": "Latino / Mestizaje",
       "date": "2027-01-23",
       "time": "20:00",
       "venue": "Teatro Circo Price",
@@ -12196,8 +12217,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "LATINO / SKA",
+      "styleColor": "#14b8a6"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-23",
@@ -12253,7 +12274,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-23",
       "title": "LOS ENEMIGOS",
       "artistName": "LOS ENEMIGOS",
-      "musicStyle": "",
+      "musicStyle": "Latino / Mestizaje",
       "date": "2027-01-23",
       "time": "21:00",
       "venue": "La Riviera",
@@ -12271,8 +12292,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "LATINO / SKA",
+      "styleColor": "#14b8a6"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-23",
@@ -12460,7 +12481,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-24",
       "title": "Los Enemigos",
       "artistName": "Los Enemigos",
-      "musicStyle": "",
+      "musicStyle": "Latino / Mestizaje",
       "date": "2027-01-24",
       "time": "21:00",
       "venue": "La Riviera",
@@ -12478,8 +12499,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "LATINO / SKA",
+      "styleColor": "#14b8a6"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-26",
@@ -12735,7 +12756,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-29",
       "title": "Javi Chapela",
       "artistName": "Javi Chapela",
-      "musicStyle": "",
+      "musicStyle": "Indie / Alternativo",
       "date": "2027-01-29",
       "time": "20:30",
       "venue": "Movistar Arena",
@@ -12753,8 +12774,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "INDIE / ALT",
+      "styleColor": "#10b981"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-29",
@@ -12810,7 +12831,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-29",
       "title": "LOS NIKIS DE LA PRADERA",
       "artistName": "LOS NIKIS DE LA PRADERA",
-      "musicStyle": "",
+      "musicStyle": "Folk / Cantautor",
       "date": "2027-01-29",
       "time": "21:00",
       "venue": "Sala El Sol",
@@ -12828,8 +12849,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "FOLK / CANTAUTOR",
+      "styleColor": "#84cc16"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-29",
@@ -12885,7 +12906,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-30",
       "title": "FITO &amp;amp; FITIPALDIS",
       "artistName": "FITO &amp;amp; FITIPALDIS",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-01-30",
       "time": "18:00",
       "venue": "Teatro Circo Price",
@@ -12903,8 +12924,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-30",
@@ -12935,7 +12956,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-30",
       "title": "Javier Ruibal",
       "artistName": "Javier Ruibal",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-30",
       "time": "20:00",
       "venue": "Teatro Albéniz",
@@ -12953,8 +12974,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-30",
@@ -13085,7 +13106,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-30",
       "title": "EL NIDO",
       "artistName": "EL NIDO",
-      "musicStyle": "",
+      "musicStyle": "Folk / Cantautor",
       "date": "2027-01-30",
       "time": "21:00",
       "venue": "Sala Villanos",
@@ -13103,14 +13124,14 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "FOLK / CANTAUTOR",
+      "styleColor": "#84cc16"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-31",
       "title": "FITO &amp;amp; FITIPALDIS",
       "artistName": "FITO &amp;amp; FITIPALDIS",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-01-31",
       "time": "18:00",
       "venue": "Teatro Circo Price",
@@ -13128,8 +13149,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "esm-aHR0cHM6Ly93d3cuZXNt-2027-01-31",
@@ -13248,7 +13269,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-31",
       "title": "LA PANTERA",
       "artistName": "LA PANTERA",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2027-01-31",
       "time": "20:30",
       "venue": "Movistar Arena",
@@ -13266,14 +13287,14 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-01",
       "title": "LA PANTERA",
       "artistName": "LA PANTERA",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2027-02-01",
       "time": "20:30",
       "venue": "Movistar Arena",
@@ -13291,14 +13312,14 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-02",
       "title": "FITO &amp;amp; FITIPALDIS",
       "artistName": "FITO &amp;amp; FITIPALDIS",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-02-02",
       "time": "19:00",
       "venue": "Teatro Circo Price",
@@ -13316,14 +13337,14 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-03",
       "title": "FITO &amp;amp; FITIPALDIS",
       "artistName": "FITO &amp;amp; FITIPALDIS",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-02-03",
       "time": "19:00",
       "venue": "Teatro Circo Price",
@@ -13341,8 +13362,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-04",
@@ -13473,7 +13494,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-05",
       "title": "QUINTO DIARIO",
       "artistName": "QUINTO DIARIO",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-02-05",
       "time": "21:00",
       "venue": "Sala El Sol",
@@ -13491,8 +13512,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-05",
@@ -14098,7 +14119,7 @@
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-20",
       "title": "Conchita",
       "artistName": "Conchita",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-02-20",
       "time": "20:00",
       "venue": "Teatro Albéniz",
@@ -14116,8 +14137,8 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-20",
@@ -15272,6 +15293,12 @@
       "count": 25
     },
     {
+      "tag": "INTRUSO BAR",
+      "name": "Intruso Bar",
+      "color": "#14b8a6",
+      "count": 20
+    },
+    {
       "tag": "CIRCO PRICE",
       "name": "Teatro Circo Price",
       "color": "#d946ef",
@@ -15287,12 +15314,6 @@
       "tag": "MOE",
       "name": "Moe",
       "color": "#ec4899",
-      "count": 19
-    },
-    {
-      "tag": "INTRUSO BAR",
-      "name": "Intruso Bar",
-      "color": "#14b8a6",
       "count": 19
     },
     {
@@ -15823,13 +15844,19 @@
       "tag": "ROCK",
       "name": "Rock",
       "color": "#ef4444",
-      "count": 160
+      "count": 174
     },
     {
       "tag": "SIN ESPECIFICAR",
       "name": "Otros / Sin especificar",
       "color": "#64748b",
-      "count": 109
+      "count": 66
+    },
+    {
+      "tag": "POP",
+      "name": "Pop",
+      "color": "#ec4899",
+      "count": 65
     },
     {
       "tag": "JAZZ",
@@ -15838,10 +15865,10 @@
       "count": 63
     },
     {
-      "tag": "POP",
-      "name": "Pop",
-      "color": "#ec4899",
-      "count": 57
+      "tag": "URBANO / RAP",
+      "name": "Urbano / Rap",
+      "color": "#8b5cf6",
+      "count": 42
     },
     {
       "tag": "BLUES",
@@ -15850,22 +15877,22 @@
       "count": 42
     },
     {
-      "tag": "URBANO / RAP",
-      "name": "Urbano / Rap",
-      "color": "#8b5cf6",
-      "count": 34
-    },
-    {
       "tag": "LATINO / SKA",
       "name": "Latino / Mestizaje",
       "color": "#14b8a6",
-      "count": 24
+      "count": 29
     },
     {
       "tag": "CLÁSICA",
       "name": "Clásica",
       "color": "#6366f1",
-      "count": 19
+      "count": 20
+    },
+    {
+      "tag": "INDIE / ALT",
+      "name": "Indie / Alternativo",
+      "color": "#10b981",
+      "count": 20
     },
     {
       "tag": "FLAMENCO",
@@ -15874,28 +15901,22 @@
       "count": 19
     },
     {
+      "tag": "ELECTRÓNICA",
+      "name": "Electrónica",
+      "color": "#06b6d4",
+      "count": 18
+    },
+    {
       "tag": "SOUL / FUNK",
       "name": "Soul / Funk",
       "color": "#eab308",
       "count": 17
     },
     {
-      "tag": "ELECTRÓNICA",
-      "name": "Electrónica",
-      "color": "#06b6d4",
-      "count": 16
-    },
-    {
-      "tag": "INDIE / ALT",
-      "name": "Indie / Alternativo",
-      "color": "#10b981",
-      "count": 16
-    },
-    {
       "tag": "FOLK / CANTAUTOR",
       "name": "Folk / Cantautor",
       "color": "#84cc16",
-      "count": 15
+      "count": 17
     },
     {
       "tag": "PUNK",
@@ -15911,12 +15932,12 @@
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-27T10:45:38.770Z",
+    "updatedAt": "2026-11-27T11:37:22.392Z",
     "city": "Madrid",
     "referenceDate": "2026-11-27",
     "oneYearHorizon": "2027-11-27",
-    "totalScanned": 728,
-    "totalMatched": 710,
+    "totalScanned": 730,
+    "totalMatched": 711,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
       "🚀 Iniciando búsqueda de Espectáculos (A) para Madrid",
@@ -15927,19 +15948,19 @@
       "✓ Escaneado esMADRID (https://www.esmadrid.com/agenda-musica-madrid): 7 eventos extraídos",
       "✓ Escaneado esMADRID (https://www.esmadrid.com/agenda-teatro-madrid): 34 eventos extraídos",
       "✓ Escaneado esMADRID (https://www.esmadrid.com/agenda-musicales): 17 eventos extraídos",
-      "✓ Escaneado Madrid en Vivo (https://madridenvivo.com/): 57 eventos extraídos",
+      "✓ Escaneado Madrid en Vivo (https://madridenvivo.com/): 59 eventos extraídos",
       "✓ Escaneado Conciertos.club (https://conciertos.club/madrid): 414 eventos extraídos",
       "✓ Escaneado adiccine.net (https://www.adiccine.net/ciclos-y-eventos/): 0 eventos extraídos",
       "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Madrid: 134 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Madrid: 3 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://negufest.com/) para Madrid: 1 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 499 conciertos catalogados (67 por IA, 115 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [MOVISTAR ARENA: 49], [LA RIVIERA: 35], [SALA EL SOL: 34], [LA COQUETTE: 29], [SALA VILLANOS: 25], [CIRCO PRICE: 20], [EL DESPERTAR CAFÉ: 19], [MOE: 19], [INTRUSO BAR: 19], [OTROS ESCENARIOS: 14], [TEATRO ALBÉNIZ: 14], [RINCÓN DEL ARTE NU: 12], [SALA VESTA: 12], [SALA CLAMORES: 12], [SIROCO: 12], [FOUR SEASONS HOTEL: 11], [CÍRCULO DE BELLAS: 11], [HONKY TONK: 10], [FUN HOUSE: 10], [EL CAFÉ DE LA ÓPER: 10], [PALACIO DE VISTALE: 9], [MARAVILLAS CLUB: 9], [SALA UNI: 9], [CAFÉ BERLÍN: 9], [BIG MAMA BALLROOM: 9], [MOBY DICK: 8], [SALA BUT: 7], [ATENEO DE MADRID: 7], [C.C.C. CONDE DUQUE: 7], [BASÍLICA PONTIFICI: 6], [CADAVRA CLUB: 6], [SALA NAZCA: 6], [GALILEO GALILEI: 6], [EL PERRO DE LA PAR: 6], [REVI LIVE: 6], [TEMPO AUDIOPHILE C: 6], [IFEMA: 6], [LIVE LAS VENTAS: 5], [CADILLAC SOLITARIO: 5], [CAFÉ LA PALMA: 5], [STAIRWAY: 5], [TEATRO ESLAVA: 4], [AUTOCINE MADRID: 3], [INDEPENDANCE CLUB: 3], [GRUTA 77: 3], [SALA ROCKVILLE: 3], [JAZZVILLE: 3], [SALA MON LIVE: 2], [SALA OLVIDO: 2], [LA CUBIERTA DE LEG: 2], [BARRACUDAS ROCK BA: 2], [TEATRO ALCALÁ: 2], [SALA LA TRINCHERA: 2], [GRAN TEATRO CAIXAB: 2], [CAFÉ CENTRAL: 2], [ROCKVILLE: 2], [TABLAO ÓPERA FLAME: 2], [TABLAO DE LA VILLA: 2], [TABLAO FLAMENCO TO: 2], [MARAVILLAS: 2], [EL PERRO CLUB: 2], [EL SÓTANO: 2], [WURLITZER BALLROOM: 2], [LA VEGA DEL HENARE: 2], [CHANGÓ CLUB: 1], [PLAZA MAHOU: 1], [CRICKET PUB: 1], [COPÉRNICO: 1], [ESPACIO AL MARGEN: 1], [CANDELA: 1], [THUNDERCAT: 1], [SILIKONA: 1], [CAFÉ EL DESPERTAR: 1], [FULANITA DE TAL: 1], [CANOPY BY HILTON M: 1], [SALA TARAMBANA: 1], [TEATRO JOSÉ MARÍA: 1], [SALA OESTE: 1], [WELLINGTON HOTEL: 1], [COLEGIO MAYOR ELÍA: 1], [DIME QUE ME QUIERE: 1], [EXE VICTORIA PALAC: 1], [MUSIC STATION PRÍN: 1], [SALA LÓPEZ: 1], [LATA BOMBILLAS: 1], [AUDITORIO ZGZ: 1], [TEATRO DE LA ZARZU: 1], [KAFE ANTZOKIA: 1], [TEATRO REAL: 1]",
+      "🤖 IA Estilos Musicales: 545 conciertos catalogados (112 por IA, 71 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [MOVISTAR ARENA: 49], [LA RIVIERA: 35], [SALA EL SOL: 34], [LA COQUETTE: 29], [SALA VILLANOS: 25], [INTRUSO BAR: 20], [CIRCO PRICE: 20], [EL DESPERTAR CAFÉ: 19], [MOE: 19], [OTROS ESCENARIOS: 14], [TEATRO ALBÉNIZ: 14], [RINCÓN DEL ARTE NU: 12], [SALA VESTA: 12], [SALA CLAMORES: 12], [SIROCO: 12], [FOUR SEASONS HOTEL: 11], [CÍRCULO DE BELLAS: 11], [HONKY TONK: 10], [FUN HOUSE: 10], [EL CAFÉ DE LA ÓPER: 10], [PALACIO DE VISTALE: 9], [MARAVILLAS CLUB: 9], [SALA UNI: 9], [CAFÉ BERLÍN: 9], [BIG MAMA BALLROOM: 9], [MOBY DICK: 8], [SALA BUT: 7], [ATENEO DE MADRID: 7], [C.C.C. CONDE DUQUE: 7], [BASÍLICA PONTIFICI: 6], [CADAVRA CLUB: 6], [SALA NAZCA: 6], [GALILEO GALILEI: 6], [EL PERRO DE LA PAR: 6], [REVI LIVE: 6], [TEMPO AUDIOPHILE C: 6], [IFEMA: 6], [LIVE LAS VENTAS: 5], [CADILLAC SOLITARIO: 5], [CAFÉ LA PALMA: 5], [STAIRWAY: 5], [TEATRO ESLAVA: 4], [AUTOCINE MADRID: 3], [INDEPENDANCE CLUB: 3], [GRUTA 77: 3], [SALA ROCKVILLE: 3], [JAZZVILLE: 3], [SALA MON LIVE: 2], [SALA OLVIDO: 2], [LA CUBIERTA DE LEG: 2], [BARRACUDAS ROCK BA: 2], [TEATRO ALCALÁ: 2], [SALA LA TRINCHERA: 2], [GRAN TEATRO CAIXAB: 2], [CAFÉ CENTRAL: 2], [ROCKVILLE: 2], [TABLAO ÓPERA FLAME: 2], [TABLAO DE LA VILLA: 2], [TABLAO FLAMENCO TO: 2], [MARAVILLAS: 2], [EL PERRO CLUB: 2], [EL SÓTANO: 2], [WURLITZER BALLROOM: 2], [LA VEGA DEL HENARE: 2], [CHANGÓ CLUB: 1], [PLAZA MAHOU: 1], [CRICKET PUB: 1], [COPÉRNICO: 1], [ESPACIO AL MARGEN: 1], [CANDELA: 1], [THUNDERCAT: 1], [SILIKONA: 1], [CAFÉ EL DESPERTAR: 1], [FULANITA DE TAL: 1], [CANOPY BY HILTON M: 1], [SALA TARAMBANA: 1], [TEATRO JOSÉ MARÍA: 1], [SALA OESTE: 1], [WELLINGTON HOTEL: 1], [COLEGIO MAYOR ELÍA: 1], [DIME QUE ME QUIERE: 1], [EXE VICTORIA PALAC: 1], [MUSIC STATION PRÍN: 1], [SALA LÓPEZ: 1], [LATA BOMBILLAS: 1], [AUDITORIO ZGZ: 1], [TEATRO DE LA ZARZU: 1], [KAFE ANTZOKIA: 1], [TEATRO REAL: 1]",
       "🎪 Festivales en Madrid: [INVERFEST: 134], [ROAD TO INVERFEST 2026: 3], [NEGUFEST: 1]",
       "🎭 Teatros / Salas detectadas: [OTROS ESCENARIOS: 51], [T. FLAMENCO MAD: 1]",
       "🖼️ Salas de Exposiciones detectadas: [OTROS ESCENARIOS: 61]",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 160], [SIN ESPECIFICAR: 109], [JAZZ: 63], [POP: 57], [BLUES: 42], [URBANO / RAP: 34], [LATINO / SKA: 24], [CLÁSICA: 19], [FLAMENCO: 19], [SOUL / FUNK: 17], [ELECTRÓNICA: 16], [INDIE / ALT: 16], [FOLK / CANTAUTOR: 15], [PUNK: 5], [METAL / HEAVY: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 710"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 174], [SIN ESPECIFICAR: 66], [POP: 65], [JAZZ: 63], [URBANO / RAP: 42], [BLUES: 42], [LATINO / SKA: 29], [CLÁSICA: 20], [INDIE / ALT: 20], [FLAMENCO: 19], [ELECTRÓNICA: 18], [SOUL / FUNK: 17], [FOLK / CANTAUTOR: 17], [PUNK: 5], [METAL / HEAVY: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 711"
     ]
   }
 }
