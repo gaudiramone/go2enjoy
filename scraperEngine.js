@@ -1136,11 +1136,13 @@ async function scrapeMadridEnVivo(targetUrl, city, referenceDate) {
     }
   }
 
+  let lastErr = '';
   try {
-    const htmlList = await runWithConcurrency(pagesToFetch, 6, async (p) => {
+    const htmlList = await runWithConcurrency(pagesToFetch, 3, async (p) => {
       try {
-        return { ...p, html: await fetchHtmlWithTimeout(p.url, 9000) };
-      } catch (_) {
+        return { ...p, html: await fetchHtmlWithTimeout(p.url, 15000) };
+      } catch (err) {
+        lastErr = err?.message || 'Timeout/Error';
         return { ...p, html: '' };
       }
     });
@@ -1256,6 +1258,9 @@ async function scrapeMadridEnVivo(targetUrl, city, referenceDate) {
       }
     }
 
+    if (events.length === 0 && htmlList.every(p => !p.html) && lastErr) {
+      return { ok: false, targetUrl, error: lastErr, count: 0, events: [] };
+    }
     return { ok: true, targetUrl, count: events.length, events };
   } catch (err) {
     return { ok: false, targetUrl, error: err.message, count: 0, events: [] };
