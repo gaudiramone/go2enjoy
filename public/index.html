@@ -2817,9 +2817,11 @@
         const email = (localStorage.getItem('go2enjoy_user_email') || getUserProfileSettings().email || '').trim().toLowerCase();
         const politicalPhrase = (document.getElementById('profilePoliticalPhrase').value || '').trim();
 
+        const selectedCity = document.getElementById('userCitySelect')?.value || getUserProfileSettings().selectedCity || 'Zaragoza';
         const payload = {
           alias,
           email,
+          selectedCity,
           avatar: draftProfileAvatar,
           avatarImage: draftProfileAvatarImage,
           politicalPhrase,
@@ -3256,6 +3258,7 @@
 
         const eventRecord = {
           id: ev.id || '',
+          city: ev.city || document.getElementById('userCitySelect')?.value || getUserProfileSettings().selectedCity || '',
           subType: ev.subType || '',
           title: ev.title || '',
           artistName: ev.artistName || '',
@@ -3571,6 +3574,7 @@
                 ${venueTagHtml}
                 ${styleTagHtml}
                 <span class="text-xs font-bold text-slate-300">📅 ${ev.date || ''} ${ev.time ? `· ${ev.time}` : ''}</span>
+                ${ev.city ? `<span class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-900 text-pink-300 border border-slate-700">${ev.city}</span>` : ''}
                 ${ev.venue ? `<span class="text-[11px] text-slate-400">📍 ${ev.venue}</span>` : ''}
               </div>
               <p class="text-sm font-extrabold text-white truncate">${ev.title}</p>
