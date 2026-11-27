@@ -1,5 +1,45 @@
 [
   {
+    "timestamp": "2026-11-27T10:22:18.482Z",
+    "madridTime": "2026-11-27 11:22:18",
+    "type": "profile_save",
+    "email": "gaudiramone@gmail.com",
+    "city": "Murcia",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (4 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T10:22:15.318Z",
+    "madridTime": "2026-11-27 11:22:15",
+    "type": "profile_save",
+    "email": "gaudiramone@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (4 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T10:22:03.032Z",
+    "madridTime": "2026-11-27 11:22:03",
+    "type": "profile_save",
+    "email": "gaudiramone@gmail.com",
+    "city": "Alicante",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (4 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T10:21:54.403Z",
+    "madridTime": "2026-11-27 11:21:54",
+    "type": "profile_save",
+    "email": "gaudiramone@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (4 apuntes)"
+  },
+  {
     "timestamp": "2026-11-27T09:40:35.058Z",
     "madridTime": "2026-11-27 10:40:35",
     "type": "profile_save",
