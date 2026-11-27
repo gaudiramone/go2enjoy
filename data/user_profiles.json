@@ -186,6 +186,7 @@
     "profileCalendar": [
       {
         "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-23",
+        "city": "Zaragoza",
         "subType": "Exposiciones",
         "title": "Explorar la Tierra: un viaje con Verne y las geociencias",
         "artistName": "Explorar la Tierra: un viaje con Verne y las geociencias",
@@ -202,13 +203,15 @@
         "url": "https://museonat.es/nueva-exposicion-temporal-verne-y-las-geociencias/",
         "isTicketUrl": false,
         "actionLabel": "Ir a Más info",
-        "color": "#64748b",
+        "color": "#10b981",
         "shareConfig": {
           "isPublic": true,
           "alias": true,
           "email": false,
           "politicalPhrase": false,
           "politicalScale": false,
+          "religion": false,
+          "religionPractice": false,
           "appearance": false,
           "sexuality": false,
           "seekingPerson": false,
