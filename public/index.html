@@ -1438,9 +1438,6 @@
       }
 
       await triggerCalendarUpdate(false);
-      if (!document.getElementById('part5Container')?.classList.contains('hidden')) {
-        await renderCommunityEventsTab();
-      }
     }
 
     let profileCalendarInstance = null;
@@ -2100,6 +2097,9 @@
           renderTheaterVenueTags();
           renderExhibitionVenueTags();
           refreshCalendarAndStats();
+          if (!document.getElementById('part5Container')?.classList.contains('hidden')) {
+            await renderCommunityEventsTab();
+          }
         } else {
           alert('Error al cargar eventos: ' + (data.error || 'Desconocido'));
         }
