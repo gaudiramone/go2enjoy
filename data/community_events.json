@@ -21,6 +21,28 @@
         "paid": true,
         "createdAt": "2026-11-25T19:01:15.616Z"
       }
+    ],
+    "Madrid": [
+      {
+        "id": "ce_mwyuet4r_f7ziv",
+        "city": "Madrid",
+        "title": "Fieston en la piscina",
+        "date": "2026-11-29",
+        "time": "08:00",
+        "venue": "Las ocas",
+        "venueTag": "POOL PARTY",
+        "venueColor": "#ec4899",
+        "price": "Gratis",
+        "subType": "EVENTO",
+        "description": "Traete bañador",
+        "url": "",
+        "actionLabel": "Ir a Más info",
+        "creatorEmail": "gaudiramone@gmail.com",
+        "creatorAlias": "Gaudiramone",
+        "creatorAvatar": "🎭",
+        "paid": true,
+        "createdAt": "2026-11-27T10:32:54.267Z"
+      }
     ]
   }
 }
