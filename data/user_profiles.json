@@ -185,53 +185,6 @@
     },
     "profileCalendar": [
       {
-        "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-30",
-        "subType": "Exposiciones",
-        "title": "Exposición Bibliográfica",
-        "artistName": "Exposición Bibliográfica",
-        "date": "2026-11-26",
-        "rangeStart": "2026-11-23",
-        "rangeEnd": "2026-11-30",
-        "time": "19:30",
-        "venue": "Otros Escenarios (Zaragoza)",
-        "venueTag": "OTROS ESCENARIOS",
-        "musicStyle": "",
-        "styleTag": "",
-        "styleColor": "",
-        "price": "Gratis",
-        "url": "https://www.zaragoza.es/sede/servicio/cultura/evento/316580",
-        "isTicketUrl": false,
-        "actionLabel": "Ir a Más info",
-        "color": "#10b981",
-        "shareConfig": {
-          "isPublic": true,
-          "alias": true,
-          "email": false,
-          "politicalPhrase": false,
-          "politicalScale": false,
-          "religion": false,
-          "religionPractice": false,
-          "appearance": false,
-          "sexuality": false,
-          "seekingPerson": false,
-          "seekingRelation": false,
-          "photos": [
-            false,
-            false,
-            false
-          ],
-          "socialLinks": {
-            "instagram": false,
-            "tiktok": false,
-            "x": false,
-            "facebook": false,
-            "youtube": false,
-            "linkedin": false,
-            "web": false
-          }
-        }
-      },
-      {
         "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-23",
         "subType": "Exposiciones",
         "title": "Explorar la Tierra: un viaje con Verne y las geociencias",
@@ -310,53 +263,6 @@
           "photos": [
             false,
             true,
-            false
-          ],
-          "socialLinks": {
-            "instagram": false,
-            "tiktok": false,
-            "x": false,
-            "facebook": false,
-            "youtube": false,
-            "linkedin": false,
-            "web": false
-          }
-        }
-      },
-      {
-        "id": "ce_mwwhousg_x0l3k",
-        "subType": "EVENTO",
-        "title": "JUeves de casino",
-        "artistName": "",
-        "date": "2026-11-26",
-        "rangeStart": "",
-        "rangeEnd": "",
-        "time": "20:00",
-        "venue": "el bingo",
-        "venueTag": "AFTERWORK",
-        "musicStyle": "",
-        "styleTag": "",
-        "styleColor": "",
-        "price": "33 €",
-        "url": "",
-        "isTicketUrl": false,
-        "actionLabel": "Ir a Más info",
-        "color": "#6366f1",
-        "shareConfig": {
-          "isPublic": true,
-          "alias": false,
-          "email": false,
-          "politicalPhrase": false,
-          "politicalScale": false,
-          "religion": false,
-          "religionPractice": false,
-          "appearance": false,
-          "sexuality": true,
-          "seekingPerson": false,
-          "seekingRelation": false,
-          "photos": [
-            true,
-            false,
             false
           ],
           "socialLinks": {
