@@ -99,6 +99,10 @@
               <span id="headerProfileAvatar" class="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center overflow-hidden text-3xl shrink-0">😎</span>
               <span id="headerProfileLabel" class="max-w-[160px] truncate">Mi perfil</span>
             </button>
+            <div class="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded-lg border border-slate-700 shrink-0">
+              <span class="text-xs">📍</span>
+              <select id="userCitySelect" onchange="onUserCityChange()" aria-label="Ciudad seleccionada" class="bg-transparent text-xs font-extrabold text-pink-300 focus:outline-none cursor-pointer max-w-[120px] sm:max-w-[160px]"></select>
+            </div>
             <button id="btnLogoutGoogle" onclick="logoutGoogleUser()" class="hidden px-2.5 py-1 rounded-md bg-rose-500/15 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-[11px] font-bold transition">
               Cerrar sesión
             </button>
@@ -106,30 +110,24 @@
         </div>
       </div>
 
-      <!-- City Selector (left) + Navigation Tabs (4 Tabs) -->
-      <div class="w-full lg:w-auto flex items-center gap-1.5 sm:gap-2 shrink-0">
-        <div class="flex items-center gap-1 bg-slate-800/80 px-2 py-1.5 sm:py-2 rounded-xl border border-slate-700/70 shrink-0">
-          <span class="text-xs sm:text-sm">📍</span>
-          <select id="userCitySelect" onchange="onUserCityChange()" aria-label="Ciudad seleccionada" class="bg-transparent text-[11px] sm:text-sm font-extrabold text-pink-300 focus:outline-none cursor-pointer max-w-[95px] sm:max-w-[160px]"></select>
-        </div>
-        <div class="flex-1 lg:flex-none grid grid-cols-4 sm:flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1 sm:p-1.5 rounded-xl border border-slate-700/70">
-          <button id="tabBtnPart4" onclick="switchPart(4)" title="Filtro" aria-label="Filtro" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
-            <span>🎛️</span>
-            <span>Filtro</span>
-          </button>
-          <button id="tabBtnPart2" onclick="switchPart(2)" title="Calend" aria-label="Calend" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 whitespace-nowrap">
-            <span>📅</span>
-            <span>Calend</span>
-          </button>
-          <button id="tabBtnPart3" onclick="switchPart(3)" title="Búsqueda" aria-label="Búsqueda" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
-            <span>🔍</span>
-            <span>Búsqueda</span>
-          </button>
-          <button id="tabBtnPart5" onclick="switchPart(5)" title="Eventos" aria-label="Eventos" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
-            <span>🍸</span>
-            <span>Eventos</span>
-          </button>
-        </div>
+      <!-- Navigation Tabs for the Separated Parts -->
+      <div class="w-full sm:w-auto grid grid-cols-4 sm:flex items-center gap-1 sm:gap-2 bg-slate-800/80 p-1.5 rounded-xl border border-slate-700/70 shrink-0">
+        <button id="tabBtnPart4" onclick="switchPart(4)" title="Filtro" aria-label="Filtro" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
+          <span>🎛️</span>
+          <span>Filtro</span>
+        </button>
+        <button id="tabBtnPart2" onclick="switchPart(2)" title="Calend" aria-label="Calend" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 bg-indigo-600 text-white shadow-md shadow-indigo-600/30 whitespace-nowrap">
+          <span>📅</span>
+          <span>Calend</span>
+        </button>
+        <button id="tabBtnPart3" onclick="switchPart(3)" title="Búsqueda" aria-label="Búsqueda" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
+          <span>🔍</span>
+          <span>Búsqueda</span>
+        </button>
+        <button id="tabBtnPart5" onclick="switchPart(5)" title="Eventos" aria-label="Eventos" class="px-0.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg text-[9px] sm:text-sm font-normal sm:font-bold transition-all flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 text-slate-300 hover:text-white whitespace-nowrap">
+          <span>🍸</span>
+          <span>Eventos</span>
+        </button>
       </div>
     </div>
   </header>
