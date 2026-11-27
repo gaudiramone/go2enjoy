@@ -1,7 +1,7 @@
 {
   "city": "Zaragoza",
   "date": "2026-11-27",
-  "urlsKey": "{\"city\":[\"https://vivezaragoza.es/\",\"https://aragonenvivo.com/\",\"https://www.locozaragozadiscoteca.com/\",\"https://conciertos.club/zaragoza\",\"https://www.emfproducciones.com/\"],\"festivals\":[\"https://inverfest.com/conciertos/\",\"https://inverfest.com/zgz/\",\"https://negufest.com/\"]}",
+  "urlsKey": "{\"city\":[\"https://vivezaragoza.es/\",\"https://aragonenvivo.com/\",\"https://www.locozaragozadiscoteca.com/\",\"https://conciertos.club/zaragoza\",\"https://www.emfproducciones.com/\",\"https://salalopez.com/eventos/\"],\"festivals\":[\"https://inverfest.com/conciertos/\",\"https://inverfest.com/zgz/\",\"https://negufest.com/\"]}",
   "events": [
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-27",
@@ -1879,6 +1879,27 @@
       "styleColor": "#10b981"
     },
     {
+      "id": "salalopez-ZmxvdyAyMDAwMjAyNi0x-2026-11-28",
+      "title": "flow 2000",
+      "artistName": "flow 2000",
+      "musicStyle": "Urbano / Rap",
+      "date": "2026-11-28",
+      "time": "23:45",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://site.fourvenues.com/es/kroma-klub1/events/flow-2000-zaragoza-28-11-2026-Z6MC",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "site.fourvenues.com",
+      "price": "ANTICIPADA: 7,99€ + GASTOS",
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
+    },
+    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-11-28",
       "title": "FLOW 2000 en la Sala López",
       "artistName": "FLOW 2000 en la Sala López",
@@ -2737,6 +2758,27 @@
       "styleColor": "#8b5cf6"
     },
     {
+      "id": "salalopez-VVJCQU4gRkVNTUUgRkVT-2026-12-04",
+      "title": "URBAN FEMME FEST",
+      "artistName": "URBAN FEMME FEST",
+      "musicStyle": "",
+      "date": "2026-12-04",
+      "time": "20:30",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://dice.fm/event/nylbl5-urban-femme-fest-4th-dec-sala-lpez-zaragoza-tickets?lng=es",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "dice.fm",
+      "price": "ANTICIPADA: 16,48€ + GASTOS",
+      "styleTag": "SIN ESPECIFICAR",
+      "styleColor": "#64748b"
+    },
+    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-04",
       "title": "AL DUAL",
       "artistName": "AL DUAL",
@@ -3148,6 +3190,27 @@
       "actionLabel": "Ir a Más info",
       "styleTag": "ROCK",
       "styleColor": "#ef4444"
+    },
+    {
+      "id": "salalopez-TEFNQVJBIENSVVoyMDI2-2026-12-06",
+      "title": "LAMARA CRUZ",
+      "artistName": "LAMARA CRUZ",
+      "musicStyle": "Latino / Mestizaje",
+      "date": "2026-12-06",
+      "time": "20:30",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://site.fourvenues.com/es/la-chismosa-tour/events/lamara-cruz-06-12-2026-J2FJ",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "site.fourvenues.com",
+      "price": "ANTICIPADA: 15,00€ + GASTOS",
+      "styleTag": "LATINO / SKA",
+      "styleColor": "#14b8a6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2026-12-06",
@@ -3567,6 +3630,27 @@
       "actionLabel": "Ir a Más info",
       "styleTag": "ROCK",
       "styleColor": "#ef4444"
+    },
+    {
+      "id": "salalopez-RVZBIE1jQkVMMjAyNi0x-2026-12-11",
+      "title": "EVA McBEL",
+      "artistName": "EVA McBEL",
+      "musicStyle": "Pop",
+      "date": "2026-12-11",
+      "time": "20:00",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://entradium.com/events/eva-mcbel",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "entradium.com",
+      "price": "ANTICIPADA: 15,84 € + GASTOS",
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "loco-UEVEUsOBIChUcmlidXRv-2026-12-11",
@@ -4022,6 +4106,27 @@
       "sourceName": "zaragoza.es",
       "price": "Gratis",
       "actionLabel": "Ir a Más info"
+    },
+    {
+      "id": "salalopez-RGVzY29uY2llcnRvIGNv-2026-12-13",
+      "title": "Desconcierto con ESTER VALLEJO",
+      "artistName": "Desconcierto con ESTER VALLEJO",
+      "musicStyle": "",
+      "date": "2026-12-13",
+      "time": "18:00",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://entradium.com/events/desconcierto-con-ester-vallejo",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "entradium.com",
+      "price": "ANTICIPADA: 10,50€ + GASTOS",
+      "styleTag": "SIN ESPECIFICAR",
+      "styleColor": "#64748b"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-13",
@@ -5091,6 +5196,27 @@
       "styleColor": "#ec4899"
     },
     {
+      "id": "salalopez-VEVFTkFHRSBDSEFORUwg-2026-12-19",
+      "title": "TEENAGE CHANEL ¡¡CHRISTMAS PARTY!!",
+      "artistName": "TEENAGE CHANEL ¡¡CHRISTMAS PARTY!!",
+      "musicStyle": "Electrónica",
+      "date": "2026-12-19",
+      "time": "23:59",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://site.fourvenues.com/es/sala-lopez-1/events/teenage-chanel---christmas-party-19-12-2026-7LWM",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "site.fourvenues.com",
+      "price": "ANTICIPADA: 12,00€ + GASTOS",
+      "styleTag": "ELECTRÓNICA",
+      "styleColor": "#06b6d4"
+    },
+    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-20",
       "title": "Open Mic ZGZ Junior Diciembre",
       "artistName": "Open Mic ZGZ Junior Diciembre",
@@ -5127,6 +5253,27 @@
       "sourceName": "zaragoza.es",
       "price": "Ver web",
       "actionLabel": "Ir a Más info"
+    },
+    {
+      "id": "salalopez-QnJvYWR3YXkgUGFydHkg-2026-12-20",
+      "title": "Broadway Party Zaragoza",
+      "artistName": "Broadway Party Zaragoza",
+      "musicStyle": "Electrónica",
+      "date": "2026-12-20",
+      "time": "17:00",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://site.fourvenues.com/es/broadway-party/events/broadway-party-zaragoza-20-12-2026-E7MX",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "site.fourvenues.com",
+      "price": "ANTICIPADA: 15,00€ + GASTOS",
+      "styleTag": "ELECTRÓNICA",
+      "styleColor": "#06b6d4"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-20",
@@ -5972,6 +6119,27 @@
       "styleColor": "#ef4444"
     },
     {
+      "id": "salalopez-S3JvbWEgdWx0aW1hIGZp-2026-12-31",
+      "title": "Kroma ultima fiesta del año - Nochevieja 2026",
+      "artistName": "Kroma ultima fiesta del año - Nochevieja 2026",
+      "musicStyle": "Electrónica",
+      "date": "2026-12-31",
+      "time": "02:00",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://site.fourvenues.com/es/kroma-klub1/events/fin-de-ano-flow-2000-zaragoza-31-12-2026-37B0",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "site.fourvenues.com",
+      "price": "ANTICIPADA: 20,00€ + GASTOS",
+      "styleTag": "ELECTRÓNICA",
+      "styleColor": "#06b6d4"
+    },
+    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2026-12-31",
       "title": "Goya. Del museo al Palacio",
       "artistName": "Goya. Del museo al Palacio",
@@ -6247,6 +6415,27 @@
       "actionLabel": "Comprar entradas"
     },
     {
+      "id": "salalopez-VEhFIFJBUEFOVFMgSU5W-2027-01-08",
+      "title": "THE RAPANTS INVERFEST",
+      "artistName": "THE RAPANTS INVERFEST",
+      "musicStyle": "",
+      "date": "2027-01-08",
+      "time": "19:30",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://inverfest.com/events/the-rapants-zgz/",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "inverfest.com",
+      "price": "ANTICIPADA: 16,50€ + GASTOS",
+      "styleTag": "SIN ESPECIFICAR",
+      "styleColor": "#64748b"
+    },
+    {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-01-08",
       "title": "THE RAPANTS",
       "artistName": "THE RAPANTS",
@@ -6314,7 +6503,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-09",
       "title": "Drugos",
       "artistName": "Drugos",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-01-09",
       "time": "20:00",
       "venue": "Sala López",
@@ -6327,8 +6516,8 @@
       "sourceName": "salalopez.com",
       "price": "17.5 €",
       "actionLabel": "Comprar entradas",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "loco-RmVzdGl2YWwgUEFSVElF-2027-01-09",
@@ -6820,7 +7009,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-16",
       "title": "SHO-HAI",
       "artistName": "SHO-HAI",
-      "musicStyle": "",
+      "musicStyle": "Urbano / Rap",
       "date": "2027-01-16",
       "time": "21:00",
       "venue": "Auditorio de Zaragoza",
@@ -6833,8 +7022,8 @@
       "sourceName": "auditoriozaragoza.com",
       "price": "Ver web",
       "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
     },
     {
       "id": "cc-aHR0cHM6Ly9jb25jaWVy-2027-01-16",
@@ -7080,7 +7269,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-22",
       "title": "La Bien Querida",
       "artistName": "La Bien Querida",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-01-22",
       "time": "22:00",
       "venue": "Sala Oasis",
@@ -7093,14 +7282,14 @@
       "sourceName": "salaoasis.com",
       "price": "Ver web",
       "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-23",
       "title": "Reality",
       "artistName": "Reality",
-      "musicStyle": "",
+      "musicStyle": "Metal / Heavy",
       "date": "2027-01-23",
       "time": "20:00",
       "venue": "Sala López",
@@ -7113,8 +7302,8 @@
       "sourceName": "salalopez.com",
       "price": "22 €",
       "actionLabel": "Comprar entradas",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "METAL / HEAVY",
+      "styleColor": "#7c3aed"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-23",
@@ -7242,7 +7431,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-23",
       "title": "La Milagrosa",
       "artistName": "La Milagrosa",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-01-23",
       "time": "22:00",
       "venue": "Sala Oasis",
@@ -7255,8 +7444,8 @@
       "sourceName": "salaoasis.com",
       "price": "Ver web",
       "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-01-24",
@@ -7617,6 +7806,27 @@
       "prioritySource": 2,
       "sourceName": "inverfest.com",
       "price": "Ver web",
+      "styleTag": "FLAMENCO",
+      "styleColor": "#f97316"
+    },
+    {
+      "id": "salalopez-TGEgQ29ycmVkZXJhMjAy-2027-02-05",
+      "title": "La Corredera",
+      "artistName": "La Corredera",
+      "musicStyle": "Flamenco",
+      "date": "2027-02-05",
+      "time": "19:30",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://www.enterticket.es/eventos/la-corredera-en-zaragoza-509500",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "enterticket.es",
+      "price": "ANTICIPADA: 18,00€ + GASTOS",
       "styleTag": "FLAMENCO",
       "styleColor": "#f97316"
     },
@@ -8106,7 +8316,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-12",
       "title": "Carlangas",
       "artistName": "Carlangas",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-02-12",
       "time": "22:00",
       "venue": "Sala Oasis",
@@ -8119,8 +8329,8 @@
       "sourceName": "salaoasis.com",
       "price": "Ver web",
       "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "fest-aHR0cHM6Ly9pbnZlcm-2027-02-13",
@@ -8690,7 +8900,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-26",
       "title": "Gara Durán",
       "artistName": "Gara Durán",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-02-26",
       "time": "20:00",
       "venue": "Sala López",
@@ -8703,8 +8913,8 @@
       "sourceName": "salalopez.com",
       "price": "20 €",
       "actionLabel": "Comprar entradas",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-02-26",
@@ -8822,6 +9032,27 @@
       "sourceName": "salalopez.com",
       "price": "16 €",
       "actionLabel": "Comprar entradas",
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
+    },
+    {
+      "id": "salalopez-SUJFUiBST0NLIFpBUkFH-2027-02-27",
+      "title": "IBER ROCK ZARAGOZA",
+      "artistName": "IBER ROCK ZARAGOZA",
+      "musicStyle": "Rock",
+      "date": "2027-02-27",
+      "time": "18:30",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://www.enterticket.es/eventos/iber-rock-tributos-extremomarea-zaragoza-206997",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "enterticket.es",
+      "price": "ANTICIPADA: 16,00€ + GASTOS",
       "styleTag": "ROCK",
       "styleColor": "#ef4444"
     },
@@ -8945,7 +9176,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-03-06",
       "title": "Iñigo Quintero",
       "artistName": "Iñigo Quintero",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-03-06",
       "time": "20:00",
       "venue": "Sala López",
@@ -8958,8 +9189,8 @@
       "sourceName": "salalopez.com",
       "price": "22 €",
       "actionLabel": "Comprar entradas",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-03-06",
@@ -9099,6 +9330,27 @@
       "actionLabel": "Comprar entradas"
     },
     {
+      "id": "salalopez-TGFzIFBldHVuaWFzMjAy-2027-03-11",
+      "title": "Las Petunias",
+      "artistName": "Las Petunias",
+      "musicStyle": "Rock",
+      "date": "2027-03-11",
+      "time": "20:30",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://feverup.com/m/645834",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "feverup.com",
+      "price": "ANTICIPADA: 16,00€ + GASTOS",
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
+    },
+    {
       "id": "loco-RkVTVElWQUwgR1JVTkdF-2027-03-12",
       "title": "FESTIVAL GRUNGE XXL",
       "artistName": "FESTIVAL GRUNGE XXL",
@@ -9156,6 +9408,27 @@
       "sourceName": "teatrodelasesquinas.com",
       "price": "27.5 €",
       "actionLabel": "Comprar entradas"
+    },
+    {
+      "id": "salalopez-SXRhY2EgQmFuZDIwMjct-2027-03-13",
+      "title": "Itaca Band",
+      "artistName": "Itaca Band",
+      "musicStyle": "Indie / Alternativo",
+      "date": "2027-03-13",
+      "time": "20:00",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://itacaband.com/event/itaca-band-en-zaragoza-sala-lopez/",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "itacaband.com",
+      "price": "ANTICIPADA: 19,80€ + GASTOS",
+      "styleTag": "INDIE / ALT",
+      "styleColor": "#10b981"
     },
     {
       "id": "loco-Qk9NQkFJMjAyNy0wMy0x-2027-03-13",
@@ -9275,6 +9548,27 @@
       "sourceName": "rockandbluescafe.com",
       "price": "Gratis",
       "actionLabel": "Ir a Más info",
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
+    },
+    {
+      "id": "salalopez-UkFUQSAtIEdJUkEgVklC-2027-03-20",
+      "title": "RATA - GIRA VIBRA MAHOU",
+      "artistName": "RATA - GIRA VIBRA MAHOU",
+      "musicStyle": "Rock",
+      "date": "2027-03-20",
+      "time": "20:30",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://www.tixxlab.com/eventDetails/450",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "tixxlab.com",
+      "price": "ANTICIPADA: € + GASTOS",
       "styleTag": "ROCK",
       "styleColor": "#ef4444"
     },
@@ -9459,7 +9753,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-04-10",
       "title": "DIRE STRAITS: HOMENAJE POR ALCHEMY PROJECT",
       "artistName": "DIRE STRAITS: HOMENAJE POR ALCHEMY PROJECT",
-      "musicStyle": "",
+      "musicStyle": "Rock",
       "date": "2027-04-10",
       "time": "20:30",
       "venue": "Auditorio de Zaragoza",
@@ -9472,8 +9766,8 @@
       "sourceName": "auditoriozaragoza.com",
       "price": "Ver web",
       "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "ROCK",
+      "styleColor": "#ef4444"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-04-11",
@@ -9779,6 +10073,27 @@
       "styleColor": "#ef4444"
     },
     {
+      "id": "salalopez-Q2VjaWxpbyBHMjAyNy0w-2027-05-22",
+      "title": "Cecilio G",
+      "artistName": "Cecilio G",
+      "musicStyle": "Urbano / Rap",
+      "date": "2027-05-22",
+      "time": "20:00",
+      "venue": "Sala López",
+      "venueTag": "SALA LÓPEZ",
+      "venueColor": "#10b981",
+      "url": "https://dice.fm/partner/tickets/event/yy2vwv-cecilio-g-22nd-may-sala-lpez-zaragoza-tickets?dice_id=10966768&dice_channel=web&dice_tags=organic&dice_campaign=DICE&dice_feature=mio_marketing&_branch_match_id=1463551417951109758&utm_source=web&utm_campaign=DICE&utm_medium=mio_marketing&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXz8nMy9ZLyUxO1UvL1XcySLWwSDaxNDA3SrOvK0pNSy0qysxLj08qyi8vTi2ydc4oys9NBQBiU%2FZ6OwAAAA%3D%3D&lng=es",
+      "isTicketUrl": true,
+      "section": "A",
+      "subType": "Conciertos",
+      "hasOriginalSource": true,
+      "prioritySource": 1,
+      "sourceName": "dice.fm",
+      "price": "ANTICIPADA: 20,00€ + GASTOS",
+      "styleTag": "URBANO / RAP",
+      "styleColor": "#8b5cf6"
+    },
+    {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-05-23",
       "title": "MusicAeterna",
       "artistName": "MusicAeterna",
@@ -9920,7 +10235,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-06-26",
       "title": "Alejandro Sanz en Zaragoza",
       "artistName": "Alejandro Sanz",
-      "musicStyle": "",
+      "musicStyle": "Pop",
       "date": "2027-06-26",
       "time": "22:00",
       "venue": "Fundación / Espacio Ibercaja",
@@ -9933,8 +10248,8 @@
       "sourceName": "doctormusic.com",
       "price": "40 €",
       "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "POP",
+      "styleColor": "#ec4899"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-07-24",
@@ -9976,7 +10291,7 @@
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-09-25",
       "title": "Alejandro Astola",
       "artistName": "Alejandro Astola",
-      "musicStyle": "",
+      "musicStyle": "Flamenco",
       "date": "2027-09-25",
       "time": "22:00",
       "venue": "Sala Oasis",
@@ -9989,8 +10304,8 @@
       "sourceName": "salaoasis.com",
       "price": "Ver web",
       "actionLabel": "Ir a Más info",
-      "styleTag": "SIN ESPECIFICAR",
-      "styleColor": "#64748b"
+      "styleTag": "FLAMENCO",
+      "styleColor": "#f97316"
     },
     {
       "id": "vz-aHR0cHM6Ly92aXZlemFyYW-2027-10-02",
@@ -10048,6 +10363,12 @@
       "count": 55
     },
     {
+      "tag": "SALA LÓPEZ",
+      "name": "Sala López",
+      "color": "#10b981",
+      "count": 34
+    },
+    {
       "tag": "SALA OASIS",
       "name": "Sala Oasis",
       "color": "#ec4899",
@@ -10058,12 +10379,6 @@
       "name": "La Casa del Loco (Loco Zaragoza)",
       "color": "#f97316",
       "count": 24
-    },
-    {
-      "tag": "SALA LÓPEZ",
-      "name": "Sala López",
-      "color": "#10b981",
-      "count": 19
     },
     {
       "tag": "LATA BOMBILLAS",
@@ -10521,7 +10836,7 @@
       "tag": "ROCK",
       "name": "Rock",
       "color": "#ef4444",
-      "count": 101
+      "count": 107
     },
     {
       "tag": "CLÁSICA",
@@ -10533,13 +10848,19 @@
       "tag": "SIN ESPECIFICAR",
       "name": "Otros / Sin especificar",
       "color": "#64748b",
-      "count": 46
+      "count": 38
     },
     {
       "tag": "POP",
       "name": "Pop",
       "color": "#ec4899",
-      "count": 21
+      "count": 27
+    },
+    {
+      "tag": "URBANO / RAP",
+      "name": "Urbano / Rap",
+      "color": "#8b5cf6",
+      "count": 18
     },
     {
       "tag": "FOLK / CANTAUTOR",
@@ -10548,28 +10869,22 @@
       "count": 16
     },
     {
-      "tag": "URBANO / RAP",
-      "name": "Urbano / Rap",
-      "color": "#8b5cf6",
-      "count": 15
+      "tag": "ELECTRÓNICA",
+      "name": "Electrónica",
+      "color": "#06b6d4",
+      "count": 11
     },
     {
       "tag": "INDIE / ALT",
       "name": "Indie / Alternativo",
       "color": "#10b981",
-      "count": 10
+      "count": 11
     },
     {
       "tag": "JAZZ",
       "name": "Jazz",
       "color": "#f59e0b",
       "count": 10
-    },
-    {
-      "tag": "ELECTRÓNICA",
-      "name": "Electrónica",
-      "color": "#06b6d4",
-      "count": 8
     },
     {
       "tag": "SOUL / FUNK",
@@ -10587,6 +10902,18 @@
       "tag": "LATINO / SKA",
       "name": "Latino / Mestizaje",
       "color": "#14b8a6",
+      "count": 5
+    },
+    {
+      "tag": "FLAMENCO",
+      "name": "Flamenco",
+      "color": "#f97316",
+      "count": 5
+    },
+    {
+      "tag": "METAL / HEAVY",
+      "name": "Metal / Heavy",
+      "color": "#7c3aed",
       "count": 4
     },
     {
@@ -10594,31 +10921,19 @@
       "name": "Blues",
       "color": "#3b82f6",
       "count": 4
-    },
-    {
-      "tag": "METAL / HEAVY",
-      "name": "Metal / Heavy",
-      "color": "#7c3aed",
-      "count": 3
-    },
-    {
-      "tag": "FLAMENCO",
-      "name": "Flamenco",
-      "color": "#f97316",
-      "count": 3
     }
   ],
   "meta": {
-    "updatedAt": "2026-11-27T07:48:47.395Z",
+    "updatedAt": "2026-11-27T08:04:53.788Z",
     "city": "Zaragoza",
     "referenceDate": "2026-11-27",
     "oneYearHorizon": "2027-11-27",
-    "totalScanned": 726,
-    "totalMatched": 513,
+    "totalScanned": 754,
+    "totalMatched": 528,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
       "🚀 Iniciando búsqueda de Espectáculos (A) para Zaragoza",
-      "🔗 URLs configuradas para Zaragoza: https://vivezaragoza.es/, https://aragonenvivo.com/, https://www.locozaragozadiscoteca.com/, https://conciertos.club/zaragoza, https://www.emfproducciones.com/",
+      "🔗 URLs configuradas para Zaragoza: https://vivezaragoza.es/, https://aragonenvivo.com/, https://www.locozaragozadiscoteca.com/, https://conciertos.club/zaragoza, https://www.emfproducciones.com/, https://salalopez.com/eventos/",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
       "✓ Escaneado Vive Zaragoza (https://vivezaragoza.es/): 535 eventos extraídos",
@@ -10626,16 +10941,17 @@
       "✓ Escaneado Sala [LOCO ZARAGOZA] (https://www.locozaragozadiscoteca.com/): 23 eventos extraídos",
       "✓ Escaneado Conciertos.club (https://conciertos.club/zaragoza): 121 eventos extraídos",
       "✓ Escaneado emfproducciones.com (https://www.emfproducciones.com/): 0 eventos extraídos",
+      "✓ Escaneado Sala [SALA LÓPEZ] (https://salalopez.com/eventos/): 28 eventos extraídos",
       "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Zaragoza: 1 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Zaragoza: 32 eventos en esta ciudad",
       "🎪 Escaneado Festival (https://negufest.com/) para Zaragoza: 2 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 377 conciertos catalogados (55 por IA, 57 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 58], [ROCK & BLUES: 55], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [SALA LÓPEZ: 19], [LATA BOMBILLAS: 19], [CENTRO CÍVICO: 12], [SALA CREEDENCE: 12], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [PRÍNCIPE FELIPE: 5], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [ROZE: 2], [BEMBÉ CLUB: 2], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [IGLESIA SAN PABLO: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
+      "🤖 IA Estilos Musicales: 411 conciertos catalogados (82 por IA, 51 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [AUDITORIO ZGZ: 58], [ROCK & BLUES: 55], [SALA LÓPEZ: 34], [SALA OASIS: 32], [LOCO ZARAGOZA: 24], [LATA BOMBILLAS: 19], [CENTRO CÍVICO: 12], [SALA CREEDENCE: 12], [IBERCAJA: 7], [SALA Z: 7], [PLAZA DEL PILAR: 6], [TEATRO PRINCIPAL: 6], [PRÍNCIPE FELIPE: 5], [OTROS ESCENARIOS: 4], [EL TÚNEL: 4], [EL CORAZÓN VERDE: 4], [TEATRO ESQUINAS: 4], [CAIXAFORUM: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [ROZE: 2], [BEMBÉ CLUB: 2], [PLAZA DE ARAGÓN: 1], [IGLESIA EVANGÉLICA: 1], [LAS ARMAS: 1], [LIBRERÍA ALBAREDA: 1], [ZONA JOVEN MIGUEL: 1], [REFUGIO CRÁPULA: 1], [ZONA JOVEN MOVERA: 1], [MOLINER 7: 1], [PLAZA ESPAÑA: 1], [BASÍLICA DE SANTA: 1], [IGLESIA SAN PABLO: 1], [CENTRO SOCIOEDUCAT: 1], [LA AZUCARERA: 1], [GRAN CASA: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
       "🎪 Festivales en Zaragoza: [ROAD TO INVERFEST 2026: 17], [NEGUFEST: 2], [INVERFEST: 1]",
       "🎭 Teatros / Salas detectadas: [TEATRO ESQUINAS: 62], [TEATRO PRINCIPAL: 19], [TEATRO ARBOLÉ: 17], [CENTRO CÍVICO: 8], [T. DEL MERCADO: 7], [T. LA ESTACIÓN: 6], [PLAZA DEL PILAR: 4], [BELUSHI: 2], [EL TÚNEL: 2], [BIBLIOTECA PÚBLICA: 1], [PABELLÓN DE FESTEJ: 1], [IBERCAJA: 1], [ZONA JOVEN MIGUEL: 1], [PABELLÓN SOCIOCULT: 1], [PABELLÓN MULTIUSOS: 1], [CARPA DEL BARRIO S: 1]",
       "🖼️ Salas de Exposiciones detectadas: [IAACC P. SERRANO: 12], [CENTRO CÍVICO: 12], [OTROS ESCENARIOS: 8], [CENTRO HISTORIAS: 5], [TEATRO ESQUINAS: 3], [PALACIO DE LA ALJA: 2], [BIBLIOTECA ANDRESA: 2], [BIBLIOTECA PARA JÓ: 2], [SALA DE EXPOSICION: 2], [LA LONJA: 2], [CAIXAFORUM: 2], [PARANINFO: 2], [ZONA JOVEN UNIVERS: 2], [CÁMARA DE COMERCIO: 2], [ZONA JOVEN MOVERA: 2], [IBERCAJA: 1], [MOBILITY CITY (PAB: 1], [ALMA MATER: 1], [AMARILLO ESPACIO C: 1], [MUSEO DEL FUEGO Y: 1]",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 101], [CLÁSICA: 54], [SIN ESPECIFICAR: 46], [POP: 21], [FOLK / CANTAUTOR: 16], [URBANO / RAP: 15], [INDIE / ALT: 10], [JAZZ: 10], [ELECTRÓNICA: 8], [SOUL / FUNK: 8], [PUNK: 7], [LATINO / SKA: 4], [BLUES: 4], [METAL / HEAVY: 3], [FLAMENCO: 3]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 513"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 107], [CLÁSICA: 54], [SIN ESPECIFICAR: 38], [POP: 27], [URBANO / RAP: 18], [FOLK / CANTAUTOR: 16], [ELECTRÓNICA: 11], [INDIE / ALT: 11], [JAZZ: 10], [SOUL / FUNK: 8], [PUNK: 7], [LATINO / SKA: 5], [FLAMENCO: 5], [METAL / HEAVY: 4], [BLUES: 4]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 528"
     ]
   }
 }
