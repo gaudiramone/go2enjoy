@@ -1359,30 +1359,39 @@
       const citySelect = document.getElementById('userCitySelect');
 
       const entries = Object.values(cities);
-      container.innerHTML = entries.map(c => `
-        <div onclick="loadCityIntoForm('${c.name}')" class="cursor-pointer rounded-xl bg-slate-800/70 hover:bg-slate-800 border ${c.name === appState.userProfile?.selectedCity ? 'border-indigo-500' : 'border-slate-700'} p-4 transition">
-          <div class="flex items-center justify-between">
-            <h3 class="text-base font-extrabold text-white">📍 ${c.name}</h3>
-            <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">
-              ${(c.urls || []).length} URLs
-            </span>
+      if (container) {
+        container.innerHTML = entries.map(c => `
+          <div onclick="loadCityIntoForm('${c.name}')" class="cursor-pointer rounded-xl bg-slate-800/70 hover:bg-slate-800 border ${c.name === appState.userProfile?.selectedCity ? 'border-indigo-500' : 'border-slate-700'} p-4 transition">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-extrabold text-white">📍 ${c.name}</h3>
+              <span class="text-[11px] px-2 py-0.5 rounded-full bg-slate-700 text-slate-300">
+                ${(c.urls || []).length} URLs
+              </span>
+            </div>
+            <div class="mt-2 space-y-1">
+              ${(c.urls || []).map(u => `<p class="text-xs font-mono text-indigo-300 truncate">🔗 ${u}</p>`).join('')}
+            </div>
           </div>
-          <div class="mt-2 space-y-1">
-            ${(c.urls || []).map(u => `<p class="text-xs font-mono text-indigo-300 truncate">🔗 ${u}</p>`).join('')}
-          </div>
-        </div>
-      `).join('');
+        `).join('');
+      }
 
-      citySelect.innerHTML = entries.map(c =>
-        `<option value="${c.name}" ${c.name === appState.userProfile?.selectedCity ? 'selected' : ''}>${c.name}</option>`
-      ).join('');
+      if (citySelect) {
+        citySelect.innerHTML = entries.map(c =>
+          `<option value="${c.name}" ${c.name === appState.userProfile?.selectedCity ? 'selected' : ''}>${c.name}</option>`
+        ).join('');
+        if (appState.userProfile?.selectedCity) {
+          citySelect.value = appState.userProfile.selectedCity;
+        }
+      }
     }
 
     function loadCityIntoForm(cityName) {
       const c = appState.appConfig?.cities?.[cityName];
       if (!c) return;
-      document.getElementById('cfgCityName').value = c.name;
-      document.getElementById('cfgCityUrls').value = (c.urls || []).join('\n');
+      const nameEl = document.getElementById('cfgCityName');
+      const urlsEl = document.getElementById('cfgCityUrls');
+      if (nameEl) nameEl.value = c.name;
+      if (urlsEl) urlsEl.value = (c.urls || []).join('\n');
     }
 
     async function saveCityConfig() {
@@ -4105,10 +4114,20 @@
             const finalEmail = data.ok ? data.email : email;
             localStorage.setItem('go2enjoy_user_email', finalEmail);
 
+            const serverProf = data.ok ? data.userProfile : null;
             const current = getUserProfileSettings();
+            const mergedProfile = {
+              ...getEmptyUserProfile(finalEmail),
+              ...(serverProf || {}),
+              ...current,
+              email: finalEmail,
+              selectedCity: current.selectedCity || serverProf?.selectedCity || appState?.appConfig?.activeCity || 'Zaragoza'
+            };
+            setLocalUserProfile(mergedProfile);
             if (appState) {
-              appState.userProfile = { ...(appState.userProfile || {}), ...current, email: finalEmail };
+              appState.userProfile = { ...(appState.userProfile || {}), ...mergedProfile };
             }
+            renderPart1Cities();
             updateHeaderUserUI(finalEmail);
             hydrateProfilePageUI();
             hideGoogleLoginModal();
@@ -4172,6 +4191,7 @@
         }
       } catch {}
 
+      renderPart1Cities();
       updateHeaderUserUI(savedEmail);
       await triggerCalendarUpdate();
     }
