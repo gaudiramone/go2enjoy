@@ -1,5 +1,35 @@
 [
   {
+    "timestamp": "2026-11-27T08:26:29.934Z",
+    "madridTime": "2026-11-27 09:26:29",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
+    "timestamp": "2026-11-27T08:26:17.435Z",
+    "madridTime": "2026-11-27 09:26:17",
+    "type": "login",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Inicio de sesión usuario"
+  },
+  {
+    "timestamp": "2026-11-27T08:26:17.138Z",
+    "madridTime": "2026-11-27 09:26:17",
+    "type": "profile_save",
+    "email": "arturo.ordobas@gmail.com",
+    "city": "Zaragoza",
+    "ip": "93.156.203.229",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 Edg/157.",
+    "detail": "Perfil actualizado (2 apuntes)"
+  },
+  {
     "timestamp": "2026-11-27T08:25:44.576Z",
     "madridTime": "2026-11-27 09:25:44",
     "type": "login",
