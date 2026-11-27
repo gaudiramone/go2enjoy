@@ -1,7 +1,7 @@
 {
   "userProfile": {
     "email": "arturo.ordobas@gmail.com",
-    "selectedCity": "Cordoba",
+    "selectedCity": "Zaragoza",
     "preferences": {
       "A": {
         "showTypes": [
@@ -100,29 +100,33 @@
   "concertVenues": [],
   "calendarEvents": [],
   "lastUpdateMeta": {
-    "updatedAt": "2026-11-26T20:15:11.262Z",
-    "city": "Cordoba",
-    "referenceDate": "2026-11-26",
-    "oneYearHorizon": "2027-11-26",
-    "totalScanned": 46,
-    "totalMatched": 45,
+    "updatedAt": "2026-11-27T07:40:56.749Z",
+    "city": "Zaragoza",
+    "referenceDate": "2026-11-27",
+    "oneYearHorizon": "2027-11-27",
+    "totalScanned": 191,
+    "totalMatched": 175,
     "logs": [
       "👤 Usuario Google activo (Agenda e IA): arturo.ordobas@gmail.com",
-      "🚀 Iniciando búsqueda de Espectáculos (A) para Cordoba",
-      "🔗 URLs configuradas para Cordoba: https://conciertos.club/cordoba",
+      "🚀 Iniciando búsqueda de Espectáculos (A) para Zaragoza",
+      "🔗 URLs configuradas para Zaragoza: https://vivezaragoza.es/, https://aragonenvivo.com/, https://www.locozaragozadiscoteca.com/, https://conciertos.club/zaragoza, https://www.emfproducciones.com/",
       "🎪 URLs generales de Festivales: https://inverfest.com/conciertos/, https://inverfest.com/zgz/, https://negufest.com/",
       "🎭 Tipos seleccionados: Conciertos, Teatro, Cine, Exposiciones",
-      "✓ Escaneado Conciertos.club (https://conciertos.club/cordoba): 45 eventos extraídos",
-      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Cordoba: 1 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Cordoba: 0 eventos en esta ciudad",
-      "🎪 Escaneado Festival (https://negufest.com/) para Cordoba: 0 eventos en esta ciudad",
-      "🤖 IA Estilos Musicales: 33 conciertos catalogados (1 por IA, 13 sin especificar).",
-      "🎸 Salas con conciertos detectadas: [AMBIGÚ AXERQUÍA: 7], [SALA IMPALA: 6], [SALA M100: 6], [LONG ROCK CÓRDOBA: 4], [PALACIO CONGRESOS: 4], [TEATRO AVANTI: 3], [GRAN TEATRO DE CÓR: 3], [PLAZA DE TOROS DE: 2], [TEATRO EL BRILLANT: 2], [TEATRO EL SILO: 2], [PEÑA MOTERA & ROCK: 1], [PLAZA DE TOROS: 1], [TEATRO GÓNGORA: 1], [TEATRO VICTORIA: 1], [LA RIVIERA: 1], [HANGAR: 1]",
-      "🎪 Festivales en Cordoba: [INVERFEST: 1]",
-      "🎭 Teatros / Salas detectadas: ",
+      "⚠ Aviso en Vive Zaragoza (https://vivezaragoza.es/): No se pudo acceder a Vive Zaragoza",
+      "✓ Escaneado Aragón en Vivo (https://aragonenvivo.com/eventos/): 12 eventos extraídos",
+      "✓ Escaneado Sala [LOCO ZARAGOZA] (https://www.locozaragozadiscoteca.com/): 23 eventos extraídos",
+      "✓ Escaneado Conciertos.club (https://conciertos.club/zaragoza): 121 eventos extraídos",
+      "✓ Escaneado emfproducciones.com (https://www.emfproducciones.com/): 0 eventos extraídos",
+      "🎪 Escaneado Festival (https://inverfest.com/conciertos/) para Zaragoza: 1 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://inverfest.com/zgz/) para Zaragoza: 32 eventos en esta ciudad",
+      "🎪 Escaneado Festival (https://negufest.com/) para Zaragoza: 2 eventos en esta ciudad",
+      "🤖 IA Estilos Musicales: 172 conciertos catalogados (44 por IA, 12 sin especificar).",
+      "🎸 Salas con conciertos detectadas: [ROCK & BLUES: 25], [LOCO ZARAGOZA: 24], [AUDITORIO ZGZ: 20], [LATA BOMBILLAS: 16], [TEATRO ESQUINAS: 15], [SALA OASIS: 15], [SALA LÓPEZ: 12], [SALA CREEDENCE: 9], [SALA Z: 7], [TEATRO PRINCIPAL: 6], [EL CORAZÓN VERDE: 4], [LA LEY SECA: 3], [SALA UTOPÍA: 3], [OTROS ESCENARIOS: 2], [ROZE: 2], [LAS ARMAS: 1], [EL TÚNEL: 1], [CENTRO CÍVICO: 1], [REFUGIO CRÁPULA: 1], [MOLINER 7: 1], [PRÍNCIPE FELIPE: 1], [PALACIO CONGRESOS: 1], [GRAN HOTEL DE ZARA: 1], [SALA EL SOL: 1], [HÏDE CLUB: 1]",
+      "🎪 Festivales en Zaragoza: [ROAD TO INVERFEST 2026: 32], [NEGUFEST: 2], [INVERFEST: 1]",
+      "🎭 Teatros / Salas detectadas: [T. LA ESTACIÓN: 1], [BELUSHI: 1]",
       "🖼️ Salas de Exposiciones detectadas: ",
-      "🎵 Estilos musicales detectados en la descripción: [ROCK: 14], [SIN ESPECIFICAR: 13], [FLAMENCO: 6], [LATINO / SKA: 3], [FOLK / CANTAUTOR: 2], [ELECTRÓNICA: 2], [CLÁSICA: 2], [BLUES: 1], [URBANO / RAP: 1], [PUNK: 1]",
-      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 45"
+      "🎵 Estilos musicales detectados en la descripción: [ROCK: 71], [POP: 23], [SIN ESPECIFICAR: 11], [FOLK / CANTAUTOR: 10], [ELECTRÓNICA: 9], [URBANO / RAP: 9], [PUNK: 8], [CLÁSICA: 7], [INDIE / ALT: 7], [LATINO / SKA: 5], [FLAMENCO: 5], [JAZZ: 3], [METAL / HEAVY: 2], [BLUES: 2], [SOUL / FUNK: 1]",
+      "🎯 Total eventos únicos añadidos al calendario (sin duplicados): 175"
     ]
   },
   "concertStyles": [],
